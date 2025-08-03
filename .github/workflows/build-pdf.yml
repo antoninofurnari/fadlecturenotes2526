@@ -5,7 +5,7 @@ on:
     branches:
       - master
 
-# Add permissions required for the release action to create/update a release
+# Permissions required for the release action to create/update a release
 permissions:
   contents: write
 
@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v4 # <-- Updated to v4 for latest features and security
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
 
@@ -24,6 +24,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             fonts-liberation \
             fonts-cmu \
+            fonts-freefont-ttf \
             texlive-latex-recommended \
             texlive-latex-extra \
             texlive-fonts-recommended \
@@ -48,7 +49,7 @@ jobs:
           jb build lecturenotes/ --builder pdflatex
 
       - name: Upload PDF Artifact
-        uses: actions/upload-artifact@v4 # <-- FIX: Updated from deprecated v3
+        uses: actions/upload-artifact@v4
         with:
           name: book-pdf
           path: lecturenotes/_build/latex/book.pdf
