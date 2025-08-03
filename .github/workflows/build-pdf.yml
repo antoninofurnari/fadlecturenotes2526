@@ -1,34 +1,39 @@
 name: Build PDF
+
 on:
   push:
     branches:
       - master
+
+# Add permissions required for the release action to create/update a release
+permissions:
+  contents: write
+
 jobs:
   build-pdf:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
-        uses: actions/checkout@v3  # Updated to v3
+        uses: actions/checkout@v4 # <-- Updated to v4 for latest features and security
         with:
           persist-credentials: false
-      - name: Install Fonts
+
+      - name: Install System Dependencies
         run: |
-          sudo apt-get install -y fonts-liberation
-          sudo apt-get install -y fonts-cmu
-      - name: Install & Update TexLive
-        shell: bash -l {0}
-        run: |
-          sudo apt-get -qq update
-          sudo apt-get install -y     \
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            fonts-liberation \
+            fonts-cmu \
             texlive-latex-recommended \
-            texlive-latex-extra       \
+            texlive-latex-extra \
             texlive-fonts-recommended \
-            texlive-fonts-extra       \
-            texlive-xetex             \
-            latexmk                   \
+            texlive-fonts-extra \
+            texlive-xetex \
+            latexmk \
             xindy
+
       - name: Setup Miniconda
-        uses: conda-incubator/setup-miniconda@v3  # Updated to v3
+        uses: conda-incubator/setup-miniconda@v3
         with:
           auto-update-conda: true
           auto-activate-base: false
@@ -36,15 +41,20 @@ jobs:
           python-version: 3.8
           environment-file: environment.yml
           activate-environment: fadlecturenotes
-      - name: Build QuantEcon Mini Example
+
+      - name: Build PDF with Jupyter Book
         shell: bash -l {0}
         run: |
           jb build lecturenotes/ --builder pdflatex
-      - uses: actions/upload-artifact@v3  # Updated to v3
+
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4 # <-- FIX: Updated from deprecated v3
         with:
-          name: pdf
+          name: book-pdf
           path: lecturenotes/_build/latex/book.pdf
-      - uses: ncipollo/release-action@v1  # Keep this as is, check if a newer version exists
+
+      - name: Create or Update "latest" Release
+        uses: ncipollo/release-action@v1
         with:
           artifacts: lecturenotes/_build/latex/book.pdf
           allowUpdates: true
