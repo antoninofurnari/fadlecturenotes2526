@@ -572,7 +572,7 @@ document.write(`
 </div>
 </div>
 <p>As can be seen, <strong>not all projections are the same</strong>. Indeed, some of them tend to project the points in a space in which they are very close to each other, while others allow for more “space” between the points.</p>
-<p>Intuitively, we would like to project points in a way that <strong>they keep their distinctiveness as much as possible</strong>. We can reason on this also form the point of view of information loss. Let’s say we want to reconstruct the values of <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(y_1\)</span> from <span class="math notranslate nohighlight">\(z\)</span>. Recall that the process by which we project <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> onto <span class="math notranslate nohighlight">\((u_1,u_2)\)</span> is <strong>lossy</strong>:</p>
+<p>Intuitively, we would like to project points in a way that <strong>they keep their distinctiveness as much as possible</strong>. We can reason on this also from the point of view of information loss. Let’s say we want to reconstruct the values of <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> from <span class="math notranslate nohighlight">\(z\)</span>. Recall that the process by which we project <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> onto <span class="math notranslate nohighlight">\((u_1,u_2)\)</span> is <strong>lossy</strong>:</p>
 <div class="math notranslate nohighlight">
 \[z = u_1 x_1 + u_2 x_2\]</div>
 <p>In practice, <strong>we cannot reconstruct <span class="math notranslate nohighlight">\(x_1\)</span> and <span class="math notranslate nohighlight">\(x_2\)</span> with arbitrary precision</strong>. The best we can do is to approximate the point with its projection, hence by scaling vector <span class="math notranslate nohighlight">\((u_1,u_2)\)</span> by <span class="math notranslate nohighlight">\(z\)</span>:</p>
@@ -591,7 +591,7 @@ document.write(`
 \[(\hat{x}_1,\hat{x}_2)^T = z \cdot (u_1,u_2)^T\]</div>
 <p>Points <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> are the blue circles, while points <span class="math notranslate nohighlight">\((\hat{x}_1,\hat{x}_2)\)</span> are the red ones in the plots shown above on random projection. Intuitively, to reduce the reconstruction error, we want to choose <strong>the line which best approximates the points</strong>, hence reducing the distance between the points and the line (as in linear regression where we tried to minimize RSS).</p>
 <p><strong>It can be shown that this is equivalent to finding the projection such that <span class="math notranslate nohighlight">\(z\)</span> has the largest variance</strong>. Intuitively, this makes sense as highest variance means that the points are more distinguishable and hence their reconstructions will be more distinguishable as well.</p>
-<p>While we will not see it formally, the plot below shows replicates the previous plot adding the mean squared error between original and reconstructed points:</p>
+<p>While we will not see it formally, the plot below replicates the previous plot adding the mean squared error between original and reconstructed points:</p>
 <div class="math notranslate nohighlight">
 \[MSE = \frac{1}{N}\sum_{i}||({x}_1^{(i)},{x}_2^{(i)})-(\hat{x}_1^{(i)},\hat{x}_2^{(i)})||^2\]</div>
 <p>Along with the variance of the projected data:</p>
@@ -769,7 +769,7 @@ Eigenvectors:
 </section>
 <section id="pca-for-data-whitening">
 <h2><span class="section-number">26.5. </span>PCA for data whitening<a class="headerlink" href="#pca-for-data-whitening" title="Permalink to this heading">#</a></h2>
-<p>It can also be seen that PCA transforms the original data with a given covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> to a new set of data (with new axes, the principal components), such that its covariance matrix <span class="math notranslate nohighlight">\(\Sigma'\)</span> is <strong>the identity matrix</strong>. This means that <strong>the new variables</strong> are now <strong>decorrelated</strong>.</p>
+<p>It can also be seen that PCA transforms the original data with a given covariance matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> to a new set of data (with new axes, the principal components), such that its covariance matrix <span class="math notranslate nohighlight">\(\Sigma'\)</span> is <strong>a diagonal matrix</strong>. This means that <strong>the new variables</strong> are now <strong>decorrelated</strong>.</p>
 <p>Intuitively, this makes sense: <strong>we rotated the data so that the new axes are aligned to main directions of variation and we constructed principal components to be orthogonal to each other</strong>.</p>
 <p>This process is also called <strong>whitening transformation</strong>. An example of this property is shown below:</p>
 <div class="cell tag_remove-input docutils container">
@@ -925,7 +925,7 @@ Eigenvectors:
 </div>
 <p>We can quantify the fraction of variance explained by each component <span class="math notranslate nohighlight">\(n\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
-\[\frac{var(n)}{V(N)}\]</div>
+\[\frac{var(n)}{V(D)}\]</div>
 <p>If we compute such value for all <span class="math notranslate nohighlight">\(n\)</span>, we obtain the following vector in our example:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -942,7 +942,7 @@ Eigenvectors:
 </div>
 <p>As we can see, the first component retains <span class="math notranslate nohighlight">\(92.46\%\)</span> of the variance, while the second one retains only <span class="math notranslate nohighlight">\(5.3\%\)</span> of the variance. It is common to also look at the cumulative variance ratio, defined as:</p>
 <div class="math notranslate nohighlight">
-\[\frac{V(n)}{V(N)}\]</div>
+\[\frac{V(n)}{V(D)}\]</div>
 <p>In our case:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">

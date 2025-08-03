@@ -625,7 +625,7 @@ dissimilar (i.e., their Euclidean distance is large).</p>
 \[\forall\ \mathbf{x}^{(i)} \in \mathbf{X}\ \exists!S_{j} \in S\ :\mathbf{x}^{(i)} \in S_{j}\]</div>
 <p>More specifically, K-Means attempts to create <span class="math notranslate nohighlight">\(K\)</span> clusters which are <strong>as compact as possible</strong>, where <span class="math notranslate nohighlight">\(K\)</span> is
 a parameter specified by the user (its application may depend on the application).</p>
-<p>We will start by defining <span class="math notranslate nohighlight">\(K\)</span> different vectors <span class="math notranslate nohighlight">\(\mathbf{\mu}_k \in \Re^n\)</span> which will act as prototypes for the our clusters. We will shortly see that these vectors will be the cluster’s centers.</p>
+<p>We will start by defining <span class="math notranslate nohighlight">\(K\)</span> different vectors <span class="math notranslate nohighlight">\(\mathbf{\mu}_k \in \Re^n\)</span> which will act as prototypes for our clusters. We will shortly see that these vectors will be the cluster’s centers.</p>
 <p>Hence, we define <span class="math notranslate nohighlight">\(N \times K\)</span> binary variables <span class="math notranslate nohighlight">\(r_{ij}\)</span> which will allow us to establish a mapping between data points <span class="math notranslate nohighlight">\(\mathbf{x}^{(i)}\)</span> and clusters <span class="math notranslate nohighlight">\(S_j\)</span>. In particular, we will define:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}r_{ij} = \begin{cases}1 &amp; \text{ if } \mathbf{x}^{(i)} \in S_j \\ 0 &amp; \text{ otherwise} \end{cases} \end{split}\]</div>

@@ -529,7 +529,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="logistic-regression">
 <h1><span class="section-number">18. </span>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h1>
-<p>Linear regression allows to model relationships between <strong>continuos independent and dependent variables</strong> and <strong>between qualitative independent variables and continuous variables</strong>. However, it does not allow to model relationships between continuous or qualitative independent variables and <strong>qualitative dependent variables</strong>.</p>
+<p>Linear regression allows to model relationships between <strong>continuous independent and dependent variables</strong> and <strong>between qualitative independent variables and continuous variables</strong>. However, it does not allow to model relationships between continuous or qualitative independent variables and <strong>qualitative dependent variables</strong>.</p>
 <section id="example-data">
 <h2><span class="section-number">18.1. </span>Example Data<a class="headerlink" href="#example-data" title="Permalink to this heading">#</a></h2>
 <p>Establishing such relationships is useful in different contexts. For instance, let us consider the <a class="reference external" href="https://archive.ics.uci.edu/dataset/17/breast+cancer+wisconsin+diagnostic">Breast Cancer Wisconsin</a> dataset:</p>
@@ -879,7 +879,7 @@ document.write(`
 <img alt="../_images/cb22e8950a18ed9d77288bf5aaf8f32f3fa2d4ebee49d85905d6c1576a8ec27e.png" src="../_images/cb22e8950a18ed9d77288bf5aaf8f32f3fa2d4ebee49d85905d6c1576a8ec27e.png" />
 </div>
 </div>
-<p>The correlation between the residuals and the independent variable is a strong indication that the true relationship between the two variables is not correcly modeled. After all, from a purely predictive point of view, we are using a linear regressor which takes the form:</p>
+<p>The correlation between the residuals and the independent variable is a strong indication that the true relationship between the two variables is not correctly modeled. After all, from a purely predictive point of view, we are using a linear regressor which takes the form:</p>
 <div class="math notranslate nohighlight">
 \[f:\mathbb{R} \to \mathbb{R}\]</div>
 <p>while the values <code class="docutils literal notranslate"><span class="pre">Diagnosis</span></code> variable belong to the set <span class="math notranslate nohighlight">\(\{0,1\}\)</span> and we would need instead a function with the following form:</p>
@@ -988,9 +988,9 @@ document.write(`
 \[
 \log(\frac{p}{1-p})=\beta_0 + \beta_1 x
 \]</div>
-<p>Applying what we know about linear regressors, we can write:</p>
+<p>Applying what we know about logistic regressors, we can write:</p>
 <div class="math notranslate nohighlight">
-\[x=0 \Rightarrow \ln(\frac{p}{1-p})=\beta_0\]</div>
+\[x=0 \Rightarrow \log(\frac{p}{1-p})=\beta_0\]</div>
 <p>To have a clearer picture, we can exponentiate both sides of the equation and write:</p>
 <div class="math notranslate nohighlight">
 \[x=0 \Rightarrow \frac{p}{1-p}=e^{\beta_0}\]</div>
@@ -1000,7 +1000,7 @@ document.write(`
 \[p=\frac{odds}{1+odds}\]</div>
 <p>Hence, the probability of the event being true when all variables are zero is given by:</p>
 <div class="math notranslate nohighlight">
-\[p(y=1|x) = \frac{e^\beta_0}{1+e^\beta_0}\]</div>
+\[p(y=1|x) = \frac{e^{\beta_0}}{1+e^{\beta_0}}\]</div>
 <p>How can we interpret the <strong>coefficient values</strong>?</p>
 <p>We know that:</p>
 <div class="math notranslate nohighlight">
@@ -1019,10 +1019,10 @@ document.write(`
 <p>We can thus say that <strong>increasing the variable <span class="math notranslate nohighlight">\(x\)</span> by one unit corresponds to a multiplicative increase in odds by <span class="math notranslate nohighlight">\(e^{\beta_1}\)</span></strong>.</p>
 <p>This analysis can be easily extended to the case of a multiple logistic regressor. Hence in general, given the model:</p>
 <div class="math notranslate nohighlight">
-\[P(y=1|\mathbf{x}) = \beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n\]</div>
+\[P(y=1|\mathbf{x}) = \sigma(\beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n)\]</div>
 <p>We can say that:</p>
 <ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(e^{\beta_0}\)</span> is the odd of <span class="math notranslate nohighlight">\(y\)</span> being equal to <span class="math notranslate nohighlight">\(1\)</span> rather than <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(x_i=0 \forall i\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(e^{\beta_0}\)</span> is the odd of <span class="math notranslate nohighlight">\(y\)</span> being equal to <span class="math notranslate nohighlight">\(1\)</span> rather than <span class="math notranslate nohighlight">\(0\)</span> when <span class="math notranslate nohighlight">\(x_i=0, \ \forall i\)</span>;</p></li>
 <li><p>An increment of one unit in the independent variable <span class="math notranslate nohighlight">\(x_i\)</span> corresponds to a multiplicative increment of <span class="math notranslate nohighlight">\(e^{\beta_i}\)</span> in the odds of <span class="math notranslate nohighlight">\(y=1\)</span>. So if <span class="math notranslate nohighlight">\(e^{\beta_i}=0.05\)</span>, then <span class="math notranslate nohighlight">\(y=1\)</span> is <span class="math notranslate nohighlight">\(5\%\)</span> more likely for a one-unit increment of <span class="math notranslate nohighlight">\(x\)</span>.</p></li>
 </ul>
 </section>

@@ -849,10 +849,10 @@ beta_1: -0.16
 </div>
 <p>Apart from the geometric interpretation, the coefficients of a linear regressor have an important <strong>statistical interpretation</strong>. In particular:</p>
 <p><strong>The intercept <span class="math notranslate nohighlight">\(\beta_0\)</span> is the value of <span class="math notranslate nohighlight">\(y\)</span> that we get when the input value <span class="math notranslate nohighlight">\(x\)</span> is equal to zero <span class="math notranslate nohighlight">\(x=0\)</span> (i.e., <span class="math notranslate nohighlight">\(f(0)\)</span>)</strong>. This value <strong>may not always make sense</strong>. For instance, in the example above, we have: <span class="math notranslate nohighlight">\(\beta_0 = 39.94\)</span>, which means that, <strong>when the horsepower is <span class="math notranslate nohighlight">\(0\)</span>, then the consumption in mpg is equal to <span class="math notranslate nohighlight">\(39.94\)</span></strong>.</p>
-<p><strong>The coefficient <span class="math notranslate nohighlight">\(\beta_1\)</span> indicates the steepness of the curve</strong>. If <span class="math notranslate nohighlight">\(\beta_1\)</span> is large, then the curve is steep. This indicates that a small change in <span class="math notranslate nohighlight">\(x\)</span> is associates to a large change in <span class="math notranslate nohighlight">\(y\)</span>. In general, we can see that:</p>
+<p><strong>The coefficient <span class="math notranslate nohighlight">\(\beta_1\)</span> indicates the steepness of the curve</strong>. If <span class="math notranslate nohighlight">\(\beta_1\)</span> is large, then the curve is steep. This indicates that a small change in <span class="math notranslate nohighlight">\(x\)</span> is associated to a large change in <span class="math notranslate nohighlight">\(y\)</span>. In general, we can see that:</p>
 <div class="math notranslate nohighlight">
 \[f(x+1)-f(x)=\beta_0+\beta_1 (x+1)-\beta_0-\beta_1 x=\beta_1 (x+1-x)=\beta_1\]</div>
-<p>which reveals that <strong>when we observe an increment of one unit of x, we observe an increment of <span class="math notranslate nohighlight">\(\beta_1\)</span> units in y</strong>. In our example, <span class="math notranslate nohighlight">\(\beta_1=-0.15\)</span>, hence we can say that, for cars with one additional unit of horsepower, we observe an drop in mps <span class="math notranslate nohighlight">\(-0.15\)</span> units.</p>
+<p>which reveals that <strong>when we observe an increment of one unit of x, we observe an increment of <span class="math notranslate nohighlight">\(\beta_1\)</span> units in y</strong>. In our example, <span class="math notranslate nohighlight">\(\beta_1=-0.15\)</span>, hence we can say that, for cars with one additional unit of horsepower, we observe an drop in mpg <span class="math notranslate nohighlight">\(-0.15\)</span> units.</p>
 </section>
 <section id="accuracy-of-the-coefficient-estimates">
 <h3><span class="section-number">17.3.3. </span>Accuracy of the Coefficient Estimates<a class="headerlink" href="#accuracy-of-the-coefficient-estimates" title="Permalink to this heading">#</a></h3>
@@ -875,7 +875,7 @@ beta_1: -0.16
 </div>
 </div>
 <p>Each of the first three subplots shows a different sample drawn from the population, with its corresponding estimated regression line, along with the true population regression line. The last subplot compares the different estimated lines with the population regression line and the average regression line (in red). Coefficient estimates are shown in the subplot titles.</p>
-<p>As can be noted, each estimate can be inaccurate, while the average regression line is very close to the population regression line. This is due to the fact that our estimators for the parameters of the regression coefficients <strong>have non-zero variance</strong>. In practice, in can be shown that these estimators are <strong>unbiased</strong> (hence the average regression line is close to the population line).</p>
+<p>As can be noted, each estimate can be inaccurate, while the average regression line is very close to the population regression line. This is due to the fact that our estimators for the parameters of the regression coefficients <strong>have non-zero variance</strong>. In practice, it can be shown that these estimators are <strong>unbiased</strong> (hence the average regression line is close to the population line).</p>
 <section id="standard-errors-of-the-regression-coefficients">
 <h4><span class="section-number">17.3.3.1. </span>Standard Errors of the Regression Coefficients<a class="headerlink" href="#standard-errors-of-the-regression-coefficients" title="Permalink to this heading">#</a></h4>
 <p>A natural question is hence <strong>“how do we assess how good our estimates of the regression coefficients are”</strong>. We resort here to <strong>statistical inference</strong>. It can be shown that the squared standard errors associated to the coefficient estimates are:</p>
@@ -902,7 +902,7 @@ beta_1: -0.16
 \[[\hat \beta_1 - 1.96 \cdot SE(\hat \beta_1), \hat \beta_1 + 1.96 \cdot SE(\hat \beta_1)]\]</div>
 <p>In practice, it is common to compute confidence intervals with a <span class="math notranslate nohighlight">\(95\%\)</span> confidence. In the case of our model:</p>
 <div class="math notranslate nohighlight">
-\[horsepower \approx = \beta_0 + mpg \cdot beta_1\]</div>
+\[horsepower \approx \beta_0 + mpg \cdot \beta_1\]</div>
 <p>We will have:</p>
 <table class="table">
 <thead>
@@ -928,7 +928,7 @@ beta_1: -0.16
 <p>From the table above, we can say that:</p>
 <ul class="simple">
 <li><p>The value of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> for <code class="docutils literal notranslate"><span class="pre">horsepower=0</span></code> lies somewhere between <span class="math notranslate nohighlight">\(38.53\)</span> and <span class="math notranslate nohighlight">\(41.35\)</span>;</p></li>
-<li><p>An increase of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> by one unit is associated to an decrease of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between <span class="math notranslate nohighlight">\(-0.17\)</span> and <span class="math notranslate nohighlight">\(.015\)</span>.</p></li>
+<li><p>An increase of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> by one unit is associated to a decrease of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> between <span class="math notranslate nohighlight">\(-0.17\)</span> and <span class="math notranslate nohighlight">\(.015\)</span>.</p></li>
 </ul>
 <p>It is also common to see plots like the following one:</p>
 <div class="cell tag_remove-input docutils container">
@@ -940,7 +940,7 @@ beta_1: -0.16
 </section>
 <section id="statistical-tests-for-the-significance-of-coefficients">
 <h4><span class="section-number">17.3.3.3. </span>Statistical Tests for the Significance of Coefficients<a class="headerlink" href="#statistical-tests-for-the-significance-of-coefficients" title="Permalink to this heading">#</a></h4>
-<p>Standard errors are also used to perform <strong>hypothesis tests</strong> on the coefficients. In practice, it is common to perform a statistical test to assess whether the coefficient <span class="math notranslate nohighlight">\(\beta_1\)</span> is significantly different from zero. It is interesting to check this because, if <span class="math notranslate nohighlight">\(\beta_1\)</span> was equal to zero, then there would not be any correlation between the variables (and hence the linear regressor would not be useful). Indeed, if <span class="math notranslate nohighlight">\(\beta-1=0\)</span>:</p>
+<p>Standard errors are also used to perform <strong>hypothesis tests</strong> on the coefficients. In practice, it is common to perform a statistical test to assess whether the coefficient <span class="math notranslate nohighlight">\(\beta_1\)</span> is significantly different from zero. It is interesting to check this because, if <span class="math notranslate nohighlight">\(\beta_1\)</span> was equal to zero, then there would not be any correlation between the variables (and hence the linear regressor would not be useful). Indeed, if <span class="math notranslate nohighlight">\(\beta_1=0\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[Y=\beta_0 + \epsilon\]</div>
 <p>Hence <span class="math notranslate nohighlight">\(Y\)</span> cannot be predicted from <span class="math notranslate nohighlight">\(X\)</span> and the two variables are not associated.</p>
@@ -1040,7 +1040,7 @@ beta_1: -0.16
 <img alt="../_images/3d62b26713ecd8bf2fc4bb00fdd1e4f749a313553f209878086fc881d42a9656.png" src="../_images/3d62b26713ecd8bf2fc4bb00fdd1e4f749a313553f209878086fc881d42a9656.png" />
 </div>
 </div>
-<p>The interpretation of the <span class="math notranslate nohighlight">\(R^2\)</span> is related to the one of the Pearson’s <span class="math notranslate nohighlight">\(\rho\)</span> correlation coefficient. Indeed, both scores are independent of the slope of the regression line, but quantify how liner the relationship between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is. In practice, it can be shown that:</p>
+<p>The interpretation of the <span class="math notranslate nohighlight">\(R^2\)</span> is related to the one of the Pearson’s <span class="math notranslate nohighlight">\(\rho\)</span> correlation coefficient. Indeed, both scores are independent of the slope of the regression line, but quantify how linear the relationship between <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> is. In practice, it can be shown that:</p>
 <div class="math notranslate nohighlight">
 \[R^2 = \rho^2\]</div>
 <p>The <span class="math notranslate nohighlight">\(R^2\)</span> value in our example of regressing <code class="docutils literal notranslate"><span class="pre">mpg</span></code> from <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> is:</p>
@@ -1188,7 +1188,7 @@ beta_1: -0.16
 <div class="math notranslate nohighlight">
 \[RSS(\beta_0,\ldots,\beta_n) = \sum_{i=1}^m (y_i - \beta_0+\beta_1x_1^{(i)} + \ldots + \beta_n x_n^{(i)})^2\]</div>
 <p>Where <span class="math notranslate nohighlight">\(m\)</span> is the total number of observations and <span class="math notranslate nohighlight">\(x_j^{(i)}\)</span> is the <span class="math notranslate nohighlight">\(j^{th}\)</span> variable (<span class="math notranslate nohighlight">\(x_j\)</span>) of the <span class="math notranslate nohighlight">\(i^{th}\)</span> observations.</p>
-<p>The values <span class="math notranslate nohighlight">\(\hat \beta_0,\ldots,\hat \beta_n\)</span> values that minimize the loss function above are the <strong>multiple least square coefficient estimates</strong>.</p>
+<p>The <span class="math notranslate nohighlight">\(\hat \beta_0,\ldots,\hat \beta_n\)</span> values that minimize the loss function above are the <strong>multiple least square coefficient estimates</strong>.</p>
 <p>To find these optimal values, it is convenient to use matrix notation. Given <span class="math notranslate nohighlight">\(m\)</span> observations, we will have <span class="math notranslate nohighlight">\(m\)</span> equations:</p>
 <div class="math notranslate nohighlight">
 \[y^{(1)} = \beta_0 + \beta_1 x_1^{(1)} + \ldots + \beta_n x_n^{(1)} + e^{(1)}\]</div>
@@ -1244,7 +1244,7 @@ e^{(m)}
 \[H_0: \beta_1=\beta_2=\ldots=\beta_n=0\]</div>
 <div class="math notranslate nohighlight">
 \[H_a: \exists j\ s.t.\ \beta_j \neq 0\]</div>
-<p>The null hypothesis (the one we want to reject with this test) is that all coefficients are zero in the population. If this is true, than the multiple regressor is not reliable and we should discard it. The alternative hypothesis is that at least one of the coefficients is different from zero.</p>
+<p>The null hypothesis (the one we want to reject with this test) is that all coefficients are zero in the population. If this is true, than the multiple regressor is not reliable and we should discard it. Note that we exclude <span class="math notranslate nohighlight">\(\beta_0\)</span> from these coefficients because it represents the position of the regression line (intercept) and does not denote correlation. The alternative hypothesis is that at least one of the coefficients is different from zero.</p>
 <p>The test is performed by computing the following F-statistic:</p>
 <div class="math notranslate nohighlight">
 \[F=\frac{(TSS-RSS)/n}{RSS(m-n-1)}\]</div>
@@ -1771,7 +1771,7 @@ Fuel Type: [&#39;gas&#39; &#39;diesel&#39;]
 <p>This relationship does not look linear. It looks instead as a quadratic, which would be fit by the following model:</p>
 <div class="math notranslate nohighlight">
 \[mpg = \beta_0 + \beta_1 horsepower + \beta_2 horsepower^2\]</div>
-<p>Again, the model above is nonlinear in <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>, but we can still fit it with a linear regressor if we add a new variable <span class="math notranslate nohighlight">\(z=horsepower\)</span>.</p>
+<p>Again, the model above is nonlinear in <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>, but we can still fit it with a linear regressor if we add a new variable <span class="math notranslate nohighlight">\(z=horsepower^2\)</span>.</p>
 <p>The fit model will obtain <span class="math notranslate nohighlight">\(R^2=0.688\)</span>, larger than <span class="math notranslate nohighlight">\(R^2=608\)</span> obtained by the base model (<span class="math notranslate nohighlight">\(mpg = \beta_0 + \beta_1 horsepower\)</span>). Both have a large F-statistic.</p>
 <p>The estimated coefficients are:</p>
 <div class="cell tag_remove-input docutils container">
