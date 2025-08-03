@@ -534,7 +534,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduzione-a-pandas">
 <h1><span class="section-number">9. </span>Introduzione a Pandas<a class="headerlink" href="#introduzione-a-pandas" title="Permalink to this heading">#</a></h1>
-<p>Abbiamo visto come Python, unito a numpy e matplotlib possa essere un potente strumento per il calcolo scientifico. Esistono tuttavia altre librerie che forniscono una maggiore astrazione per una più agevole gestione e analisi dei dati. In questo laboratorio vedremo le basi di della libreria Pandas, utile per l’analisi dei dati. In particolare vedremo:</p>
+<p>Abbiamo visto come Python, unito a numpy e matplotlib possa essere un potente strumento per il calcolo scientifico. Esistono tuttavia altre librerie che forniscono una maggiore astrazione per una più agevole gestione e analisi dei dati. In questo laboratorio vedremo le basi della libreria Pandas, utile per l’analisi dei dati. In particolare vedremo:</p>
 <ul class="simple">
 <li><p>Come creare e gestire serie di dati (Pandas Series);</p></li>
 <li><p>Come creare e gestire DataFrame di Pandas;</p></li>
@@ -625,7 +625,7 @@ Name: Mia Serie, dtype: int64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Qual è la principale differenza tra <code class="docutils literal notranslate"><span class="pre">Series</span></code> di Pandas e <code class="docutils literal notranslate"><span class="pre">array</span></code> di Numpy?</p>
 </div></blockquote>
 </section>
@@ -906,7 +906,7 @@ dtype: int64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>Cosa stampa a schermo il seguente codice?</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">s</span><span class="o">%</span><span class="mi">2</span><span class="p">])</span>
@@ -978,7 +978,7 @@ dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Considerata la Series definita come segue:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">s</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="mf">5.2</span><span class="p">])</span>
 </pre></div>
@@ -1355,7 +1355,7 @@ dtype: int64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Si provi ad applicare il metodo <code class="docutils literal notranslate"><span class="pre">apply</span></code> ad una <code class="docutils literal notranslate"><span class="pre">Series</span></code> specificando una funzione che prende in unput due argomenti. E’ possibile farlo? Perché?</p>
 </div></blockquote>
 </section>
@@ -1400,7 +1400,7 @@ dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 5</strong></p>
+<div><p><strong>Domanda 5</strong></p>
 <p>Come si può ottenere un array di Numpy da un Series in modo che le due entità siano indipendenti?</p>
 </div></blockquote>
 </section>
@@ -1902,7 +1902,7 @@ W  0.392118  0.343178  0.729050
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 6</strong></p>
+<div><p><strong>Domanda 6</strong></p>
 <p>In cosa differisce principalmente un DataFrame da un array bidimensionale di Numpy? Qual è il vantaggio dei DataFrame?</p>
 </div></blockquote>
 </section>
@@ -2627,7 +2627,7 @@ W  0.392118  0.343178  0.729050
 </div></div></div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>Si consideri il seguente DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="s1">&#39;B&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span><span class="s1">&#39;C&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">]})</span>
 </pre></div>
@@ -3302,7 +3302,7 @@ Name: H, dtype: int64
 </div></div></div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 8</strong></p>
+<div><p><strong>Domanda 8</strong></p>
 <p>Si consideri il seguente DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="s1">&#39;B&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span><span class="s1">&#39;C&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">]})</span>
 </pre></div>
@@ -3636,7 +3636,7 @@ dtype: float64
 </div></div></div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 9</strong></p>
+<div><p><strong>Domanda 9</strong></p>
 <p>Si consideri il seguente DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;A&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span><span class="s1">&#39;B&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span><span class="s1">&#39;C&#39;</span><span class="p">:[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">12</span><span class="p">]})</span>
 </pre></div>
@@ -4456,7 +4456,7 @@ Name: age, dtype: float64
 </div>
 <p>Questa vista ci permette di comparare diverse statistiche delle due variabili <code class="docutils literal notranslate"><span class="pre">age</span></code> e <code class="docutils literal notranslate"><span class="pre">income</span></code> per <code class="docutils literal notranslate"><span class="pre">M</span></code> e <code class="docutils literal notranslate"><span class="pre">F</span></code>.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 10</strong></p>
+<div><p><strong>Domanda 10</strong></p>
 <p>Considerando il DataFrame precedentemente creato, si usi <code class="docutils literal notranslate"><span class="pre">groupby</span></code> per ottenere la somma dei redditi dei dipendenti di una data compagnia.</p>
 </div></blockquote>
 </section>
@@ -4835,7 +4835,7 @@ coppia di variabili categoriche, le righe e colonne della crosstab (nota anche c
 </div>
 <p>La tabella ci dice che l’età media delle persone di sesso maschile che lavorano per CDX è di <span class="math notranslate nohighlight">\(37,33\)</span> anni.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 11</strong></p>
+<div><p><strong>Domanda 11</strong></p>
 <p>Si costruisca una crosstab che, per ogni compagnia, riporti il numero di dipendenti di una data età.</p>
 </div></blockquote>
 </section>
@@ -6797,7 +6797,7 @@ memory usage: 1.0+ MB
 </div></div></div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 12</strong></p>
+<div><p><strong>Domanda 12</strong></p>
 <p>Visualizzare il numero medio di review per tipo (variabile Type).</p>
 </div></blockquote>
 <div class="cell docutils container">
@@ -6870,7 +6870,7 @@ memory usage: 1.0+ MB
 <section id="esercizi">
 <h2><span class="section-number">9.4. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Si carichi il dataset disponibile al seguente URL: <a class="reference external" href="https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv">https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv</a> in modo da utilizzare i valori della colonna “PassengerId” come indici e si applichino le seguenti trasfromazioni:</p>
 <ul class="simple">
 <li><p>Si rimuovano le righe che contengono dei valori NaN;</p></li>
@@ -6880,23 +6880,23 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Si consideri il dataset caricato e modificato nell’esercizio precedente. Si trovi il nome del passeggero con ticket dal codice “345779”.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Quali sono i nomei dei 5 passeggeri più giovani?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Si consideri il dataset caricato e modificato nell’esercizio precedente. Si selezionino tutte le osservazioni relative a passeggeri di età compresa tra 20 e 30 anni.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Si consideri il dataset caricato e modificato negli esercizi precedenti. Si calcoli la tariffa media pagata dai passeggeri di sesso femminile in seconda classe.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 6</p>
+<div><p>Esercizio 6</p>
 <p>Si consideri il dataset caricato e modificato negli esercizi precedenti. Si costruisca una crosstab che permetta di rispondere alle seguenti domande:</p>
 <ul class="simple">
 <li><p>Quanti passeggeri di sesso maschile sono sopravvisuti?</p></li>
@@ -6904,7 +6904,7 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 7</p>
+<div><p>Esercizio 7</p>
 <p>Si consideri il dataset caricato e modificato negli esercizi precedenti. Si costruisca una crosstab che permetta di rispondere alle seguenti domande:</p>
 <ul class="simple">
 <li><p>Quanti passeggeri di sesso maschile sono sopravvisuti in prima classe?</p></li>
@@ -6913,7 +6913,7 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 8</p>
+<div><p>Esercizio 8</p>
 <p>Si consideri il seguente DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Category&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;NumberOfElements&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;CheckedElements&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]})</span>
 </pre></div>

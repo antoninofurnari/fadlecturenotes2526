@@ -528,7 +528,7 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduzione-a-python">
 <h1><span class="section-number">2. </span>Introduzione a Python<a class="headerlink" href="#introduzione-a-python" title="Permalink to this heading">#</a></h1>
-<p>Python è un linguaggio di programmazione ad alto livello, interpretato e pensato per la programmazione “general purpose”. Python supporta un sistema dei tipi dimanico e diversi paradigmi di programmazione tra cui la programmazione orientata agli oggetti, la programmazione imperativa, la programmazione funzionale e la programmazione procedurale. Il linguaggio è stato ideato nel 1991 da Guido van Rossum e il suo nome è ispirato alla serie TV satirica Monty Python’s Flying Circus (<a class="reference external" href="https://en.wikipedia.org/wiki/Monty_Python%27s_Flying_Circus">https://en.wikipedia.org/wiki/Monty_Python’s_Flying_Circus</a>).</p>
+<p>Python è un linguaggio di programmazione ad alto livello, interpretato e pensato per la programmazione “general purpose”. Python supporta un sistema dei tipi dinamico e diversi paradigmi di programmazione tra cui la programmazione orientata agli oggetti, la programmazione imperativa, la programmazione funzionale e la programmazione procedurale. Il linguaggio è stato ideato nel 1991 da Guido van Rossum e il suo nome è ispirato alla serie TV satirica Monty Python’s Flying Circus (<a class="reference external" href="https://en.wikipedia.org/wiki/Monty_Python%27s_Flying_Circus">https://en.wikipedia.org/wiki/Monty_Python’s_Flying_Circus</a>).</p>
 <p>Benché Python non sia nato come linguaggio di programmazione per il calcolo scientifico, la sua estrema versatilità ha contribuito al nascere di una serie di librerire che rendono la computazione numerica in Python comoda ed efficiente. Buona parte di queste librerie fanno parte di “SciPy” (<a class="reference external" href="https://www.scipy.org/">https://www.scipy.org/</a>), un ecosistema di software open-source per il calcolo scientifico. In questo laboratorio, oltre a una introduzione a Python, vedremo in particolare i fondamenti di NumPy (calcolo scientifico) e Matplolib (Plot 2D).</p>
 <p>Referenze importanti da consultare durante il corso, solo le seguenti documentazioni:</p>
 <ul class="simple">
@@ -717,7 +717,7 @@ document.write(`
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Qual è il tipo della seguente variabile?</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="o">//</span><span class="mi">2</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="mi">3</span><span class="o">*</span><span class="mf">0.0</span><span class="p">)</span>
 </pre></div>
@@ -1262,7 +1262,7 @@ l[0:2]      -&gt; [1, 2]
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ultimo indice della lista:&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[3:]       -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">3</span><span class="p">:])</span> <span class="c1">#dall&#39;indice 3 (incluso) all&#39;indice 5 (escluso)</span>
 <span class="c1">#equivalente al seguente:</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[3:5]      -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span> <span class="c1">#dall&#39;indice 3 (incluso) all&#39;indice 5 (escluso)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[3:8]      -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">8</span><span class="p">])</span> <span class="c1">#dall&#39;indice 3 (incluso) all&#39;indice 5 (escluso)</span>
 </pre></div>
 </div>
 </div>
@@ -1296,7 +1296,7 @@ l[0:8]       -&gt; [1, 2, 3, 4, 5, 6, 7, 8]
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[0:8:2]    -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> 
 <span class="c1">#da 0 (incluso) a 8 (escluso) a un passo di 2 (un elemento sì e uno no)</span>
 <span class="c1">#equivalente a:</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[::2]      -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">8</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l[::2]      -&gt;&quot;</span><span class="p">,</span> <span class="n">l</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span> 
 <span class="c1">#da 0 (incluso) a 8 (escluso) a un passo di 2 (un elemento sì e uno no)</span>
 </pre></div>
 </div>
@@ -1688,7 +1688,7 @@ dlroW olleH
 </div>
 </div>
 </div>
-<p>Il metodo <code class="docutils literal notranslate"><span class="pre">split</span></code> in particolare può essere utilizzato per la tokenizzazione o per estrarre sottostringhe in maniera agevole. Ad esempio, supponiamo di voler estrarre il numero <code class="docutils literal notranslate"><span class="pre">2018</span></code> dalla stringa <code class="docutils literal notranslate"><span class="pre">A-2017-B2</span></code>:</p>
+<p>Il metodo <code class="docutils literal notranslate"><span class="pre">split</span></code> in particolare può essere utilizzato per la tokenizzazione o per estrarre sottostringhe in maniera agevole. Ad esempio, supponiamo di voler estrarre il numero <code class="docutils literal notranslate"><span class="pre">2017</span></code> dalla stringa <code class="docutils literal notranslate"><span class="pre">A-2017-B2</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;A-2017-B2&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
@@ -1732,7 +1732,7 @@ False
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Quale codice permette di manipolare la stringa <code class="docutils literal notranslate"><span class="pre">azyp-kk9-382</span></code> per ottenere la stringa <code class="docutils literal notranslate"><span class="pre">Kk9</span></code>?</p>
 </div></blockquote>
 </section>
@@ -1971,16 +1971,16 @@ False
 <section id="costrutti-if-elif-else">
 <h2><span class="section-number">2.11. </span>Costrutti if/elif/else<a class="headerlink" href="#costrutti-if-elif-else" title="Permalink to this heading">#</a></h2>
 <p>I costrutti condizionali funzionano in maniera simile ai linguaggi basati su C. A differenza di tali linguaggi tuttavia, Python sostituisce le parentesi con l’indentazione obbligatoria. Il seguente codice C++:</p>
-<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span>int var1 = 5;
-int var2 = 10;
-if(var1&lt;var2) {
-    int var3 = var1+var2;
-    cout &lt;&lt; &quot;Hello World &quot;&lt;&lt;var3;
-}
-cout &lt;&lt; &quot;End&quot;;```
-viene invece scritto come segue:
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">var1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">5</span><span class="p">;</span>
+<span class="kt">int</span><span class="w"> </span><span class="n">var2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<span class="k">if</span><span class="p">(</span><span class="n">var1</span><span class="o">&lt;</span><span class="n">var2</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">var3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">var1</span><span class="o">+</span><span class="n">var2</span><span class="p">;</span>
+<span class="w">    </span><span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;Hello World &quot;</span><span class="o">&lt;&lt;</span><span class="n">var3</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="n">cout</span><span class="w"> </span><span class="o">&lt;&lt;</span><span class="w"> </span><span class="s">&quot;End&quot;</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>viene invece scritto come segue:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var1</span> <span class="o">=</span> <span class="mi">5</span>
@@ -2247,7 +2247,7 @@ true
 </div>
 </div>
 </div>
-<p>Supponiamo adesso di voler scorrere contemporaneamente tutti gli iesimi elementi di più liste. Ad esempio:</p>
+<p>Supponiamo adesso di voler scorrere contemporaneamente tutti gli i-esimi elementi di più liste. Ad esempio:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">]</span>
@@ -2406,7 +2406,7 @@ true
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>Tutte le operazioni che si possono fare mediante comprensione di liste e dizionari possono essere fatte mediante un ciclo for? Quali sono i vantaggi principali di queste tecniche rispetto a l’utilizzo dei cicli for?</p>
 </div></blockquote>
 </section>
@@ -2500,7 +2500,7 @@ true
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 8</strong></p>
+<div><p><strong>Domanda 8</strong></p>
 <p>Qual è il vantaggio di definire una funzione mediante <strong>lambda</strong>? Quali sono i suoi limiti?</p>
 </div></blockquote>
 </section>
@@ -2844,7 +2844,7 @@ matrix:
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise multiplication:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">*</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#moltiplicazione tra elementi corrispondenti</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Power of two:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#quadrato degli elementi</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise power:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">**</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#elevamento a potenza elemento per elemento</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector product:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span> <span class="c1">#prodotto vettoriale</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scalar product:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span> <span class="c1">#prodotto scalare tra vettori</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1">#minimo dell&#39;array</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="c1">#massimo dell&#39;array</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span><span class="n">a2</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1">#somma di tutti i valori dell&#39;array</span>
@@ -2957,7 +2957,7 @@ Transposed:
 </div>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si considerino le seguenti liste:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">l1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
 <span class="n">l2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
@@ -2972,13 +2972,13 @@ Transposed:
 </div>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Si ripeta l’esercizio <strong>2</strong> utilizzando la comprensione di dizionari. A tale scopo, si definisca prima la lista <code class="docutils literal notranslate"><span class="pre">['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno',</span></code>
 <code class="docutils literal notranslate"><span class="pre">'Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre']</span></code>.</p>
 <p>Si costruisca dunque il dizionario desiderato utilizzando la comprensione di dizionari e la funzione <code class="docutils literal notranslate"><span class="pre">enum</span></code></p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Date le variabili:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">obj</span><span class="o">=</span><span class="s1">&#39;triangolo&#39;</span>
 <span class="n">area</span><span class="o">=</span><span class="mf">21.167822</span>
@@ -2992,7 +2992,7 @@ Transposed:
 <p>Utilizzare la formattazione di stringhe per ottenere il risultato.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 6</p>
+<div><p>Esercizio 6</p>
 <p>Scrivere una funzione che estragga il dominio da un indirizzo email. Ad esempio, se l’indirizzo è “<a class="reference external" href="mailto:furnari&#37;&#52;&#48;dmi&#46;unict&#46;it">furnari<span>&#64;</span>dmi<span>&#46;</span>unict<span>&#46;</span>it</a>”, la funzione deve estrarre “<a class="reference external" href="http://dmi.unict.it">dmi.unict.it</a>”.</p>
 </div></blockquote>
 </section>

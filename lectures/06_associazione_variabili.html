@@ -1331,7 +1331,7 @@ document.write(`
 \[\tilde n_{ij} = P(X=x_j) n_{i+} = P(Y=y_i) n_{+j}\]</div>
 <p>Dove la tilde su <span class="math notranslate nohighlight">\(\tilde n_{ij}\)</span> indica che questo è un valore stimato, non il valore realmente osservato.</p>
 <blockquote>
-<div><p>Quanto visto sopra suggerisce che le frequenze <span class="math notranslate nohighlight">\(n_{ij}\)</span> seguando la stessa distribuzione delle frequenze marginali in caso di indipendenza tra le variabili.</p>
+<div><p>Quanto visto sopra suggerisce che le frequenze <span class="math notranslate nohighlight">\(n_{ij}\)</span> seguano la stessa distribuzione delle frequenze marginali in caso di indipendenza tra le variabili.</p>
 </div></blockquote>
 <section id="esempio">
 <h4><span class="section-number">12.3.1.1. </span>Esempio<a class="headerlink" href="#esempio" title="Permalink to this heading">#</a></h4>
@@ -1578,7 +1578,7 @@ Name: Survived, dtype: float64
 <p>Questo valore ci dice che abbiamo un rischio di circa l’<span class="math notranslate nohighlight">\(1\%\)</span> di contrarre la malattia se non esposti. In pratica, su <span class="math notranslate nohighlight">\(100\)</span> soggetti non esposti al rischio, <span class="math notranslate nohighlight">\(1\)</span> si ammala.</p>
 <p>È utile mettere a confronto questi due valori di rischio. Infatti, sebbene il <span class="math notranslate nohighlight">\(5\%\)</span> di rischio di ammalarsi tra i soggetti esposti non sia in valore assoluto un numero molto alto, va anche detto che la proporzione di soggetti malati non esposti al rischio è molto più bassa (<span class="math notranslate nohighlight">\(1\%\)</span>). Definiamo dunque il rischio relativo come il rapporto tra questi due rischi (o probabilità):</p>
 <div class="math notranslate nohighlight">
-\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{0.05}{0.1}=5\]</div>
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{0.05}{0.01}=5\]</div>
 <p>Interpretiamo questo valore così:</p>
 <blockquote>
 <div><p>La proporzione di soggetti che contraggono la malattia è di <span class="math notranslate nohighlight">\(5\)</span> volte più grande tra coloro che sono stati esposti al rischio, rispetto al gruppo di coloro che non lo sono stati.</p>
@@ -1595,7 +1595,7 @@ Name: Survived, dtype: float64
 </section>
 <section id="odds-ratio">
 <h3><span class="section-number">12.3.5. </span>Odds Ratio<a class="headerlink" href="#odds-ratio" title="Permalink to this heading">#</a></h3>
-<p>Il rischio relativo non è sempre calcolabile. Infatti, nel caso precedente abbiamo assunto di avere a disposizione tutti i dati sulla popolazione: di tutti i <span class="math notranslate nohighlight">\(1000\)</span> abitanti sapevamo chi era stato esposto al rischio e chi no e chi aveva sviluppato la malattia e chi no. In molti casi, potremmo non avere tutti questi dati. Ad esempio, immaginiamo che l’incidente sia avvenuto <span class="math notranslate nohighlight">\(50\)</span> fa e che ai tempi sia stato intervistato solo un campione casuale del <span class="math notranslate nohighlight">\(50\%\)</span> dei <span class="math notranslate nohighlight">\(1000\)</span> abitanti del villaggio. Immaginiamo di aver ottenere la seguente tabella di contingenza:</p>
+<p>Il rischio relativo non è sempre calcolabile. Infatti, nel caso precedente abbiamo assunto di avere a disposizione tutti i dati sulla popolazione: di tutti i <span class="math notranslate nohighlight">\(1000\)</span> abitanti sapevamo chi era stato esposto al rischio e chi no e chi aveva sviluppato la malattia e chi no. In molti casi, potremmo non avere tutti questi dati. Ad esempio, immaginiamo che l’incidente sia avvenuto <span class="math notranslate nohighlight">\(50\)</span> anni fa e che ai tempi sia stato intervistato solo un campione casuale del <span class="math notranslate nohighlight">\(50\%\)</span> dei <span class="math notranslate nohighlight">\(1000\)</span> abitanti del villaggio. Immaginiamo di aver ottenere la seguente tabella di contingenza:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <div class="output text_html"><div>
@@ -1638,7 +1638,7 @@ Name: Survived, dtype: float64
 <p>Si noti che questo caso (quello del campionamento) sarà il più frequente, in quanto spesso non abbiamo accesso a tutta la popolazione, ma solo a un campione.</p>
 <p>In questo caso, non possiamo calcolare il rischio relativo in quanto non sono disponibili i numeri reali di persone esposte e non esposte al rischio, che stavano al denominatore delle espressioni del calcolo del rischio. Se applichiamo comunque la formula, otterremo una stima falsata dal nostro campionamento:</p>
 <div class="math notranslate nohighlight">
-\[\textit{RR} = \frac{f(Diseased|Exposed)}{f(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{20/(20+10)}{6/(6+16)}=2.45\]</div>
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{20/(20+10)}{6/(6+16)}=2.45\]</div>
 <p>Sebbene non possiamo calcolare il rischio relativo in quanto non conosciamo il numero assoluto di persone malate e esposte, <strong>ci aspettiamo che il nostro campione sia una buona rappresentazione della popolazione</strong>, per cui possiamo ragionare in termini di “odds”.</p>
 <p>Gli odds sono un concetto di probabilità molto usato nell’ambito delle scommesse, perché permettono allo scommettitore di calcolare in modo facile la vinciata da incassare. Ad esempio, se la vittoria della squadra <span class="math notranslate nohighlight">\(A\)</span> sulla squadra <span class="math notranslate nohighlight">\(B\)</span> in una partita di calcio è data <span class="math notranslate nohighlight">\(5:1\)</span>, il bookmaker si aspetta che sia <span class="math notranslate nohighlight">\(5\)</span> volte più probabile che vinca la squadra <span class="math notranslate nohighlight">\(A\)</span> rispetto alla <span class="math notranslate nohighlight">\(B\)</span>. Se scometto la cifra di <span class="math notranslate nohighlight">\(2\)</span> euro sulla squadra <span class="math notranslate nohighlight">\(B\)</span> e la squadra <span class="math notranslate nohighlight">\(B\)</span> vince, allora vincerò <span class="math notranslate nohighlight">\(5\times 2 = 10\)</span> euro (ho scomesso su un evento raro). L’odd in questo caso sarebbe definito come:</p>
 <div class="math notranslate nohighlight">
@@ -1652,12 +1652,12 @@ Name: Survived, dtype: float64
 <p>L’odd è un concetto simile a quello del rischio perché ci dice quanto è più grande la frequenza che un evento si realizzi (A vince) rispetto alla frequenza che l’evento non si realizzi. Applichiamo questo concetto al nostro esempio. Definiamo due odds (così come abbiamo definito due rischi):</p>
 <ul class="simple">
 <li><p>L’odds di ammalarsi se esposti: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)} = \frac{\frac{20}{20+10}}{\frac{10}{20+10}} = \frac{20}{10} = 2\)</span></p></li>
-<li><p>L’odds di ammalarsi se non esposti: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)} = \frac{\frac{6}{6+16}}{\frac{16}{6+16}} = \frac{6}{16} 0.375\)</span></p></li>
+<li><p>L’odds di ammalarsi se non esposti: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)} = \frac{\frac{6}{6+16}}{\frac{16}{6+16}} = \frac{6}{16} = 0.375\)</span></p></li>
 </ul>
 <p>Va notato che nelle formule sopra i conteggi assoluti, ovvero quelli di cui non ci fidiamo dato il campionamento, “si annullano”.</p>
 <p>L’odds ratio sarà definito come segue:</p>
 <div class="math notranslate nohighlight">
-\[odd = \frac{\frac{f(Diseased|Exposed)}{f(Healthy|Exposed)}}{\frac{f(Diseased|Non\ Exposed)}{f(Healthy|Non\ Exposed)}} = \frac{2}{0.375} \approx 5.3\]</div>
+\[odd = \frac{\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)}}{\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)}} = \frac{2}{0.375} \approx 5.3\]</div>
 <p>Notiamo come l’odds ratio ottenuto sia molto vicino al rischio relativo calolcato in precedenza <span class="math notranslate nohighlight">\(5\)</span>. <strong>In pratica si può dimostrare che, se si assume che la malattia sia rara (rare-disease assumption), l’odds ratio e il rischio relativo convergono a volori simili.</strong> È quindi una pratica abbastanza comune di effettuare questa ipotesi e calcolare l’odds ratio al posto del rischio relativo.</p>
 </section>
 </section>

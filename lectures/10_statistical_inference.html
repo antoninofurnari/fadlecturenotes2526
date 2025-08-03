@@ -659,14 +659,14 @@ document.write(`
 <img alt="../_images/5063273c8fe855a9ab31473e1c978c7688b4cebba12166b0c6a6b170fdff2b22.png" src="../_images/5063273c8fe855a9ab31473e1c978c7688b4cebba12166b0c6a6b170fdff2b22.png" />
 </div>
 </div>
-<p>We can see a peak at about <span class="math notranslate nohighlight">\(2\)</span>, but there is some variability in the measurements. The variability is given by the fact that <span class="math notranslate nohighlight">\(50\)</span> is a small sample size. The plot below shows examples of what we would observe for different sample sizes:</p>
+<p>We can see a peak at about <span class="math notranslate nohighlight">\(0.05\)</span>, but there is some variability in the measurements. The variability is given by the fact that <span class="math notranslate nohighlight">\(50\)</span> is a small sample size. The plot below shows examples of what we would observe for different sample sizes:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/272d47a6b1ac33b6eab16ccb9db9fec0813a4e2b287ea07c8321592e534318f2.png" src="../_images/272d47a6b1ac33b6eab16ccb9db9fec0813a4e2b287ea07c8321592e534318f2.png" />
 </div>
 </div>
 <p>As we can see, the mean is always around <span class="math notranslate nohighlight">\(0.05\)</span>, but the standard deviation decreases as the sample size increases. This suggests that <strong>the error in the estimation of the real defect rate decreases with large samples</strong>.</p>
-<p>In practice, we can see the act of <strong>taking a random sample of size <span class="math notranslate nohighlight">\(50\)</span> ad a random experiment</strong> and introduce a random variable <span class="math notranslate nohighlight">\(X\)</span> depending on the sampling process. In particular we will define:</p>
+<p>In practice, we can see the act of <strong>taking a random sample of size <span class="math notranslate nohighlight">\(50\)</span> as a random experiment</strong> and introduce a random variable <span class="math notranslate nohighlight">\(X\)</span> depending on the sampling process. In particular we will define:</p>
 <div class="math notranslate nohighlight">
 \[X = \text{number of defective chips in the sample}\]</div>
 <p>Also the estimated defect rate will be a random variable:</p>
@@ -684,7 +684,7 @@ document.write(`
 \[Var[\hat P] = Var\left[\frac{X}{n}\right] = \frac{p(1-p)}{n}\]</div>
 <div class="math notranslate nohighlight">
 \[Std[\hat P] = \frac{\sqrt{p(1-p)}}{\sqrt{n}}\]</div>
-<p>If can be shown (but we will not see it formally) that for large values of <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(\hat P\)</span> will be approximately normal.</p>
+<p>It can be shown (but we will not see it formally) that for large values of <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(\hat P\)</span> will be approximately normal.</p>
 <p>Note that the <span class="math notranslate nohighlight">\(Std[\hat P]\)</span> depends in fact on the true probability <span class="math notranslate nohighlight">\(p\)</span>, which is in general not available. So, in its place, it is common to consider the <strong>standard error</strong> of <span class="math notranslate nohighlight">\(\hat P\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[SE(\hat p) = \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}}\]</div>
@@ -762,7 +762,7 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[\hat p = \frac{20}{500} = 0.04\]</div>
 <div class="math notranslate nohighlight">
-\[SE(\hat p) = \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{\hat 0.4(1-0.4)}}{\sqrt{500}} = 0.009\]</div>
+\[SE(\hat p) =  \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{ 0.4(1-0.4)}}{\sqrt{500}} = 0.009\]</div>
 <p>Hence our confidence interval will be:</p>
 <div class="math notranslate nohighlight">
 \[[0.04-0.009, 0.04+0.009] = [0.031,0.049]\]</div>
@@ -776,7 +776,7 @@ document.write(`
 \[\hat p = \frac{82}{1000} = 0.41\]</div>
 <p>The standard error is:</p>
 <div class="math notranslate nohighlight">
-\[SE(\hat p) = \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{\hat 0.41(1-0.41)}}{\sqrt{2000}} = 0.004\]</div>
+\[SE(\hat p) =  \frac{\sqrt{\hat p(1-\hat p)}}{\sqrt{n}} = \frac{\sqrt{ 0.41(1-0.41)}}{\sqrt{2000}} = 0.004\]</div>
 <p>The updated confidence interval with <span class="math notranslate nohighlight">\(95.5\%\)</span> confidence will be:</p>
 <div class="math notranslate nohighlight">
 \[[\hat p-2SE(\hat p), \hat p+2SE(\hat p)] = [0.033, 0.049]\]</div>
@@ -827,13 +827,13 @@ Confidence interval: [0.030, 0.052]
 <p>Let us consider a univariate sample <span class="math notranslate nohighlight">\(\{X^{(i)}\}_{i=1}^n\)</span>. The mean estimator:</p>
 <div class="math notranslate nohighlight">
 \[
-\overline x = \frac{1}{n} \sum_{i=0}^{n} x^{(i)};
+\overline x = \frac{1}{n} \sum_{i=1}^{n} x^{(i)};
 \]</div>
 <p>is unbiased. This means that <strong>if we draw a large number of random samples, we compute their mean and then we compute the mean of their mean, this last value will converge to the population mean as the sample size <span class="math notranslate nohighlight">\(n\)</span> gets larger</strong>.</p>
 <p>The estimator for the variance:</p>
 <div class="math notranslate nohighlight">
 \[
-s_n^2=\frac{1}{n}\sum_{i=0}^{n}(x^{(i)}-\overline x)^2
+s_n^2=\frac{1}{n}\sum_{i=1}^{n}(x^{(i)}-\overline x)^2
 \]</div>
 <p>is known to be <strong>biased</strong>. In practice, it can be shown that this estimator systematically underestimates the variance. In particular:</p>
 <div class="math notranslate nohighlight">
@@ -843,7 +843,7 @@ s_n^2=\frac{1}{n}\sum_{i=0}^{n}(x^{(i)}-\overline x)^2
 <p>where <span class="math notranslate nohighlight">\(\sigma^2\)</span> is the variance of the population. An unbiased estimator for the variance is given by:</p>
 <div class="math notranslate nohighlight">
 \[
-s_{n-1}^2=\frac{1}{n-1}\sum_{i=0}^{n}(x^{(i)}-\overline x)^2
+s_{n-1}^2=\frac{1}{n-1}\sum_{i=1}^{n}(x^{(i)}-\overline x)^2
 \]</div>
 <p>Note that this approaches to <span class="math notranslate nohighlight">\(s_{n}^2\)</span> as <span class="math notranslate nohighlight">\(n \to \infty\)</span>. In practice:</p>
 <ul class="simple">
@@ -884,7 +884,7 @@ s_{n-1}^2=\frac{1}{n-1}\sum_{i=0}^{n}(x^{(i)}-\overline x)^2
 <p>We sample <span class="math notranslate nohighlight">\(n=1000\)</span> of such components and measure their diameters <span class="math notranslate nohighlight">\(x_1,\ldots,x_n\)</span>. We then compute the mean, obtaining:</p>
 <div class="math notranslate nohighlight">
 \[\overline x = \frac{x_1+x_2+\ldots+x_n}{n} = 0.1001nm\]</div>
-<p>This value is close to <span class="math notranslate nohighlight">\(1.1nm\)</span>, so we could conclude that the quality of the production process is good enough. However, we can imagine how, if we drew another sample, we could obtain a slightly different result. The questions are <strong>“how close that result would be to the one we obtained”</strong> and <strong>“how close this result is to the population mean”</strong>.</p>
+<p>This value is close to <span class="math notranslate nohighlight">\(0.1nm\)</span>, so we could conclude that the quality of the production process is good enough. However, we can imagine how, if we drew another sample, we could obtain a slightly different result. The questions are <strong>“how close that result would be to the one we obtained”</strong> and <strong>“how close this result is to the population mean”</strong>.</p>
 <p>Similarly to what we observed in the case of the defect rate, we can see the diameter of a single component as a random variable <span class="math notranslate nohighlight">\(X_i\)</span>. We will have:</p>
 <div class="math notranslate nohighlight">
 \[E[X_i] = \mu\]</div>
@@ -931,7 +931,7 @@ s_{n-1}^2=\frac{1}{n-1}\sum_{i=0}^{n}(x^{(i)}-\overline x)^2
 <p>with a sample of <span class="math notranslate nohighlight">\(n=1000\)</span> measurements.</p>
 <p>We know that the random variable <span class="math notranslate nohighlight">\(\overline X\)</span> will distribute according to a t-Student distribution with <span class="math notranslate nohighlight">\(n-1\)</span> degrees of freedom:</p>
 <div class="math notranslate nohighlight">
-\[\frac{\overline X-\mu}{s/\sqrt{n}}\]</div>
+\[\frac{\overline X-\mu}{s_{n-1}/\sqrt{n}}\]</div>
 <p>Using the inverse of the CDF function (we will not see the details), we find out that <span class="math notranslate nohighlight">\(95\%\)</span> of the density is included between <span class="math notranslate nohighlight">\(-1.96\sigma\)</span> and <span class="math notranslate nohighlight">\(1.96\sigma\)</span>. We hence write:</p>
 <div class="math notranslate nohighlight">
 \[0.95 = P(\overline X -1.96 SE(\overline X) \leq \mu \leq \overline X + 1.96 SE(\overline X))\]</div>

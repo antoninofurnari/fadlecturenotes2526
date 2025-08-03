@@ -671,7 +671,7 @@ BMI = 0.25 \cdot weight + 7.37
 \]</div>
 <p>che ci permette di calcolare il valore di <code class="docutils literal notranslate"><span class="pre">BMI</span></code> dai valori di <code class="docutils literal notranslate"><span class="pre">weight</span></code>.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Secondo il modello lineare trovato, che valore di BMI ha un soggetto che pesa 69 Kg? E per un soggetto che pesa 90 Kg?</p>
 </div></blockquote>
 <p>Il modello mette a disposizione il metodo <strong>predict</strong> per effettuare questo tipo di calcoli. Il metodo però vuole che specifichiamo il nome delle variabili indipendenti per le quali stiamo fornendo i valori. Ciò si può fare definendo al volo un dizionario:</p>
@@ -704,7 +704,7 @@ dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>Cosa possiamo dire della retta visualizzata? Esistono valori per i quali l’errore commesso è maggiore? Qual è l’equazione della retta mostrata nel grafico?</p>
 </div></blockquote>
 <section id="analisi-di-un-regressore-lineare-semplice">
@@ -1666,7 +1666,7 @@ Name: 5, dtype: uint8
 <li><p>I coefficienti appresi per le variabili dummy di <code class="docutils literal notranslate"><span class="pre">rad</span></code> indicano che quando <code class="docutils literal notranslate"><span class="pre">rad</span></code> assume il valore 24, il valore delle case aumenta di circa <span class="math notranslate nohighlight">\(7500\)</span> dollari. Altri valori di <code class="docutils literal notranslate"><span class="pre">rad</span></code> contribuiscono differentemente all’incremento del valore di <code class="docutils literal notranslate"><span class="pre">medv</span></code>;</p></li>
 </ul>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Dati i risultati del regressore lineare, qual è la variabile più influente nella regressione?</p>
 </div></blockquote>
 <div class="cell docutils container">
@@ -2592,7 +2592,7 @@ Name: rad, Length: 506, dtype: object
 </div>
 <p>Non ci sono più variabili non significative. Il regressore trovato è quello finale. Va notato che i coefficienti delle variabili sono leggermente cambiati rispetto al regressore che conteneva tutte le variabili.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Si calcolino i valori MSE per il primo regressore trovato (quello contenente tutte le variabili) e l’ultimo (quello contenente solo variabili significative). Esistono differenze tra i due valori?</p>
 </div></blockquote>
 </section>
@@ -3552,23 +3552,23 @@ Name: rad, Length: 506, dtype: object
 <section id="esercizi">
 <h2><span class="section-number">21.6. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Si consideri il dataset delle iris di Fisher. Si effettui uno scatterplot per studiare le relazioni tra le variabili. Si calcoli la matrice di correlazione usando gli indici di correlazione di Pearson, Spearman e Kendall. Esistono correlazioni deboli, medie o forti? Si calcoli l’indice di correlazione di Pearson tra le due coppie di variabili che individuano le correlazioni più forti. Si tratta di correlazioni significative?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Si effettui la normalizzazione <strong>z-scoring</strong> su tutte le variabili del dataset delle iris di Fisher. Si calcoli la matrice di covarianza delle variabili normalizzate. Si confronti la matrice ottenuta con la matrice di correlazione calcolata mediante l’indice di Pearson. Ci sono differenze tra le due matrici? Perché?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si consideri il dataset Titanic. Si calcoli un regressore lineare che predica i valori di <code class="docutils literal notranslate"><span class="pre">Fare</span></code> dai valori di <code class="docutils literal notranslate"><span class="pre">Survived</span></code>, <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>, <code class="docutils literal notranslate"><span class="pre">Sex</span></code> e <code class="docutils literal notranslate"><span class="pre">Age</span></code>. Si inseriscano variabili dummy ove opportuno. Il regressore ottenuto è un buon regressore? Quali variabili contribuiscono significativamente alla regressione? Esistono variabili non rilevanti? Si eliminino tali variabili mediante la tecnica della backward elimination. Si discuta il significato dei coefficienti individuati.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Si consideri il dataset Titanic. Si calcoli un regressore lineare che predica i valori di <code class="docutils literal notranslate"><span class="pre">Age</span></code> dai valori di <code class="docutils literal notranslate"><span class="pre">Survived</span></code>, <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>, <code class="docutils literal notranslate"><span class="pre">Sex</span></code> e <code class="docutils literal notranslate"><span class="pre">Fare</span></code>. Si inseriscano variabili dummy ove opportuno. Il regressore ottenuto è un buon regressore? Si tratta di un regressore migliore o peggiore del regressore calcolato nell’esercizio precedente? Quali variabili contribuiscono significativamente alla regressione? Esistono variabili non rilevanti? Si eliminino tali variabili mediante la tecnica della backward elimination. Si discuta il significato dei coefficienti individuati.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Si consideri il dataset Boston. Si calcoli un regressore lineare che predica i valori di <code class="docutils literal notranslate"><span class="pre">crim</span></code> dai valori delle altre variabili. Si inseriscano variabili dummy ove opportuno. Quali variabili contribuiscono significativamente alla regressione? Esistono variabili non rilevanti? Si eliminino tali variabili mediante la tecnica della backward elimination. Si discuta il significato dei coefficienti individuati.</p>
 </div></blockquote>
 </section>

@@ -619,7 +619,7 @@ document.write(`
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>I dati mostrati sopra presentano caratteristiche peculiari?</p>
 </div></blockquote>
 <p>Alleniamo adesso l’algoritmo K-Means specificando <span class="math notranslate nohighlight">\(2\)</span> come numero di cluster:</p>
@@ -752,7 +752,7 @@ document.write(`
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>L’assegnamento dei cluster è plausibile? Si esegua più volte l’algoritmo K-Means. La soluzione cambia? Perché? Le soluzioni trovate sono equivalenti?</p>
 </div></blockquote>
 <p>Possiamo accedere ai centroidi trovati dall’algoritmo K-Means come segue:</p>
@@ -875,7 +875,7 @@ document.write(`
 </div>
 <p>Ci aspetteremmo che il K-Means abbia messo in un dato cluster tutti e soli gli elementi appartenenti ad una data classe (ad esempio, un cluster dovrebbe contenere tutti e soli i campioni con etichetta “0”). In tal caso, si dice che il cluster “è puro”. Diversi cluster possono avere diversi gradi di purezza.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Guardando alle immagini dei centroidi, possiamo prevedere quali cluster sono più puri e quali lo sono meno?</p>
 </div></blockquote>
 <p>Possiamo misurare la purezza di un cluster nel seguente modo:</p>
@@ -937,7 +937,7 @@ Cluster 9. Most frequent label: 7. Purity: 0.86
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Le previsioni fatte in precedenza corrispondono ai valori di purezza trovati? Perché alcuni cluster sono più puri e altri lo sono meno?</p>
 </div></blockquote>
 </section>
@@ -1222,7 +1222,7 @@ Coefficienti:
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 5</strong></p>
+<div><p><strong>Domanda 5</strong></p>
 <p>Si confronti il decision boundary trovato dal modello GMM con quello relativo al modello K-Means. Ci sono differenze?</p>
 </div></blockquote>
 <p>Abbiamo detto che il modello GMM permette di effettuare un “soft assignment” calcolando le probabilità <span class="math notranslate nohighlight">\(p(\mathbf{x}\ |\ z_k)\)</span>. Per accedere alle distribuzioni di probabilità, possiamo utilizzare il metodo <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code>:</p>
@@ -1263,7 +1263,7 @@ Coefficienti:
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 6</strong></p>
+<div><p><strong>Domanda 6</strong></p>
 <p>Dove si trovano i punti incerti? Perché?</p>
 </div></blockquote>
 <p>Ricordiamo che GMM modella i cluster come delle Gaussiane. Visualizziamo le due Gaussiane:</p>
@@ -1396,7 +1396,7 @@ Coefficienti:
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>I dati presentano varianze diverse lungo le due variabili? Se no, quale variabile è caratterizzata da una varianza maggiore?</p>
 </div></blockquote>
 <p>Applichiamo la tecnica della Principal Component Analysis ai dati. A tale scopo, ultilizzeremo l’oggetto <code class="docutils literal notranslate"><span class="pre">PCA</span></code> della libreria <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>:</p>
@@ -1514,7 +1514,7 @@ dtype: float64
 <p>I due vettori rappresentano le due componenti principali individuati dalla PCA. In particolare, la prima componente giace lungo la direzione di massima varianza, mentre la seconda componente è perpendicolare alla prima e giace lungo la seconda direzione di massima varianza (la direzione di minima varianza in questo caso).</p>
 <p>La proiezione dei dati verrà effettuato proiettando tutti i dati prima lungo l’asse individuato dalla prima componente e successivamente lungo l’asse individuato dalla seconda componente.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 8</strong></p>
+<div><p><strong>Domanda 8</strong></p>
 <p>Che tipo di trasformazione geometrica si può applicare ai dati per passare dal primo al secondo sistema di riferimento? Dopo la trasformazione, le distanze relative tra i punti sono preservate?</p>
 </div></blockquote>
 </section>
@@ -1549,7 +1549,7 @@ dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 9</strong></p>
+<div><p><strong>Domanda 9</strong></p>
 <p>Quali sono le principali differenze tra i due set di dati? In quale dei due set la varianza lungo l’asse <span class="math notranslate nohighlight">\(x\)</span> è massima? In quale dei due set si nota una correlazione lineare?</p>
 </div></blockquote>
 <p>In pratica, i dati sono stati roto-traslati. In particolare, essi sono stati traslati lungo i due assi <span class="math notranslate nohighlight">\(x\)</span> e <span class="math notranslate nohighlight">\(y\)</span> in modo da avere media nulla e ruotati in modo che la varianza massima si trovi sull’asse <span class="math notranslate nohighlight">\(x\)</span>. Ciò fa anche in modo che i dati siano decorrelati.</p>
@@ -1578,7 +1578,7 @@ dtype: float64
 </div>
 <p>La matrice di covarianza di <span class="math notranslate nohighlight">\(Z\)</span> non è perfettamente diagonale ma, come si può notare, gli elementi al di fuori della diagonale principale sono quasi nulli.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 10</strong></p>
+<div><p><strong>Domanda 10</strong></p>
 <p>Che caratteristiche ha la matrice di correlazione costruita con l’indice di correlazione di Pearson a partire da <code class="docutils literal notranslate"><span class="pre">Z</span></code>? Si utilizzi la funzione <code class="docutils literal notranslate"><span class="pre">corrcoef</span></code> di <code class="docutils literal notranslate"><span class="pre">numpy</span></code> per calcolarla.</p>
 </div></blockquote>
 </section>
@@ -1686,7 +1686,7 @@ Percentuale di varianza persa: 26.21%
 </div>
 <p>In questo caso, troncando alla prima componente manteniamo circa il <span class="math notranslate nohighlight">\(73.86\%\)</span> dell’informazione. Troncando alla seconda componente (e dunque tenendole tutte), manteniamo il <span class="math notranslate nohighlight">\(100\%\)</span> dell’informazione.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 11</strong></p>
+<div><p><strong>Domanda 11</strong></p>
 <p>Perché manteniamo il <span class="math notranslate nohighlight">\(100\%\)</span> dell’informazione mantenendo le prime due componenti?</p>
 </div></blockquote>
 </section>
@@ -1776,7 +1776,7 @@ Numero di dimensioni: 819840
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 12</strong></p>
+<div><p><strong>Domanda 12</strong></p>
 <p>Si nota ridondanza nei valori contenuti nei blocchetti?</p>
 </div></blockquote>
 <p>Calcoliamo la PCA di tiles:</p>
@@ -1883,7 +1883,7 @@ Numero di dimensioni: 819840
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 13</strong></p>
+<div><p><strong>Domanda 13</strong></p>
 <p>Si provi a comprimere e ricostruire l’immagine con un numero di componenti diverso. Esistono numeri che permettono di ottenere buoni risultati salvando comunque spazio?</p>
 </div></blockquote>
 </section>
@@ -2012,7 +2012,7 @@ L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 14</strong></p>
+<div><p><strong>Domanda 14</strong></p>
 <p>Evinciamo qualche tipo di regolarità dei dati dal grafico sopra?</p>
 </div></blockquote>
 </section>
@@ -2020,23 +2020,23 @@ L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
 <section id="esercizi">
 <h2><span class="section-number">32.4. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Si consideri il dataset Boston. Si applichi il K-Means ai dati della variabile <code class="docutils literal notranslate"><span class="pre">medv</span></code>. Si inserisca dunque una nuova colonna <code class="docutils literal notranslate"><span class="pre">priceRange</span></code> nel dataset che contenga i cluster associati ai relativi valori di <code class="docutils literal notranslate"><span class="pre">medv</span></code>. Si suddivida il dataset in training e test set e si alleni un K-NN (trovare un K opportuno) per predire i valori di <code class="docutils literal notranslate"><span class="pre">priceRange</span></code> a partire da tutte le variabili tranne <code class="docutils literal notranslate"><span class="pre">medv</span></code>. Si discutano i risultati ottenuti.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Si utilizzi un modello GMM per clusterizzare il dataset digits come fatto in precedenza nel caso del K-Means. Si visualizzino le immagini relative alle medie trovate e si calcoli la purezza di ogni cluster. I risultati ottenuti mediante GMM e K-Means sono qualitativamente diversi? Calcoli la purezza media del cluster nei due casi. Ci sono differenze?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si consideri il dataset Titanic. Si applichi la PCA a tutte le variabili eccetto <code class="docutils literal notranslate"><span class="pre">Survived</span></code>. Quante componenti bisogna mantenere per conservare il <span class="math notranslate nohighlight">\(90\%\)</span> della varianza?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Si calcolino i coefficienti della PCA con il numero di componenti trovate nell’esercizio precedente. Si proiettino i dati mediante PCA. Si calcolino dunque due regressori logistici per predire i valori di <code class="docutils literal notranslate"><span class="pre">Survived</span></code> a partire dai dati originali e a partire dai dati trasformati. Quale dei due regressori lineari è migliore?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Si proiettino i dati del dataset Titanic sulle due componenti principali. Si plottino i dati come punti nello spazio 2D distinguendo gli elementi appartenenti alla classe <code class="docutils literal notranslate"><span class="pre">Survived</span></code> e quelli non appartenenti a tale classe. Le classi sono ben separabili?</p>
 </div></blockquote>
 </section>

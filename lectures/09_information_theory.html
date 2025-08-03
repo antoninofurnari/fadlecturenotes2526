@@ -675,7 +675,7 @@ will be:</p></li>
 <h3><span class="section-number">6.3.3. </span>Mutual Information<a class="headerlink" href="#mutual-information" title="Permalink to this heading">#</a></h3>
 <p>Let us consider two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> with a joint probability function <span class="math notranslate nohighlight">\(P(X,Y)\)</span>. We define the <strong>mutual information</strong> <span class="math notranslate nohighlight">\(I(X;Y)\)</span> as the <strong>relative entropy</strong> between the joint distribution and the product distribution:</p>
 <div class="math notranslate nohighlight">
-\[I(X;Y) = \sum_{x \in \mathcal{X}}\sum_{y \in \mathcal{Y}} p(x,y) \log \frac{P(x,y)}{P(x)P(y)}\]</div>
+\[I(X;Y) = \sum_{x \in \mathcal{X}}\sum_{y \in \mathcal{Y}} P(x,y) \log \frac{P(x,y)}{P(x)P(y)}\]</div>
 <p>if the KL divergence measures the inefficiency of using <span class="math notranslate nohighlight">\(q\)</span> when <span class="math notranslate nohighlight">\(p\)</span> is the real distribution, the mutual information measures the inefficiency of using the product <span class="math notranslate nohighlight">\(P(x)P(y)\)</span> instead of <span class="math notranslate nohighlight">\(P(x,y)\)</span>. As you may recall:</p>
 <div class="math notranslate nohighlight">
 \[P(X,Y)=P(X)P(Y) \Leftrightarrow X \perp Y \]</div>

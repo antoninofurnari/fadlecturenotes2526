@@ -823,7 +823,7 @@ memory usage: 16.8 KB
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Sembra esserci una correlazione tra le due variabili? Quale tipo di vetro sembra contere in genere maggiori concentrazioni di alluminio?</p>
 </div></blockquote>
 <section id="limiti-della-regressione-lineare-con-variabile-dipendente-categorica">
@@ -843,7 +843,7 @@ memory usage: 16.8 KB
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>Guardando il grafico con la retta di regressione, che tipo di vetro prevediamo per i seguenti valori di <strong>Al</strong>?</p>
 <ul class="simple">
 <li><p>Al = 3.5</p></li>
@@ -996,7 +996,7 @@ dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Il regressore logistico individua, in maniera simile a quanto visto per il regressore lineare, una soglia oltre la quale i punti vengono assegnati a una classe piuttosto che a un’altra. Si confronti questo punto di soglia con quello ottenuto nel caso del regressore lineare. I due punti sono diversi? Perché?</p>
 </div></blockquote>
 </section>
@@ -1128,7 +1128,7 @@ dtype: float64
 <li><p>L’incremento di una unità del valore della variabile <code class="docutils literal notranslate"><span class="pre">al</span></code> corrisponde a un incremento moltiplicativo di <span class="math notranslate nohighlight">\(0.015\)</span>. Dato che il numero è minore di 1, ciò corrisponde a un decremento moltiplicativo pari a <span class="math notranslate nohighlight">\(1-0.015=0.985\)</span>. Possiamo dire dunque che l’incremento di una unità del valore di <code class="docutils literal notranslate"><span class="pre">al</span></code> corrisponde a un decremento del <span class="math notranslate nohighlight">\(98.5\%\)</span> dell’odds.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Le considerazioni tratte dall’analisi dei coefficienti sono coerenti con quanto visualizzato nel plot di regressione logistica visto in precedenza?</p>
 </div></blockquote>
 </section>
@@ -1154,7 +1154,7 @@ logit(p)=\beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 5</strong></p>
+<div><p><strong>Domanda 5</strong></p>
 <p>Come si distribuiscono i dati delle due classi nello spazio? Quale potrebbe essere un buon criterio per classificarli?</p>
 </div></blockquote>
 <p>Calcoliamo il regressore logistico multiplo:</p>
@@ -1238,7 +1238,7 @@ dtype: float64
 <li><p>Se la variabile <code class="docutils literal notranslate"><span class="pre">Na=0</span></code>, l’incremento di una unità della variabile <code class="docutils literal notranslate"><span class="pre">si</span></code> causa un decremento dell’odds pari a circa il <span class="math notranslate nohighlight">\(96\%\)</span>.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 6</strong></p>
+<div><p><strong>Domanda 6</strong></p>
 <p>Considerato che <code class="docutils literal notranslate"><span class="pre">Si</span></code> e <code class="docutils literal notranslate"><span class="pre">Na</span></code> hanno la stessa unità di misura (misurano entrambe delle concentrazioni), quali delle due variabili influenza maggiormente l’esito dell’appartenenza o meno alla classe <code class="docutils literal notranslate"><span class="pre">window_glass</span></code>? Se le unità di misura fossero diverse, potremmo fare le stesse considerazioni?</p>
 </div></blockquote>
 <section id="esempio-di-regressione-logistica-con-piu-di-due-variabili-indipendenti">
@@ -1680,7 +1680,7 @@ dtype: float64
 </ul>
 <p>L’incremento delle variabili, in genere, causa un incremento dell’odds. Pertanto ci aspettiamo che i valori delle variabili siano piccoli in presenza di tumori benigni.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>Si legga la documentazione del dataset considerato per capire su quale scala sono stati registrati i valori delle variabili indipendenti. Si calcolino inoltre le deviazioni standard delle singole variabili nel dataset. Possiamo dire che qualcuna di queste variabili è più influente sulla presenza di un tumore maligno rispetto alle altre?</p>
 </div></blockquote>
 </section>
@@ -1902,15 +1902,15 @@ dtype: float64
 <section id="esercizi">
 <h2><span class="section-number">22.4. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Si calcoli un regressore logistico per predire i valori della variabile <code class="docutils literal notranslate"><span class="pre">Survived</span></code> a partire dalle altre variabili del dataset Titanic. Si gestiscano adeguatamente le variabili categoriche. Si utilizzi il metodo della backward elimination per eliminare le variabili che non contribuiscono significativamente alla regressione. Si analizzi il regressore trovato e si discuta il significato dei suoi parametri.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Si scelgano due variabili significative del regressore calcolato al punto precedente e si calcoli un regressore bivariato usando solo queste due variabili. Si visualizzi un plot di regressione logistica sui dati bidimensionali individuati dalle due variabili. Si plotti il decision boundary individuato dal regressore sullo scatterplot delle due variabili.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si consideri il dataset Boston. Si costruisca un regressore logistico per prevedere i valori della variabile <code class="docutils literal notranslate"><span class="pre">chas</span></code> a partire dai valori delle altre variabili. Si gesticano adeguatamente le variabili categoriche mediante l’introduzione di variabili dummy. Si utilizzi il metodo della backward elimination per eliminare le variabili che non contribuiscono significativamente alla regressione.</p>
 </div></blockquote>
 </section>

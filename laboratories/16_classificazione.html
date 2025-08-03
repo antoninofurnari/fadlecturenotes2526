@@ -608,7 +608,7 @@ document.write(`
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Perché si suddividono i dati in due set asimmetrici, scegliendo un numero maggiore di elementi di training? Quali sono i rischi di un test set troppo piccolo?</p>
 </div></blockquote>
 <p>Si procede dunque con la fase di training. Nel nostro caso, calcoleremo un regressore logistico utilizzando solo i dati di training. Usiamo il set di variabili ottimale individuato negli scorsi laboratori:</p>
@@ -864,7 +864,7 @@ Numero di miss: 3
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>Cosa possiamo dire del classificatore guardando al numero di hit e miss? I numeri ottenuti vanno rapportati alla dimensione del test set o possono essere interpretati in maniera indipendente da essa?</p>
 </div></blockquote>
 </section>
@@ -951,7 +951,7 @@ Numero di miss: 3
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Si studi la matrice di confusione. I numeri ottenuti corrispondono ai valori di TN, FP, FN, TP calcolati a mano in precedenza?</p>
 </div></blockquote>
 <p>Possiamo ottenere i valori separati di TN, FP, FN e TP semplicemente come segue:</p>
@@ -1071,7 +1071,7 @@ TPR: 0.953125
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Si confronti la matrice di confusione normalizzata con quella non normalizzata. Quale delle due offre un quadro più chiaro?</p>
 </div></blockquote>
 <p>Si noti che, per valutare le performance di un classificatore, è necessario analizzare tutti i e 4 i numeri appena visti. Esistono infatti dei casi in cui osservare solo alcuni indicatori fornisce un quadro parziale della situazione. Vediamo qualche esempio.</p>
@@ -1316,7 +1316,7 @@ Accuracy: 0.63
 <li><p><strong>Classificatore delle iris di Fisher</strong>: il dataset è bilanciato (<span class="math notranslate nohighlight">\(150\)</span> esempi per classi). In questi casi l’<strong>accuracy</strong> può essere una buona misura di valutazione.</p></li>
 </ul>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 5</strong></p>
+<div><p><strong>Domanda 5</strong></p>
 <p>Si vuole costruire un sistema automatico per l’analisi di componenti elettronici prodotti da una fabbrica. Il sistema analizza delle misurazioni effettuate su alcuni elementi e determina se il componente può essere passato alla vendita o se va cestinato. Il sistema deve permettere di mantenere uno standard qualitativo alto con pochi pezzi difettosi effettivamente venduti (tali pezzi potranno poi essere sostituiti dopo la notifica dell’acquirente). Che misure di valutazione conviene considerare durante la costruzione del sistema?</p>
 </div></blockquote>
 </section>
@@ -1379,7 +1379,7 @@ Matrice di confusione normalizzata:
 </div>
 <p>L’accuracy è praticamente identica. La matrice di confusione sul training set appare leggermente più bilanciata. Possiamo concludere che il modello generalizza bene.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 6</strong></p>
+<div><p><strong>Domanda 6</strong></p>
 <p>Si supponga che un classificatore abbia errore di training basso ed errore di generalizzazione alto. Come si chiama questo tipo di condizione?</p>
 </div></blockquote>
 </section>
@@ -1591,7 +1591,7 @@ True Positive Rate: 0.67
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>I risultati ottenuti con le due nuove soglie sono migliori o peggiori dei primi? Qual è il risultato migliore?</p>
 </div></blockquote>
 <p>Abbiamo visto che cambiando il valore della soglia, i valori di <strong>TPR</strong> e <strong>FPR</strong> cambiano a loro volta. In particolare abbiamo notato che al crescere dell’uno diminuisce l’altro e viceversa. Se vogliamo vedere cosa succede per diversi valori della soglia, possiamo visualizzare una curva <strong>ROC</strong>.</p>
@@ -1674,7 +1674,7 @@ True Positive Rate: 0.67
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 8</strong></p>
+<div><p><strong>Domanda 8</strong></p>
 <p>Quale delle due variabili è più discriminativa nel nostro esempio? Esiste una soglia per la quale i pesi sono più discriminativi delle altezze?</p>
 </div></blockquote>
 <p>Resta ancora da capire come scegliere una buona soglia per il classificatore. Abbiamo detto che la soglia va scelta sulla base di un qualche criterio legato all’applicazione in cui utilizzeremo il classificatore. Supponiamo di voler trovare la soglia che massimizzi <strong>TPR</strong> e minimizzi <strong>FPR</strong> e supponiamo che i due score abbiano lo stesso peso nella nostra applicazione. Possiamo dunque scegliere la soglia che massimizza la somma <strong>TPR+(1-FPR)</strong>. Vediamo come questo valore cambia al cambiare delle soglie:</p>
@@ -1727,7 +1727,7 @@ True Positive Rate: 0.78
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 9</strong></p>
+<div><p><strong>Domanda 9</strong></p>
 <p>Si ripeta il processo di selezione della soglia utilizzando i pesi invece delle altezze. Qual è la soglia ottimale ottenuta?</p>
 </div></blockquote>
 </section>
@@ -1958,7 +1958,7 @@ Numero di campioni di test: 38
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 10</strong></p>
+<div><p><strong>Domanda 10</strong></p>
 <p>Come verrebbero classificati i dati di training da un classificatore 1-NN? La classificazione sarebbe sempre corretta? Un SVM lineare farebbe meglio o peggio di 1-NN in questo caso?</p>
 </div></blockquote>
 <p>Costruiamo adesso un classificatore 1-NN mediante scikit-learn:</p>
@@ -1995,7 +1995,7 @@ Accuracy sul test set: 0.74
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 11</strong></p>
+<div><p><strong>Domanda 11</strong></p>
 <p>Perché l’accuracy sul training set non è pari a <span class="math notranslate nohighlight">\(1\)</span>? Si risponda guardando al grafico mostrato sopra.</p>
 </div></blockquote>
 <p>L’algortimo KNN suddivide implicitamente lo spazio dei dati in delle regioni di decisione, dove il valore di decisione in un particolare punto dello spazio dipende dalla classe di appartenenza dei K vicini più prossimi. Per visualizzare le regioni di decisione e dunque il decision boundary, possiamo effettuare la classificazione per una griglia uniforme di punti:</p>
@@ -2039,7 +2039,7 @@ Accuracy sul test set: 0.74
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 12</strong></p>
+<div><p><strong>Domanda 12</strong></p>
 <p>Lo spazio è stato suddiviso in maniera plausibile? Ci sono delle regioni in cui si potrebbe fare di meglio? A cosa sono dovuti gli errori di test?</p>
 </div></blockquote>
 <p>Proviamo adesso a costruire un classificatore <span class="math notranslate nohighlight">\(7-NN\)</span>:</p>
@@ -2077,7 +2077,7 @@ Accuracy sul test set: 0.82
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 13</strong></p>
+<div><p><strong>Domanda 13</strong></p>
 <p>In che modo è cambiato il decision boundary?</p>
 </div></blockquote>
 <section id="trovare-il-valore-ottimale-di-k">
@@ -2149,7 +2149,7 @@ Migliore k: 9.00
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 13</strong></p>
+<div><p><strong>Domanda 13</strong></p>
 <p>Perché dobbiamo utilizzare il training set per scegliere il migliore valore di <span class="math notranslate nohighlight">\(K\)</span> e non possiamo semplicemente utilizzare il test set?</p>
 </div></blockquote>
 </section>
@@ -2215,11 +2215,11 @@ Migliore k: 9.00
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 14</strong></p>
+<div><p><strong>Domanda 14</strong></p>
 <p>In entrambi i casi la differenza tra le medie è la stessa. Tuttavia i dati non sono separabili alla stessa maniera. Quale set di dati è “più separabile” tra i due? Perché?</p>
 </div></blockquote>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 15</strong></p>
+<div><p><strong>Domanda 15</strong></p>
 <p>Si faccia un esempio analogo (con disegno) a quello appena visto nel caso 2D.</p>
 </div></blockquote>
 <p>Oltre a massimizzare la distanza tra le medie, vogliamo duqnue anche minimizzare le varianze dei dati appartenenti alle singole classi date da:</p>
@@ -2508,11 +2508,11 @@ Migliore k: 9.00
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 16</strong></p>
+<div><p><strong>Domanda 16</strong></p>
 <p>Calcolare il valore <span class="math notranslate nohighlight">\(\frac{|w_0|}{||\mathbf{w}||}\)</span> e segnare sul grafico sopra a quale segmento corrisponde questa lunghezza. Il valore ottenuto è verosimile?</p>
 </div></blockquote>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 17</strong></p>
+<div><p><strong>Domanda 17</strong></p>
 <p>Si considerino altre possibili direzioni di proiezioni dei dati. Esse permettono una maggiore separabilità dei dati?</p>
 </div></blockquote>
 </section>
@@ -2576,7 +2576,7 @@ Medie dei valori in ingresso
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 18</strong></p>
+<div><p><strong>Domanda 18</strong></p>
 <p>Si confrontino i risultati ottenuti mediante l’implementazione di scikit-learn con quelli ottenuti prima in maniera manuale. I due classificatori sono simili o equivalenti?</p>
 </div></blockquote>
 <p>Visualizziamo il decision boundary per un semplice problema di classificazione con LDA:</p>
@@ -2960,7 +2960,7 @@ F &amp;altrimenti &amp;
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 19</strong></p>
+<div><p><strong>Domanda 19</strong></p>
 <p>Cosa ci dice il plot? Sapendo che un individuo è alto 160 cm, è più probabile che sia una donna o un uomo? Cosa possiamo dire di un individuo alto 180 cm? E di un individuo alto 170 cm? Esiste un punto soglia al di là del quale conviene classificare le altezze come “uomini”?</p>
 </div></blockquote>
 <p>Calcoliamo dunque le probabilità <span class="math notranslate nohighlight">\(P(H\ |\ S)\)</span> per tutti i valori del test set:</p>
@@ -3057,7 +3057,7 @@ Accuracy: 0.85
 </div>
 <p>In pratica il calssificatore <strong>MAP</strong> è equivalente (o quasi, vista la presenza di due soluzioni) a un classificatore basato su soglia per il quale la soglia ottimale è stata determinata automaticamente. Va notato che il calssificatore MAP trovato è molto simile a un classificatore basato su soglia anche dal momento che poche altezze saranno inferiori a <span class="math notranslate nohighlight">\(50\ cm\)</span> (il secondo punto di intersezione tra le Gaussiane).</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 20</strong></p>
+<div><p><strong>Domanda 20</strong></p>
 <p>Confrontare la soglia con quella trovata mediante il metodo di ottimizzazione visto nella Sezione 1. Le due soglie sono simili? A che cosa è dovuta la differenza tra le due soglie?</p>
 </div></blockquote>
 <section id="classificatore-basato-su-distanza-di-mahalanobis">
@@ -3099,7 +3099,7 @@ Accuracy: 0.85
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 21</strong></p>
+<div><p><strong>Domanda 21</strong></p>
 <p>A quale delle due popolazioni appartiene il punto? Qual è un buon criterio per determinarlo?</p>
 </div></blockquote>
 <p>Ci chiediamo dunque a quale popolazione appartenga il punto <span class="math notranslate nohighlight">\(x1\)</span>. Iniziamo calcolando la distanza euclidea tra il punto e le medie delle due popolazioni:</p>
@@ -3202,7 +3202,7 @@ Accuracy: 0.83
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 22</strong></p>
+<div><p><strong>Domanda 22</strong></p>
 <p>Si confronti la matrice di confusione del classificatore basato sulla distanza di Mahalanobis con quella relativa al classificatore MAP precedentemente allenato. I due metodi sono equivalenti?</p>
 </div></blockquote>
 </section>
@@ -3277,7 +3277,7 @@ Accuracy: 0.83
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 23</strong></p>
+<div><p><strong>Domanda 23</strong></p>
 <p>Quale delle due variabili sembra offrirci una minore incertezza? Come potremmo quantificare tale incertezza?</p>
 </div></blockquote>
 <p>A questo punto, per ogni elemento del test set, dobbiamo calcolare le probabilità <span class="math notranslate nohighlight">\(P(H\ |\ S = s)\ P(W\ |\ S = M)\)</span> e <span class="math notranslate nohighlight">\(P(H\ |\ S = s)\ P(W\ |\ S = F)\)</span></p>
@@ -3317,7 +3317,7 @@ Accuracy: 0.83
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 24</strong></p>
+<div><p><strong>Domanda 24</strong></p>
 <p>Si confrontino accuracy e matrice di confusione del classificatore Naive Bayes appena costruito con quelle relative al classificatore MAP costruito solo sulle altezze.</p>
 </div></blockquote>
 <p><strong>Scikit-Learn</strong> mette a disposizione una implementazione del classificatore Naive Bayes basato su assunzione Gaussiana. Vediamo come utilizzarla:</p>
@@ -3403,7 +3403,7 @@ Accuracy: 0.83
 <section id="esercizi">
 <h2><span class="section-number">35.7. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Si suddivida il dataset Titanic in training e test set. Il test set deve contenere il <span class="math notranslate nohighlight">\(15\%\)</span> degli elementi. Si costruisca un regressore logistico per predire i valori della variabile <code class="docutils literal notranslate"><span class="pre">Survived</span></code> a partire dal training set. Si utilizzi il metodo della backward elimination per eliminare le variabili che non contribuiscono alla regressione in maniera significativa. Si testi il modello ottenuto sul test set considerando le seguenti misure di valutazione:</p>
 <ul class="simple">
 <li><p>Matrice di confusione;</p></li>
@@ -3415,19 +3415,19 @@ Accuracy: 0.83
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Si testi il modello ottenuto nell’esercizio precedente sul training set utilizzando le stesse misure di valutazione. Si confrontino le performance di training con quelle di test. Il metodo generalizza?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si valutino tutti i modelli intermedi ottenuti mediante il metodo della backward elimination applicato all’esercizio 1 sul test set utilizzando l’accuracy. Si plottino le accuracy rispetto ai numeri di parametri contenuti nei modelli. Cosa si apprende dal grafico?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Si considerino due classificatori basati su soglia che predicono i risultati di <code class="docutils literal notranslate"><span class="pre">Survived</span></code> a partire dalle due variabili numeriche <code class="docutils literal notranslate"><span class="pre">Age</span></code> e <code class="docutils literal notranslate"><span class="pre">Fare</span></code>. Si plottino le relative curve ROC. Quale delle due variabili è più discriminativa? Si calcolino le soglie ottimali e si valutino i classificatori individuati mediante <strong>precision</strong>, <strong>recall</strong>, <strong><span class="math notranslate nohighlight">\(F_1\)</span> score</strong>, <strong>Accuracy</strong> e <strong>matrice di confusione</strong>. Quale dei due classificatori è migliore?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Si consideri il dataset di classificazione di vetri (glass). Lo si suddivida in training (<span class="math notranslate nohighlight">\(70%\)</span>) e test (<span class="math notranslate nohighlight">\(30%\)</span>) e si confrontino le accuracy e matrici di confusione ottenute con i seguenti classificatore:</p>
 <ul class="simple">
 <li><p>1-NN;</p></li>
@@ -3440,19 +3440,19 @@ Accuracy: 0.83
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 6</p>
+<div><p>Esercizio 6</p>
 <p>Con riferimento all’esercizio precedente, si trovi il valore ottimale di K mediante cross validation e si alleni il classificatore K-NN con il valore trovato per K. Si applichino le tecniche di condensing e multi-editing e si confrontino le performance del K-NN sui dati originali e su quelli modificati.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 7</p>
+<div><p>Esercizio 7</p>
 <p>Si carichi il dataset MNIST e si costruisca un training set selezionino 500 campioni casuali e un test set selezionando altri 100 campioni casuali. Si trovi il miglior parametro di <span class="math notranslate nohighlight">\(K\)</span> fra i valori <span class="math notranslate nohighlight">\(1,5,10,20,30,50\)</span> utilizzando la grid search sul training set. Che accuracy di test otteniamo con il miglior <span class="math notranslate nohighlight">\(K\)</span> trovato?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 8</p>
+<div><p>Esercizio 8</p>
 <p>Si consideri il dataset Breast Cancer. Si proiettino su una unica dimensione i dati mediante PCA e LDA. Si confrontino con due istogrammi le caratteristiche dei dati trasformati. In quali dei due spazi i dati sono più linearmente separabili? Si calcolino due regressori logistici a partire dai due insiemi di dati. Quale trasformazione permette di ottenere il regressore migliore?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 9</p>
+<div><p>Esercizio 9</p>
 <p>Si consideri il dataset Breast Cancer. Si suddivida il dataset in training e test set. Si allenino sul training set i seguenti classificatori:</p>
 <ul class="simple">
 <li><p>Naive Bayes Gaussiano allenato sui dati di partenza;</p></li>
@@ -3462,23 +3462,23 @@ Accuracy: 0.83
 <p>Si confrontino le performance di training e test dei classificatori ottenuti mediante matrici di confusione e accuracy. Quale classificatore ottiene una performance migliore?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 10</p>
+<div><p>Esercizio 10</p>
 <p>Si consideri il dataset delle Iris di Fisher. Si proiettino i dati su due dimensioni utilizzando PCA e LDA. Si visualizzino i dati ottenuti e si confrontino i due insiemi di dati trasformati. Quale set di dati è più facilmente separabile linearmente? Si allenino due classificatori Naive Bayes Gaussiani sui due insiemi di dati. Quali dei due classificatori ottiene performance migliori?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 10</p>
+<div><p>Esercizio 10</p>
 <p>Si consideri il dataset Titanic e lo si suddivida in training e test set. Si costruisca un calssificatore basato su soglia per determinare i valori di <code class="docutils literal notranslate"><span class="pre">Survived</span></code> a partire dai valori di <code class="docutils literal notranslate"><span class="pre">Age</span></code>. Si visualizzi la curva ROC del classificatore e si determini una soglia di classificazione usando un metodo a scelta. Si allenino un classificatore MAP e un regressore logistico per risolvere lo stesso problema. Si confrontino i risultati ottenuti dai tre classificatori sul test set mediante matrici di confusione, accuracy, precision e recall. Quale classificatore ottiene i risultati migliori?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 11</p>
+<div><p>Esercizio 11</p>
 <p>Con riferimento all’esercizio precedente, si alleni un classificatore Naive Bayes per predire i valori di <code class="docutils literal notranslate"><span class="pre">Survived</span></code> includendo oltre ad <code class="docutils literal notranslate"><span class="pre">Age</span></code> altre variabili. Si confrontino i risultati ottenuti sul test set con quelli ottenuti mediante il classificatore MAP basato su una unica variabile. Quale classificatore ottiene i risultati migliori?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 12</p>
+<div><p>Esercizio 12</p>
 <p>Si consideri il dataset Titanic e lo si suddivida in training e test set. Si alleni un classificatore di tipo Naive Bayes per inferire i valori della variabile <code class="docutils literal notranslate"><span class="pre">PClass</span></code> a partire da quelli delle altre variabili (si scartino le variabili poco utilizzabili quali “Ticket”). Si confrontino le performance su training e test set. Il classificatore generalizza?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 13</p>
+<div><p>Esercizio 13</p>
 <p>Si consideri il dataset DIGITS e lo si suddivida in training e test set. Si calcoli la PCA sul training set e si utilizzi il modello ottenuto per trasformare i dati di training e test mantenendo solo le prime <span class="math notranslate nohighlight">\(10\)</span> componenti. Si alleni sul training set un classificatore Naive Bayes per classificare gli elementi del dataset e si valuti il classificatore sul test set. Si provi a diminuire e aumentare il numero di componenti principali considerate e si ripeta il processo. Si confrontino le performance sul test set dei classificatori allenati.</p>
 </div></blockquote>
 </section>

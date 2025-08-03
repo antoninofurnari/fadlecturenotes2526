@@ -730,7 +730,7 @@ Altezza meno frequente: 47
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 1</strong></p>
+<div><p><strong>Domanda 1</strong></p>
 <p>Scrivendo:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Altezza più frequente:&quot;</span><span class="p">,</span><span class="n">height_counts</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Altezza meno frequente:&quot;</span><span class="p">,</span><span class="n">height_counts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
@@ -788,7 +788,7 @@ Name: height, dtype: int64
 <p>dove il parametro <code class="docutils literal notranslate"><span class="pre">figsize=(12,6)</span></code> serve a specificare le dimensioni del plot, mentre <code class="docutils literal notranslate"><span class="pre">plt.grid()</span></code> serve a mostrare una griglia sovrapposta al plot.</p>
 <p>Il grafico ottenuto è detto <strong>digramma a barre delle frequenze assolute</strong> e mostra il numero di volte in cui ciascun valore appare nel campione.</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 2</strong></p>
+<div><p><strong>Domanda 2</strong></p>
 <p>Che cosa ci dice la rappresentazione dei dati sopra? Quali sono i valori più frequenti? Quante persone hanno un’altezza pari a <span class="math notranslate nohighlight">\(167.64\ cm\)</span>?</p>
 </div></blockquote>
 <p>Si noti che, alternativamente, è possibile plottare un grafico a barre direttamente tramite matplotlib come segue:</p>
@@ -902,7 +902,7 @@ Name: height, dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 3</strong></p>
+<div><p><strong>Domanda 3</strong></p>
 <p>Cosa hanno in comune (graficamente) il diagramma a barre delle frequenze assolute e il diagramma a barre delle frequenze relative? Che cosa ci dice in più una rappresentazione rispetto all’altra?</p>
 </div></blockquote>
 <p>I diagrammi a barre delle frequenze relative possono essere utili anche per confrontare diversi campioni di dati. Consideriamo ad esempio le altezze delle donne e degli uomini come due campioni separati nel dataset e calcoliamone le frequenze relative:</p>
@@ -935,7 +935,7 @@ Name: height, dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 4</strong></p>
+<div><p><strong>Domanda 4</strong></p>
 <p>Cosa ci dicono i due plot? Quale delle due classi (‘F’ o ‘M’) contiene i soggetti più bassi? Esistono soggetti di sesso femminile alti? Esistono soggetti di sesso maschile bassi? Quanto sono “probabili”?</p>
 </div></blockquote>
 </section>
@@ -982,7 +982,7 @@ dtype: int64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 5</strong></p>
+<div><p><strong>Domanda 5</strong></p>
 <p>Il confronto è adesso più chiaro? Quale dei due campioni contiene i pesi maggiori?</p>
 </div></blockquote>
 <p>Le ECDF tornano utili per verificare graficamente se due fenomeni hanno distribuzioni simili. Prendiamo ad esempio il dataset “Titanic”, che riporta diversi dati sui passeggeri del Titanic:</p>
@@ -1114,7 +1114,7 @@ memory usage: 83.5+ KB
 </div>
 <p>L’istogramma mostrato sopra riporta le frequenze assolute per ogni bin e ci permette di rispondere a domande del genere “quanti soggetti hanno un peso compreso tra <span class="math notranslate nohighlight">\(70 Kg\)</span> e <span class="math notranslate nohighlight">\(80 Kg\)</span>”?</p>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 6</strong></p>
+<div><p><strong>Domanda 6</strong></p>
 <p>Si costruiscano degli istogrammi per rispondere alle domande</p>
 <ul class="simple">
 <li><p>quanti soggetti di sesso maschile hanno un peso compreso tra <span class="math notranslate nohighlight">\(70Kg\)</span> e <span class="math notranslate nohighlight">\(80Kg\)</span>?</p></li>
@@ -1162,7 +1162,7 @@ memory usage: 83.5+ KB
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 7</strong></p>
+<div><p><strong>Domanda 7</strong></p>
 <p>Utilizzare l’istogramma sopra per ottenere la probabilità che un soggetto abbia un peso compreso tra <span class="math notranslate nohighlight">\(40Kg\)</span> e <span class="math notranslate nohighlight">\(50Kg\)</span>.</p>
 </div></blockquote>
 <p>Gli istogrammi possono essere plottati anche direttamente da <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>:</p>
@@ -1198,7 +1198,7 @@ memory usage: 83.5+ KB
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 8</strong></p>
+<div><p><strong>Domanda 8</strong></p>
 <p>Si confronti il plot di densità visto sopra con istogrammi ottenuti con diversi numeri di bin. Qual è il vantaggio principale della stima della densità?</p>
 </div></blockquote>
 </section>
@@ -1221,7 +1221,7 @@ memory usage: 83.5+ KB
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 9</strong></p>
+<div><p><strong>Domanda 9</strong></p>
 <p>Si metta in relazione il plot dei due istogrammi con il plot delle dure relative ECDF. I due plot sono concordi? Quali dei due plot è più immediato?</p>
 </div></blockquote>
 <p>È possibile effettuare plot combinati simili direttamente da <code class="docutils literal notranslate"><span class="pre">Pandas</span></code> utilizzando il <code class="docutils literal notranslate"><span class="pre">groupby</span></code>:</p>
@@ -1658,7 +1658,7 @@ Name: Age, dtype: float64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 10</strong></p>
+<div><p><strong>Domanda 10</strong></p>
 <p>Si confrontino mediante un barplot le età medie dei passeggeri per classe di imbarco e sesso.</p>
 </div></blockquote>
 <p>Così come per i barplot, è possibile confrontare gli istogrammi di diversi campioni di dati. Confrontiamo le distribuzioni delle età distinte per sesso:</p>
@@ -1722,7 +1722,7 @@ Name: Survived, dtype: int64
 </div>
 </div>
 <blockquote>
-<div><p><strong>🙋‍♂️ Domanda 11</strong></p>
+<div><p><strong>Domanda 11</strong></p>
 <p>Costruire un grafico a torta che confronti il numero di sopravvissuti nelle varie classi di imbarco.</p>
 </div></blockquote>
 </section>
@@ -1730,23 +1730,23 @@ Name: Survived, dtype: int64
 <section id="esercizi">
 <h2><span class="section-number">13.5. </span>Esercizi<a class="headerlink" href="#esercizi" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 1</p>
+<div><p>Esercizio 1</p>
 <p>Considerando il dataset Titanic, si mostrino i diagrammi a barre delle frequenze assolute e relative dei valori della colonna <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>. Scegliendo a caso tra i passeggeri, qual è la probabilità che egli si sia imbarcato in seconda classe?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 2</p>
+<div><p>Esercizio 2</p>
 <p>Considerando il dataset Titanic, si mostri l’istogramma delle età dei passeggeri imbarcati in prima classe. Si utilizzi un criterio opportuno per scegliere il numero di bin.</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 3</p>
+<div><p>Esercizio 3</p>
 <p>Si modifichi il plot dell’esercizio precedente per costruire un istogramma che permetta di rispondere alla domanda “se scelgo casualmente un passeggero imbarcato in prima classe, qual è la probabilità che la sua età sia compresa tra <span class="math notranslate nohighlight">\(20\)</span> e <span class="math notranslate nohighlight">\(30\)</span> anni?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 4</p>
+<div><p>Esercizio 4</p>
 <p>Considerando il dataset Titanic, si confrontino le distribuzioni cumulative delle età dei passeggeri imbarcati nelle varie classi. Le distribuzioni sono simili? In quale classe sono imbarcati i soggetti più giovani?</p>
 </div></blockquote>
 <blockquote>
-<div><p>🧑‍💻 Esercizio 5</p>
+<div><p>Esercizio 5</p>
 <p>Considerando il dataset Titanic, si mostrino con uno stacked bar plot le percentuali di passeggeri appartenenti alle tre classi separatamente per i due sessi. Si notano differenze nella ripartizione?</p>
 </div></blockquote>
 </section>
