@@ -10,7 +10,7 @@ parts:
 - caption: Setup and Python Crash Course
   chapters:
   - file: laboratories/01_setup
-  - file: lectures/02_intro_python_en
+  - file: laboratories/02_intro_python_en
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
