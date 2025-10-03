@@ -7,102 +7,132 @@ options:
   numbered: True
 
 parts:
-- caption: Lecture 1
-  numbered: True
+- caption: Setup and Python Crash Course
   chapters:
   - file: laboratories/01_setup
-  - file: laboratories/02_intro_python
-- caption: Lecture 2
-  numbered: True
-  chapters: 
-  - file: lectures/03_main_data_analysis_concepts
-  - file: lectures/07_probability
-- caption: Lecture 3
-  numbered: True
-  chapters: 
-  - file: lectures/08_common_distributions
-  - file: lectures/09_information_theory
-- caption: Laboratory 1
-  numbered: True
-  chapters: 
-  - file: laboratories/03_intro_numpy
-  - file: laboratories/04_intro_matplotlib
-  - file: laboratories/05_intro_pandas
-- caption: Lecture 4
-  numbered: True
-  chapters:
-  - file: lectures/04_misure_di_frequenze_e_rappresentazione_grafica_dei_dati
-  - file: lectures/05_misure_di_tendenza_centrale_dispersione_e_forma
-- caption: Lecture 5
-  numbered: True
-  chapters:
-  - file: lectures/06_associazione_variabili
-- caption: Laboratory 2
-  numbered: True
-  chapters:
-  - file: laboratories/06_misure_di_frequenze_e_rappresentazioni_grafiche_dei_dati
-  - file: laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma
-  - file: laboratories/08_associazione_variabili
-- caption: Lecture 6
-  numbered: True
-  chapters:
-  - file: lectures/10_statistical_inference
-- caption: Lecture 7 & 8
-  numbered: True
-  chapters:
-  - file: lectures/11_linear_regression
-- caption: Lecture 9
-  numbered: True
-  chapters:
-  - file: lectures/12_logistic_regression
-- caption: Lecture 10
-  numbered: True
-  chapters:
-  - file: lectures/13_causal_analysis
-- caption: Laboratory 3
-  numbered: True
-  chapters:
-  - file: laboratories/10_statistical_inference
-  - file: laboratories/11_regressione_lineare
-  - file: laboratories/12_regressione_logistica
-- caption: Lecture 11
-  numbered: True
-  chapters:
-  - file: lectures/14_data_as_nd_points
-  - file: lectures/15_clustering
-- caption: Lecture 12
-  numbered: True
-  chapters:
-  - file: lectures/16_density_estimation
-- caption: Lecture 13
-  numbered: True
-  chapters:
-  - file: lectures/17_principal_component_analysis
-- caption: Laboratory 4
-  numbered: True
-  chapters:
-  - file: practicals/01_heart_disease_explorative_inferential_analysis
-- caption: Lecture 14
-  numbered: True
-  chapters:
-  - file: lectures/18_predictive_modeling
-- caption: Lecture 15
-  numbered: True
-  chapters:
-  - file: lectures/19_classification
-  - file: lectures/20_discriminative_models_for_classification
-- caption: Lecture 16
-  numbered: True
-  chapters:
-  - file: lectures/21_generative_models_for_classification
-- caption: Laboratory 5
-  numbered: True
-  chapters:
-  - file: laboratories/
-  - file: laboratories/14_clustering_density_estimation_pca
-  - file: practicals/02_customer_segmentation_analysis
-- caption: Laboratory 6
-  numbered: True
-  chapters:
-  - file: laboratories/15_regression_predictive
-  - file: laboratories/16_classificazione
+  - file: lectures/02_intro_python_en
+# - caption: Lectures
+#   chapters:
+#   - file: lectures/01_intro_data_analysis
+#   - file: lectures/02_frequency_measures_and_graphical_data_representation
+# - caption: Laboratories
+#   chapters:
+#   - file: laboratories/01_setup
+#   - file: laboratories/02_intro_python
+#   - file: laboratories/03_intro_numpy
+#   - file: laboratories/04_intro_matplotlib
+#   - file: laboratories/05_intro_pandas
+#   - file: laboratories/06_misure_di_frequenze_e_rappresentazioni_grafiche_dei_dati
+#   - file: laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma
+#   - file: laboratories/08_associazione_variabili
+#   - file: laboratories/09_statistical_inference
+#   - file: laboratories/10_statistical_inference
+#   - file: laboratories/11_regressione_lineare
+#   - file: laboratories/12_regressione_logistica
+#   - file: laboratories/13_clustering_density_estimation_pca
+#   - file: laboratories/14_clustering_density_estimation_pca
+#   - file: laboratories/15_regression_predictive
+#   - file: laboratories/16_classificazione
+# - caption: Practicals
+#   chapters:
+#   - file: practicals/01_heart_disease_explorative_inferential_analysis
+#   - file: practicals/02_customer_segmentation_analysis
+# - caption: Lecture 1
+#   numbered: True
+#   chapters:
+#   - file: laboratories/01_setup
+#   - file: laboratories/02_intro_python
+# - caption: Lecture 2
+#   numbered: True
+#   chapters: 
+#   - file: lectures/03_main_data_analysis_concepts
+#   - file: lectures/07_probability
+# - caption: Lecture 3
+#   numbered: True
+#   chapters: 
+#   - file: lectures/08_common_distributions
+#   - file: lectures/09_information_theory
+# - caption: Laboratory 1
+#   numbered: True
+#   chapters: 
+#   - file: laboratories/03_intro_numpy
+#   - file: laboratories/04_intro_matplotlib
+#   - file: laboratories/05_intro_pandas
+# - caption: Lecture 4
+#   numbered: True
+#   chapters:
+#   - file: lectures/04_misure_di_frequenze_e_rappresentazione_grafica_dei_dati
+#   - file: lectures/05_misure_di_tendenza_centrale_dispersione_e_forma
+# - caption: Lecture 5
+#   numbered: True
+#   chapters:
+#   - file: lectures/06_associazione_variabili
+# - caption: Laboratory 2
+#   numbered: True
+#   chapters:
+#   - file: laboratories/06_misure_di_frequenze_e_rappresentazioni_grafiche_dei_dati
+#   - file: laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma
+#   - file: laboratories/08_associazione_variabili
+# - caption: Lecture 6
+#   numbered: True
+#   chapters:
+#   - file: lectures/10_statistical_inference
+# - caption: Lecture 7 & 8
+#   numbered: True
+#   chapters:
+#   - file: lectures/11_linear_regression
+# - caption: Lecture 9
+#   numbered: True
+#   chapters:
+#   - file: lectures/12_logistic_regression
+# - caption: Lecture 10
+#   numbered: True
+#   chapters:
+#   - file: lectures/13_causal_analysis
+# - caption: Laboratory 3
+#   numbered: True
+#   chapters:
+#   - file: laboratories/10_statistical_inference
+#   - file: laboratories/11_regressione_lineare
+#   - file: laboratories/12_regressione_logistica
+# - caption: Lecture 11
+#   numbered: True
+#   chapters:
+#   - file: lectures/14_data_as_nd_points
+#   - file: lectures/15_clustering
+# - caption: Lecture 12
+#   numbered: True
+#   chapters:
+#   - file: lectures/16_density_estimation
+# - caption: Lecture 13
+#   numbered: True
+#   chapters:
+#   - file: lectures/17_principal_component_analysis
+# - caption: Laboratory 4
+#   numbered: True
+#   chapters:
+#   - file: practicals/01_heart_disease_explorative_inferential_analysis
+# - caption: Lecture 14
+#   numbered: True
+#   chapters:
+#   - file: lectures/18_predictive_modeling
+# - caption: Lecture 15
+#   numbered: True
+#   chapters:
+#   - file: lectures/19_classification
+#   - file: lectures/20_discriminative_models_for_classification
+# - caption: Lecture 16
+#   numbered: True
+#   chapters:
+#   - file: lectures/21_generative_models_for_classification
+# - caption: Laboratory 5
+#   numbered: True
+#   chapters:
+#   - file: laboratories/
+#   - file: laboratories/14_clustering_density_estimation_pca
+#   - file: practicals/02_customer_segmentation_analysis
+# - caption: Laboratory 6
+#   numbered: True
+#   chapters:
+#   - file: laboratories/15_regression_predictive
+#   - file: laboratories/16_classificazione

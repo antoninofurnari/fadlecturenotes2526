@@ -1,6 +1,6 @@
 # This Repository
 
-This repository contain lecture notes for the Fundamental of Data Analysis course 2023/2024. University of Catania. Prof. Antonino Furnari.
+This repository contain lecture notes for the Fundamentals of Data Analysis course 2025/2026. University of Catania. Prof. Antonino Furnari.
 
 ## Creating an Conda Environment
 

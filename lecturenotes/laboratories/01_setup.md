@@ -1,102 +1,102 @@
-# Introduzione ai laboratori e Installazione dell'Ambiente di Lavoro
-Questo corso include ore di laboratorio in cui affronteremo manipolazioni pratiche di analisi dei dati. Tutti i laboratori verranno condotti utilizzando il linguaggio Python e il notebook Jupyter (tramite un'installazione locale o Google Colab). Inizieremo vedendo come installare l'ambiente di lavoro.
+# Introduction to the Labs and Work Environment Setup
+This course includes lab hours where we will tackle practical data analysis manipulations. All labs will be conducted using the Python language and Jupyter notebooks (either through a local installation or Google Colab). We will start by seeing how to set up the work environment.
 
-## Installazione di Python
-Nel corso, utilizzeremo il linguaggio Python. Scegliamo Python in quanto un linguaggio moderno, diffuso, multi-piattaforma, portabile, facile da usare ed elegante e dotato di una modalità interattiva. Questa ultima caratteristica risulterà molto utile per sperimentare con il codice e apprendere bene il funzionamento del linguaggio e delle librerie.
+## Installing Python
+In this course, we will use the Python language. We choose Python as it is a modern, widespread, multi-platform, portable, easy-to-use, and elegant language that features an interactive mode. This last feature will be very useful for experimenting with code and learning how the language and its libraries work.
 
-Python è un linguaggio fortemente modulare: alcune funzionalità di base sono incluse nel linguaggio, mentre molte altre sono fornite da pacchetti di terze parti, gestite mediante un vero e proprio gestore dei pacchetti chiamato `pip`. Per avere un ambiente di lavoro pronto per l'utilizzo in applicazioni che richiedono l'analisi dei dati, utilizzeremo una distribuzione chiamata [Anaconda](https://www.anaconda.com/). Va notato che in passato esistevano due branch di Python: il 2.x e il 3.x. Oggi il 2.x non è più utilizzato. La distribuzione di Anaconda utilizzata nel momento in cui si scrive installerà Python 3.9.
+Python is a highly modular language: some basic functionalities are included in the language, while many others are provided by third-party packages, managed through a dedicated package manager called `pip`. To have a ready-to-use work environment for data analysis applications, we will use a distribution called [Anaconda](https://www.anaconda.com/). It should be noted that in the past there were two branches of Python: 2.x and 3.x. Today, 2.x is no longer used. The Anaconda distribution used at the time of this writing will install Python 3.x.
 
-Scarichiamo la distribuzione per la nostra piattaforma dal seguente link: https://www.anaconda.com/products/distribution e installiamola. Una volta fatto ciò, dovremmo poter accedere a un terminale con l'accesso agli eseguibili messi a disposizione da Anaconda. In particolare:
- * Su windows, sarà disponbile il progamma "Anaconda Prompt";
- * Su MacOS e su Linux gli eseguibili dovrebbero già trovarsi nel path dell'utente e dunque dovrebbe essere sufficiente aprire un semplice terminale.
+Let's download the distribution for our platform from the following link: https://www.anaconda.com/products/distribution and install it. Once this is done, we should be able to access a terminal with access to the executables made available by Anaconda. Specifically:
+ * On Windows, the "Anaconda Prompt" program will be available;
+ * On MacOS and Linux, the executables should already be in the user's path, so it should be sufficient to open a standard terminal.
 
- Se anaconda è stato correttamente installato, apparirà l'indicazione `(base)` prima del prompt dei comandi, come mostrato di seguito:
+ If Anaconda has been installed correctly, the indication `(base)` will appear before the command prompt, as shown below:
 
 ```{figure} /_static/lecture_specific/intro_python/anaconda_prompt.png
 ```
 
- `(base)` indica l'`environment` (di default è l'environement di base) in cui stiamo operando. Anaconta infatti permette di definire e utilizzare diversi evironment indipendenti tra di loro in cui è possibile installare pacchetti diversi (anche in termini di versioni).
+ `(base)` indicates the `environment` (by default, it's the base environment) in which we are operating. Indeed, Anaconda allows you to define and use different environments that are independent of each other, in which you can install different packages (even different versions).
 
-## Programmare in Python
-Con Anaconda verranno installati diversi strumenti. Tra questi:
-* L’interprete python;
-* La shell interattiva ipython;
-* L’IDE Spyder;
+## Programming in Python
+Several tools will be installed with Anaconda. Among them:
+* The Python interpreter;
+* The ipython interactive shell;
+* The Spyder IDE;
 * Jupyter Notebook.
 
-### Interprete Python
-L'interprete Python permette di eseguire un programma Python mediante un comando del genere:
+### Python Interpreter
+The Python interpreter allows you to run a Python program using a command like:
 
-`python programma.py`
+`python program.py`
 
-Dove `programma.py` è il file di testo sorgente del programma. Alla prima esecuzione, Python compilerà il programma e genererà un file bytecode `programma.pyc`.
+Where `program.py` is the source text file of the program. On the first run, Python will compile the program and generate a bytecode file `program.pyc`.
 
-### Shell interattiva ipython
-La shell interattiva è una versione più "evoluta" dell’interprete Python che permette di:
+### ipython Interactive Shell
+The interactive shell is a more "advanced" version of the Python interpreter that allows you to:
 
-* Interpretare comandi;
-* Eseguire programmi Python;
-* Analizzare il contenuto delle variabili del workspace;
+* Interpret commands;
+* Run Python programs;
+* Analyze the content of workspace variables;
 
-Possiamo lanciare la shell interattiva con il comando `ipytyon`:
+We can launch the interactive shell with the `ipython` command:
 
 ```{figure} /_static/lecture_specific/intro_python/ipython.png
 ```
 
 ### IDE
-Un IDE generalmente integra una shell ipython e diversi strumenti per il debugging. É un ottimo strumento per progetti di medie o grandi dimensioni. Un ide molto usato per la programmazione in Python è [Visual Studio Code](https://code.visualstudio.com/).
+An IDE generally integrates an ipython shell and various debugging tools. It is an excellent tool for medium to large-sized projects. A widely used IDE for Python programming is [Visual Studio Code](https://code.visualstudio.com/).
 
 ```{figure} /_static/lecture_specific/intro_python/vscode.png
 ```
 
-### Notebook Jupyter
-È possibile avviare jupyter mediante il comando:
+### Jupyter Notebook
+You can start Jupyter with the command:
 
 `jupyter notebook`
 
 ```{figure} /_static/lecture_specific/intro_python/jupyter.png
 ```
 
-Jupyter permette di creare (mediante interfaccia web) dei "notebook", ovvero degli archivi contenenti:
-* Testo formattato;
-* Il codice da eseguire;
-* Le immagini ottenuti come risultati dell'esecuzione del codice.
+Jupyter allows you to create (via a web interface) "notebooks," which are files containing:
+* Formatted text;
+* The code to be executed;
+* The images obtained as results of the code's execution.
 
-Si tratta di uno strumento molto potente, in quanto permette di generare dei veri e propri report delle sperimentazioni.
+It is a very powerful tool, as it allows for the generation of actual experimental reports.
 
 ### IDE vs Notebook
-C'è da chiedersi quando sia utile usare uno degli strumenti rispetto agli altri.
+One might wonder when it is useful to use one tool over the others.
 
-Gli IDE sono ottimi per:
- * medi o grossi progetti, con diversi moduli e classi;
- * computazione interattiva (ad esempio elaborare un video in tempo reale).
+IDEs are great for:
+ * medium or large projects, with multiple modules and classes;
+ * interactive computation (e.g., processing a video in real time).
 
-I Notebook di Jupyter sono ottimi per:
- * documentare i processi di analisi dei dati
-sperimentare nuove idee;
- * scrivere documentazione e tutorials.
+Jupyter Notebooks are great for:
+ * documenting data analysis processes;
+ * experimenting with new ideas;
+ * writing documentation and tutorials.
 
  ## Google Colab
- In alternativa alla installazione di un ambiente di lavoro sul proprio computer, è possibile utilizzare un servizio gratuito messo a disposizione da Google chiamato "Colab": https://colab.research.google.com/
+ As an alternative to installing a work environment on your own computer, you can use a free service provided by Google called "Colab": https://colab.research.google.com/
 
- Il servizio mette a disposizione dei notebook in Python (simili a quelli di Jupyter) con supporto GPU.
+ The service provides Python notebooks (similar to Jupyter) with GPU support.
 
 ```{figure} /_static/lecture_specific/intro_python/colab.png
 ```
 
-In Google Colab, troveremo i principali pacchetti installati, ma possiamo installare dei pacchetti aggiuntivi mediante comandi del tipo:
+In Google Colab, we will find the main packages already installed, but we can install additional packages using commands like:
 
  `pip install sklearn`
 
-### Risorse limitate
-Google Colab è un ottimo strumento per sperimentare o fare piccoli esperimenti. Tuttavia, tenete a mente che le risorse sono limitate e l'accesso alla GPU potrebbe essere revocato dopo alcune ore di computazione o se il computer è inattivo per diverso tempo. Pertanto, potrebbe essere diffiile usarlo per progetti medio-grandi.
+### Limited Resources
+Google Colab is an excellent tool for experimenting or conducting small experiments. However, keep in mind that resources are limited, and GPU access may be revoked after a few hours of computation or if the machine is idle for a long time. Therefore, it might be difficult to use it for medium-to-large projects.
 
-### Persistenza dei dati
- Ad ogni esecuzione di un notebook, Google Colab mette a disposizione uno spazio temporaneo su cui è possibile scrivere e dal quale è possibile leggere dei dati. Ogni volta che il notebook è chiuso e riaperto, lo spazio viene liberato e il contenuto eliminato. Se si vuole avere accesso a uno spazio persistente, è possibile montare una specifica cartella del proprio Google Drive eseguendo una cella con il seguente codice:
+### Data Persistence
+ With each notebook execution, Google Colab provides a temporary storage space where you can write and read data. Every time the notebook is closed and reopened, this space is cleared, and its content is deleted. If you want to access persistent storage, you can mount a specific folder from your Google Drive by running a cell with the following code:
 
  ```python
 from google.colab import drive
 drive.mount('/content/drive/path/to/folder')
 ```
 
-Dove `/path/to/folder` è il path alla cartella all'interno del drive.
+Where `/path/to/folder` is the path to the folder within your Drive.
