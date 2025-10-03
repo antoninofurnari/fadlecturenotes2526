@@ -1,0 +1,2088 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Clustering, Density Estimation, and Principal Component Analysis &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/14_clustering_density_estimation_pca_en';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../lectures/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../lectures/index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/14_clustering_density_estimation_pca_en.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/14_clustering_density_estimation_pca_en.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/laboratories/14_clustering_density_estimation_pca_en.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Clustering, Density Estimation, and Principal Component Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering">K-Means Clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-digits-dataset">Example with DIGITS dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation">Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-density-estimation">Non-Parametric Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hexplots">Hexplots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel Density Estimation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-methods">Parametric Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-known-distributions-to-data-using-scipy">Fitting Known Distributions to Data using SciPy</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-models-gmm">Gaussian Mixture Models (GMM)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principal-component-analysis">Principal Component Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pca-coefficients">Interpretation of PCA Coefficients</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-coefficients-of-pca-have-a-simple-geometric-interpretation-in-the-2d-case-the-two-columns-of-the-matrix-w-represent-the-two-unit-vectors-of-the-new-reference-system-identified-by-pca-let-s-first-verify-that-they-are-two-unit-vectors">The coefficients of PCA have a simple geometric interpretation in the 2D case. The two columns of the matrix <span class="math notranslate nohighlight">\(W\)</span> represent the two unit vectors of the new reference system identified by PCA. Let’s first verify that they are two unit vectors:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rototranslation-of-data">Rototranslation of data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-decorrelation">Data decorrelation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction">Dimensionality Reduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-for-data-compression">PCA for Data Compression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-for-data-visualization">PCA for Data Visualization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="clustering-density-estimation-and-principal-component-analysis">
+<h1>Clustering, Density Estimation, and Principal Component Analysis<a class="headerlink" href="#clustering-density-estimation-and-principal-component-analysis" title="Permalink to this heading">#</a></h1>
+<section id="k-means-clustering">
+<h2>K-Means Clustering<a class="headerlink" href="#k-means-clustering" title="Permalink to this heading">#</a></h2>
+<p>The K-Means algorithm aims to find groups (<strong>clusters</strong>) of data in a multidimensional space. Let’s look at an example of using the K-Means algorithm. Consider the “Old Faithful” dataset. The dataset contains measurements on the eruptions of the Old Faithful geyser in Yellowstone National Park, USA. Specifically, each record reports the duration of an eruption and the time elapsed between the current and the next eruption. Let’s load the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.datasets</span> <span class="kn">import</span> <span class="n">get_rdataset</span>
+<span class="n">faithful</span> <span class="o">=</span> <span class="n">get_rdataset</span><span class="p">(</span><span class="s1">&#39;faithful&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of records:&quot;</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Numero di record: 272
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>eruptions</th>
+      <th>waiting</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3.600</td>
+      <td>79</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.800</td>
+      <td>54</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3.333</td>
+      <td>74</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.283</td>
+      <td>62</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4.533</td>
+      <td>85</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We apply normalization by mean and standard deviation (z-scoring) to the data and plot it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">faithful</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="o">-</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">/</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="c1"># we can use the &quot;plot&quot; function of dataframes or all other methods seen previously</span>
+<span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;eruptions&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;waiting&#39;</span><span class="p">,</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/35186282c131148f37c4821c1bf69ec1636c6146c23cea09ba99fe023f0030ba.png" src="../_images/35186282c131148f37c4821c1bf69ec1636c6146c23cea09ba99fe023f0030ba.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 1</strong></p>
+<p>Do the data shown above present peculiar characteristics?</p>
+</div></blockquote>
+<p>We now train the K-Means algorithm by specifying <span class="math notranslate nohighlight">\(2\)</span> as the number of clusters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/sklearn/cluster/_kmeans.py:1416: FutureWarning: The default value of `n_init` will change from 10 to &#39;auto&#39; in 1.4. Set the value of `n_init` explicitly to suppress the warning
+  super()._check_params_vs_input(X, default_n_init=10)
+</pre></div>
+</div>
+<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">KMeans</label><div class="sk-toggleable__content"><pre>KMeans(n_clusters=2)</pre></div></div></div></div></div></div></div>
+</div>
+<p>The K-Means algorithm has assigned each training data point to one of the clusters. We can access the assigner variable as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 0 1 0 1 0 0 1 0 1 0 0 1 0 1 1 0 1 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1
+ 0 1 0 0 1 0 1 0 0 0 1 0 1 0 0 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 0 1 0 0 1 0 0
+ 1 0 1 0 0 0 0 0 0 1 0 0 0 0 1 0 1 0 1 0 1 0 0 0 1 0 1 0 1 0 0 1 0 1 0 0 0
+ 1 0 0 1 0 1 0 1 0 1 0 0 1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 0 0 1 0 1
+ 0 1 0 0 1 0 0 0 0 0 1 0 1 0 1 0 0 0 1 0 1 0 1 1 0 0 0 0 0 1 0 0 1 0 0 0 1
+ 0 0 1 0 1 0 1 0 0 0 0 0 0 1 0 1 0 0 1 0 1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0
+ 1 0 0 0 0 0 0 0 0 1 0 1 0 1 1 0 0 1 0 1 0 1 0 0 1 0 1 0 1 0 0 0 0 0 0 0 1
+ 0 0 0 1 0 1 1 0 0 1 0 1 0]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each element has been assigned to one of the two clusters identified with <span class="math notranslate nohighlight">\(1\)</span> or <span class="math notranslate nohighlight">\(0\)</span>. For convenience, we construct a new dataframe in which we rename the variables to “X” and “Y” and add a variable “C” that indicates the cluster to which each record has been associated:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;eruptions&#39;</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;waiting&#39;</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>C</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.098318</td>
+      <td>0.596025</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-1.478733</td>
+      <td>-1.242890</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>-0.135612</td>
+      <td>0.228242</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-1.055558</td>
+      <td>-0.654437</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.915755</td>
+      <td>1.037364</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Let’s plot the data, visualizing which cluster they have been associated with:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot2d</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">C</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">C</span><span class="o">==</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                 <span class="n">data</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">C</span><span class="o">==</span><span class="n">c</span><span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plot2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7d47726e05d923bd7867b78c7680d7ee6f7180188f1d2ea27d1381fd60a5d76c.png" src="../_images/7d47726e05d923bd7867b78c7680d7ee6f7180188f1d2ea27d1381fd60a5d76c.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 2</strong></p>
+<p>Is the cluster assignment plausible? Run the K-Means algorithm multiple times. Does the solution change? Why? Are the solutions found equivalent?</p>
+</div></blockquote>
+<p>We can access the centroids found by the K-Means algorithm as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.70839746,  0.67549972],
+       [-1.25776692, -1.19935664]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similar to how a Nearest Neighbor algorithm works, K-Means also implicitly defines decision regions and a decision boundary. Let’s visualize this information in our case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_kmeans_decision_boundary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">kmeans</span><span class="p">):</span>
+    <span class="n">plot2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">X</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+    
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    
+    <span class="n">Z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set3&#39;</span><span class="p">)</span>
+    
+    <span class="n">centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;kX&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;centroids&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plot_kmeans_decision_boundary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">kmeans</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:465: UserWarning: X does not have valid feature names, but KMeans was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/bd0d859412aac83fd29461512a7023474bbaa89bc8ee327c1826d714d52b206f.png" src="../_images/bd0d859412aac83fd29461512a7023474bbaa89bc8ee327c1826d714d52b206f.png" />
+</div>
+</div>
+<section id="example-with-digits-dataset">
+<h3>Example with DIGITS dataset<a class="headerlink" href="#example-with-digits-dataset" title="Permalink to this heading">#</a></h3>
+<p>Let’s now try to use a larger dataset with multidimensional samples. Let’s consider the “digits” dataset of handwritten digits made available by scikit-learn:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="n">digits</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of samples: </span><span class="si">%d</span><span class="s2">, Number of dimensions: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Numero di campioni: 1797, Numero di dimensioni: 64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We recall that each element of the dataset is a 64-dimensional vector representing an <span class="math notranslate nohighlight">\(8 \times 8\)</span> image. Therefore, we can visualize each sample as an image through a <em>reshape</em> operation. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)),</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Label: </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4f858a614bb6ba4844e85801390d4c4ab108dd325a6bff9e444e97cac17de632.png" src="../_images/4f858a614bb6ba4844e85801390d4c4ab108dd325a6bff9e444e97cac17de632.png" />
+</div>
+</div>
+<p>Let’s assume for a moment that the dataset is not labeled, but let’s still assume we know it contains images of the 10 handwritten digits. Let’s try to use the K-Means algorithm to try to divide the data into <span class="math notranslate nohighlight">\(10\)</span> groups:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">kmeans</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/sklearn/cluster/_kmeans.py:1416: FutureWarning: The default value of `n_init` will change from 10 to &#39;auto&#39; in 1.4. Set the value of `n_init` explicitly to suppress the warning
+  super()._check_params_vs_input(X, default_n_init=10)
+</pre></div>
+</div>
+<div class="output text_html"><style>#sk-container-id-2 {color: black;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>KMeans(n_clusters=10)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">KMeans</label><div class="sk-toggleable__content"><pre>KMeans(n_clusters=10)</pre></div></div></div></div></div></div></div>
+</div>
+<p>The KMeans algorithm found <span class="math notranslate nohighlight">\(10\)</span> centroids and assigned each training sample to one of the centroids. The centroids have the same dimensionality as the input data (<span class="math notranslate nohighlight">\(64\)</span> elements) and therefore can also be viewed as <span class="math notranslate nohighlight">\(8 \times 8\)</span> images. In particular, each centroid is the average image of all images that have been associated with that cluster. Let’s visualize the 10 centroids as images:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+
+<span class="n">centroids</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">centroids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)),</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f70b0e25d7c5c087ba92ad2cdab1e37ca820ebcce2145074b2cd3cfa2309b1bf.png" src="../_images/f70b0e25d7c5c087ba92ad2cdab1e37ca820ebcce2145074b2cd3cfa2309b1bf.png" />
+</div>
+</div>
+<p>We would expect K-Means to have placed all and only the elements belonging to a given class into a given cluster (e.g., one cluster should contain all and only the samples with label “0”). In this case, the cluster is said to be “pure.” Different clusters can have different degrees of purity.</p>
+<blockquote>
+<div><p><strong>Question 3</strong></p>
+<p>Looking at the images of the centroids, can we predict which clusters are purer and which are less so?</p>
+</div></blockquote>
+<p>We can measure the purity of a cluster as follows:</p>
+<ul class="simple">
+<li><p>Determine the most frequent label among those of the training samples assigned to the cluster;</p></li>
+<li><p>Count the fraction of elements assigned to the cluster that have a label corresponding to the most frequent one.
+Let’s see how to do it:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">mode</span>
+<span class="n">cluster_assignments</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">labels_</span>
+
+<span class="n">purity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">most_frequent_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">training_labels</span> <span class="o">=</span> <span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="n">cluster_assignments</span><span class="o">==</span><span class="n">c</span><span class="p">]</span>
+    <span class="n">most_frequent_label</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">mode</span><span class="p">(</span><span class="n">training_labels</span><span class="p">)</span><span class="o">.</span><span class="n">mode</span>
+    <span class="n">purity</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">training_labels</span><span class="o">==</span><span class="n">most_frequent_label</span><span class="p">[</span><span class="n">c</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cluster </span><span class="si">%d</span><span class="s2">. Most frequent label: </span><span class="si">%d</span><span class="s2">. Purity: </span><span class="si">%0.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">most_frequent_label</span><span class="p">[</span><span class="n">c</span><span class="p">],</span><span class="n">purity</span><span class="p">[</span><span class="n">c</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cluster 0. Most frequent label: 9. Purity: 0.58
+Cluster 1. Most frequent label: 0. Purity: 0.99
+Cluster 2. Most frequent label: 2. Purity: 0.84
+Cluster 3. Most frequent label: 8. Purity: 0.45
+Cluster 4. Most frequent label: 5. Purity: 0.87
+Cluster 5. Most frequent label: 6. Purity: 0.97
+Cluster 6. Most frequent label: 4. Purity: 0.99
+Cluster 7. Most frequent label: 3. Purity: 0.85
+Cluster 8. Most frequent label: 1. Purity: 0.60
+Cluster 9. Most frequent label: 7. Purity: 0.86
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now visualize this information along with the images related to the centroids:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+
+<span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cluster_centers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)),</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2"> / </span><span class="si">%0.2f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">most_frequent_label</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">purity</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f10a90fd346fa65445a0f6e8099ed9bc98b00bf11acb5f77fc54ac1de411e46f.png" src="../_images/f10a90fd346fa65445a0f6e8099ed9bc98b00bf11acb5f77fc54ac1de411e46f.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 4</strong></p>
+<p>Do the previous predictions correspond to the purity values found? Why are some clusters purer and others less so?</p>
+</div></blockquote>
+</section>
+</section>
+<section id="density-estimation">
+<h2>Density Estimation<a class="headerlink" href="#density-estimation" title="Permalink to this heading">#</a></h2>
+<section id="non-parametric-density-estimation">
+<h3>Non-Parametric Density Estimation<a class="headerlink" href="#non-parametric-density-estimation" title="Permalink to this heading">#</a></h3>
+<section id="hexplots">
+<h4>Hexplots<a class="headerlink" href="#hexplots" title="Permalink to this heading">#</a></h4>
+<p>Hexplots are done in Python as follows using <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Load the iris dataset from seaborn</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a hexbin plot for sepal length vs. sepal width</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Hexbin plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">jointplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;hex&quot;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Points&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Hexbin Plot for Sepal Length vs. Sepal Width&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 720x576 with 0 Axes&gt;
+</pre></div>
+</div>
+<img alt="../_images/e4a976d2c4f282efdb3dcde82ff0872f4b7d5209bda6c5a5e1bebf5c2e6ba6aa.png" src="../_images/e4a976d2c4f282efdb3dcde82ff0872f4b7d5209bda6c5a5e1bebf5c2e6ba6aa.png" />
+</div>
+</div>
+<p>Alternatively, we can use <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Load the iris dataset from seaborn</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a hexbin plot for sepal length vs. sepal width</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Hexbin plot</span>
+<span class="n">hex_bin_plot</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hexbin</span><span class="p">(</span><span class="n">iris_data</span><span class="p">[</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">],</span> <span class="n">iris_data</span><span class="p">[</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">],</span> <span class="n">gridsize</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">mincnt</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Add a colorbar</span>
+<span class="n">color_bar</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">hex_bin_plot</span><span class="p">)</span>
+<span class="n">color_bar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="s1">&#39;Count&#39;</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris_data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Points&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hexbin Plot for Sepal Length vs. Sepal Width&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Sepal Width&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/db503b1cf71c6bfc18850a5a4e89daea3f1ac8c730fb947b7f0c9e40627a6883.png" src="../_images/db503b1cf71c6bfc18850a5a4e89daea3f1ac8c730fb947b7f0c9e40627a6883.png" />
+</div>
+</div>
+</section>
+<section id="kernel-density-estimation">
+<h4>Kernel Density Estimation<a class="headerlink" href="#kernel-density-estimation" title="Permalink to this heading">#</a></h4>
+<p>Kernel Density Estimation can be performed using seaborn as shown in the following example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Load the iris dataset from seaborn</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;iris&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create a scatter plot with a 2D KDE plot for sepal length vs. sepal width</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+
+
+<span class="c1"># 2D KDE plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Blues&quot;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;2D KDE&#39;</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sepal_length&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;sepal_width&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Points&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Scatter Plot with 2D Kernel Density Estimation (KDE)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sepal Length&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Sepal Width&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c1d0e0ee63012a664455e5be945e5e9ad5eb6227522e98c40591fa2fec168e4b.png" src="../_images/c1d0e0ee63012a664455e5be945e5e9ad5eb6227522e98c40591fa2fec168e4b.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="parametric-methods">
+<h3>Parametric Methods<a class="headerlink" href="#parametric-methods" title="Permalink to this heading">#</a></h3>
+<section id="fitting-known-distributions-to-data-using-scipy">
+<h4>Fitting Known Distributions to Data using SciPy<a class="headerlink" href="#fitting-known-distributions-to-data-using-scipy" title="Permalink to this heading">#</a></h4>
+<p>When working with empirical data, it’s often valuable to model the underlying probability distribution to gain insights into the data’s characteristics. SciPy, a scientific library for Python, provides a convenient <code class="docutils literal notranslate"><span class="pre">scipy.stats</span></code> module that offers various probability distributions for statistical modeling.</p>
+<p>While Scipy implements many distributions, we will see an example with the Gaussian distribution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span> <span class="c1"># the normal distribution</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">124</span><span class="p">)</span> <span class="c1"># random seed</span>
+
+<span class="c1"># generate a random sample</span>
+<span class="n">sample</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+
+<span class="c1"># fit the gaussian to the sample</span>
+<span class="n">mean_value</span><span class="p">,</span> <span class="n">std_dev</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_value</span><span class="p">,</span> <span class="n">std_dev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.988335448619584 5.021959091782125
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="gaussian-mixture-models-gmm">
+<h3>Gaussian Mixture Models (GMM)<a class="headerlink" href="#gaussian-mixture-models-gmm" title="Permalink to this heading">#</a></h3>
+<p>The K-Means algorithm divides the training set into groups by assigning each of them to a specific centroid. Another strategy consists in trying to model the multimodal distribution of data and assigning each data point to the most probable mode. If we want to find <span class="math notranslate nohighlight">\(K\)</span> clusters, we assume that the data distribution is modeled as a mixture of <span class="math notranslate nohighlight">\(K\)</span> Gaussians (Mixture of Gaussians). In this case, the probability of a data sample <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> will be given by:</p>
+<p>\begin{equation}
+p(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}\ |\ \mathbf{\mu}_k, \Sigma_k)
+\end{equation}</p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\pi_i\)</span> are the mixture coefficients of the Gaussians (the weights of the individual Gaussians);</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\sigma}_k\)</span> are the means and covariances of the individual Gaussians.</p></li>
+</ul>
+<p>Each Gaussian in the model represents one of the clusters, while the <span class="math notranslate nohighlight">\(\pi_i\)</span> coefficients represent the “importance” of each cluster.</p>
+<p>The GMM model is very similar to the one offered by K-Means but with some important differences:</p>
+<ul class="simple">
+<li><p>The GMM model explicitly models the distribution of the input samples, allowing us to calculate the <span class="math notranslate nohighlight">\(p(x)\)</span> term for each sample;</p></li>
+<li><p>The GMM model performs a “soft assignment” of samples to clusters. Unlike with K-Means, a sample does not belong to a single cluster (although it is possible to determine the most probable cluster), but has a certain probability of belonging to each of the considered clusters. This type of “soft assignment” allows us to identify cases of uncertainty (for example, in the border regions between two clusters);</p></li>
+<li><p>The GMM model models each cluster with a Gaussian distribution, while K-Means does not explicitly determine the covariance matrices of the clusters, only the means. In a sense, it’s as if K-Means considered diagonal covariance matrices.</p></li>
+</ul>
+<p>Let’s go back to the Old Faithful dataset and train a GMM type model on this data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span> <span class="k">as</span> <span class="n">GMM</span>
+
+<span class="n">gmm</span> <span class="o">=</span> <span class="n">GMM</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-3 {color: black;}#sk-container-id-3 pre{padding: 0;}#sk-container-id-3 div.sk-toggleable {background-color: white;}#sk-container-id-3 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-3 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-3 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-3 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-3 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-3 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-3 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-3 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-3 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-3 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-3 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-3 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-3 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-3 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-3 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-3 div.sk-item {position: relative;z-index: 1;}#sk-container-id-3 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-3 div.sk-item::before, #sk-container-id-3 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-3 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-3 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-3 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-3 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-3 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-3 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-3 div.sk-label-container {text-align: center;}#sk-container-id-3 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-3 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-3" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GaussianMixture(n_components=2)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" checked><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">GaussianMixture</label><div class="sk-toggleable__content"><pre>GaussianMixture(n_components=2)</pre></div></div></div></div></div></div></div>
+</div>
+<p>The model found the most appropriate values for the parameters <span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span>, <span class="math notranslate nohighlight">\(\Sigma_k\)</span>, and <span class="math notranslate nohighlight">\(\pi_k\)</span>. Let’s see how to access these parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Means:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Covariances:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficients:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Medie:
+ [[ 0.70265943  0.66733937]
+ [-1.27150812 -1.20759416]]
+
+Covarianze:
+ [[[0.13035882 0.06049755]
+  [0.06049755 0.19491776]]
+
+ [[0.05317595 0.02811558]
+  [0.02811558 0.18236361]]]
+
+Coefficienti:
+ [0.64407305 0.35592695]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can assign each point to the most likely cluster as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">clusters</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 0 1 0 1 0 0 1 0 1 0 0 1 0 1 1 0 1 0 1 1 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1
+ 0 1 0 0 1 0 1 0 0 0 1 0 1 0 0 1 0 1 0 0 1 0 0 1 0 1 0 1 0 0 0 1 0 0 1 0 0
+ 1 0 1 0 0 0 0 0 0 1 0 0 0 0 1 0 1 0 1 0 1 0 0 0 1 0 1 0 1 0 0 1 0 1 0 0 0
+ 1 0 0 1 0 1 0 1 0 1 0 0 1 0 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0 0 1 0 0 0 1 0 1
+ 0 1 0 0 1 0 0 0 0 0 1 0 1 0 1 0 0 0 1 0 1 0 1 1 0 0 0 0 0 1 0 0 1 0 0 0 1
+ 0 0 1 0 1 0 1 0 0 0 0 0 0 1 0 1 0 0 1 0 1 0 0 1 0 1 0 1 0 0 0 1 0 1 0 1 0
+ 1 0 0 0 0 0 0 0 0 1 0 1 0 1 1 0 0 1 0 1 0 1 0 0 1 0 1 0 1 0 0 0 0 0 0 0 1
+ 0 0 0 1 0 1 1 0 0 1 0 1 0]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s build a DataFrame and visualize the assignments:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">faithful_gmm</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">faithful_gmm</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;eruptions&#39;</span><span class="p">]</span>
+<span class="n">faithful_gmm</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;waiting&#39;</span><span class="p">]</span>
+<span class="n">faithful_gmm</span><span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">clusters</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plot2d</span><span class="p">(</span><span class="n">faithful_gmm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/942b81121909a159c4fcd3cc15efee9671eaaafba5de652a0b989d3c99b11850.png" src="../_images/942b81121909a159c4fcd3cc15efee9671eaaafba5de652a0b989d3c99b11850.png" />
+</div>
+</div>
+<p>Visualize the decision regions found by the model:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_gmm_decision_boundary</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">gmm</span><span class="p">):</span>
+    <span class="n">plot2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">X_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">Y_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+    <span class="n">X_mesh</span><span class="p">,</span><span class="n">Y_mesh</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">X_range</span><span class="p">,</span><span class="n">Y_range</span><span class="p">)</span>
+    
+    <span class="n">Z_predictions</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">X_mesh</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y_mesh</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+    
+    <span class="n">Z_reshaped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Z_predictions</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X_mesh</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">X_mesh</span><span class="p">,</span> <span class="n">Y_mesh</span><span class="p">,</span> <span class="n">Z_reshaped</span><span class="p">,</span> <span class="n">antialiased</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Set3&#39;</span><span class="p">)</span>
+    
+    <span class="n">cluster_centers</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cluster_centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">cluster_centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;kX&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;centroids&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plot_gmm_decision_boundary</span><span class="p">(</span><span class="n">faithful_gmm</span><span class="p">,</span><span class="n">gmm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:465: UserWarning: X does not have valid feature names, but GaussianMixture was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/a11740421b1a08335f0d6f6fd3eaf08e4e2273b527a511baa7fb5d512924d945.png" src="../_images/a11740421b1a08335f0d6f6fd3eaf08e4e2273b527a511baa7fb5d512924d945.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 5</strong></p>
+<p>Compare the decision boundary found by the GMM model with that of the K-Means model. Are there any differences?</p>
+</div></blockquote>
+<p>We said that the GMM model allows for a “soft assignment” by calculating the probabilities <span class="math notranslate nohighlight">\(p(\mathbf{x}\ |\ z_k)\)</span>. To access the probability distributions, we can use the <code class="docutils literal notranslate"><span class="pre">predict_proba</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cluster_probabilities</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">faithful</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cluster_probabilities</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(272, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each element of the dataset, a two-dimensional vector was calculated representing the posterior probability distribution <span class="math notranslate nohighlight">\(p(\mathbf{x}\ |\ z_k)\)</span> for the two possible values of <span class="math notranslate nohighlight">\(k\)</span>. In practice, the vector has components <span class="math notranslate nohighlight">\([p(\mathbf{x}\ |\ z_0=1),\ p(\mathbf{x}\ |\ z_1=1)]\)</span>. We highlight in the plot above the points that exhibit uncertainty:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">uncertain</span> <span class="o">=</span> <span class="n">cluster_probabilities</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">0.999</span> <span class="c1"># select points with probability less than 0.999</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plot_gmm_decision_boundary</span><span class="p">(</span><span class="n">faithful_gmm</span><span class="p">,</span><span class="n">gmm</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">faithful_gmm</span><span class="p">[</span><span class="s1">&#39;X&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uncertain</span><span class="p">],</span><span class="n">faithful_gmm</span><span class="p">[</span><span class="s1">&#39;Y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">uncertain</span><span class="p">],</span><span class="mi">180</span><span class="p">,</span>
+                <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span><span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;uncertain p(x|z_k=1)&lt;0.999)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/sklearn/base.py:465: UserWarning: X does not have valid feature names, but GaussianMixture was fitted with feature names
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/e3c847a8290148f2adc6901f6adc428580e133abcfc93a5ddb85811bc154e295.png" src="../_images/e3c847a8290148f2adc6901f6adc428580e133abcfc93a5ddb85811bc154e295.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 6</strong></p>
+<p>Where are the uncertain points located? Why?</p>
+</div></blockquote>
+<p>Remember that GMM models clusters as Gaussians. Let’s visualize the two Gaussians:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">multivariate_normal</span> <span class="k">as</span> <span class="n">mnorm</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># define the two multivariate gaussians</span>
+<span class="n">g0</span> <span class="o">=</span> <span class="n">mnorm</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">g1</span> <span class="o">=</span> <span class="n">mnorm</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># plot the data</span>
+<span class="n">plot2d</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># construct a meshgrid </span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">data</span><span class="o">.</span><span class="n">Y</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span><span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+
+<span class="n">Z0</span> <span class="o">=</span> <span class="n">g0</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">Z1</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">contour</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">contour</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">,</span><span class="n">Z1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">contour</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="n">centers</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">centers</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;kX&#39;</span><span class="p">,</span><span class="n">markersize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;centroids&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0869f368d472c5b4729bd53e9274d05104ec8453bb84b5602c6ff1f17767443a.png" src="../_images/0869f368d472c5b4729bd53e9274d05104ec8453bb84b5602c6ff1f17767443a.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="principal-component-analysis">
+<h2>Principal Component Analysis<a class="headerlink" href="#principal-component-analysis" title="Permalink to this heading">#</a></h2>
+<p>Let’s start by considering a simple 2D dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data_set2d</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://iplab.dmi.unict.it/furnari/downloads/Simple2DSet.csv&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_set2d</span><span class="p">))</span>
+<span class="n">data_set2d</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1000
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>x</th>
+      <th>y</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6.403621</td>
+      <td>-0.742478</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2.782241</td>
+      <td>-4.126082</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>6.354109</td>
+      <td>-2.308102</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>5.499853</td>
+      <td>-1.986180</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.492006</td>
+      <td>-5.074300</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The dataset contains <span class="math notranslate nohighlight">\(1000\)</span> elements. Each record in the data frame corresponds to a pair of 2D values (<span class="math notranslate nohighlight">\(x\)</span>,<span class="math notranslate nohighlight">\(y\)</span>). Let’s visualize them in 2D space:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">set2d</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">set2d</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span> <span class="c1"># maintains the same scale on both axes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/967ae4f0bdee478a4978ef9d7776164f6e56ef88dd5ca2c29146489427ee074b.png" src="../_images/967ae4f0bdee478a4978ef9d7776164f6e56ef88dd5ca2c29146489427ee074b.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 7</strong></p>
+<p>Do the data present different variances along the two variables? If not, which variable is characterized by a greater variance?</p>
+</div></blockquote>
+<p>We apply the Principal Component Analysis technique to the data. For this purpose, we will use the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> object from the <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">PCA</span></code> object follows the scikit-learn API and offers two main methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fit</span></code>: takes <span class="math notranslate nohighlight">\(X\)</span> as input and allows for the calculation of PCA coefficients. The <code class="docutils literal notranslate"><span class="pre">fit</span></code> method does not require the columns of <span class="math notranslate nohighlight">\(X\)</span> to have zero mean. The means of the columns of <span class="math notranslate nohighlight">\(X\)</span> will therefore be calculated and stored as part of the model;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">transform</span></code>: takes a data matrix (e.g., <span class="math notranslate nohighlight">\(X\)</span>) as input and transforms it by first subtracting the column means calculated by <code class="docutils literal notranslate"><span class="pre">fit</span></code> and then projecting the data using <span class="math notranslate nohighlight">\(Z=XW\)</span>.</p></li>
+</ul>
+<p>We obtain the matrix <span class="math notranslate nohighlight">\(X\)</span> from the DataFrame and calculate the PCA from the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">set2d</span><span class="o">.</span><span class="n">values</span>
+<span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">()</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-4 {color: black;}#sk-container-id-4 pre{padding: 0;}#sk-container-id-4 div.sk-toggleable {background-color: white;}#sk-container-id-4 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-4 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-4 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-4 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-4 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-4 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-4 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-4 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-4 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-4 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-4 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-4 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-4 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-4 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-4 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-4 div.sk-item {position: relative;z-index: 1;}#sk-container-id-4 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-4 div.sk-item::before, #sk-container-id-4 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-4 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-4 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-4 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-4 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-4 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-4 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-4 div.sk-label-container {text-align: center;}#sk-container-id-4 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-4 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-4" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" checked><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA()</pre></div></div></div></div></div></div></div>
+</div>
+<p>Visualize the means of variables calculated by <code class="docutils literal notranslate"><span class="pre">PCA</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span><span class="o">.</span><span class="n">mean_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 4.98240411, -3.09411727])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check that they are indeed the averages of the two variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">set2d</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>x    4.982404
+y   -3.094117
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize the values found for the matrix <span class="math notranslate nohighlight">\(W\)</span>. These are referred to as “components” (the principal components):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">W</span><span class="o">=</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span>
+<span class="n">W</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.64514558,  0.76405967],
+       [ 0.76405967, -0.64514558]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can use the <span class="math notranslate nohighlight">\(PCA\)</span> object to transform the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Z</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="interpretation-of-pca-coefficients">
+<h3>Interpretation of PCA Coefficients<a class="headerlink" href="#interpretation-of-pca-coefficients" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+<section id="the-coefficients-of-pca-have-a-simple-geometric-interpretation-in-the-2d-case-the-two-columns-of-the-matrix-w-represent-the-two-unit-vectors-of-the-new-reference-system-identified-by-pca-let-s-first-verify-that-they-are-two-unit-vectors">
+<h2>The coefficients of PCA have a simple geometric interpretation in the 2D case. The two columns of the matrix <span class="math notranslate nohighlight">\(W\)</span> represent the two unit vectors of the new reference system identified by PCA. Let’s first verify that they are two unit vectors:<a class="headerlink" href="#the-coefficients-of-pca-have-a-simple-geometric-interpretation-in-the-2d-case-the-two-columns-of-the-matrix-w-represent-the-two-unit-vectors-of-the-new-reference-system-identified-by-pca-let-s-first-verify-that-they-are-two-unit-vectors" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">weight</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1., 1.])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s plot the two unit vectors on the graph representing the data, starting them from the midpoint of the data. For this purpose, we will use the <code class="docutils literal notranslate"><span class="pre">quiver</span></code> function from <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code>, which allows us to represent vectors by specifying their components. For visualization purposes, we will pass a scaling parameter to the function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="c1"># specify alpha=0.5 to display points with transparency</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">set2d</span><span class="o">.</span><span class="n">x</span><span class="p">,</span><span class="n">set2d</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># use the quiver function to plot vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">set2d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">set2d</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;First component&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="n">set2d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">set2d</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="n">W</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="n">W</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Second component&#39;</span><span class="p">)</span>
+<span class="c1"># impose that the axes have the same scale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/578c10e43b9ad4f19c5cd7adbbed294ed3e760a8413240a6510f04c44fca99d2.png" src="../_images/578c10e43b9ad4f19c5cd7adbbed294ed3e760a8413240a6510f04c44fca99d2.png" />
+</div>
+</div>
+<p>The two vectors represent the two principal components identified by PCA. In particular, the first component lies along the direction of maximum variance, while the second component is perpendicular to the first and lies along the second direction of maximum variance (the direction of minimum variance in this case).</p>
+<p>The projection of the data will be performed by projecting all the data first along the axis identified by the first component and then along the axis identified by the second component.</p>
+<blockquote>
+<div><p><strong>Question 8</strong></p>
+<p>What type of geometric transformation can be applied to the data to go from the first to the second reference system? After the transformation, are the relative distances between points preserved?</p>
+</div></blockquote>
+<section id="rototranslation-of-data">
+<h3>Rototranslation of data<a class="headerlink" href="#rototranslation-of-data" title="Permalink to this heading">#</a></h3>
+<p>We plot the data and compare it with the old ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Before PCA&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">X</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span> <span class="c1"># maintains the same scale on both axes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;After PCA&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Z</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">Z</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span> <span class="c1"># maintains the same scale on both axes</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/da41bb47d83ba5dd989c536c83ce5a525977a3a8cb8b61ca660b9aad84d9f20a.png" src="../_images/da41bb47d83ba5dd989c536c83ce5a525977a3a8cb8b61ca660b9aad84d9f20a.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 9</strong></p>
+<p>What are the main differences between the two datasets? In which of the two sets is the variance along the <span class="math notranslate nohighlight">\(x\)</span>-axis maximal? In which of the two sets is a linear correlation observed?</p>
+</div></blockquote>
+<p>In practice, the data were roto-translated. Specifically, they were translated along the two axes <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> so as to have zero mean and rotated so that the maximum variance lies on the <span class="math notranslate nohighlight">\(x\)</span> axis. This also ensures that the data are decorrelated.</p>
+</section>
+<section id="data-decorrelation">
+<h3>Data decorrelation<a class="headerlink" href="#data-decorrelation" title="Permalink to this heading">#</a></h3>
+<p>We calculate the covariance matrices for the two data sets:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">Z</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[2.45531835 1.25551632]
+ [1.25551632 2.88213855]]
+
+[[3.94225312e+00 1.67144688e-16]
+ [1.67144688e-16 1.39520377e+00]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The covariance matrix of <span class="math notranslate nohighlight">\(Z\)</span> is not perfectly diagonal but, as can be seen, the off-diagonal elements are almost zero.</p>
+<blockquote>
+<div><p><strong>Question 10</strong></p>
+<p>What are the characteristics of the correlation matrix constructed with Pearson’s correlation coefficient from <code class="docutils literal notranslate"><span class="pre">Z</span></code>? Use the <code class="docutils literal notranslate"><span class="pre">corrcoef</span></code> function from <code class="docutils literal notranslate"><span class="pre">numpy</span></code> to calculate it.</p>
+</div></blockquote>
+</section>
+<section id="dimensionality-reduction">
+<h3>Dimensionality Reduction<a class="headerlink" href="#dimensionality-reduction" title="Permalink to this heading">#</a></h3>
+<p>Now let’s look at a very simple example of dimensionality reduction on 2D data. Specifically, we will project the data onto the first principal component. To do this, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> allows us to specify an <code class="docutils literal notranslate"><span class="pre">n_components</span></code> parameter to the <code class="docutils literal notranslate"><span class="pre">PCA</span></code> constructor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca1d</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pca1d</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-5 {color: black;}#sk-container-id-5 pre{padding: 0;}#sk-container-id-5 div.sk-toggleable {background-color: white;}#sk-container-id-5 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-5 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-5 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-5 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-5 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-5 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-5 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-5 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-5 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-5 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-5 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-5 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-5 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-5 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-5 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-5 div.sk-item {position: relative;z-index: 1;}#sk-container-id-5 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-5 div.sk-item::before, #sk-container-id-5 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-5 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-5 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-5 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-5 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-5 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-5 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-5 div.sk-label-container {text-align: center;}#sk-container-id-5 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-5 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-5" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA(n_components=1)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-5" type="checkbox" checked><label for="sk-estimator-id-5" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA(n_components=1)</pre></div></div></div></div></div></div></div>
+</div>
+<p>Let’s see which components were found:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca1d</span><span class="o">.</span><span class="n">components_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[0.64514558, 0.76405967]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is the first row of the matrix <code class="docutils literal notranslate"><span class="pre">W</span></code> in the case of PCA with both components. Let’s verify:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">pca1d</span><span class="o">.</span><span class="n">components_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">components_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.64514558 0.76405967]]
+[[ 0.64514558  0.76405967]
+ [ 0.76405967 -0.64514558]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We perform the data projection:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Z1</span> <span class="o">=</span> <span class="n">pca1d</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">Z1</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1000, 1)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The obtained values are now one-dimensional. However, in this operation, we have lost some information. We can measure how much variance we have lost by dividing the variance of the projected data by the total variance of the data before the transformation:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># sum the variances of the two variables to get the total variance</span>
+<span class="n">total_variance</span> <span class="o">=</span> <span class="n">set2d</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">var</span><span class="p">()</span> <span class="o">+</span> <span class="n">set2d</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="n">variance_retained</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">Z1</span><span class="p">)</span>
+
+<span class="c1"># multiply by one hundred to get a percentage value</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Percentage of variance retained: </span><span class="si">%0.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">variance_retained</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">total_variance</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Percentage of variance lost: </span><span class="si">%0.2f%%</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="mi">100</span> <span class="o">-</span> <span class="n">variance_retained</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="n">total_variance</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Percentuale di varianza mantenuta: 73.79%
+Percentuale di varianza persa: 26.21%
+</pre></div>
+</div>
+</div>
+</div>
+<p>In practice, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> calculates for us the percentage of variance “explained” by the i-th component:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.7386014, 0.2613986])
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the i-th component of the vector, the variance explained by the i-th principal component is reported. If we want to know how much variance we keep by truncating to the i-th component, we can apply <code class="docutils literal notranslate"><span class="pre">cumsum</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.7386014, 1.       ])
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, truncating at the first component, we retain approximately <span class="math notranslate nohighlight">\(73.86\%\)</span> of the information. Truncating at the second component (and thus keeping all of them), we retain <span class="math notranslate nohighlight">\(100\%\)</span> of the information.</p>
+<blockquote>
+<div><p><strong>Question 11</strong></p>
+<p>Why do we retain <span class="math notranslate nohighlight">\(100\%\)</span> of the information by keeping the first two components?</p>
+</div></blockquote>
+</section>
+<section id="pca-for-data-compression">
+<h3>PCA for Data Compression<a class="headerlink" href="#pca-for-data-compression" title="Permalink to this heading">#</a></h3>
+<p>Let’s now look at a simple example of data compression using PCA. In particular, we will consider the case of image compression. An image can be viewed as high-dimensional data, where the number of dimensions is equal to the number of pixels. For example, an RGB image of size <span class="math notranslate nohighlight">\(640 \times 480\)</span> pixels has <span class="math notranslate nohighlight">\(3 \cdot 640 \cdot 480=921600\)</span> dimensions. We expect that in all these dimensions there will be redundant information. One method for compressing images consists of dividing them into fixed-size blocks (e.g., <span class="math notranslate nohighlight">\(8 \times 8\)</span>). Each of these small blocks will constitute an element belonging to a population (the population of <span class="math notranslate nohighlight">\(8 \times 8\)</span> blocks of the image. Assuming that the information in the blocks is highly correlated, we can try to compress it by applying PCA to the population of blocks and choosing only a few principal components to represent the content of the blocks.</p>
+<p>Let’s start by loading an example image using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_sample_image</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">flower_image</span> <span class="o">=</span> <span class="n">load_sample_image</span><span class="p">(</span><span class="s1">&#39;flower.jpg&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Image dimensions:&quot;</span><span class="p">,</span><span class="n">flower_image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number of dimensions:&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">flower_image</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flower_image</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dimensioni dell&#39;immagine: (427, 640, 3)
+Numero di dimensioni: 819840
+</pre></div>
+</div>
+<img alt="../_images/f4cbd0c42f0010f88d0ac3e11b7d3c1b12377c8559f38871f2a14cf3ba3c5c6c.png" src="../_images/f4cbd0c42f0010f88d0ac3e11b7d3c1b12377c8559f38871f2a14cf3ba3c5c6c.png" />
+</div>
+</div>
+<p>We will divide the image into RGB blocks of size <span class="math notranslate nohighlight">\(8 \times 8 \times 3\)</span> (these are <span class="math notranslate nohighlight">\(8 \times 8\)</span> RGB images). We start by transforming the image into a one-dimensional vector:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flower_one_dimensional</span> <span class="o">=</span> <span class="n">flower</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">flower_one_dimensional</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>819840
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s calculate how many <span class="math notranslate nohighlight">\(8 \times 8 \times 3\)</span> blocks fit into the image:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">flower_one_dimensional</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="p">(</span><span class="mi">8</span><span class="o">*</span><span class="mi">8</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4270.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>We use the numpy <code class="docutils literal notranslate"><span class="pre">split</span></code> function to divide the one-dimensional vector into <span class="math notranslate nohighlight">\(4270\)</span> equal parts. This method returns a list. We use numpy’s <code class="docutils literal notranslate"><span class="pre">stack</span></code> to transform the list of vectors into a matrix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tiles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">flower</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="mi">4270</span><span class="p">)</span>
+<span class="n">tiles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">tiles</span><span class="p">)</span>
+<span class="n">tiles</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4270, 192)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We obtained <span class="math notranslate nohighlight">\(4270\)</span> vectors of <span class="math notranslate nohighlight">\(192 = 8 \times 8 \times 3\)</span> units. Each of the vectors is a block of the image. Let’s try to visualize some of them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">141</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tiles</span><span class="p">[</span><span class="mi">1855</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">142</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tiles</span><span class="p">[</span><span class="mi">2900</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">143</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tiles</span><span class="p">[</span><span class="mi">1856</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">144</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">tiles</span><span class="p">[</span><span class="mi">960</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ebd6d798c5f92400bec3d5eff1401f212d0b9445568d843862de10225f3c5dff.png" src="../_images/ebd6d798c5f92400bec3d5eff1401f212d0b9445568d843862de10225f3c5dff.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 12</strong></p>
+<p>Is there redundancy in the values contained in the blocks?</p>
+</div></blockquote>
+<p>We calculate the PCA of tiles:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span><span class="o">=</span><span class="n">PCA</span><span class="p">()</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tiles</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-6 {color: black;}#sk-container-id-6 pre{padding: 0;}#sk-container-id-6 div.sk-toggleable {background-color: white;}#sk-container-id-6 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-6 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-6 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-6 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-6 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-6 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-6 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-6 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-6 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-6 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-6 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-6 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-6 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-6 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-6 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-6 div.sk-item {position: relative;z-index: 1;}#sk-container-id-6 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-6 div.sk-item::before, #sk-container-id-6 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-6 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-6 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-6 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-6 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-6 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-6 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-6 div.sk-label-container {text-align: center;}#sk-container-id-6 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-6 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-6" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA()</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-6" type="checkbox" checked><label for="sk-estimator-id-6" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA()</pre></div></div></div></div></div></div></div>
+</div>
+<p>Let’s check how much information is lost by discarding the various components:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">cumsum</span><span class="p">(</span><span class="n">pca</span><span class="o">.</span><span class="n">explained_variance_ratio_</span><span class="p">)[:</span><span class="mi">32</span><span class="p">]</span> <span class="c1"># print only the values related to the first 32 components</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.72033322, 0.8054948 , 0.88473857, 0.91106289, 0.92773705,
+       0.94002709, 0.94742984, 0.95262262, 0.95724086, 0.96138203,
+       0.96493482, 0.96813026, 0.97074765, 0.97304417, 0.97502487,
+       0.97676849, 0.97827393, 0.97961611, 0.98080084, 0.98195037,
+       0.98298693, 0.98399279, 0.98491245, 0.98570784, 0.98649079,
+       0.98719466, 0.98779928, 0.98835152, 0.98888528, 0.98937606,
+       0.98983658, 0.99027875])
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, truncating to the first component allows us to retain approximately <span class="math notranslate nohighlight">\(72\%\)</span> of the information, truncating to the second allows us to retain approximately <span class="math notranslate nohighlight">\(80\%\)</span>, and so on, up to <span class="math notranslate nohighlight">\(32\)</span> components, which allow us to retain approximately <span class="math notranslate nohighlight">\(99\%\)</span> of the information. Let’s now see how to compress and reconstruct the image. We will choose the first <span class="math notranslate nohighlight">\(32\)</span> components, which preserve <span class="math notranslate nohighlight">\(99\%\)</span> of the information:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">tiles</span><span class="p">)</span>
+<span class="n">compressed_tiles</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">tiles</span><span class="p">)</span>
+<span class="n">compressed_tiles</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4270, 32)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have obtained a much smaller matrix than the starting one. Let’s calculate the percentage of space saved:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Space saved in compression: </span><span class="si">{:0.2f}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="mi">100</span><span class="o">-</span><span class="mi">100</span><span class="o">*</span><span class="n">compressed_tiles</span><span class="o">.</span><span class="n">size</span><span class="o">/</span><span class="n">tiles</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spazio salvato nella compressione: 83.33%
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now reconstruct the image from its compressed representation. To do this, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> provides the <code class="docutils literal notranslate"><span class="pre">inverse_transform</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reconstructed_tiles</span> <span class="o">=</span> <span class="n">pca</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">compressed_tiles</span><span class="p">)</span>
+<span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(4270, 192)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to perform the inverse steps to recompose the image from the tiles. We start by normalizing the values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(255\)</span>. This is necessary to avoid warnings (after PCA, the RGB values might have a slightly different range):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_reconstructed_tiles</span> <span class="o">=</span> <span class="p">(</span><span class="n">reconstructed_tiles</span> <span class="o">-</span> <span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> \
+            <span class="o">/</span> <span class="p">(</span><span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="o">*</span> <span class="mi">255</span>
+<span class="c1"># Convert the data type from float to uint8</span>
+<span class="n">reconstructed_tiles</span> <span class="o">=</span> <span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>let’s recompose the image using a reshape and display it next to the original:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">reconstructed_flower</span><span class="o">=</span><span class="n">reconstructed_tiles</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">flower</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">flower</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Reconstructed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">reconstructed_flower</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ed00e125d39f751780bef753970e006f892f939957560b2fe289d5c722055afa.png" src="../_images/ed00e125d39f751780bef753970e006f892f939957560b2fe289d5c722055afa.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 13</strong></p>
+<p>Try to compress and reconstruct the image with a different number of components. Are there numbers that allow for good results while still saving space?</p>
+</div></blockquote>
+</section>
+<section id="pca-for-data-visualization">
+<h3>PCA for Data Visualization<a class="headerlink" href="#pca-for-data-visualization" title="Permalink to this heading">#</a></h3>
+<p>PCA is also used to allow for the visualization of multidimensional data, for example, to get an idea of how it is distributed in space. Let’s consider, for example, the “digits” dataset made available by the <strong>scikit-learn</strong> library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="n">digits</span><span class="o">=</span><span class="n">load_digits</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a dataset of <span class="math notranslate nohighlight">\(8 \times 8\)</span> pixel images depicting handwritten numbers. Let’s visualize its description:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">DESCR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.. _digits_dataset:
+
+Optical recognition of handwritten digits dataset
+--------------------------------------------------
+
+**Data Set Characteristics:**
+
+    :Number of Instances: 1797
+    :Number of Attributes: 64
+    :Attribute Information: 8x8 image of integer pixels in the range 0..16.
+    :Missing Attribute Values: None
+    :Creator: E. Alpaydin (alpaydin &#39;@&#39; boun.edu.tr)
+    :Date: July; 1998
+
+This is a copy of the test set of the UCI ML hand-written digits datasets
+https://archive.ics.uci.edu/ml/datasets/Optical+Recognition+of+Handwritten+Digits
+
+The data set contains images of hand-written digits: 10 classes where
+each class refers to a digit.
+
+Preprocessing programs made available by NIST were used to extract
+normalized bitmaps of handwritten digits from a preprinted form. From a
+total of 43 people, 30 contributed to the training set and different 13
+to the test set. 32x32 bitmaps are divided into nonoverlapping blocks of
+4x4 and the number of on pixels are counted in each block. This generates
+an input matrix of 8x8 where each element is an integer in the range
+0..16. This reduces dimensionality and gives invariance to small
+distortions.
+
+For info on NIST preprocessing routines, see M. D. Garris, J. L. Blue, G.
+T. Candela, D. L. Dimmick, J. Geist, P. J. Grother, S. A. Janet, and C.
+L. Wilson, NIST Form-Based Handprint Recognition System, NISTIR 5469,
+1994.
+
+|details-start|
+**References**
+|details-split|
+
+- C. Kaynak (1995) Methods of Combining Multiple Classifiers and Their
+  Applications to Handwritten Digit Recognition, MSc Thesis, Institute of
+  Graduate Studies in Science and Engineering, Bogazici University.
+- E. Alpaydin, C. Kaynak (1998) Cascading Classifiers, Kybernetika.
+- Ken Tang and Ponnuthurai N. Suganthan and Xi Yao and A. Kai Qin.
+  Linear dimensionalityreduction using relevance weighted LDA. School of
+  Electrical and Electronic Engineering Nanyang Technological University.
+  2005.
+- Claudio Gentile. A New Approximate Maximal Margin Classification
+  Algorithm. NIPS. 2000.
+
+|details-end|
+</pre></div>
+</div>
+</div>
+</div>
+<p>The character images are contained in the form of one-dimensional vectors of <span class="math notranslate nohighlight">\(64\)</span> elements. Each element is associated with a class. We visualize an element of the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the elements are contained within digits.data</span>
+<span class="c1"># these are 1x64 vectors, which must be transformed into 8x8 vectors for visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">)),</span><span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="c1"># the classes are contained within digits.target</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Corresponding class:&quot;</span><span class="p">,</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classe corrispondente: 0
+</pre></div>
+</div>
+<img alt="../_images/9724f74c648a88b70e68ac651cc728f778d5d49ef093a27479db9edb7792b642.png" src="../_images/9724f74c648a88b70e68ac651cc728f778d5d49ef093a27479db9edb7792b642.png" />
+</div>
+</div>
+<p>To understand how data is distributed in space, we could visualize it in two-dimensional space. To do this, we must discard <span class="math notranslate nohighlight">\(62\)</span> dimensions and keep <span class="math notranslate nohighlight">\(2\)</span>. To be sure we consider the “most important” two dimensions, we first transform the data using PCA to “reorder” its dimensions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># since we only want the first two principal components</span>
+<span class="c1"># we can specify n_components=2</span>
+<span class="n">pca</span><span class="o">=</span><span class="n">PCA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">pca</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="n">Y</span><span class="o">=</span><span class="n">pca</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We therefore perform the plot, class by class:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">legend</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">Y</span><span class="p">[</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="o">==</span><span class="n">c</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">Y</span><span class="p">[</span><span class="n">digits</span><span class="o">.</span><span class="n">target</span><span class="o">==</span><span class="n">c</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;o&#39;</span><span class="p">)</span>
+    <span class="n">legend</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">legend</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bf14fd7d56c2e85b1b880667fa182a77e1e2ff92e5f54ba4eacb1df26a11564f.png" src="../_images/bf14fd7d56c2e85b1b880667fa182a77e1e2ff92e5f54ba4eacb1df26a11564f.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 14</strong></p>
+<p>Can we infer any type of data regularity from the graph above?</p>
+</div></blockquote>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Consider the Boston dataset. Apply K-Means to the <code class="docutils literal notranslate"><span class="pre">medv</span></code> variable data. Then, insert a new column <code class="docutils literal notranslate"><span class="pre">priceRange</span></code> into the dataset containing the clusters associated with the respective <code class="docutils literal notranslate"><span class="pre">medv</span></code> values. Split the dataset into training and test sets and train a K-NN (find an appropriate K) to predict <code class="docutils literal notranslate"><span class="pre">priceRange</span></code> values from all variables except <code class="docutils literal notranslate"><span class="pre">medv</span></code>. Discuss the obtained results.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Use a GMM model to cluster the digits dataset as done previously in the case of K-Means. Visualize the images related to the found means and calculate the purity of each cluster. Are the results obtained by GMM and K-Means qualitatively different? Calculate the average cluster purity in the two cases. Are there any differences?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Consider the Titanic dataset. Apply PCA to all variables except <code class="docutils literal notranslate"><span class="pre">Survived</span></code>. How many components should be kept to retain 90% of the variance?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>Calculate the PCA coefficients with the number of components found in the previous exercise. Project the data using PCA. Then, calculate two logistic regressions to predict the values of <code class="docutils literal notranslate"><span class="pre">Survived</span></code> from the original data and from the transformed data. Which of the two linear regressions is better?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
+<p>Project the Titanic dataset onto the two principal components. Plot the data as points in 2D space, distinguishing between elements belonging to the <code class="docutils literal notranslate"><span class="pre">Survived</span></code> class and those not belonging to it. Are the classes well separable?</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./laboratories"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#k-means-clustering">K-Means Clustering</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-with-digits-dataset">Example with DIGITS dataset</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation">Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-density-estimation">Non-Parametric Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hexplots">Hexplots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-density-estimation">Kernel Density Estimation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-methods">Parametric Methods</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-known-distributions-to-data-using-scipy">Fitting Known Distributions to Data using SciPy</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-models-gmm">Gaussian Mixture Models (GMM)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#principal-component-analysis">Principal Component Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pca-coefficients">Interpretation of PCA Coefficients</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-coefficients-of-pca-have-a-simple-geometric-interpretation-in-the-2d-case-the-two-columns-of-the-matrix-w-represent-the-two-unit-vectors-of-the-new-reference-system-identified-by-pca-let-s-first-verify-that-they-are-two-unit-vectors">The coefficients of PCA have a simple geometric interpretation in the 2D case. The two columns of the matrix <span class="math notranslate nohighlight">\(W\)</span> represent the two unit vectors of the new reference system identified by PCA. Let’s first verify that they are two unit vectors:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rototranslation-of-data">Rototranslation of data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-decorrelation">Data decorrelation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction">Dimensionality Reduction</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-for-data-compression">PCA for Data Compression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pca-for-data-visualization">PCA for Data Visualization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

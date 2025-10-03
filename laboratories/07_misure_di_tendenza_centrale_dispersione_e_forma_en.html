@@ -1,0 +1,1461 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Laboratory on Measures of Central Tendency, Dispersion, and Shape &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma_en';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../lectures/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../lectures/index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma_en.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/07_misure_di_tendenza_centrale_dispersione_e_forma_en.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/laboratories/07_misure_di_tendenza_centrale_dispersione_e_forma_en.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Laboratory on Measures of Central Tendency, Dispersion, and Shape</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#size">Size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-tendency-indicators-mean-median-and-mode">Central Tendency Indicators: Mean, Median, and Mode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles-percentiles-and-quartiles">Quantiles, Percentiles, and Quartiles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-maximum-and-range">Minimum, Maximum, and Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interquartile-range">Interquartile Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-and-standard-deviation">Variance and Standard Deviation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-0-and-1">Normalization between 0 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-1-and-1">Normalization between -1 and 1</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardization-z-scoring">Standardization (z-scoring)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-indicators">Shape Indicators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#asymmetry-skewness">Asymmetry (skewness)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#curtosis-kurtosis">Curtosis (kurtosis)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplot">Boxplot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-boxplots">Multiple Boxplots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="laboratory-on-measures-of-central-tendency-dispersion-and-shape">
+<h1>Laboratory on Measures of Central Tendency, Dispersion, and Shape<a class="headerlink" href="#laboratory-on-measures-of-central-tendency-dispersion-and-shape" title="Permalink to this heading">#</a></h1>
+<p>To examine the instruments in question, we will use the <strong>Titanic</strong> dataset. This is a classic dataset that reports some information, such as sex, age, boarding class, and survival of some passengers on the Titanic. You can find a version of the dataset at the following URL:</p>
+<p><a class="reference external" href="https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv">https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv</a></p>
+<p>Let’s load the dataset using the Pandas library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">,</span>
+                     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Display some information about the dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 891 entries, 1 to 891
+Data columns (total 11 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   Survived  891 non-null    int64  
+ 1   Pclass    891 non-null    int64  
+ 2   Name      891 non-null    object 
+ 3   Sex       891 non-null    object 
+ 4   Age       714 non-null    float64
+ 5   SibSp     891 non-null    int64  
+ 6   Parch     891 non-null    int64  
+ 7   Ticket    891 non-null    object 
+ 8   Fare      891 non-null    float64
+ 9   Cabin     204 non-null    object 
+ 10  Embarked  889 non-null    object 
+dtypes: float64(2), int64(4), object(5)
+memory usage: 83.5+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset contains <span class="math notranslate nohighlight">\(891\)</span> observations and <span class="math notranslate nohighlight">\(11\)</span> columns. We visualize the first rows of the DataFrame to see how it is organized:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="size">
+<h2>Size<a class="headerlink" href="#size" title="Permalink to this heading">#</a></h2>
+<p>The size of the samples constituted by the individual columns can be obtained using the <code class="docutils literal notranslate"><span class="pre">len</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>891
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">len</span></code> method, however, does not consider incomplete data (the column might contain <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s). To obtain a more accurate count, we can explicitly remove the <code class="docutils literal notranslate"><span class="pre">NaN</span></code>s with <code class="docutils literal notranslate"><span class="pre">dropna</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>714
+</pre></div>
+</div>
+</div>
+</div>
+<p>As we can see, the sample is less numerous than it seemed. Alternatively, we can call <code class="docutils literal notranslate"><span class="pre">info</span></code> on the DataFrame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Int64Index: 891 entries, 1 to 891
+Data columns (total 11 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   Survived  891 non-null    int64  
+ 1   Pclass    891 non-null    int64  
+ 2   Name      891 non-null    object 
+ 3   Sex       891 non-null    object 
+ 4   Age       714 non-null    float64
+ 5   SibSp     891 non-null    int64  
+ 6   Parch     891 non-null    int64  
+ 7   Ticket    891 non-null    object 
+ 8   Fare      891 non-null    float64
+ 9   Cabin     204 non-null    object 
+ 10  Embarked  889 non-null    object 
+dtypes: float64(2), int64(4), object(5)
+memory usage: 83.5+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>The schema above shows the number of <code class="docutils literal notranslate"><span class="pre">non-null</span></code> objects for each column. Consistent with what was seen before, we only have <span class="math notranslate nohighlight">\(714\)</span> valid <code class="docutils literal notranslate"><span class="pre">Age</span></code> elements.</p>
+<blockquote>
+<div><p><strong>Question 1</strong></p>
+<p>What is the cardinality of <code class="docutils literal notranslate"><span class="pre">Cabin</span></code>?</p>
+</div></blockquote>
+</section>
+<section id="central-tendency-indicators-mean-median-and-mode">
+<h2>Central Tendency Indicators: Mean, Median, and Mode<a class="headerlink" href="#central-tendency-indicators-mean-median-and-mode" title="Permalink to this heading">#</a></h2>
+<section id="mean">
+<h3>Mean<a class="headerlink" href="#mean" title="Permalink to this heading">#</a></h3>
+<p>We can manually calculate the mean as follows</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29.69911764705882
+</pre></div>
+</div>
+</div>
+</div>
+<p>Or simply using the <code class="docutils literal notranslate"><span class="pre">mean</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29.69911764705882
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 2</strong></p>
+<p>In which cases does the mean summarize the data well? In which cases does it not?</p>
+</div></blockquote>
+</section>
+<section id="median">
+<h3>Median<a class="headerlink" href="#median" title="Permalink to this heading">#</a></h3>
+<p>We can calculate the median manually as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">data_series</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">sort_values</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data_series</span><span class="o">.</span><span class="n">sort_values</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3   -4
+1   -2
+0    1
+2    3
+4    7
+dtype: int64
+Mediana: 1
+</pre></div>
+</div>
+</div>
+</div>
+<p>o alternatively using the <code class="docutils literal notranslate"><span class="pre">median</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s calculate the median value of <code class="docutils literal notranslate"><span class="pre">Age</span></code> for example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>28.0
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 3</strong></p>
+<p>Compare the mean of <code class="docutils literal notranslate"><span class="pre">Age</span></code> with its median. Do the two values correspond? Why? Which of the two values is equal to one of the values belonging to the sample?</p>
+</div></blockquote>
+</section>
+<section id="quantiles-percentiles-and-quartiles">
+<h3>Quantiles, Percentiles, and Quartiles<a class="headerlink" href="#quantiles-percentiles-and-quartiles" title="Permalink to this heading">#</a></h3>
+<p>In pandas, quantiles are obtained using the <code class="docutils literal notranslate"><span class="pre">quantile</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0th quantile (minimum):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0.5th quantile (median):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1st quantile (maximum):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;0.15th quantile:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quantile di ordine 0 (minimo): 0.42
+Quantile di ordine 0.5 (mediana): 28.0
+Quantile di ordine 1 (massimo): 80.0
+Quantile di ordine 0.15: 17.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Percentiles are always obtained using the <code class="docutils literal notranslate"><span class="pre">quantile</span></code> function, dividing the percentile order by 100:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;50</span><span class="si">% o</span><span class="s2">rder percentile (median):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">50</span><span class="o">/</span><span class="mi">100</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;30</span><span class="si">% o</span><span class="s2">rder percentile:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">30</span><span class="o">/</span><span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Percentile di ordine 50% (mediana): 28.0
+Percentile di ordine 30%: 22.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Analogously, quartiles are obtained by dividing the quartile’s order by 4:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 0 quartile (minimum):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 1 quartile:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 2 quartile (median):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 3 quartile:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 4 quartile (maximum):&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quartile di ordine 0 (minimo): 0.42
+Quartile di ordine 1: 20.125
+Quartile di ordine 2 (mediana): 28.0
+Quartile di ordine 3: 38.0
+Quartile di ordine 4 (massimo): 80.0
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 4</strong></p>
+<p>Quartiles, like the minimum and maximum, also allow us to get an idea of the order of magnitude of the analyzed data, however, quartiles have an advantage, what is it?</p>
+</div></blockquote>
+</section>
+<section id="mode">
+<h3>Mode<a class="headerlink" href="#mode" title="Permalink to this heading">#</a></h3>
+<p>We can calculate the mode manually as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mode: &quot;</span><span class="p">,</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>24.0    30
+22.0    27
+18.0    26
+19.0    25
+28.0    25
+Name: Age, dtype: int64
+Moda:  24.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Alternatively, we can use the <code class="docutils literal notranslate"><span class="pre">mode</span></code> function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    24.0
+Name: Age, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 5</strong></p>
+<p>Compare the mode of <code class="docutils literal notranslate"><span class="pre">Age</span></code> with its mean. Do the values correspond? Why?</p>
+</div></blockquote>
+</section>
+</section>
+<section id="measures-of-dispersion">
+<h2>Measures of Dispersion<a class="headerlink" href="#measures-of-dispersion" title="Permalink to this heading">#</a></h2>
+<section id="minimum-maximum-and-range">
+<h3>Minimum, Maximum, and Range<a class="headerlink" href="#minimum-maximum-and-range" title="Permalink to this heading">#</a></h3>
+<p>Maximum, minimum, and range are calculated simply as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Range:&quot;</span><span class="p">,</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Minimo: 0.42
+Massimo: 80.0
+Range: 79.58
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 6</strong></p>
+<p>Is the range a robust measure of dispersion in the presence of “outliers”?</p>
+</div></blockquote>
+</section>
+<section id="interquartile-range">
+<h3>Interquartile Range<a class="headerlink" href="#interquartile-range" title="Permalink to this heading">#</a></h3>
+<p>We can calculate the interquartile range as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q11</span><span class="p">,</span><span class="n">q13</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;male&#39;</span><span class="p">][</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">q21</span><span class="p">,</span><span class="n">q23</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;female&#39;</span><span class="p">][</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The interquartile range of sample 1 is:&quot;</span><span class="p">,</span><span class="n">q13</span><span class="o">-</span><span class="n">q11</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The interquartile range of sample 2 is:&quot;</span><span class="p">,</span><span class="n">q23</span><span class="o">-</span><span class="n">q21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Lo scarto interquartile di sample 1 è: 18.0
+Lo scarto interquartile di sample 2 è: 19.0
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 7</strong></p>
+<p>Is the interquartile distance always a robust measure of dispersion? What happens in the case of strongly asymmetric distributions?</p>
+</div></blockquote>
+</section>
+<section id="variance-and-standard-deviation">
+<h3>Variance and Standard Deviation<a class="headerlink" href="#variance-and-standard-deviation" title="Permalink to this heading">#</a></h3>
+<p>Variance can be calculated by calling the <code class="docutils literal notranslate"><span class="pre">var</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;male&#39;</span><span class="p">][</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;female&#39;</span><span class="p">][</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>215.44957942429036
+199.0962330533453
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <strong>standard deviation</strong> is calculated using the <code class="docutils literal notranslate"><span class="pre">std</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample standard deviation:&quot;</span><span class="p">,</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">(),</span><span class="s2">&quot;years&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Deviazione standard del campione: 14.526497332334044 anni
+</pre></div>
+</div>
+</div>
+</div>
+<p>The standard deviation also tells us something about the “shape” of the distribution. Let’s compare, for example, the standard deviations of the ages of passengers belonging to the three boarding classes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Pclass&#39;</span><span class="p">)[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pclass
+1    14.802856
+2    14.001077
+3    12.495398
+Name: Age, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s now compare the densities estimated from the three samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Pclass&#39;</span><span class="p">)[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3127b5ecb288eba512d670ea969b8c4eabfb9e0d36ad57988cbb81267b12f59b.png" src="../_images/3127b5ecb288eba512d670ea969b8c4eabfb9e0d36ad57988cbb81267b12f59b.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 8</strong></p>
+<p>Is there a relationship between the standard deviations of samples and their respective densities? Which one?</p>
+</div></blockquote>
+<section id="normalization-between-0-and-1">
+<h4>Normalization between 0 and 1<a class="headerlink" href="#normalization-between-0-and-1" title="Permalink to this heading">#</a></h4>
+<p>According to normalization between 0 and 1, data are rescaled as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{norm} = (x-x_{min})/(x_{max}-x_{min})
+\]</div>
+<p>We can perform this transformation in Pandas as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">normalized_age_01</span> <span class="o">=</span> <span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">-</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We verify that the endpoints of the new sample are 0 and 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">age_norm_01</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">age_norm_01</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="normalization-between-1-and-1">
+<h4>Normalization between -1 and 1<a class="headerlink" href="#normalization-between-1-and-1" title="Permalink to this heading">#</a></h4>
+<p>The data is rescaled as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{norm} = (x_{max}+x_{min}-2\cdot x)/(x_{max}-x_{min})
+\]</div>
+<p>We can perform this transformation in Pandas as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age_norm_11</span> <span class="o">=</span> <span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s check that the extremes of the new sample are -1 and 1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">age_norm_11</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">age_norm_11</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-1.0 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="standardization-z-scoring">
+<h3>Standardization (z-scoring)<a class="headerlink" href="#standardization-z-scoring" title="Permalink to this heading">#</a></h3>
+<p>We can perform this normalization using the <code class="docutils literal notranslate"><span class="pre">zscore</span></code> function from <code class="docutils literal notranslate"><span class="pre">scipy</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">zscore</span>
+<span class="n">zscore</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1.41421356, -0.70710678,  0.        ,  0.70710678,  1.41421356])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We apply this normalization to the ages of the Titanic passengers:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age_z</span><span class="o">=</span><span class="n">zscore</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">age_z</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/94d6f9801933af40ea58e994ae8e4868959480742ea326ad146ff0c511d56c11.png" src="../_images/94d6f9801933af40ea58e994ae8e4868959480742ea326ad146ff0c511d56c11.png" />
+</div>
+</div>
+</section>
+<section id="shape-indicators">
+<h3>Shape Indicators<a class="headerlink" href="#shape-indicators" title="Permalink to this heading">#</a></h3>
+<section id="asymmetry-skewness">
+<h4>Asymmetry (skewness)<a class="headerlink" href="#asymmetry-skewness" title="Permalink to this heading">#</a></h4>
+<p>I can calculate the skewness value using the Pandas <code class="docutils literal notranslate"><span class="pre">skew</span></code> method. Let’s look at a couple of examples on the weights and heights dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_31494/1596635564.py:1: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with &#39;numeric_only=None&#39;) is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.
+  titanic.skew()
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Survived    0.478523
+Pclass     -0.630548
+Age         0.389108
+SibSp       3.695352
+Parch       2.749117
+Fare        4.787317
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s compare the results with the density estimates:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;, &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;,
+        &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;],
+       [&lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;, &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;,
+        &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;]], dtype=object)
+</pre></div>
+</div>
+<img alt="../_images/db7ca8b3af75435e6a0559d58c00faaf677aadc08d3b10203140f7c00457ab50.png" src="../_images/db7ca8b3af75435e6a0559d58c00faaf677aadc08d3b10203140f7c00457ab50.png" />
+</div>
+</div>
+<p>The skewness values of weights and heights will be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">hw</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Weight skewness: </span><span class="si">{</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Height skewness: </span><span class="si">{</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Skweness pesi: 0.57
+Skweness altezza: 0.19
+</pre></div>
+</div>
+</div>
+</div>
+<p>Comparing with densities:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">subplots</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[&lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;, &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;,
+        &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;],
+       [&lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;, &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;,
+        &lt;AxesSubplot:ylabel=&#39;Density&#39;&gt;]], dtype=object)
+</pre></div>
+</div>
+<img alt="../_images/0b8c6e1db2d6c3e5aa90f25f408109f1ef065faf6116962d108297f4741ed227.png" src="../_images/0b8c6e1db2d6c3e5aa90f25f408109f1ef065faf6116962d108297f4741ed227.png" />
+</div>
+</div>
+</section>
+<section id="curtosis-kurtosis">
+<h4>Curtosis (kurtosis)<a class="headerlink" href="#curtosis-kurtosis" title="Permalink to this heading">#</a></h4>
+<p>Similarly, we can calculate the curtosis using the <code class="docutils literal notranslate"><span class="pre">Kurtosis</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_31494/3071249296.py:1: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with &#39;numeric_only=None&#39;) is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.
+  titanic.kurtosis()
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Survived    -1.775005
+Pclass      -1.280015
+Age          0.178274
+SibSp       17.880420
+Parch        9.778125
+Fare        33.398141
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_31494/4227707798.py:1: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with &#39;numeric_only=None&#39;) is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.
+  hw.kurtosis()
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>BMI       0.917179
+height   -0.687287
+weight   -0.056386
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="boxplot">
+<h2>Boxplot<a class="headerlink" href="#boxplot" title="Permalink to this heading">#</a></h2>
+<p>We can visualize a boxplot directly using <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/24ce3a60a19260af41dbbe519a20cc5bb83884b3725b8559e329f5efc6b6d1b5.png" src="../_images/24ce3a60a19260af41dbbe519a20cc5bb83884b3725b8559e329f5efc6b6d1b5.png" />
+</div>
+</div>
+<p>Alternatively, we can show a boxplot using matplotlib:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">())</span> <span class="c1"># insert dropna to eliminate NaNs</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/720afb629c1a6f2676144757c776184c11d125f9d75c8df2002e982dfd1556d6.png" src="../_images/720afb629c1a6f2676144757c776184c11d125f9d75c8df2002e982dfd1556d6.png" />
+</div>
+</div>
+<section id="multiple-boxplots">
+<h3>Multiple Boxplots<a class="headerlink" href="#multiple-boxplots" title="Permalink to this heading">#</a></h3>
+<p>Using <code class="docutils literal notranslate"><span class="pre">Pandas</span></code>, you can display the boxplots of all numeric variables in a DataFrame as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/de2f3779e3ca0a5415af5d0b1fd7b13d8512c8c761774699af78989be464eade.png" src="../_images/de2f3779e3ca0a5415af5d0b1fd7b13d8512c8c761774699af78989be464eade.png" />
+</div>
+</div>
+<p>If we want to narrow the analysis to a few variables, we can select only the variables of interest as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Fare&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f07d23bc4d5aeb42aebc700af486860efab477ee35bd57f9e8646bfc77b431b5.png" src="../_images/f07d23bc4d5aeb42aebc700af486860efab477ee35bd57f9e8646bfc77b431b5.png" />
+</div>
+</div>
+<p>It is also possible to compare the boxplots of different samples. Suppose we want to compare the ages of men and women:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/39dad22ba90a44b0126bbad7ea284ea3867bd8f6c21a0a1181d6678cde1bc88f.png" src="../_images/39dad22ba90a44b0126bbad7ea284ea3867bd8f6c21a0a1181d6678cde1bc88f.png" />
+</div>
+</div>
+<p>In the case of multiple variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Fare&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cf3e189ccf3f2adeb0cb2920596f95655da5ba8d86c5c39d951dbdd2ac00b871.png" src="../_images/cf3e189ccf3f2adeb0cb2920596f95655da5ba8d86c5c39d951dbdd2ac00b871.png" />
+</div>
+</div>
+<p>We can also combine boxplots with a <code class="docutils literal notranslate"><span class="pre">groupby</span></code>. For example, let’s compare the fares paid by men and women belonging to the three boarding classes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Pclass&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0f8d2c7e5e7c25f0ffacd637664b7a6aed807c7bbd8756334f2bb6af12c1bb39.png" src="../_images/0f8d2c7e5e7c25f0ffacd637664b7a6aed807c7bbd8756334f2bb6af12c1bb39.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Pclass&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span><span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">layout</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ade8de75dd250f657860417399df43f016f9c2434f36ad5e583829eb2f5f88d5.png" src="../_images/ade8de75dd250f657860417399df43f016f9c2434f36ad5e583829eb2f5f88d5.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 9</strong></p>
+<p>Compare the ages of women and men in the various boarding classes. In which class are there notable differences between the ages of men and women?</p>
+</div></blockquote>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Considering the Titanic dataset, calculate for each variable the count, mean, standard deviation, minimum, maximum, median, first quartile, and third quartile. After calculating the requested values individually, use the <code class="docutils literal notranslate"><span class="pre">describe</span></code> method to obtain these values. Which variable is the most dispersed?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Considering the Titanic dataset, for each of the three classes, calculate the mean and variance of passenger ages. In which class are the ages least dispersed? Which class contains the youngest individuals? Complete the analysis with bar charts.</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./laboratories"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#size">Size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#central-tendency-indicators-mean-median-and-mode">Central Tendency Indicators: Mean, Median, and Mode</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles-percentiles-and-quartiles">Quantiles, Percentiles, and Quartiles</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-maximum-and-range">Minimum, Maximum, and Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interquartile-range">Interquartile Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-and-standard-deviation">Variance and Standard Deviation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-0-and-1">Normalization between 0 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-1-and-1">Normalization between -1 and 1</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standardization-z-scoring">Standardization (z-scoring)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-indicators">Shape Indicators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#asymmetry-skewness">Asymmetry (skewness)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#curtosis-kurtosis">Curtosis (kurtosis)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplot">Boxplot</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-boxplots">Multiple Boxplots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

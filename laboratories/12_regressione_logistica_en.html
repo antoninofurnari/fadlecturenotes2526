@@ -1,0 +1,1940 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Logistic Regression Workshop &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/12_regressione_logistica_en';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../lectures/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../lectures/index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/12_regressione_logistica_en.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/12_regressione_logistica_en.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/laboratories/12_regressione_logistica_en.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Logistic Regression Workshop</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-logistic-regression">Simple Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-linear-regression-with-a-categorical-dependent-variable">Limitations of Linear Regression with a Categorical Dependent Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-analysis">Logistic Regression Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#significance">Significance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-analysis">Coefficient Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-logistic-regression">Multiple Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-logistic-regression-with-more-than-two-independent-variables">Example of Logistic Regression with More Than Two Independent Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-logistic-regressor-optional">Multinomial Logistic Regressor (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="logistic-regression-workshop">
+<h1>Logistic Regression Workshop<a class="headerlink" href="#logistic-regression-workshop" title="Permalink to this heading">#</a></h1>
+<p>Suppose we want to study the correlation between two variables, one of which (the dependent variable) is categorical and binary (i.e., it can only take values <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>). To study this case, we will consider an example adapted from <a class="reference external" href="http://nbviewer.jupyter.org/github/justmarkham/DAT8/blob/master/notebooks/12_logistic_regression.ipynb">http://nbviewer.jupyter.org/github/justmarkham/DAT8/blob/master/notebooks/12_logistic_regression.ipynb</a>.</p>
+<p>Let’s consider the <strong>Glass Identification Data Set</strong> (<a class="reference external" href="https://archive.ics.uci.edu/ml/datasets/glass+identification">https://archive.ics.uci.edu/ml/datasets/glass+identification</a>). This is a dataset containing a series of measurements for different glass samples. We will load the dataset using the UCI ML API:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ucimlrepo</span> <span class="kn">import</span> <span class="n">fetch_ucirepo</span> 
+  
+<span class="c1"># fetch dataset </span>
+<span class="n">glass_identification</span> <span class="o">=</span> <span class="n">fetch_ucirepo</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span> 
+  
+<span class="c1"># data (as pandas dataframes) </span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">glass_identification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">features</span> 
+<span class="n">target</span> <span class="o">=</span> <span class="n">glass_identification</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">targets</span> 
+
+<span class="n">glass</span><span class="o">=</span> <span class="n">features</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 214 entries, 0 to 213
+Data columns (total 10 columns):
+ #   Column         Non-Null Count  Dtype  
+---  ------         --------------  -----  
+ 0   RI             214 non-null    float64
+ 1   Na             214 non-null    float64
+ 2   Mg             214 non-null    float64
+ 3   Al             214 non-null    float64
+ 4   Si             214 non-null    float64
+ 5   K              214 non-null    float64
+ 6   Ca             214 non-null    float64
+ 7   Ba             214 non-null    float64
+ 8   Fe             214 non-null    float64
+ 9   Type_of_glass  214 non-null    int64  
+dtypes: float64(9), int64(1)
+memory usage: 16.8 KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RI</th>
+      <th>Na</th>
+      <th>Mg</th>
+      <th>Al</th>
+      <th>Si</th>
+      <th>K</th>
+      <th>Ca</th>
+      <th>Ba</th>
+      <th>Fe</th>
+      <th>Type_of_glass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.52101</td>
+      <td>13.64</td>
+      <td>4.49</td>
+      <td>1.10</td>
+      <td>71.78</td>
+      <td>0.06</td>
+      <td>8.75</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.51761</td>
+      <td>13.89</td>
+      <td>3.60</td>
+      <td>1.36</td>
+      <td>72.73</td>
+      <td>0.48</td>
+      <td>7.83</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.51618</td>
+      <td>13.53</td>
+      <td>3.55</td>
+      <td>1.54</td>
+      <td>72.99</td>
+      <td>0.39</td>
+      <td>7.78</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.51766</td>
+      <td>13.21</td>
+      <td>3.69</td>
+      <td>1.29</td>
+      <td>72.61</td>
+      <td>0.57</td>
+      <td>8.22</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.51742</td>
+      <td>13.27</td>
+      <td>3.62</td>
+      <td>1.24</td>
+      <td>73.08</td>
+      <td>0.55</td>
+      <td>8.07</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The dataset contains <span class="math notranslate nohighlight">\(214\)</span> observations and <span class="math notranslate nohighlight">\(10\)</span> columns. The meanings of the variables are as follows:</p>
+<ul class="simple">
+<li><p><strong>id</strong>: the id of the DataFrame row;</p></li>
+<li><p><strong>ri</strong>: the refractive index of the glass;</p></li>
+<li><p><strong>na</strong>: the percentage of sodium;</p></li>
+<li><p><strong>mg</strong>: the percentage of mercury;</p></li>
+<li><p><strong>al</strong>: the percentage of aluminum;</p></li>
+<li><p><strong>si</strong>: the percentage of silicon;</p></li>
+<li><p><strong>k</strong>: the percentage of potassium;</p></li>
+<li><p><strong>ca</strong>: the percentage of calcium;</p></li>
+<li><p><strong>ba</strong>: the percentage of barium;</p></li>
+<li><p><strong>fe</strong>: the percentage of iron;</p></li>
+<li><p><strong>Type of Glass</strong>:</p>
+<ol class="arabic simple">
+<li><p>building_windows_float_processed;</p></li>
+<li><p>building_windows_non_float_processed;</p></li>
+<li><p>vehicle_windows_float_processed;</p></li>
+<li><p>vehicle_windows_non_float_processed (this type of glass is not present in the dataset!);</p></li>
+<li><p>containers;</p></li>
+<li><p>tableware;</p></li>
+<li><p>headlamps.</p></li>
+</ol>
+</li>
+</ul>
+<p>The different types of glass can be grouped into two macro-categories:</p>
+<ul class="simple">
+<li><p>window glass (buildings or vehicles): classes 1, 2, 3 (class 4 is not present in the dataset);</p></li>
+<li><p>non-window glass: classes 5, 6, 7;</p></li>
+</ul>
+<p>Let’s build a new binary variable <strong>window_glass</strong> that maps the classes as just defined. This can be done using the <code class="docutils literal notranslate"><span class="pre">replace</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;window_glass&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;Type_of_glass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="mi">1</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">glass</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>RI</th>
+      <th>Na</th>
+      <th>Mg</th>
+      <th>Al</th>
+      <th>Si</th>
+      <th>K</th>
+      <th>Ca</th>
+      <th>Ba</th>
+      <th>Fe</th>
+      <th>Type_of_glass</th>
+      <th>window_glass</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1.52101</td>
+      <td>13.64</td>
+      <td>4.49</td>
+      <td>1.10</td>
+      <td>71.78</td>
+      <td>0.06</td>
+      <td>8.75</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1.51761</td>
+      <td>13.89</td>
+      <td>3.60</td>
+      <td>1.36</td>
+      <td>72.73</td>
+      <td>0.48</td>
+      <td>7.83</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1.51618</td>
+      <td>13.53</td>
+      <td>3.55</td>
+      <td>1.54</td>
+      <td>72.99</td>
+      <td>0.39</td>
+      <td>7.78</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.51766</td>
+      <td>13.21</td>
+      <td>3.69</td>
+      <td>1.29</td>
+      <td>72.61</td>
+      <td>0.57</td>
+      <td>8.22</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.51742</td>
+      <td>13.27</td>
+      <td>3.62</td>
+      <td>1.24</td>
+      <td>73.08</td>
+      <td>0.55</td>
+      <td>8.07</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="simple-logistic-regression">
+<h2>Simple Logistic Regression<a class="headerlink" href="#simple-logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>Let’s now suppose we want to investigate the correlation between the percentage of aluminum present in the glass (variable <code class="docutils literal notranslate"><span class="pre">Al</span></code>) and the dichotomous variable <code class="docutils literal notranslate"><span class="pre">window_glass</span></code>. In particular, we want to understand if the variable <code class="docutils literal notranslate"><span class="pre">Al</span></code> influences the outcome of <code class="docutils literal notranslate"><span class="pre">window_glass</span></code>, meaning to what extent it is possible to predict the type of glass knowing only the percentage of aluminum present. Let’s start by studying the correlation using a scatterplot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">glass</span><span class="o">.</span><span class="n">Al</span><span class="p">,</span><span class="n">glass</span><span class="o">.</span><span class="n">window_glass</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3cfaa2b294a6c65e6cca9ad05b72c0c15e0b2931feccdbf90391f2eb0f0bfec1.png" src="../_images/3cfaa2b294a6c65e6cca9ad05b72c0c15e0b2931feccdbf90391f2eb0f0bfec1.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 1</strong></p>
+<p>Does there seem to be a correlation between the two variables? What type of glass generally seems to contain higher concentrations of aluminum?</p>
+</div></blockquote>
+<section id="limitations-of-linear-regression-with-a-categorical-dependent-variable">
+<h3>Limitations of Linear Regression with a Categorical Dependent Variable<a class="headerlink" href="#limitations-of-linear-regression-with-a-categorical-dependent-variable" title="Permalink to this heading">#</a></h3>
+<p>Let’s now try to visualize the regression line for the two variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="s1">&#39;window_glass&#39;</span><span class="p">,</span><span class="n">glass</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c60d23cfa8791646b3854f33efee007812701a6bd8f32b7637a36cea3c9d6a31.png" src="../_images/c60d23cfa8791646b3854f33efee007812701a6bd8f32b7637a36cea3c9d6a31.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 2</strong></p>
+<p>Looking at the graph with the regression line, what type of glass do we predict for the following values of <strong>Al</strong>?</p>
+<ul class="simple">
+<li><p>Al = 3.5</p></li>
+<li><p>Al = 0.8</p></li>
+<li><p>Al = 1.5</p></li>
+<li><p>Al = 2.5</p></li>
+<li><p>Al = 0.5</p></li>
+</ul>
+<p>Based on what criterion do we base our predictions?</p>
+</div></blockquote>
+<p>The linear regressor, in practice, allows us to obtain a real number that gives us some indication of the most likely value of the dichotomous variable <code class="docutils literal notranslate"><span class="pre">window_glass</span></code>. If the value obtained by the linear regressor is greater than or equal to <span class="math notranslate nohighlight">\(0.5\)</span>, it makes sense to predict that <strong>window_glass</strong> is equal to <strong>1</strong>, otherwise it makes sense to predict that <strong>window_glass</strong> is equal to <strong>0</strong>. We can therefore obtain binary predictions by thresholding the values obtained by the regressor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>
+<span class="c1"># calculate the linear regressor</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;window_glass ~ Al&#39;</span><span class="p">,</span><span class="n">glass</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="c1"># get the predictions</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">glass</span><span class="p">)</span>
+<span class="c1"># round the predictions to the nearest value</span>
+<span class="c1"># this corresponds to thresholding with 0.5</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">round</span><span class="p">()</span>
+<span class="c1"># the predicted values are now binary</span>
+<span class="n">predictions</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1., 0.])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We plot the predictions on the regression graph seen before:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># sort the &#39;Al&#39; values in ascending order</span>
+<span class="c1"># first find the indices that sort the array</span>
+<span class="n">idx</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;Al&#39;</span><span class="p">])</span>
+<span class="c1"># then apply the same sorting to both &#39;Al&#39; and the predictions</span>
+<span class="n">al</span> <span class="o">=</span> <span class="n">glass</span><span class="p">[</span><span class="s1">&#39;Al&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+<span class="n">pred</span> <span class="o">=</span> <span class="n">predictions</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+<span class="c1"># finally plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;window_glass&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">glass</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">,</span><span class="n">pred</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9a4bc4447928ff374f65b5248dbe4563fd37c486d7ad4e62974b06d658fe00ca.png" src="../_images/9a4bc4447928ff374f65b5248dbe4563fd37c486d7ad4e62974b06d658fe00ca.png" />
+</div>
+</div>
+<p>We have identified a threshold point for <code class="docutils literal notranslate"><span class="pre">al</span></code> (close to <span class="math notranslate nohighlight">\(2.0\)</span>) that allows for the distinction of elements belonging to the two classes with some errors (consider the values to the left of <span class="math notranslate nohighlight">\(2.0\)</span> with class <code class="docutils literal notranslate"><span class="pre">window_glass</span></code> equal to zero).</p>
+<p>Although the linear regressor found can be used for classification, it has several limitations:</p>
+<ul class="simple">
+<li><p>It is not clear how to interpret the values obtained from the regressor. Note that, since they can be less than <span class="math notranslate nohighlight">\(0\)</span> or greater than <span class="math notranslate nohighlight">\(1\)</span>, they cannot be interpreted as probabilities;</p></li>
+<li><p>The method is not very robust to outliers. Imagine that our sample contains many <code class="docutils literal notranslate"><span class="pre">window_glass</span></code> class points equal to <span class="math notranslate nohighlight">\(0\)</span> and very high <code class="docutils literal notranslate"><span class="pre">al</span></code> values (e.g., <span class="math notranslate nohighlight">\(300\)</span>). The regression line found in this case would be much more horizontal and many of the elements with low <code class="docutils literal notranslate"><span class="pre">al</span></code> values (e.g., <span class="math notranslate nohighlight">\(2.5\)</span>) would be assigned to the <code class="docutils literal notranslate"><span class="pre">window_glass=0</span></code> class;</p></li>
+<li><p>The method does not capture the uncertainty with which we can predict the classes to which elements belong. Consider, for example, points with <code class="docutils literal notranslate"><span class="pre">al</span></code> values of <span class="math notranslate nohighlight">\(2.5\)</span> and <code class="docutils literal notranslate"><span class="pre">al</span></code> of <span class="math notranslate nohighlight">\(2.0\)</span>. We would expect the model to be “more certain” about the class of membership of the first point, rather than the second.</p></li>
+</ul>
+</section>
+<section id="logistic-regression">
+<h3>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h3>
+<p>We can calculate a <strong>logistic regressor</strong> as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">logit</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;window_glass ~ Al&#39;</span><span class="p">,</span> <span class="n">glass</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.354364
+         Iterations 7
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will see how to analyze the regressor and interpret the coefficients found afterwards.</p>
+<p>We can obtain the predicted probabilities for the values of the independent variables as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probs</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">glass</span><span class="p">)</span>
+<span class="n">probs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.957513
+1    0.883730
+2    0.781728
+3    0.910590
+4    0.926211
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the values obtained are now between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> and therefore interpretable as probabilities:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">probs</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">probs</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0009889852519933211, 0.9985007304335234)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will consider an element to belong to the <code class="docutils literal notranslate"><span class="pre">window_glass=1</span></code> class if its predicted probability is greater than <span class="math notranslate nohighlight">\(0.5\)</span>. In this case, the probability of <code class="docutils literal notranslate"><span class="pre">window_glass=0</span></code> will be less than <span class="math notranslate nohighlight">\(0.5\)</span>, and therefore the most probable outcome will be that the element belongs to the <code class="docutils literal notranslate"><span class="pre">window_glass</span></code> class.</p>
+<p>We plot the predictions as done previously:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># reorder the probabilities using</span>
+<span class="c1"># the indices found earlier</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">probs</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
+
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Al&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;window_glass&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">glass</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">al</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a7dbaacb4506256951cbd02e7b1b7cb7d47cd1a65e3ce344f06b218814c5c6b7.png" src="../_images/a7dbaacb4506256951cbd02e7b1b7cb7d47cd1a65e3ce344f06b218814c5c6b7.png" />
+</div>
+</div>
+<p>The probabilities obtained now show “where” the model is most uncertain and allow us to <strong>predict the probability that a given element belongs to the <code class="docutils literal notranslate"><span class="pre">window_glass=1</span></code> class</strong>. We can obtain a logistic regression plot with seaborn as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;Aluminum&#39;</span><span class="p">],</span><span class="n">glass</span><span class="p">[</span><span class="s1">&#39;window_glass&#39;</span><span class="p">],</span><span class="n">logistic</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/furnari/opt/anaconda3/lib/python3.9/site-packages/seaborn/_decorators.py:36: FutureWarning: Pass the following variables as keyword args: x, y. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../_images/7de5236b907a753df9a10505449b4e4b8616eaa3766f5fbd8367c63a6e382750.png" src="../_images/7de5236b907a753df9a10505449b4e4b8616eaa3766f5fbd8367c63a6e382750.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 3</strong></p>
+<p>The logistic regressor identifies, similarly to what was seen for the linear regressor, a threshold beyond which points are assigned to one class rather than another. Compare this threshold point with that obtained in the case of the linear regressor. Are the two points different? Why?</p>
+</div></blockquote>
+</section>
+<section id="logistic-regression-analysis">
+<h3>Logistic Regression Analysis<a class="headerlink" href="#logistic-regression-analysis" title="Permalink to this heading">#</a></h3>
+<p>Let’s visualize the summary of the previously calculated logistic regression:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>window_glass</td>   <th>  No. Observations:  </th>  <td>   214</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>   212</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     1</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>  <td>0.3547</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:41:22</td>     <th>  Log-Likelihood:    </th> <td> -75.834</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -117.51</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>6.835e-20</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    7.7136</td> <td>    1.078</td> <td>    7.158</td> <td> 0.000</td> <td>    5.602</td> <td>    9.826</td>
+</tr>
+<tr>
+  <th>Al</th>        <td>   -4.1804</td> <td>    0.660</td> <td>   -6.338</td> <td> 0.000</td> <td>   -5.473</td> <td>   -2.888</td>
+</tr>
+</table></div></div>
+</div>
+<section id="significance">
+<h4>Significance<a class="headerlink" href="#significance" title="Permalink to this heading">#</a></h4>
+<p>The summary presents several elements. Let’s analyze the most important ones:</p>
+<ul class="simple">
+<li><p>Pseudo R-squared: this should be interpreted like R-squared in the case of linear regression. It tells us how well the model “explains” the data;</p></li>
+<li><p>LLR p-value: this is the p-value calculated from a “Likelihood-ratio test”. If the p-value is below a critical threshold (e.g., <span class="math notranslate nohighlight">\(0.05\)</span>), the logistic regressor is statistically relevant;</p></li>
+<li><p>P-value of coefficients (<span class="math notranslate nohighlight">\(P&gt;|z|\)</span>): these should be interpreted as in the case of linear regression. Small p-values indicate that the involved variables contribute significantly to the regression.</p></li>
+</ul>
+<p>In the specific case of the trained regressor, we can say that:</p>
+<ul class="simple">
+<li><p>The logistic regressor explains part of the relationship between the variables (pseudo <span class="math notranslate nohighlight">\(R^2\)</span> equal to approximately <span class="math notranslate nohighlight">\(0.35\)</span>);</p></li>
+<li><p>The logistic regressor is statistically relevant (p-value below <span class="math notranslate nohighlight">\(0.05\)</span>);</p></li>
+<li><p>The coefficients are all statistically relevant (low p-values);</p></li>
+</ul>
+</section>
+<section id="coefficient-analysis">
+<h4>Coefficient Analysis<a class="headerlink" href="#coefficient-analysis" title="Permalink to this heading">#</a></h4>
+<p>Let’s analyze the coefficients of the logistic regressor calculated earlier. Let’s visualize the summary again:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>window_glass</td>   <th>  No. Observations:  </th>  <td>   214</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>   212</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     1</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>  <td>0.3547</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:41:53</td>     <th>  Log-Likelihood:    </th> <td> -75.834</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -117.51</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>6.835e-20</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>    7.7136</td> <td>    1.078</td> <td>    7.158</td> <td> 0.000</td> <td>    5.602</td> <td>    9.826</td>
+</tr>
+<tr>
+  <th>Al</th>        <td>   -4.1804</td> <td>    0.660</td> <td>   -6.338</td> <td> 0.000</td> <td>   -5.473</td> <td>   -2.888</td>
+</tr>
+</table></div></div>
+</div>
+<p>We calculate the exponential of the coefficient values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    2238.577657
+Al              0.015292
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can say that:</p>
+<ul class="simple">
+<li><p>For <span class="math notranslate nohighlight">\(al=0\)</span>, the odds that the glass is window glass (<code class="docutils literal notranslate"><span class="pre">window_glass=1</span></code>) is approximately <span class="math notranslate nohighlight">\(2238\)</span>. Therefore, it is <span class="math notranslate nohighlight">\(2238\)</span> times more likely that the glass is window glass;</p></li>
+<li><p>An increase of one unit in the value of the variable <code class="docutils literal notranslate"><span class="pre">al</span></code> corresponds to a multiplicative increase of <span class="math notranslate nohighlight">\(0.015\)</span>. Since the number is less than 1, this corresponds to a multiplicative decrease of <span class="math notranslate nohighlight">\(1-0.015=0.985\)</span>. We can therefore say that an increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">al</span></code> corresponds to a <span class="math notranslate nohighlight">\(98.5\%\)</span> decrease in the odds.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Question 4</strong></p>
+<p>Are the considerations drawn from the analysis of the coefficients consistent with what was visualized in the logistic regression plot seen previously?</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+<section id="multiple-logistic-regression">
+<h2>Multiple Logistic Regression<a class="headerlink" href="#multiple-logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>It is possible to calculate a logistic regressor from multiple independent variables by simply revising the model as:</p>
+<p>\begin{equation}
+logit(p)=\beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n
+\end{equation}</p>
+<p>Let’s try to calculate the model by choosing <strong>na</strong> and <strong>si</strong> as independent variables and keeping <strong>window_glass</strong> as the dependent variable. We can visualize the scatterplot with the highlighted classes using seaborn:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Na&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Si&#39;</span><span class="p">,</span><span class="n">data</span><span class="o">=</span><span class="n">glass</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;window_glass&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/eeaa4019646c3aaa653bf7a7621880fe8f34b61bafd12ab2b6c0a1a10237db30.png" src="../_images/eeaa4019646c3aaa653bf7a7621880fe8f34b61bafd12ab2b6c0a1a10237db30.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 5</strong></p>
+<p>How are the data of the two classes distributed in space? What could be a good criterion for classifying them?</p>
+</div></blockquote>
+<p>We calculate the multiple logistic regressor:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;window_glass ~ Na + Si&#39;</span><span class="p">,</span><span class="n">glass</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.409695
+         Iterations 7
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>     <td>window_glass</td>   <th>  No. Observations:  </th>  <td>   214</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>  <td>   211</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     2</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>  <td>0.2539</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:43:20</td>     <th>  Log-Likelihood:    </th> <td> -87.675</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -117.51</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>1.098e-13</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   91.9716</td> <td>   22.944</td> <td>    4.008</td> <td> 0.000</td> <td>   47.002</td> <td>  136.941</td>
+</tr>
+<tr>
+  <th>Na</th>        <td>   -1.8780</td> <td>    0.306</td> <td>   -6.143</td> <td> 0.000</td> <td>   -2.477</td> <td>   -1.279</td>
+</tr>
+<tr>
+  <th>Si</th>        <td>   -0.8988</td> <td>    0.292</td> <td>   -3.075</td> <td> 0.002</td> <td>   -1.472</td> <td>   -0.326</td>
+</tr>
+</table></div></div>
+</div>
+<p>Let’s briefly analyze the logistic regression result:</p>
+<ul class="simple">
+<li><p>The model explains part of the relationship between the independent variables and the dependent variable (<span class="math notranslate nohighlight">\(R^2=0.2539\)</span>);</p></li>
+<li><p>The regressor is significantly different from the null regressor (p-value below the critical threshold <span class="math notranslate nohighlight">\(0.05\)</span>);</p></li>
+<li><p>The regressor parameters are all statistically significant (p-values all below the threshold <span class="math notranslate nohighlight">\(0.05\)</span>);
+Let’s calculate the exponential of the parameters:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    8.764972e+39
+Na           1.528937e-01
+Si           4.070460e-01
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">Na=0</span></code> and <code class="docutils literal notranslate"><span class="pre">Si=0</span></code>, the glass is almost certainly window glass;</p></li>
+<li><p>If the variable <code class="docutils literal notranslate"><span class="pre">Si=0</span></code>, an increase of one unit in the variable <code class="docutils literal notranslate"><span class="pre">na</span></code> causes an odds decrease of approximately <span class="math notranslate nohighlight">\(98.48\%\)</span>;</p></li>
+<li><p>If the variable <code class="docutils literal notranslate"><span class="pre">Na=0</span></code>, an increase of one unit in the variable <code class="docutils literal notranslate"><span class="pre">si</span></code> causes an odds decrease of approximately <span class="math notranslate nohighlight">\(96\%\)</span>.</p></li>
+</ul>
+<blockquote>
+<div><p><strong>Question 6</strong></p>
+<p>Considering that <code class="docutils literal notranslate"><span class="pre">Si</span></code> and <code class="docutils literal notranslate"><span class="pre">Na</span></code> have the same unit of measurement (they both measure concentrations), which of the two variables most influences the outcome of belonging or not belonging to the <code class="docutils literal notranslate"><span class="pre">window_glass</span></code> class? If the units of measurement were different, could we make the same considerations?</p>
+</div></blockquote>
+<section id="example-of-logistic-regression-with-more-than-two-independent-variables">
+<h3>Example of Logistic Regression with More Than Two Independent Variables<a class="headerlink" href="#example-of-logistic-regression-with-more-than-two-independent-variables" title="Permalink to this heading">#</a></h3>
+<p>Let’s look at an example of logistic regression with more than two independent variables. We will use the R dataset <code class="docutils literal notranslate"><span class="pre">biopsy</span></code>. We can load it using <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.datasets</span> <span class="kn">import</span> <span class="n">get_rdataset</span>
+<span class="n">biopsy</span> <span class="o">=</span> <span class="n">get_rdataset</span><span class="p">(</span><span class="s1">&#39;biopsy&#39;</span><span class="p">,</span><span class="n">package</span><span class="o">=</span><span class="s1">&#39;MASS&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">biopsy</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>.. container::
+
+   ====== ===============
+   biopsy R Documentation
+   ====== ===============
+
+   .. rubric:: Biopsy Data on Breast Cancer Patients
+      :name: biopsy
+
+   .. rubric:: Description
+      :name: description
+
+   This breast cancer database was obtained from the University of
+   Wisconsin Hospitals, Madison from Dr. William H. Wolberg. He assessed
+   biopsies of breast tumours for 699 patients up to 15 July 1992; each
+   of nine attributes has been scored on a scale of 1 to 10, and the
+   outcome is also known. There are 699 rows and 11 columns.
+
+   .. rubric:: Usage
+      :name: usage
+
+   .. code:: R
+
+      biopsy
+
+   .. rubric:: Format
+      :name: format
+
+   This data frame contains the following columns:
+
+   ``ID``
+      sample code number (not unique).
+
+   ``V1``
+      clump thickness.
+
+   ``V2``
+      uniformity of cell size.
+
+   ``V3``
+      uniformity of cell shape.
+
+   ``V4``
+      marginal adhesion.
+
+   ``V5``
+      single epithelial cell size.
+
+   ``V6``
+      bare nuclei (16 values are missing).
+
+   ``V7``
+      bland chromatin.
+
+   ``V8``
+      normal nucleoli.
+
+   ``V9``
+      mitoses.
+
+   ``class``
+      ``&quot;benign&quot;`` or ``&quot;malignant&quot;``.
+
+   .. rubric:: Source
+      :name: source
+
+   P. M. Murphy and D. W. Aha (1992). UCI Repository of machine learning
+   databases. [Machine-readable data repository]. Irvine, CA: University
+   of California, Department of Information and Computer Science.
+
+   O. L. Mangasarian and W. H. Wolberg (1990) Cancer diagnosis via
+   linear programming. *SIAM News* **23**, pp 1 &amp; 18.
+
+   William H. Wolberg and O.L. Mangasarian (1990) Multisurface method of
+   pattern separation for medical diagnosis applied to breast cytology.
+   *Proceedings of the National Academy of Sciences, U.S.A.* **87**, pp.
+   9193–9196.
+
+   O. L. Mangasarian, R. Setiono and W.H. Wolberg (1990) Pattern
+   recognition via linear programming: Theory and application to medical
+   diagnosis. In *Large-scale Numerical Optimization* eds Thomas F.
+   Coleman and Yuying Li, SIAM Publications, Philadelphia, pp 22–30.
+
+   K. P. Bennett and O. L. Mangasarian (1992) Robust linear programming
+   discrimination of two linearly inseparable sets. *Optimization
+   Methods and Software* **1**, pp. 23–34 (Gordon &amp; Breach Science
+   Publishers).
+
+   .. rubric:: References
+      :name: references
+
+   Venables, W. N. and Ripley, B. D. (2002) *Modern Applied Statistics
+   with S-PLUS.* Fourth Edition. Springer.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset contains <span class="math notranslate nohighlight">\(699\)</span> observations and <span class="math notranslate nohighlight">\(11\)</span> columns. Each observation contains measurements of <span class="math notranslate nohighlight">\(9\)</span> quantities relating to tissue samples that can be “benign” or “malignant” tumors. Let’s start by manipulating the data a bit. We visualize the values of the <code class="docutils literal notranslate"><span class="pre">class</span></code> variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;benign&#39;, &#39;malignant&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>To calculate the logistic regression model using statsmodels, it is necessary to convert these values into integers (<span class="math notranslate nohighlight">\(0\)</span> or <span class="math notranslate nohighlight">\(1\)</span>). Furthermore, it is advisable to avoid calling the column <code class="docutils literal notranslate"><span class="pre">class</span></code> as this is a reserved word for statsmodels. We build a new column <code class="docutils literal notranslate"><span class="pre">cl</span></code> that contains the modified <code class="docutils literal notranslate"><span class="pre">class</span></code> values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;cl&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;benign&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;malignant&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s proceed to calculate the logistic regressor considering all variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;cl ~ V1 + V2 + V3 + V4 + V5 + V6 + V7 + V8 + V9&#39;</span><span class="p">,</span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.075321
+         Iterations 10
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>cl</td>        <th>  No. Observations:  </th>   <td>   683</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>   <td>   673</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>   <td>     9</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>   <td>0.8837</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:44:51</td>     <th>  Log-Likelihood:    </th>  <td> -51.444</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -442.18</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>2.077e-162</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>  -10.1039</td> <td>    1.175</td> <td>   -8.600</td> <td> 0.000</td> <td>  -12.407</td> <td>   -7.801</td>
+</tr>
+<tr>
+  <th>V1</th>        <td>    0.5350</td> <td>    0.142</td> <td>    3.767</td> <td> 0.000</td> <td>    0.257</td> <td>    0.813</td>
+</tr>
+<tr>
+  <th>V2</th>        <td>   -0.0063</td> <td>    0.209</td> <td>   -0.030</td> <td> 0.976</td> <td>   -0.416</td> <td>    0.404</td>
+</tr>
+<tr>
+  <th>V3</th>        <td>    0.3227</td> <td>    0.231</td> <td>    1.399</td> <td> 0.162</td> <td>   -0.129</td> <td>    0.775</td>
+</tr>
+<tr>
+  <th>V4</th>        <td>    0.3306</td> <td>    0.123</td> <td>    2.678</td> <td> 0.007</td> <td>    0.089</td> <td>    0.573</td>
+</tr>
+<tr>
+  <th>V5</th>        <td>    0.0966</td> <td>    0.157</td> <td>    0.617</td> <td> 0.537</td> <td>   -0.210</td> <td>    0.404</td>
+</tr>
+<tr>
+  <th>V6</th>        <td>    0.3830</td> <td>    0.094</td> <td>    4.082</td> <td> 0.000</td> <td>    0.199</td> <td>    0.567</td>
+</tr>
+<tr>
+  <th>V7</th>        <td>    0.4472</td> <td>    0.171</td> <td>    2.609</td> <td> 0.009</td> <td>    0.111</td> <td>    0.783</td>
+</tr>
+<tr>
+  <th>V8</th>        <td>    0.2130</td> <td>    0.113</td> <td>    1.887</td> <td> 0.059</td> <td>   -0.008</td> <td>    0.434</td>
+</tr>
+<tr>
+  <th>V9</th>        <td>    0.5348</td> <td>    0.329</td> <td>    1.627</td> <td> 0.104</td> <td>   -0.110</td> <td>    1.179</td>
+</tr>
+</table></div></div>
+</div>
+<p>The logistic regressor explains the relationship between variables well (<span class="math notranslate nohighlight">\(R^2\)</span> high) and is significant (p-value almost zero). Some coefficients have a high p-value. Let’s start by eliminating the variable <code class="docutils literal notranslate"><span class="pre">V2</span></code>, which has the highest p-value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;cl ~ V1 + V3 + V4 + V5 + V6 + V7 + V8 + V9&#39;</span><span class="p">,</span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.075321
+         Iterations 10
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>cl</td>        <th>  No. Observations:  </th>   <td>   683</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>   <td>   674</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>   <td>     8</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>   <td>0.8837</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:45:00</td>     <th>  Log-Likelihood:    </th>  <td> -51.445</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -442.18</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>2.036e-163</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>  -10.0976</td> <td>    1.155</td> <td>   -8.739</td> <td> 0.000</td> <td>  -12.362</td> <td>   -7.833</td>
+</tr>
+<tr>
+  <th>V1</th>        <td>    0.5346</td> <td>    0.141</td> <td>    3.784</td> <td> 0.000</td> <td>    0.258</td> <td>    0.811</td>
+</tr>
+<tr>
+  <th>V3</th>        <td>    0.3182</td> <td>    0.174</td> <td>    1.826</td> <td> 0.068</td> <td>   -0.023</td> <td>    0.660</td>
+</tr>
+<tr>
+  <th>V4</th>        <td>    0.3299</td> <td>    0.121</td> <td>    2.723</td> <td> 0.006</td> <td>    0.092</td> <td>    0.567</td>
+</tr>
+<tr>
+  <th>V5</th>        <td>    0.0961</td> <td>    0.156</td> <td>    0.618</td> <td> 0.537</td> <td>   -0.209</td> <td>    0.401</td>
+</tr>
+<tr>
+  <th>V6</th>        <td>    0.3831</td> <td>    0.094</td> <td>    4.082</td> <td> 0.000</td> <td>    0.199</td> <td>    0.567</td>
+</tr>
+<tr>
+  <th>V7</th>        <td>    0.4465</td> <td>    0.170</td> <td>    2.628</td> <td> 0.009</td> <td>    0.114</td> <td>    0.779</td>
+</tr>
+<tr>
+  <th>V8</th>        <td>    0.2125</td> <td>    0.112</td> <td>    1.902</td> <td> 0.057</td> <td>   -0.006</td> <td>    0.432</td>
+</tr>
+<tr>
+  <th>V9</th>        <td>    0.5341</td> <td>    0.328</td> <td>    1.630</td> <td> 0.103</td> <td>   -0.108</td> <td>    1.176</td>
+</tr>
+</table></div></div>
+</div>
+<p>We proceed by removing <code class="docutils literal notranslate"><span class="pre">V5</span></code>, which has a p-value of <span class="math notranslate nohighlight">\(0.537\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;cl ~ V1 + V3 + V4 + V6 + V7 + V8 + V9&#39;</span><span class="p">,</span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.075598
+         Iterations 10
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>cl</td>        <th>  No. Observations:  </th>   <td>   683</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>   <td>   675</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>   <td>     7</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>   <td>0.8832</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:45:02</td>     <th>  Log-Likelihood:    </th>  <td> -51.633</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -442.18</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>2.240e-164</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   -9.9828</td> <td>    1.126</td> <td>   -8.865</td> <td> 0.000</td> <td>  -12.190</td> <td>   -7.776</td>
+</tr>
+<tr>
+  <th>V1</th>        <td>    0.5340</td> <td>    0.141</td> <td>    3.793</td> <td> 0.000</td> <td>    0.258</td> <td>    0.810</td>
+</tr>
+<tr>
+  <th>V3</th>        <td>    0.3453</td> <td>    0.172</td> <td>    2.012</td> <td> 0.044</td> <td>    0.009</td> <td>    0.682</td>
+</tr>
+<tr>
+  <th>V4</th>        <td>    0.3425</td> <td>    0.119</td> <td>    2.873</td> <td> 0.004</td> <td>    0.109</td> <td>    0.576</td>
+</tr>
+<tr>
+  <th>V6</th>        <td>    0.3883</td> <td>    0.094</td> <td>    4.150</td> <td> 0.000</td> <td>    0.205</td> <td>    0.572</td>
+</tr>
+<tr>
+  <th>V7</th>        <td>    0.4619</td> <td>    0.168</td> <td>    2.746</td> <td> 0.006</td> <td>    0.132</td> <td>    0.792</td>
+</tr>
+<tr>
+  <th>V8</th>        <td>    0.2261</td> <td>    0.111</td> <td>    2.037</td> <td> 0.042</td> <td>    0.009</td> <td>    0.444</td>
+</tr>
+<tr>
+  <th>V9</th>        <td>    0.5312</td> <td>    0.324</td> <td>    1.637</td> <td> 0.102</td> <td>   -0.105</td> <td>    1.167</td>
+</tr>
+</table></div></div>
+</div>
+<p>We remove <code class="docutils literal notranslate"><span class="pre">V9</span></code>, which has a p-value greater than <span class="math notranslate nohighlight">\(0.05\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">logit</span><span class="p">(</span><span class="s1">&#39;cl ~ V1 + V3 + V4 + V6 + V7 + V8&#39;</span><span class="p">,</span><span class="n">biopsy</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.078436
+         Iterations 9
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>Logit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>          <td>cl</td>        <th>  No. Observations:  </th>   <td>   683</td>  
+</tr>
+<tr>
+  <th>Model:</th>                 <td>Logit</td>      <th>  Df Residuals:      </th>   <td>   676</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>   <td>     6</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>   <td>0.8788</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:45:06</td>     <th>  Log-Likelihood:    </th>  <td> -53.572</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th>  <td> -442.18</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>1.294e-164</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+      <td></td>         <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th> <td>   -9.7671</td> <td>    1.085</td> <td>   -9.001</td> <td> 0.000</td> <td>  -11.894</td> <td>   -7.640</td>
+</tr>
+<tr>
+  <th>V1</th>        <td>    0.6225</td> <td>    0.137</td> <td>    4.540</td> <td> 0.000</td> <td>    0.354</td> <td>    0.891</td>
+</tr>
+<tr>
+  <th>V3</th>        <td>    0.3495</td> <td>    0.165</td> <td>    2.118</td> <td> 0.034</td> <td>    0.026</td> <td>    0.673</td>
+</tr>
+<tr>
+  <th>V4</th>        <td>    0.3375</td> <td>    0.116</td> <td>    2.920</td> <td> 0.004</td> <td>    0.111</td> <td>    0.564</td>
+</tr>
+<tr>
+  <th>V6</th>        <td>    0.3786</td> <td>    0.094</td> <td>    4.035</td> <td> 0.000</td> <td>    0.195</td> <td>    0.562</td>
+</tr>
+<tr>
+  <th>V7</th>        <td>    0.4713</td> <td>    0.166</td> <td>    2.837</td> <td> 0.005</td> <td>    0.146</td> <td>    0.797</td>
+</tr>
+<tr>
+  <th>V8</th>        <td>    0.2432</td> <td>    0.109</td> <td>    2.240</td> <td> 0.025</td> <td>    0.030</td> <td>    0.456</td>
+</tr>
+</table></div></div>
+</div>
+<p>All coefficients now have an acceptable p-value. Let’s proceed to the analysis of the coefficients. We calculate the exponentials:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept    0.000057
+V1           1.863641
+V3           1.418374
+V4           1.401487
+V6           1.460166
+V7           1.602133
+V8           1.275287
+dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>The near-zero value of the exponential of the intercept indicates that, when all variables take zero values, the odds are very low. This suggests that <span class="math notranslate nohighlight">\(p\)</span> is low, while <span class="math notranslate nohighlight">\(1-p\)</span> is very high. The probability of having a malignant tumor is therefore very low if all variables take zero values;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V1</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(86\%\)</span> in the odds, making the possibility of a malignant tumor higher;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V3</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(41\%\)</span> in the odds;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V4</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(40\%\)</span> in the odds;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V6</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(46\%\)</span> in the odds;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V7</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(60\%\)</span> in the odds;</p></li>
+<li><p>An increase of one unit in the value of <code class="docutils literal notranslate"><span class="pre">V8</span></code> corresponds to an increase of approximately <span class="math notranslate nohighlight">\(27\%\)</span> in the odds;</p></li>
+</ul>
+<p>The increase of variables generally causes an increase in the odds. Therefore, we expect the values of the variables to be small in the presence of benign tumors.</p>
+<blockquote>
+<div><p><strong>Question 7</strong></p>
+<p>Read the documentation of the dataset considered to understand on what scale the values of the independent variables were recorded. Also, calculate the standard deviations of the individual variables in the dataset. Can we say that any of these variables are more influential on the presence of a malignant tumor than others?</p>
+</div></blockquote>
+</section>
+</section>
+<section id="multinomial-logistic-regressor-optional">
+<h2>Multinomial Logistic Regressor (Optional)<a class="headerlink" href="#multinomial-logistic-regressor-optional" title="Permalink to this heading">#</a></h2>
+<p>Let’s see an example of a multinomial logistic regressor on Fisher’s Iris dataset. We load the dataset with <code class="docutils literal notranslate"><span class="pre">seaborn</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+<span class="n">iris</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>145</th>
+      <td>6.7</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.3</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>146</th>
+      <td>6.3</td>
+      <td>2.5</td>
+      <td>5.0</td>
+      <td>1.9</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>147</th>
+      <td>6.5</td>
+      <td>3.0</td>
+      <td>5.2</td>
+      <td>2.0</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>6.2</td>
+      <td>3.4</td>
+      <td>5.4</td>
+      <td>2.3</td>
+      <td>virginica</td>
+    </tr>
+    <tr>
+      <th>149</th>
+      <td>5.9</td>
+      <td>3.0</td>
+      <td>5.1</td>
+      <td>1.8</td>
+      <td>virginica</td>
+    </tr>
+  </tbody>
+</table>
+<p>150 rows × 5 columns</p>
+</div></div></div>
+</div>
+<p>As seen in the lesson, we will initially consider a single feature <code class="docutils literal notranslate"><span class="pre">petal_length</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;petal_length&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">iris</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f7d88680b9af0d55dae7bf8b3eabddaebbd9c5bb31e4705c4cba32f8c5e7bb6c.png" src="../_images/f7d88680b9af0d55dae7bf8b3eabddaebbd9c5bb31e4705c4cba32f8c5e7bb6c.png" />
+</div>
+</div>
+<p>I can calculate the multinomial regressor using <code class="docutils literal notranslate"><span class="pre">MNLogit</span></code> from <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code>. Before that, however, I will need to map the classes to integer values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">mnlogit</span>
+<span class="n">iris2</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">copy</span><span class="p">();</span> 
+<span class="n">iris2</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">iris2</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;setosa&#39;</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;versicolor&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;virginica&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">})</span>
+<span class="n">mnlogit</span><span class="p">(</span><span class="s2">&quot;species ~ sepal_length&quot;</span><span class="p">,</span> <span class="n">iris2</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.606893
+         Iterations 8
+</pre></div>
+</div>
+<div class="output text_html"><table class="simpletable">
+<caption>MNLogit Regression Results</caption>
+<tr>
+  <th>Dep. Variable:</th>        <td>species</td>     <th>  No. Observations:  </th>  <td>   150</td>  
+</tr>
+<tr>
+  <th>Model:</th>                <td>MNLogit</td>     <th>  Df Residuals:      </th>  <td>   146</td>  
+</tr>
+<tr>
+  <th>Method:</th>                 <td>MLE</td>       <th>  Df Model:          </th>  <td>     2</td>  
+</tr>
+<tr>
+  <th>Date:</th>            <td>Tue, 31 Oct 2023</td> <th>  Pseudo R-squ.:     </th>  <td>0.4476</td>  
+</tr>
+<tr>
+  <th>Time:</th>                <td>07:49:17</td>     <th>  Log-Likelihood:    </th> <td> -91.034</td> 
+</tr>
+<tr>
+  <th>converged:</th>             <td>True</td>       <th>  LL-Null:           </th> <td> -164.79</td> 
+</tr>
+<tr>
+  <th>Covariance Type:</th>     <td>nonrobust</td>    <th>  LLR p-value:       </th> <td>9.276e-33</td>
+</tr>
+</table>
+<table class="simpletable">
+<tr>
+    <th>species=1</th>     <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>    <td>   12.6771</td> <td>    2.906</td> <td>    4.362</td> <td> 0.000</td> <td>    6.981</td> <td>   18.373</td>
+</tr>
+<tr>
+  <th>sepal_length</th> <td>   -2.0307</td> <td>    0.466</td> <td>   -4.361</td> <td> 0.000</td> <td>   -2.943</td> <td>   -1.118</td>
+</tr>
+<tr>
+    <th>species=2</th>     <th>coef</th>     <th>std err</th>      <th>z</th>      <th>P>|z|</th>  <th>[0.025</th>    <th>0.975]</th>  
+</tr>
+<tr>
+  <th>Intercept</th>    <td>   38.7590</td> <td>    5.691</td> <td>    6.811</td> <td> 0.000</td> <td>   27.605</td> <td>   49.913</td>
+</tr>
+<tr>
+  <th>sepal_length</th> <td>   -6.8464</td> <td>    1.022</td> <td>   -6.698</td> <td> 0.000</td> <td>   -8.850</td> <td>   -4.843</td>
+</tr>
+</table></div></div>
+</div>
+<p>The multinomial logistic regressor is statistically significant (low p-value) and all coefficients have low p-values.</p>
+<p>We can observe that there are two sets of coefficients: one for <code class="docutils literal notranslate"><span class="pre">species=1</span></code> (versicolor) and one for <code class="docutils literal notranslate"><span class="pre">species=2</span></code> (setosa). No coefficients were estimated for <code class="docutils literal notranslate"><span class="pre">virginica</span></code> because it was chosen as the baseline. All p-values are low, so we can keep all variables. Let’s see how to interpret the coefficients:</p>
+<ul class="simple">
+<li><p>The intercept for <code class="docutils literal notranslate"><span class="pre">species=1</span></code> is <span class="math notranslate nohighlight">\(12.6771\)</span>. This indicates that the odds of <code class="docutils literal notranslate"><span class="pre">versicolor</span></code> versus <code class="docutils literal notranslate"><span class="pre">virginica</span></code> is <span class="math notranslate nohighlight">\(e^{12.6771}=320327.76\)</span>, when <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code> is set to zero. This is a very large number, likely due to <code class="docutils literal notranslate"><span class="pre">sepal_length=0</span></code> not being a realistic observation.</p></li>
+<li><p>The intercept for <code class="docutils literal notranslate"><span class="pre">species=2</span></code> is <span class="math notranslate nohighlight">\(38.7590\)</span>. This indicates that the odds of <code class="docutils literal notranslate"><span class="pre">setosa</span></code> versus <code class="docutils literal notranslate"><span class="pre">virginica</span></code> is <span class="math notranslate nohighlight">\(e^{38.7590}=6.8e+16\)</span>, when <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code> is set to zero. Again, we get a very large number, likely due to <code class="docutils literal notranslate"><span class="pre">sepal_length=0</span></code> not being a realistic observation.</p></li>
+<li><p>The coefficient <span class="math notranslate nohighlight">\(-2.0307\)</span> for <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code> for <code class="docutils literal notranslate"><span class="pre">species=1</span></code> indicates that when we observe a one-centimeter increase in <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code>, the odds of <code class="docutils literal notranslate"><span class="pre">versicolor</span></code> versus <code class="docutils literal notranslate"><span class="pre">virginica</span></code> decreases multiplicatively by <span class="math notranslate nohighlight">\(e^{-2.0307} = 0.13\)</span> (a -87% decrease).</p></li>
+<li><p>The coefficient <span class="math notranslate nohighlight">\(-6.8564\)</span> for <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code> for <code class="docutils literal notranslate"><span class="pre">species=2</span></code> indicates that when we observe a one-centimeter increase in <code class="docutils literal notranslate"><span class="pre">sepal_length</span></code>, the odds of <code class="docutils literal notranslate"><span class="pre">setosa</span></code> versus <code class="docutils literal notranslate"><span class="pre">virginica</span></code> decreases multiplicatively by <span class="math notranslate nohighlight">\(e^{-6.8464} = 0.001\)</span> (a -99.9% decrease).</p></li>
+</ul>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Calculate a logistic regressor to predict the values of the <code class="docutils literal notranslate"><span class="pre">Survived</span></code> variable from the other variables in the Titanic dataset. Adequately handle categorical variables. Use the backward elimination method to remove variables that do not contribute significantly to the regression. Analyze the found regressor and discuss the meaning of its parameters.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Select two significant variables from the regressor calculated in the previous point and calculate a bivariate regressor using only these two variables. Visualize a logistic regression plot on the two-dimensional data identified by the two variables. Plot the decision boundary identified by the regressor on the scatterplot of the two variables.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Consider the Boston dataset. Build a logistic regressor to predict the values of the <code class="docutils literal notranslate"><span class="pre">chas</span></code> variable from the values of the other variables. Adequately handle categorical variables by introducing dummy variables. Use the backward elimination method to eliminate variables that do not significantly contribute to the regression.</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./laboratories"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-logistic-regression">Simple Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-linear-regression-with-a-categorical-dependent-variable">Limitations of Linear Regression with a Categorical Dependent Variable</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-analysis">Logistic Regression Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#significance">Significance</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-analysis">Coefficient Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-logistic-regression">Multiple Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-logistic-regression-with-more-than-two-independent-variables">Example of Logistic Regression with More Than Two Independent Variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-logistic-regressor-optional">Multinomial Logistic Regressor (Optional)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

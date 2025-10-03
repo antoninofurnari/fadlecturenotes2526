@@ -1,0 +1,2300 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Association between Variables &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/06_associazione_variabili_en';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/06_associazione_variabili_en.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/06_associazione_variabili_en.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/06_associazione_variabili_en.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Association between Variables</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables-and-probability">Contingency tables and probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability-distributions">Joint Probability Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-probability-distributions">Marginal Probability Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-distributions">Conditional Probability Distributions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical Representations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association-between-two-discrete-variables">Measures of Association between two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-and-expected-frequencies">Independence and Expected Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#esempio">Esempio</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk">Relative Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio">Odds Ratio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient">Pearson Correlation Coefficient</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pearson-s-correlation-coefficient-values">Interpretation of Pearson’s Correlation Coefficient Values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spearman-s-rank-correlation-coefficient">Spearman’s Rank Correlation Coefficient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kendall-s-correlation-coefficient-optional">Kendall’s Correlation Coefficient (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix">Correlation Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="association-between-variables">
+<h1>Association between Variables<a class="headerlink" href="#association-between-variables" title="Permalink to this heading">#</a></h1>
+<p>We have thus far analyzed “univariate” samples, i.e., composed of a single variable. More precisely, even when several variables were available, we analyzed the variables one by one. In practice, it often happens that the observations under analysis are composed of multiple variables. In these cases, it is useful to consider methods to describe and visualize the data in a “multivariate” manner, in order to study the interactions between the various factors that describe the phenomenon under analysis.</p>
+<p>We will use the Titanic dataset as an example again:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>887</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Montvila, Rev. Juozas</td>
+      <td>male</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>211536</td>
+      <td>13.0000</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>888</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Graham, Miss. Margaret Edith</td>
+      <td>female</td>
+      <td>19.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>112053</td>
+      <td>30.0000</td>
+      <td>B42</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>889</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Johnston, Miss. Catherine Helen "Carrie"</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>2</td>
+      <td>W./C. 6607</td>
+      <td>23.4500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>890</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Behr, Mr. Karl Howell</td>
+      <td>male</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>111369</td>
+      <td>30.0000</td>
+      <td>C148</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>891</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Dooley, Mr. Patrick</td>
+      <td>male</td>
+      <td>32.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>370376</td>
+      <td>7.7500</td>
+      <td>NaN</td>
+      <td>Q</td>
+    </tr>
+  </tbody>
+</table>
+<p>891 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>Given the dataset above, we might ask ourselves if some variables influence the values of others. For example, does being in first, second, or third class (variable <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>) somehow influence the probability of survival (variable <code class="docutils literal notranslate"><span class="pre">Survived</span></code>), or again, does age (variable <code class="docutils literal notranslate"><span class="pre">Age</span></code>) or the price paid (<code class="docutils literal notranslate"><span class="pre">Fare</span></code>) somehow influence the probability of being saved (<code class="docutils literal notranslate"><span class="pre">Survived</span></code>)?</p>
+<p>In this lesson, we will see different ways to summarize the distributions of two variables and verify any associations (or correlations) between the variables.</p>
+<section id="contingency-tables-and-probability">
+<h2>Contingency tables and probability<a class="headerlink" href="#contingency-tables-and-probability" title="Permalink to this heading">#</a></h2>
+<p>If both variables we are studying are discrete, we can enumerate all possible combinations of values and summarize them in a <strong>contingency table</strong> that indicates the values of one variable on the rows and those of the other variable on the columns. Each cell will indicate the number of times we observe a given pair of values.</p>
+<p>The contingency table for variables <code class="docutils literal notranslate"><span class="pre">Sex</span></code> and <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> will look like this:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The table above indicates, for example, that <span class="math notranslate nohighlight">\(94\)</span> passengers in class <span class="math notranslate nohighlight">\(1\)</span> were female. A contingency table is often shown with marginal values that display the sums of rows and columns:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+      <td>314</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+      <td>577</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>216</td>
+      <td>184</td>
+      <td>491</td>
+      <td>891</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that the “All” values indicate the absolute frequencies of the two variables, while the bottom-right value indicates the sample size.</p>
+<p>Starting from the contingency table, it is possible to reason in terms of the various concepts that we saw when we talked about probability in the case of discrete variables, and in particular of:</p>
+<ul class="simple">
+<li><p>Joint Probability Distributions (or joint frequency/probability distributions)</p></li>
+<li><p>Marginal Probability Distributions (or marginal frequency/probability distributions)</p></li>
+<li><p>Conditional Probability Distributions (or conditional frequency/probability distributions)</p></li>
+</ul>
+<p>Let’s see some examples:</p>
+<section id="joint-probability-distributions">
+<h3>Joint Probability Distributions<a class="headerlink" href="#joint-probability-distributions" title="Permalink to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.105499</td>
+      <td>0.085297</td>
+      <td>0.161616</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.136925</td>
+      <td>0.121212</td>
+      <td>0.389450</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="marginal-probability-distributions">
+<h3>Marginal Probability Distributions<a class="headerlink" href="#marginal-probability-distributions" title="Permalink to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.105499</td>
+      <td>0.085297</td>
+      <td>0.161616</td>
+      <td>0.352413</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.136925</td>
+      <td>0.121212</td>
+      <td>0.389450</td>
+      <td>0.647587</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The marginals are reported in the last row and last column.</p>
+</section>
+<section id="conditional-probability-distributions">
+<h3>Conditional Probability Distributions<a class="headerlink" href="#conditional-probability-distributions" title="Permalink to this heading">#</a></h3>
+<p>Conditional probabilities with respect to the variable <code class="docutils literal notranslate"><span class="pre">Sex</span></code> (obtained by dividing the values of the contingency table by the sums of the values in the rows - <code class="docutils literal notranslate"><span class="pre">All</span></code> column):</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.299363</td>
+      <td>0.242038</td>
+      <td>0.458599</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.211438</td>
+      <td>0.187175</td>
+      <td>0.601386</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that in the table above, no values are reported in the row margins, as these would all be equal to 1.</p>
+<p>From the table above, I can deduce:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=1|Sex=female) = 0.290363 = \frac{94}{314}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=2|Sex=female) = 0.242038 = \frac{76}{314}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=3|Sex=female) = 0.458599 = \frac{144}{314}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=1|Sex=male) = 0.211438 = \frac{122}{577}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=2|Sex=male) = 0.187175 = \frac{108}{577}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Pclass=3|Sex=male) = 0.601386 = \frac{347}{577}\)</span></p></li>
+</ul>
+<p>From the table, we note that the distribution of passengers changes across the three classes. In particular, among men, the third class is more frequent than among women.</p>
+<p>We can obtain the complementary perspective by conditioning on the class instead:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.435185</td>
+      <td>0.413043</td>
+      <td>0.293279</td>
+      <td>0.352413</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.564815</td>
+      <td>0.586957</td>
+      <td>0.706721</td>
+      <td>0.647587</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that in the table above, no marginal values are reported for the columns, as these would all be equal to 1.</p>
+<p>In this case, each column will be a probability distribution. For example:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Sex=female|Pclass=1) = 0.435185\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Sex=male|Pclass=1) = 0.564815\)</span></p></li>
+</ul>
+<p>We note that the proportions of men and women change in the three classes, and in particular in the third class there are many more men than women.</p>
+</section>
+</section>
+<section id="graphical-representations">
+<h2>Graphical Representations<a class="headerlink" href="#graphical-representations" title="Permalink to this heading">#</a></h2>
+<p>We can easily obtain graphical representations of the relationships between two variables using bar charts, directly from contingency tables. For example, the following graph compares the absolute joint frequencies:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/ac26d800913862e28176b343cc300fd5f9930924d16e9e02d8164436624066c6.png" src="../_images/ac26d800913862e28176b343cc300fd5f9930924d16e9e02d8164436624066c6.png" />
+</div>
+</div>
+<p>From here we note that many passengers are men and in third class. In these cases, a stacked plot can sometimes be useful:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/0c55c9596676ee3c1296b3f23b2ef0d97b6ccd7d812d5afed9ea31f895a6d7b8.png" src="../_images/0c55c9596676ee3c1296b3f23b2ef0d97b6ccd7d812d5afed9ea31f895a6d7b8.png" />
+</div>
+</div>
+<p>È spesso utile visualizzare le distribuzioni condizionate. Ad esempio, il grafico che segue ci permette di confrontare le distribuzioni dei passeggeri nelle tre classi, suddividendo in due gruppi sulla base del sesso:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/637ce8addfa61dda9e3bea0bcbfc88d742b2b1f64c7f40452c8e684acdb47ea1.png" src="../_images/637ce8addfa61dda9e3bea0bcbfc88d742b2b1f64c7f40452c8e684acdb47ea1.png" />
+</div>
+</div>
+<p>Even in these cases we can use a stacked plot:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/35516738e5fb7cde47d91db4634a2a60ae820431ebb7a0f185da895c65740c44.png" src="../_images/35516738e5fb7cde47d91db4634a2a60ae820431ebb7a0f185da895c65740c44.png" />
+</div>
+</div>
+<p>Similarly, we can obtain the graphs of the conditional frequencies with respect to the classes:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/d9ad95d7e5a866cc1279aee299505fb0d1b74016f380d366faf595b39e9f624c.png" src="../_images/d9ad95d7e5a866cc1279aee299505fb0d1b74016f380d366faf595b39e9f624c.png" />
+<img alt="../_images/e71dd49b01ccab2eab0466335bc44785a12b9b9634d699c691472b88f760aa20.png" src="../_images/e71dd49b01ccab2eab0466335bc44785a12b9b9634d699c691472b88f760aa20.png" />
+</div>
+</div>
+</section>
+<section id="measures-of-association-between-two-discrete-variables">
+<h2>Measures of Association between two Discrete Variables<a class="headerlink" href="#measures-of-association-between-two-discrete-variables" title="Permalink to this heading">#</a></h2>
+<p>Now let’s look at measures that allow us to estimate if two variables are “associated” or not, meaning to what extent the values of one variable influence those of the other. We have seen that the variables <code class="docutils literal notranslate"><span class="pre">Sex</span></code> and <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> seem to have some degree of association. Let’s now look at a case of stronger association, by exploring the relationship between <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> and <code class="docutils literal notranslate"><span class="pre">Survived</span></code>.</p>
+<p>Let’s consider three relative frequency distributions of <code class="docutils literal notranslate"><span class="pre">Survived</span></code> conditioning on the <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> values:</p>
+<ul class="simple">
+<li><p>f(Survived|Pclass=1)</p></li>
+<li><p>f(Survived|Pclass=2)</p></li>
+<li><p>f(Survived|Pclass=3)</p></li>
+</ul>
+<p>The table of conditional frequencies that follows summarizes these values</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Survived</th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>Pclass</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.370370</td>
+      <td>0.629630</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.527174</td>
+      <td>0.472826</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.757637</td>
+      <td>0.242363</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Looking at the numbers, we see that the distributions are very different, depending on the conditioning applied. This is not surprising, because we imagine that passengers in first and second class had different treatment compared to those in third class.</p>
+<p>Let’s visualize the distributions graphically:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2ff6a2c575254b2db87f6971f38ba09c207d895c61ab450bd984b39bb88f5918.png" src="../_images/2ff6a2c575254b2db87f6971f38ba09c207d895c61ab450bd984b39bb88f5918.png" />
+</div>
+</div>
+<p>The graph clearly shows the imbalance, from which we deduce that <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> and <code class="docutils literal notranslate"><span class="pre">Survived</span></code> are in fact <strong>associated</strong> (or <strong>correlated</strong>).</p>
+<section id="independence-and-expected-frequencies">
+<h3>Independence and Expected Frequencies<a class="headerlink" href="#independence-and-expected-frequencies" title="Permalink to this heading">#</a></h3>
+<p>Before proceeding to illustrate some measures of association between variables, we must discuss the concept of <strong>independence</strong>, which is the opposite of association.</p>
+<p>Two variables are said to be independent if the observation of one variable does not allow us to make any kind of prediction about the possible values of the other variable.</p>
+<p>Imagine two randomly chosen people living in different, randomly chosen parts of the world. If we observe the way one of these two people dresses, this observation will tell us nothing about how the other might dress. The variables “clothes of the first person” and “clothes of the second person” are independent. The same does not apply if the people live in the same city. In that case, if it rains, for example, we expect the two people to wear similar clothes, so observing how one of the two people dresses can tell us something about how the other will dress.</p>
+<p>Let’s consider the generic contingency table again:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_1\)</span></p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_2\)</span></p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_l\)</span></p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Y=<span class="math notranslate nohighlight">\(y_1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{12}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1+}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Y=<span class="math notranslate nohighlight">\(y_2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{22}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>Y=<span class="math notranslate nohighlight">\(y_k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{kl}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Total</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Now suppose we cannot observe the co-occurrences, but can only observe the marginal values:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_1\)</span></p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_2\)</span></p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>X=<span class="math notranslate nohighlight">\(x_l\)</span></p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Y=<span class="math notranslate nohighlight">\(y_1\)</span></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p>…</p></td>
+<td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1+}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Y=<span class="math notranslate nohighlight">\(y_2\)</span></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p>…</p></td>
+<td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>Y=<span class="math notranslate nohighlight">\(y_k\)</span></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p>…</p></td>
+<td><p></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Total</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>Now suppose we need to “reconstruct” the missing values. If the two variables are independent, then:</p>
+<div class="math notranslate nohighlight">
+\[P(X=x_j, Y=y_i) = P(X=x_j) P(Y=y_i)\]</div>
+<p>Recall that:</p>
+<div class="math notranslate nohighlight">
+\[P(X=x_j) = \frac{n_{+j}}{n}, P(Y=y_i) = \frac{n_{i+}}{n}, P(X=x_j, Y=y_i)=\frac{n_{ij}}{n}\]</div>
+<p>From here we obtain that:</p>
+<div class="math notranslate nohighlight">
+\[\tilde n_{ij} = n \cdot P(X=x_j,Y=y_i) = n \cdot P(X=x_j) \cdot P(Y=y_i) = n \cdot \frac{n_{+j}}{n} \frac{n_{i+}}{n} = \frac{n_{+j}n_{i+}}{n}\]</div>
+<p>From which:</p>
+<div class="math notranslate nohighlight">
+\[\tilde n_{ij} = P(X=x_j) n_{i+} = P(Y=y_i) n_{+j}\]</div>
+<p>Where the tilde on <span class="math notranslate nohighlight">\(\tilde n_{ij}\)</span> indicates that this is an estimated value, not the actually observed value.</p>
+<blockquote>
+<div><p>What has been seen above suggests that the frequencies <span class="math notranslate nohighlight">\(n_{ij}\)</span> follow the same distribution as the marginal frequencies in case of independence between the variables.</p>
+</div></blockquote>
+<section id="esempio">
+<h4>Esempio<a class="headerlink" href="#esempio" title="Permalink to this heading">#</a></h4>
+<p>Vediamo un esempio sulla nostra tabella di contingenza che mette in relazione <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> e <code class="docutils literal notranslate"><span class="pre">Survived</span></code>:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Survived</th>
+      <th>0</th>
+      <th>1</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Pclass</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>80</td>
+      <td>136</td>
+      <td>216</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>97</td>
+      <td>87</td>
+      <td>184</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>372</td>
+      <td>119</td>
+      <td>491</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>549</td>
+      <td>342</td>
+      <td>891</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The marginal probability <span class="math notranslate nohighlight">\(P(Survived)\)</span> is given by:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    0.616162
+1    0.383838
+Name: Survived, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>These are the probabilities <span class="math notranslate nohighlight">\(P(Survived=0)\)</span> and <span class="math notranslate nohighlight">\(P(Survived=1)\)</span>.</p>
+<p>If the two variables were not correlated, we would expect to have absolute frequencies proportional to the marginal probabilities:</p>
+<div class="math notranslate nohighlight">
+\[\tilde{n}_{ij} = P(Y=y_j) \cdot n_{i+}\]</div>
+<p>These values will be given by the following table:</p>
+<div class="cell tag_hide-input docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_ij</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">values</span>
+<span class="n">n_iplus</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">tab</span> <span class="o">=</span> <span class="n">f_ij</span><span class="o">*</span><span class="n">n_iplus</span>
+<span class="n">ct</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">ct</span><span class="o">.</span><span class="n">values</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab</span><span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">ct</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Survived</th>
+      <th>0</th>
+      <th>1</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Pclass</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>133.090909</td>
+      <td>82.909091</td>
+      <td>216.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>113.373737</td>
+      <td>70.626263</td>
+      <td>184.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>302.535354</td>
+      <td>188.464646</td>
+      <td>491.0</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>549.000000</td>
+      <td>342.000000</td>
+      <td>891.0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Comparing these frequencies with the actual frequencies, we realize that there are discrepancies, reasonably due to the fact that the variables are not in fact independent.</p>
+</section>
+</section>
+<section id="pearson-s-mathcal-x-2-statistic">
+<h3>Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic<a class="headerlink" href="#pearson-s-mathcal-x-2-statistic" title="Permalink to this heading">#</a></h3>
+<p>Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> statistic measures these discrepancies with the following formula:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{X}^2 = \sum_{i=1}^k \sum_{j=1}^l \frac{(n_{ij}-\tilde{n}_{ij})^2}{\tilde{n}_{ij}}\]</div>
+<p>The above formula calculates the squared differences between the observed and expected absolute frequencies (to eliminate negative signs) and scales the result by the expected frequencies. <strong>Scaling the result ensures that small discrepancies obtained for small expected frequencies weigh more than small discrepancies obtained for large expected frequencies.</strong></p>
+<p>Note that if the expected frequencies are identical to the observed ones, the statistic is zero.</p>
+<p>In the previously seen example, the result will be equal to:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>102.89
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cramer-s-v-statistic">
+<h3>Cramer’s V Statistic<a class="headerlink" href="#cramer-s-v-statistic" title="Permalink to this heading">#</a></h3>
+<p>Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> statistic is not normalized, in the sense that its maximum value depends on the sample size. To overcome this problem, Cramer’s V statistic can be used, defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[V = \sqrt{\frac{\mathcal{X}^2}{n(min(k,l)-1)}}\]</div>
+<p>The result will be a value between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p>Cramer’s V statistic will be equal to the following value for the example seen before:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.34
+</pre></div>
+</div>
+</div>
+</div>
+<p>This value indicates a small association between the two variables, because the value is greater than <span class="math notranslate nohighlight">\(0\)</span> but still not close to <span class="math notranslate nohighlight">\(1\)</span>.</p>
+</section>
+<section id="relative-risk">
+<h3>Relative Risk<a class="headerlink" href="#relative-risk" title="Permalink to this heading">#</a></h3>
+<p>Relative risk is one of the most common methods for measuring the degree of correlation between two discrete variables in epidemiology.</p>
+<p>Let’s look at an example (from <a class="reference external" href="https://en.wikipedia.org/wiki/Odds_ratio">here</a>): suppose that in a village of <span class="math notranslate nohighlight">\(1000\)</span> people, the incidence of a rare disease has increased. Investigating, we discover that recently a part of the population has been exposed to radiation.</p>
+<p>The data relating to diseased and healthy subjects exposed or not exposed to the risk (the radiation) is summarized by the following contingency table that relates the “Diseased/Healthy” variable to the “Exposed/Non Exposed” one:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>380</td>
+      <td>594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The table indicates the number of people who have contracted a given disease or not, in relation to whether they have been exposed to a certain risk or not (e.g., to a pollutant).</p>
+<p>The risk of developing the disease if exposed can be calculated with the following probability:</p>
+<div class="math notranslate nohighlight">
+\[P(Diseased|Exposed) = \frac{\#\ (Diseased, Exposed)}{\#\ Exposed} = \frac{20}{20+380} = 0.05\]</div>
+<p>We see that we have a <span class="math notranslate nohighlight">\(5\%\)</span> risk of developing the disease if exposed to radiation. For example, among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, we expect to find <span class="math notranslate nohighlight">\(5\)</span> sick.</p>
+<p>The risk calculated above, by itself, does not tell us much about the association between the variables “Exposed” and “Non Exposed”. Let’s now consider the probability of contracting the disease if not exposed to the risk:</p>
+<div class="math notranslate nohighlight">
+\[P(Diseased|Non\ Exposed) = \frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed} = \frac{6}{6+594} = 0.01\]</div>
+<p>This value tells us that we have a risk of about <span class="math notranslate nohighlight">\(1\%\)</span> of contracting the disease if not exposed. In practice, out of <span class="math notranslate nohighlight">\(100\)</span> subjects not exposed to the risk, <span class="math notranslate nohighlight">\(1\)</span> gets sick.</p>
+<p>It is useful to compare these two risk values. Indeed, although the <span class="math notranslate nohighlight">\(5\%\)</span> risk of getting sick among exposed subjects is not a very high number in absolute terms, it must also be said that the proportion of sick subjects not exposed to the risk is much lower (<span class="math notranslate nohighlight">\(1\%\)</span>). We therefore define relative risk as the ratio between these two risks (or probabilities):</p>
+<div class="math notranslate nohighlight">
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{0.05}{0.01}=5\]</div>
+<p>We interpret this value as follows:</p>
+<blockquote>
+<div><p>The proportion of subjects who contract the disease is <span class="math notranslate nohighlight">\(5\)</span> times greater among those who have been exposed to the risk, compared to the group of those who have not.</p>
+</div></blockquote>
+<p>For example, if among <span class="math notranslate nohighlight">\(100\)</span> people not exposed to the risk, generally <span class="math notranslate nohighlight">\(10\)</span> get sick (a risk of <span class="math notranslate nohighlight">\(10\%\)</span>), then we expect that among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, as many as <span class="math notranslate nohighlight">\(50\%\)</span> will get sick!</p>
+<p>Relative risk tells us nothing about the absolute risk (the proportion of people who get sick), but only about how observing subjects exposed to the risk, compared to observing subjects not exposed to the risk, can influence the proportion of sick subjects.</p>
+<p>Generally:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(RR=1\)</span> indicates that exposure to the risk is irrelevant in the development of the disease (the variables are independent);</p></li>
+<li><p><span class="math notranslate nohighlight">\(RR&gt;1\)</span> indicates that exposure to the risk is positively associated with the development of the disease (there are more sick people among subjects exposed to the risk);</p></li>
+<li><p><span class="math notranslate nohighlight">\(RR&lt;1\)</span> indicates that exposure to the risk is negatively associated with the development of the disease (there are fewer sick people among subjects exposed to the risk). In this case, it is said that the risk “protects” against the onset of the disease (useful if the “risk” is actually taking a drug).</p></li>
+</ul>
+<p><strong>Note that relative risk measures a correlation between variables, not a cause-and-effect relationship, so it is not always correct to say that in the presence of a relative risk greater than 1, exposure to the risk “causes” the disease. However, there are tools (causal analysis) that allow us to verify in which cases we can give this interpretation. These tools are fundamental for ascertaining whether a particular drug causes (or is co-responsible for) a recovery or whether a particular habit (e.g., smoking) causes (or is co-responsible for) the onset of a disease. We will see more examples later in the course.</strong></p>
+</section>
+<section id="odds-ratio">
+<h3>Odds Ratio<a class="headerlink" href="#odds-ratio" title="Permalink to this heading">#</a></h3>
+<p>Relative risk cannot always be calculated. In fact, in the previous case, we assumed we had access to all population data: for all <span class="math notranslate nohighlight">\(1000\)</span> inhabitants, we knew who had been exposed to the risk and who had not, and who had developed the disease and who had not. In many cases, we might not have all this data. For example, imagine that the incident occurred <span class="math notranslate nohighlight">\(50\)</span> years ago and that at the time only a random sample of <span class="math notranslate nohighlight">\(50\%\)</span> of the <span class="math notranslate nohighlight">\(1000\)</span> inhabitants of the village was interviewed. Suppose we obtain the following contingency table:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>10</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that this case (that of sampling) will be the most frequent, as we often do not have access to the entire population, but only to a sample.</p>
+<p>In this case, we cannot calculate the relative risk as the real numbers of people exposed and not exposed to risk, which were in the denominator of the risk calculation expressions, are not available. If we still apply the formula, we will get an estimate biased by our sampling:</p>
+<div class="math notranslate nohighlight">
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{20/(20+10)}{6/(6+16)}=2.45\]</div>
+<p>Although we cannot calculate the relative risk as we do not know the absolute number of sick and exposed people, <strong>we expect our sample to be a good representation of the population</strong>, therefore we can reason in terms of “odds”.</p>
+<p>Odds are a probability concept widely used in betting, because they allow the bettor to easily calculate the payout to collect. For example, if team <span class="math notranslate nohighlight">\(A\)</span>’s victory over team <span class="math notranslate nohighlight">\(B\)</span> in a soccer match is given as <span class="math notranslate nohighlight">\(5:1\)</span>, the bookmaker expects team <span class="math notranslate nohighlight">\(A\)</span> to be <span class="math notranslate nohighlight">\(5\)</span> times more likely to win than team <span class="math notranslate nohighlight">\(B\)</span>. If I bet <span class="math notranslate nohighlight">\(2\)</span> euros on team <span class="math notranslate nohighlight">\(B\)</span> and team <span class="math notranslate nohighlight">\(B\)</span> wins, then I will win <span class="math notranslate nohighlight">\(5\times 2 = 10\)</span> euros (I bet on a rare event). The odd in this case would be defined as:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{5}{1} = 5\]</div>
+<p>Alternatively, I can reason in terms of probability. Given the scheme above, I expect that, if we played the match <span class="math notranslate nohighlight">\(100\)</span> times, then the probability of victories for team <span class="math notranslate nohighlight">\(A\)</span> would be equal to <span class="math notranslate nohighlight">\(P(A\ wins)=\frac{5}{5+1}\)</span>, while the probability of loss would be equal to <span class="math notranslate nohighlight">\(P(A\ loses)=\frac{1}{5+1}\)</span>. The odd can be defined in terms of these probabilities:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{P(A\ wins)}{P(A\ loses)} = \frac{\frac{5}{5+1}}{\frac{1}{5+1}} = 5\]</div>
+<p>In general, the odd for an event <span class="math notranslate nohighlight">\(E\)</span> is the probability that the event occurs, divided by the probability that the event does not occur:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{P(E)}{1-P(E)}\]</div>
+<p>The odd is a concept similar to risk because it tells us how much greater the frequency of an event occurring (A wins) is compared to the frequency of the event not occurring. Let’s apply this concept to our example. We define two odds (just as we defined two risks):</p>
+<ul class="simple">
+<li><p>The odds of getting sick if exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)} = \frac{\frac{20}{20+10}}{\frac{10}{20+10}} = \frac{20}{10} = 2\)</span></p></li>
+<li><p>The odds of getting sick if not exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)} = \frac{\frac{6}{6+16}}{\frac{16}{6+16}} = \frac{6}{16} = 0.375\)</span></p></li>
+</ul>
+<p>It should be noted that in the formulas above, the absolute counts, i.e., those we do not trust given the sampling, “cancel out”.</p>
+<p>The odds ratio will be defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)}}{\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)}} = \frac{2}{0.375} \approx 5.3\]</div>
+<p>We note that the obtained odds ratio is very close to the previously calculated relative risk of <span class="math notranslate nohighlight">\(5\)</span>. <strong>In practice, it can be demonstrated that, if it is assumed that the disease is rare (rare-disease assumption), the odds ratio and the relative risk converge to similar values.</strong> It is therefore a fairly common practice to make this assumption and calculate the odds ratio instead of the relative risk.</p>
+</section>
+</section>
+<section id="associations-between-continuous-variables">
+<h2>Associations Between Continuous Variables<a class="headerlink" href="#associations-between-continuous-variables" title="Permalink to this heading">#</a></h2>
+<p>When variables are continuous, it is no longer possible to construct contingency tables. In those cases, other tools are used, which we will see in this section.</p>
+<p>We will consider the “diabetes” dataset for this part. The dataset was introduced in <span class="math notranslate nohighlight">\(1979\)</span> by Reaven and Miller and examines the relationship between blood measurements and insulin in <span class="math notranslate nohighlight">\(145\)</span> adults:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relwt</th>
+      <th>glufast</th>
+      <th>glutest</th>
+      <th>instest</th>
+      <th>sspg</th>
+      <th>group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.81</td>
+      <td>80</td>
+      <td>356</td>
+      <td>124</td>
+      <td>55</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.95</td>
+      <td>97</td>
+      <td>289</td>
+      <td>117</td>
+      <td>76</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.94</td>
+      <td>105</td>
+      <td>319</td>
+      <td>143</td>
+      <td>105</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.04</td>
+      <td>90</td>
+      <td>356</td>
+      <td>199</td>
+      <td>108</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.00</td>
+      <td>90</td>
+      <td>323</td>
+      <td>240</td>
+      <td>143</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>140</th>
+      <td>1.05</td>
+      <td>353</td>
+      <td>1428</td>
+      <td>41</td>
+      <td>480</td>
+      <td>Overt_Diabetic</td>
+    </tr>
+    <tr>
+      <th>141</th>
+      <td>0.91</td>
+      <td>180</td>
+      <td>923</td>
+      <td>77</td>
+      <td>150</td>
+      <td>Overt_Diabetic</td>
+    </tr>
+    <tr>
+      <th>142</th>
+      <td>0.90</td>
+      <td>213</td>
+      <td>1025</td>
+      <td>29</td>
+      <td>209</td>
+      <td>Overt_Diabetic</td>
+    </tr>
+    <tr>
+      <th>143</th>
+      <td>1.11</td>
+      <td>328</td>
+      <td>1246</td>
+      <td>124</td>
+      <td>442</td>
+      <td>Overt_Diabetic</td>
+    </tr>
+    <tr>
+      <th>144</th>
+      <td>0.74</td>
+      <td>346</td>
+      <td>1568</td>
+      <td>15</td>
+      <td>253</td>
+      <td>Overt_Diabetic</td>
+    </tr>
+  </tbody>
+</table>
+<p>145 rows × 6 columns</p>
+</div></div></div>
+</div>
+<p>The <span class="math notranslate nohighlight">\(6\)</span> variables have the following meanings:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">relwt</span></code>
+relative weight, expressed as the ratio of actual weight to
+expected weight, given the person’s height, a numeric vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glufast</span></code>
+fasting plasma glucose level, a numeric vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">glutest</span></code>
+test plasma glucose level, a measure of glucose intolerance, a
+numeric vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">instest</span></code>
+plasma insulin during test, a measure of insulin response to oral
+glucose, a numeric vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">sspg</span></code>
+steady state plasma glucose, a measure of insulin resistance, a
+numeric vector</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">group</span></code>
+diagnostic group, a factor with levels <code class="docutils literal notranslate"><span class="pre">Normal</span></code>
+<code class="docutils literal notranslate"><span class="pre">Chemical_Diabetic</span></code> <code class="docutils literal notranslate"><span class="pre">Overt_Diabetic</span></code></p></li>
+</ul>
+<section id="graphical-representation-of-two-continuous-variables">
+<h3>Graphical Representation of Two Continuous Variables<a class="headerlink" href="#graphical-representation-of-two-continuous-variables" title="Permalink to this heading">#</a></h3>
+<p>Let’s start by considering the variables <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code>. The first useful form of representation is the scatterplot, which visualizes observations as two-dimensional data:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/72c9c65a4539d7164e8ee1c1aab1ac1452411c24ef7706efc9de99971c000370.png" src="../_images/72c9c65a4539d7164e8ee1c1aab1ac1452411c24ef7706efc9de99971c000370.png" />
+</div>
+</div>
+<p>We note that there seems to be a relationship between the two variables. Indeed, as <code class="docutils literal notranslate"><span class="pre">sspg</span></code> increases, the values of <code class="docutils literal notranslate"><span class="pre">glutest</span></code> tend to increase. There appears to be a positive <strong>correlation</strong> (or <strong>association</strong>). Let’s now consider the pair <code class="docutils literal notranslate"><span class="pre">relwt</span></code> and <code class="docutils literal notranslate"><span class="pre">sspg</span></code>:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/76b65c3d7b8c9959be7f8b08ec0ee768d3a30cf425e5963d37ad1bb93e503dd1.png" src="../_images/76b65c3d7b8c9959be7f8b08ec0ee768d3a30cf425e5963d37ad1bb93e503dd1.png" />
+</div>
+</div>
+<p>We note that in this case the relationship appears less marked, but we still note an ascending trend of <code class="docutils literal notranslate"><span class="pre">sspg</span></code> as <code class="docutils literal notranslate"><span class="pre">relwt</span></code> grows. It is often useful to try to study correlations with a <strong>scattermatrix</strong> that shows all possible scatterplots. In the case of our example:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/a79a952db4c21e82aad889a200fa92adaed5af142fbd6d1a23d0f1809a1d2954.png" src="../_images/a79a952db4c21e82aad889a200fa92adaed5af142fbd6d1a23d0f1809a1d2954.png" />
+</div>
+</div>
+<p>From the visualization above, we can deduce a few things:</p>
+<ul class="simple">
+<li><p>some pairs of variables are positively correlated (e.g., <code class="docutils literal notranslate"><span class="pre">relwt</span></code>-<code class="docutils literal notranslate"><span class="pre">sspg</span></code>), while others are negatively so (<code class="docutils literal notranslate"><span class="pre">glutest</span></code>-<code class="docutils literal notranslate"><span class="pre">instest</span></code>);</p></li>
+<li><p>some relationships are “linear” (e.g., <code class="docutils literal notranslate"><span class="pre">glutest</span></code> and <code class="docutils literal notranslate"><span class="pre">glufast</span></code>), while others tend not to be (e.g., <code class="docutils literal notranslate"><span class="pre">glufast</span></code> and <code class="docutils literal notranslate"><span class="pre">sspg</span></code>):</p></li>
+<li><p>some pairs of variables (e.g., <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">relwt</span></code>) do not appear to be correlated.</p></li>
+</ul>
+</section>
+<section id="covariance">
+<h3>Covariance<a class="headerlink" href="#covariance" title="Permalink to this heading">#</a></h3>
+<p>We have seen that <strong>variance</strong> indicates how dispersed a univariate sample is around its mean. We can use a similar idea to quantify to what extent <strong>two variables are distributed similarly around their mean</strong>. We expect that, if the variables are correlated, then they will be distributed similarly.</p>
+<p>The concept of <strong>variance</strong> is generalized by the concept of <strong>covariance</strong> in the case of bivariate data. Covariance measures how much the two variables vary together and is measured as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+Cov(X,Y) = \frac{1}{n}\sum_i^n (x^{(i)} - \overline x) (y^{(i)} - \overline y)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are the two variables of interest, <span class="math notranslate nohighlight">\(x^{(i)}\)</span> is the value of <span class="math notranslate nohighlight">\(X\)</span> for the i-th observation, <span class="math notranslate nohighlight">\(y^{(i)}\)</span> is the value of <span class="math notranslate nohighlight">\(Y\)</span> for the i-th observation, and <span class="math notranslate nohighlight">\(\overline x\)</span>, <span class="math notranslate nohighlight">\(\overline y\)</span> are the means of the observations for the two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>The main “actors” in the formula above are the terms:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\((x^{(i)}-\overline x)\)</span>: measures the distance between a point <span class="math notranslate nohighlight">\(x^{(i)}\)</span> and its respective mean <span class="math notranslate nohighlight">\(\overline x\)</span>. If the value of the point in question is above the mean, then this difference will be positive, otherwise negative.</p></li>
+<li><p><span class="math notranslate nohighlight">\((y^{(i)}-\overline y)\)</span>: measures the distance between a point <span class="math notranslate nohighlight">\(y^{(i)}\)</span> and its respective mean <span class="math notranslate nohighlight">\(\overline y\)</span>. If the value of the point in question is above the mean, then this difference will be positive, otherwise negative.</p></li>
+</ul>
+<p>Each term of the sum in the covariance formula performs the products between these two terms:</p>
+<div class="math notranslate nohighlight">
+\[(x^{(i)}-\overline x)(y^{(i)}-\overline y)\]</div>
+<p>Which will be:</p>
+<ul class="simple">
+<li><p><strong>positive</strong> if the elements <span class="math notranslate nohighlight">\(x^{(i)}\)</span> and <span class="math notranslate nohighlight">\(y^{(i)}\)</span> are “concordant”, i.e., if they are both above their respective means or both below their respective means;</p></li>
+<li><p><strong>negative</strong> if the elements <span class="math notranslate nohighlight">\(x^{(i)}\)</span> and <span class="math notranslate nohighlight">\(y^{(i)}\)</span> are “discordant”, i.e., if one of the two is above its respective mean, while the other is below its respective mean;</p></li>
+<li><p><strong>zero or close to zero</strong> if the elements <span class="math notranslate nohighlight">\(x^{(i)}\)</span> and <span class="math notranslate nohighlight">\(y^{(i)}\)</span> are very close to their respective means.</p></li>
+</ul>
+<p>These quantities have a geometric interpretation. Let’s consider the following plot:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/3da6313b7718ddb85fb100765759924a10a83fa16ef270ceef33839b74365296.png" src="../_images/3da6313b7718ddb85fb100765759924a10a83fa16ef270ceef33839b74365296.png" />
+</div>
+</div>
+<p>The graph shows a sample of points and their respective means with a horizontal line (for Y) and a vertical line (for X). The two means divide the graph into four quadrants. For each point, the red dashed lines indicate the values of the magnitudes <span class="math notranslate nohighlight">\((x^{(i)}-\overline x)\)</span> and <span class="math notranslate nohighlight">\((y^{(i)}-\overline y)\)</span>. Specifically:</p>
+<ul class="simple">
+<li><p>The points in the upper right quadrant will have both these magnitudes positive. The products <span class="math notranslate nohighlight">\((x^{(i)}-\overline x)(y^{(i)}-\overline y)\)</span> will be positive.</p></li>
+<li><p>The points in the lower right quadrant will have both these magnitudes negative. The products <span class="math notranslate nohighlight">\((x^{(i)}-\overline x)(y^{(i)}-\overline y)\)</span> will be positive.</p></li>
+<li><p>The points in the other two quadrants will have one of the magnitudes positive and the other negative. The products <span class="math notranslate nohighlight">\((x^{(i)}-\overline x)(y^{(i)}-\overline y)\)</span> will be negative.</p></li>
+</ul>
+<p>In practice:</p>
+<ul class="simple">
+<li><p>points in the first and third quadrants contribute <strong>positively</strong> to the correlation coefficient;</p></li>
+<li><p>points in the second and fourth quadrants contribute <strong>negatively</strong> to the correlation coefficient.</p></li>
+<li><p>Points close to the mean (the intersection between the two means) will correspond to very small magnitudes and <strong>will not contribute</strong> to changing the covariance value.</p></li>
+</ul>
+<p>Intuitively, the covariance will take on very positive values when <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> vary in agreement (i.e., if <span class="math notranslate nohighlight">\(X\)</span> takes high values, <span class="math notranslate nohighlight">\(Y\)</span> takes high values, and if <span class="math notranslate nohighlight">\(X\)</span> takes low values, <span class="math notranslate nohighlight">\(Y\)</span> takes low values). Indeed, in such a case, the signs of the two factors within the summation will agree, and their product will have a positive sign. If, conversely, <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> vary in disagreement, the product will have a negative sign, and the covariance will take on negative values.</p>
+<p>We note that the covariance of a variable <span class="math notranslate nohighlight">\(X\)</span> with itself is equal to the variance:</p>
+<div class="math notranslate nohighlight">
+\[
+Cov(X,X) = \frac{1}{n}\sum_i^n (x_i - \overline x) (x_i - \overline x) = s_X
+\]</div>
+<p>It should be noted that:</p>
+<ul class="simple">
+<li><p>Negative values indicate a negative correlation (when one of the two variables increases, the other decreases);</p></li>
+<li><p>Positive values indicate a positive correlation (the two variables increase or decrease together);</p></li>
+<li><p>Zero values (or close to zero) indicate that the two variables are not correlated (or are weakly correlated).</p></li>
+</ul>
+<p>It should also be noted that covariance values are not normalized and depend on the ranges of the individual variables, therefore it is not possible to compare covariances. For example, the covariance between <code class="docutils literal notranslate"><span class="pre">relwt</span></code> and itself (thus the variance of <code class="docutils literal notranslate"><span class="pre">relwt</span></code>) is close to zero; however, this does not mean that <code class="docutils literal notranslate"><span class="pre">relwt</span></code> is not correlated with itself!</p>
+<p>In practice, in the presence of multiple variables, the covariances of all possible pairs of variables are calculated, somewhat as seen in the case of the scatter matrix. In our case we will have:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relwt</th>
+      <th>glufast</th>
+      <th>glutest</th>
+      <th>instest</th>
+      <th>sspg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>relwt</th>
+      <td>0.016702</td>
+      <td>-0.072815</td>
+      <td>0.982426</td>
+      <td>3.473373</td>
+      <td>5.266255</td>
+    </tr>
+    <tr>
+      <th>glufast</th>
+      <td>-0.072815</td>
+      <td>4087.097031</td>
+      <td>19546.064080</td>
+      <td>-3063.463649</td>
+      <td>4849.905651</td>
+    </tr>
+    <tr>
+      <th>glutest</th>
+      <td>0.982426</td>
+      <td>19546.064080</td>
+      <td>100457.849808</td>
+      <td>-12918.162739</td>
+      <td>25908.490182</td>
+    </tr>
+    <tr>
+      <th>instest</th>
+      <td>3.473373</td>
+      <td>-3063.463649</td>
+      <td>-12918.162739</td>
+      <td>14625.312548</td>
+      <td>101.482519</td>
+    </tr>
+    <tr>
+      <th>sspg</th>
+      <td>5.266255</td>
+      <td>4849.905651</td>
+      <td>25908.490182</td>
+      <td>101.482519</td>
+      <td>11242.331897</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The matrix seen above is also called “covariance matrix” and denoted by the letter <span class="math notranslate nohighlight">\(\Sigma\)</span>. Given the variables <span class="math notranslate nohighlight">\(X=(X_i,\ldots,X_k)\)</span>, <span class="math notranslate nohighlight">\(\Sigma\)</span> is a <span class="math notranslate nohighlight">\([k \times k]\)</span> matrix whose general term is:</p>
+<div class="math notranslate nohighlight">
+\[\Sigma_{ij} = Cov(X_i,X_j)\]</div>
+</section>
+<section id="pearson-correlation-coefficient">
+<h3>Pearson Correlation Coefficient<a class="headerlink" href="#pearson-correlation-coefficient" title="Permalink to this heading">#</a></h3>
+<p>The Pearson correlation coefficient attempts to solve the problems of covariance by providing a normalized quantitative score. Given a bivariate sample <span class="math notranslate nohighlight">\(\{(x^{(i)},y^{(i)})\}\)</span>, the Pearson correlation coefficient is defined as the covariance between the two variables, divided by the product of their standard deviations:</p>
+<div class="math notranslate nohighlight">
+\[
+\rho(x,y)= \frac{Cov(X,Y)}{s_X s_Y}
+\]</div>
+<p>We note that:</p>
+<div class="math notranslate nohighlight">
+\[
+ \rho(x,y) = \frac{Cov(X,Y)}{s_X s_Y}  = \frac{1}{n} \sum \frac{(x_i - \overline x)}{s_X} \frac{(y_i - \overline y)}{s_X} = Cov(z(X),z(Y))
+\]</div>
+<p>Where</p>
+<div class="math notranslate nohighlight">
+\[
+z(X) = \frac{X-\overline X}{s_x}
+\]</div>
+<p>is the z-scoring function.</p>
+<p>We can therefore view the Pearson correlation coefficient as the covariance of variables normalized with z-scoring. It can be easily seen that the Pearson correlation coefficient can also be written as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+\rho(x,y) = \frac{\sum_{i=1}^n (x^{(i)}-\overline x)(y^{(i)}-\overline y)}{\sqrt{\sum_{i=1}^n (x^{(i)}-\overline x)^2} \sqrt{\sum_{i=1}^n (y^{(i)}-\overline y)^2}}
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\overline x\)</span> and <span class="math notranslate nohighlight">\(\overline y\)</span> are respectively the means of the values of the two variables.</p>
+<p>The following graph shows a plot analogous to the previous one after performing z-scoring. Note how the ranges of <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> are now normalized and the mean is at the origin.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/678c1017ce1a57225a15e996d5d0c28533f3ea183469220416da82cfc88a1339.png" src="../_images/678c1017ce1a57225a15e996d5d0c28533f3ea183469220416da82cfc88a1339.png" />
+</div>
+</div>
+<p>Pearson’s correlation coefficient is a number between <span class="math notranslate nohighlight">\(-1\)</span> (maximum anticorrelation) and <span class="math notranslate nohighlight">\(1\)</span> (maximum correlation).</p>
+<p>In practice, you will have:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\rho(x,-x)=-1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\rho(x,x) = 1\)</span></p></li>
+</ul>
+<p>The correlation coefficient between the variables <code class="docutils literal notranslate"><span class="pre">relwt</span></code> and <code class="docutils literal notranslate"><span class="pre">sspg</span></code> will be equal to:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.38
+</pre></div>
+</div>
+</div>
+</div>
+<section id="interpretation-of-pearson-s-correlation-coefficient-values">
+<h4>Interpretation of Pearson’s Correlation Coefficient Values<a class="headerlink" href="#interpretation-of-pearson-s-correlation-coefficient-values" title="Permalink to this heading">#</a></h4>
+<p>Pearson’s correlation coefficient is a number between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span> which indicates whether there is a correlation (i.e., when the values of the first variable increase, the values of the second variable also increase) or an anticorrelation (i.e., when the values of the first variable increase, the values of the second variable decrease and vice versa). Values close to <span class="math notranslate nohighlight">\(-1\)</span> indicate that the variables are anticorrelated; values close to <span class="math notranslate nohighlight">\(1\)</span> indicate that the variables are correlated; values close to <span class="math notranslate nohighlight">\(0\)</span> indicate that the variables are decorrelated. In practice:</p>
+<ul class="simple">
+<li><p>The sign of the coefficient indicates the “direction” of the correlation:</p>
+<ul>
+<li><p>Positive: the variables are correlated;</p></li>
+<li><p>Negative: the variables are anticorrelated;</p></li>
+</ul>
+</li>
+<li><p>The absolute value of the coefficient indicates how strong the correlation (or anticorrelation) is:</p>
+<ul>
+<li><p>for values between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(0.3\)</span> it indicates a <strong>weak</strong> correlation (or anticorrelation);</p></li>
+<li><p>for values between <span class="math notranslate nohighlight">\(0.3\)</span> and <span class="math notranslate nohighlight">\(0.7\)</span> it indicates a <strong>moderate</strong> correlation (or anticorrelation);</p></li>
+<li><p>for values between <span class="math notranslate nohighlight">\(0.7\)</span> and <span class="math notranslate nohighlight">\(1\)</span> it indicates a <strong>strong</strong> correlation (or anticorrelation).</p></li>
+</ul>
+</li>
+</ul>
+<p>Note that Pearson’s correlation coefficient only measures <strong>linear correlations</strong>. Therefore, a non-linear correlation might exist between two variables even if the obtained correlation coefficient is low.</p>
+<p>The following graph shows the scatterplots of some example bivariate samples with different degrees of correlation, together with their respective Pearson correlation coefficients:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4690238e89cff14024d89b1d1e67ba9d8bb9789a8ae315345347e6c34a85b1b5.png" src="../_images/4690238e89cff14024d89b1d1e67ba9d8bb9789a8ae315345347e6c34a85b1b5.png" />
+</div>
+</div>
+<p>Observing the graphs shown above, we can note that the following relationships exist between index and scatterplot:</p>
+<ul class="simple">
+<li><p>A positive index identifies an upward trend (a line with a positive slope);</p></li>
+<li><p>A negative index identifies a downward trend (a line with a negative slope);</p></li>
+<li><p>The absolute value of the index is correlated with the “width” of the “corridor” formed by the data.</p></li>
+</ul>
+<p>Note that there is no relationship between Pearson’s correlation coefficient and the slope of the line. We can see this in the following graph:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/bdf7d00d5b64d5c7d6647ac32468892357f887abd02443eac770472792eef4f5.png" src="../_images/bdf7d00d5b64d5c7d6647ac32468892357f887abd02443eac770472792eef4f5.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="spearman-s-rank-correlation-coefficient">
+<h3>Spearman’s Rank Correlation Coefficient<a class="headerlink" href="#spearman-s-rank-correlation-coefficient" title="Permalink to this heading">#</a></h3>
+<p>Pearson’s coefficient captures linear relationships between variables. However, there are cases where the relationship between two variables may not be linear, but it still makes sense to try and understand if a correlation exists.</p>
+<p>Imagine we have a series of users who assign scores to products they review. Each user will use a different and probably non-linear subjective scale. Pearson’s correlation coefficient would not be the most appropriate to check if the scores assigned by two users are correlated.</p>
+<p><strong>Spearman’s correlation coefficient tries to solve this problem by moving from scores to ranks</strong>. Instead of reasoning about individual scores, Spearman’s correlation coefficient orders the products by score and checks if the resulting orderings are similar.</p>
+<p>Consider the sample <span class="math notranslate nohighlight">\(\{(x^{(i)},y^{(i)})\}_i\)</span>. Let <span class="math notranslate nohighlight">\(R(x^{(i)})\)</span> and <span class="math notranslate nohighlight">\(R(y^{(i)})\)</span> be the ranks associated with the values of the two variables, and let <span class="math notranslate nohighlight">\(d_i=R(x^{(i)})\)</span> - <span class="math notranslate nohighlight">\(R(y^{(i)})\)</span>. Spearman’s rank correlation coefficient is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[ R = 1 - \frac{6\sum_{i=1}^n d_i^2}{n(n^2-1)} \]</div>
+<p>The values of Spearman’s coefficient are normalized between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(+1\)</span> and have a similar interpretation to Pearson’s coefficient.</p>
+<p>Consider the following example. We ask Alice, Bob, Charlie, and David to assign a score from <span class="math notranslate nohighlight">\(1\)</span> to <span class="math notranslate nohighlight">\(5\)</span> to four ice cream flavors, obtaining these results:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Participant</th>
+      <th>Chocolate</th>
+      <th>Vanilla</th>
+      <th>Strawberry</th>
+      <th>MintChip</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Alice</td>
+      <td>5</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Bob</td>
+      <td>3</td>
+      <td>5</td>
+      <td>4</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Charlie</td>
+      <td>4</td>
+      <td>3</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>David</td>
+      <td>2</td>
+      <td>3</td>
+      <td>2</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Given that each child can use a different scale, we use Spearman’s coefficient, obtaining the following values:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spearman Correlation (Chocolate vs. Vanilla): 0.21
+Spearman Correlation (Chocolate vs. Strawberry): 0.40
+Spearman Correlation (Chocolate vs. MintChip): -0.77
+</pre></div>
+</div>
+</div>
+</div>
+<p>These values tell us that the ice cream flavor that received scores “most similar” to chocolate is strawberry.</p>
+<p>Unlike the Pearson coefficient, Spearman’s index can capture non-linear relationships, as shown in the following example:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2083f8f5a738a48ff842e5251bde87d59fd0f25267940f2a100c655722a87529.png" src="../_images/2083f8f5a738a48ff842e5251bde87d59fd0f25267940f2a100c655722a87529.png" />
+</div>
+</div>
+</section>
+<section id="kendall-s-correlation-coefficient-optional">
+<h3>Kendall’s Correlation Coefficient (Optional)<a class="headerlink" href="#kendall-s-correlation-coefficient-optional" title="Permalink to this heading">#</a></h3>
+<p>Kendall’s rank correlation coefficient, also known as <strong>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span></strong>, is also used to measure the level of association between two variables, considering their ranks.</p>
+<p>Let’s consider the sample <span class="math notranslate nohighlight">\(\{(x^{(i)},y^{(i)})\}_i\)</span>. Each pair of observations <span class="math notranslate nohighlight">\((x_i,y_i)\)</span> and <span class="math notranslate nohighlight">\((x_j,y_j)\)</span>, with <span class="math notranslate nohighlight">\(i&lt;j\)</span> is called:</p>
+<ul class="simple">
+<li><p><strong>concordant</strong> if: <span class="math notranslate nohighlight">\(x_i&gt;x_j\)</span> and <span class="math notranslate nohighlight">\(y_i&gt;y_j\)</span> or <span class="math notranslate nohighlight">\(x_i&lt;x_j\)</span> and <span class="math notranslate nohighlight">\(y_i&lt;y_j\)</span>;</p></li>
+<li><p><strong>discordant</strong> if: <span class="math notranslate nohighlight">\(x_i&lt;x_j\)</span> and <span class="math notranslate nohighlight">\(y_i&gt;y_j\)</span> or <span class="math notranslate nohighlight">\(x_i&gt;x_j\)</span> and <span class="math notranslate nohighlight">\(y_i&lt;y_j\)</span>;</p></li>
+</ul>
+<p>Kendall’s <span class="math notranslate nohighlight">\(\tau\)</span> coefficient is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[\tau = \frac{\text{concordant pairs} - \text{discordant pairs}}{\text{pairs}}\]</div>
+<p>The following graph shows a sample with six points. Each line shows a possible pair of points. The green lines show the concordant pairs, while the red ones show the discordant pairs. Kendall’s coefficient for this example is given by:</p>
+<div class="math notranslate nohighlight">
+\[\tau = \frac{4-2}{6} = \frac{1}{3}\]</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/dd3c773c6c1393e349a610a0ede1dae20bfbd81e4fca4ed6a58a8844d1cb874b.png" src="../_images/dd3c773c6c1393e349a610a0ede1dae20bfbd81e4fca4ed6a58a8844d1cb874b.png" />
+</div>
+</div>
+</section>
+<section id="correlation-matrix">
+<h3>Correlation Matrix<a class="headerlink" href="#correlation-matrix" title="Permalink to this heading">#</a></h3>
+<p>Similarly to what was seen in the case of scatterplots, when we have multiple variables, we can calculate the correlation indices between all variables in the dataset. In this way, we obtain a “correlation matrix”. The correlation matrix calculated using Pearson’s coefficient, in the case of our <code class="docutils literal notranslate"><span class="pre">diabetes</span></code> dataset, will be:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relwt</th>
+      <th>glufast</th>
+      <th>glutest</th>
+      <th>instest</th>
+      <th>sspg</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>relwt</th>
+      <td>1.000000</td>
+      <td>-0.008813</td>
+      <td>0.023984</td>
+      <td>0.222238</td>
+      <td>0.384320</td>
+    </tr>
+    <tr>
+      <th>glufast</th>
+      <td>-0.008813</td>
+      <td>1.000000</td>
+      <td>0.964628</td>
+      <td>-0.396235</td>
+      <td>0.715480</td>
+    </tr>
+    <tr>
+      <th>glutest</th>
+      <td>0.023984</td>
+      <td>0.964628</td>
+      <td>1.000000</td>
+      <td>-0.337020</td>
+      <td>0.770942</td>
+    </tr>
+    <tr>
+      <th>instest</th>
+      <td>0.222238</td>
+      <td>-0.396235</td>
+      <td>-0.337020</td>
+      <td>1.000000</td>
+      <td>0.007914</td>
+    </tr>
+    <tr>
+      <th>sspg</th>
+      <td>0.384320</td>
+      <td>0.715480</td>
+      <td>0.770942</td>
+      <td>0.007914</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>There is also a graphical representation of the correlation matrix, often called “correlation plot”:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/489b6bd05531e1dbc7782b66e5410b70ccfc9d0a3fa4be0db6a0ca62298f4f23.png" src="../_images/489b6bd05531e1dbc7782b66e5410b70ccfc9d0a3fa4be0db6a0ca62298f4f23.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chapter 3 of: Heumann, Christian, and Michael Schomaker Shalabh. Introduction to statistics and data analysis. Springer International Publishing Switzerland, 2016.</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Odds_ratio">https://en.wikipedia.org/wiki/Odds_ratio</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables-and-probability">Contingency tables and probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability-distributions">Joint Probability Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marginal-probability-distributions">Marginal Probability Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-distributions">Conditional Probability Distributions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical Representations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association-between-two-discrete-variables">Measures of Association between two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-and-expected-frequencies">Independence and Expected Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#esempio">Esempio</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk">Relative Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio">Odds Ratio</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient">Pearson Correlation Coefficient</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pearson-s-correlation-coefficient-values">Interpretation of Pearson’s Correlation Coefficient Values</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spearman-s-rank-correlation-coefficient">Spearman’s Rank Correlation Coefficient</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kendall-s-correlation-coefficient-optional">Kendall’s Correlation Coefficient (Optional)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix">Correlation Matrix</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

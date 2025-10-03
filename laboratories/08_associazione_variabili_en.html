@@ -1,0 +1,2070 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Association Between Variables &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/08_associazione_variabili_en';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../lectures/index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../lectures/index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/08_associazione_variabili_en.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/08_associazione_variabili_en.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/laboratories/08_associazione_variabili_en.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Association Between Variables</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-the-distribution-of-two-discrete-variables">Summarize the Distribution of Two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables">Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-relative-frequency-distributions">Joint Relative Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-marginal-frequency-distributions">Relative Marginal Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-relative-frequency-distributions">Conditional Relative Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical Representations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association-between-two-discrete-variables">Measures of Association Between Two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio">Relative Risk and Odds Ratio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot">Scatter Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#means-and-covariances">Means and Covariances</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-indices">Correlation Indices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plot">Correlation Plot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="association-between-variables">
+<h1>Association Between Variables<a class="headerlink" href="#association-between-variables" title="Permalink to this heading">#</a></h1>
+<p>We will use the Titanic dataset again as an example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">,</span>
+                           <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">)</span>
+<span class="n">titanic_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Given the dataset above, we might ask ourselves if some variables influence the values of others. For example, being in first, second, or third class (variable <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>) somehow influences the probability of surviving (variable <code class="docutils literal notranslate"><span class="pre">Survived</span></code>)?, or perhaps, does age (variable <code class="docutils literal notranslate"><span class="pre">Age</span></code>) or the price paid (<code class="docutils literal notranslate"><span class="pre">Fare</span></code>) somehow influence the probability of survival (<code class="docutils literal notranslate"><span class="pre">Survived</span></code>)?</p>
+<p>In this lesson, we will look at different ways to summarize the distributions of two variables and check for any associations (or correlations) between the variables.</p>
+<section id="summarize-the-distribution-of-two-discrete-variables">
+<h2>Summarize the Distribution of Two Discrete Variables<a class="headerlink" href="#summarize-the-distribution-of-two-discrete-variables" title="Permalink to this heading">#</a></h2>
+<p>If both variables we are studying are discrete, we can enumerate all possible combinations of values and summarize them in a contingency table that shows the values of one variable on the rows and those of the other variable on the columns. Each cell will indicate the number of times we observe a given pair of values.</p>
+<section id="contingency-tables">
+<h3>Contingency Tables<a class="headerlink" href="#contingency-tables" title="Permalink to this heading">#</a></h3>
+<p>Let’s build the contingency table for the variables <code class="docutils literal notranslate"><span class="pre">Sex</span></code> and <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>. To do this, we will use the <code class="docutils literal notranslate"><span class="pre">crosstab</span></code> function of Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The table above indicates, for example, that <span class="math notranslate nohighlight">\(94\)</span> passengers in class <span class="math notranslate nohighlight">\(1\)</span> were female. By specifying <code class="docutils literal notranslate"><span class="pre">margins=True</span></code>, we can obtain row and column sums, which will indicate the absolute frequencies of each variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span><span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+      <td>314</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+      <td>577</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>216</td>
+      <td>184</td>
+      <td>491</td>
+      <td>891</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="joint-relative-frequency-distributions">
+<h3>Joint Relative Frequency Distributions<a class="headerlink" href="#joint-relative-frequency-distributions" title="Permalink to this heading">#</a></h3>
+<p>We can obtain the joint relative frequency table by passing <code class="docutils literal notranslate"><span class="pre">normalize=True</span></code> to the crosstab function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.105499</td>
+      <td>0.085297</td>
+      <td>0.161616</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.136925</td>
+      <td>0.121212</td>
+      <td>0.389450</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="relative-marginal-frequency-distributions">
+<h3>Relative Marginal Frequency Distributions<a class="headerlink" href="#relative-marginal-frequency-distributions" title="Permalink to this heading">#</a></h3>
+<p>We obtain the marginals by passing <code class="docutils literal notranslate"><span class="pre">margins=True</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.105499</td>
+      <td>0.085297</td>
+      <td>0.161616</td>
+      <td>0.352413</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.136925</td>
+      <td>0.121212</td>
+      <td>0.389450</td>
+      <td>0.647587</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It should be noted that the marginal relative frequencies obtained are identical to the relative frequencies of the univariate samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>male      0.647587
+female    0.352413
+Name: Sex, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>That are exactly the values in the last column of the previous table. Similarly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3    0.551066
+1    0.242424
+2    0.206510
+Name: Pclass, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>What are the values in the last row of the previous table.</p>
+</section>
+<section id="conditional-relative-frequency-distributions">
+<h3>Conditional Relative Frequency Distributions<a class="headerlink" href="#conditional-relative-frequency-distributions" title="Permalink to this heading">#</a></h3>
+<p>It is possible to obtain the conditional relative frequencies by normalizing by the appropriate row. If I want to condition with respect to variable X, I will normalize by rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=0 indicates to condition on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.299363</td>
+      <td>0.242038</td>
+      <td>0.458599</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.211438</td>
+      <td>0.187175</td>
+      <td>0.601386</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>From the table above, for example, I can infer:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=1|Sex=female) = 0.290363\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=2|Sex=female) = 0.242038\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=3|Sex=female) = 0.458599\)</span></p></li>
+</ul>
+<p>These are the frequencies of women in the three classes. Similarly, the second row represents the conditional frequencies with respect to <code class="docutils literal notranslate"><span class="pre">Sex=male</span></code>. From the table, we notice that the distribution of passengers changes across the three classes. In particular, among men, the third class is more frequent than among women.</p>
+<p>We can obtain the complementary perspective by conditioning on class instead:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=1 indicates conditioning on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.435185</td>
+      <td>0.413043</td>
+      <td>0.293279</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.564815</td>
+      <td>0.586957</td>
+      <td>0.706721</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this case, each column will be a probability distribution. For example:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Sex=female|Pclass=1) = 0.435185\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Sex=male|Pclass=1) = 0.564815\)</span></p></li>
+</ul>
+<p>We note that the proportion between men and women changes in the three classes, and in particular in the third class there are many more men than women.</p>
+</section>
+<section id="graphical-representations">
+<h3>Graphical Representations<a class="headerlink" href="#graphical-representations" title="Permalink to this heading">#</a></h3>
+<p>We can easily obtain graphical representations of the relationships between two variables using bar charts, directly from contingency tables.</p>
+<p>We can compare the absolute frequencies of passengers and sexes in the three classes as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Sex&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/ac26d800913862e28176b343cc300fd5f9930924d16e9e02d8164436624066c6.png" src="../_images/ac26d800913862e28176b343cc300fd5f9930924d16e9e02d8164436624066c6.png" />
+</div>
+</div>
+<p>From this, we note that many passengers are men and in third class. In these cases, a stacked plot can sometimes be useful:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Sex&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/0c55c9596676ee3c1296b3f23b2ef0d97b6ccd7d812d5afed9ea31f895a6d7b8.png" src="../_images/0c55c9596676ee3c1296b3f23b2ef0d97b6ccd7d812d5afed9ea31f895a6d7b8.png" />
+</div>
+</div>
+<p>It is often useful to visualize conditional distributions. For example, the following graph allows us to compare the distributions of passengers in the three classes, dividing them into two groups based on sex:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Sex&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/637ce8addfa61dda9e3bea0bcbfc88d742b2b1f64c7f40452c8e684acdb47ea1.png" src="../_images/637ce8addfa61dda9e3bea0bcbfc88d742b2b1f64c7f40452c8e684acdb47ea1.png" />
+</div>
+</div>
+<p>We can obtain the graph of conditional frequencies with respect to the classes for a complementary view. In this case, to have a meaningful graph, we need to transpose the contingency table with a <code class="docutils literal notranslate"><span class="pre">.T</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=1 indicates conditioning on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;Pclass&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/d9ad95d7e5a866cc1279aee299505fb0d1b74016f380d366faf595b39e9f624c.png" src="../_images/d9ad95d7e5a866cc1279aee299505fb0d1b74016f380d366faf595b39e9f624c.png" />
+</div>
+</div>
+</section>
+<section id="measures-of-association-between-two-discrete-variables">
+<h3>Measures of Association Between Two Discrete Variables<a class="headerlink" href="#measures-of-association-between-two-discrete-variables" title="Permalink to this heading">#</a></h3>
+<section id="pearson-s-mathcal-x-2-statistic">
+<h4>Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic<a class="headerlink" href="#pearson-s-mathcal-x-2-statistic" title="Permalink to this heading">#</a></h4>
+<p>We can calculate Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> statistic as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
+<span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">])</span>
+<span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chi2ContingencyResult(statistic=102.88898875696056, pvalue=4.549251711298793e-23, dof=2, expected_freq=array([[133.09090909,  82.90909091],
+       [113.37373737,  70.62626263],
+       [302.53535354, 188.46464646]]))
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">chi2_contingency</span></code> function returns:</p>
+<ul class="simple">
+<li><p>The statistic value;</p></li>
+<li><p>the p-value (we will see this in more detail later);</p></li>
+<li><p>the degrees of freedom of the <span class="math notranslate nohighlight">\(\chi^2\)</span> distribution (we will also see this in more detail later);</p></li>
+<li><p>The expected frequencies under the assumption of independence.</p></li>
+</ul>
+<p>We can compare these frequencies with the observed ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>```python
+def calculate_contingency_table(group1_data, group2_data):
+    &quot;&quot;&quot;
+    Calcola la tabella di contingenza per due gruppi di dati.
+
+    Args:
+        group1_data (list): Dati per il primo gruppo.
+        group2_data (list): Dati per il secondo gruppo.
+
+    Returns:
+        dict: Tabella di contingenza.
+    &quot;&quot;&quot;
+    # Inizializza la tabella di contingenza
+    contingency_table = {
+        &quot;group1_present_group2_present&quot;: 0,
+        &quot;group1_present_group2_absent&quot;: 0,
+        &quot;group1_absent_group2_present&quot;: 0,
+        &quot;group1_absent_group2_absent&quot;: 0
+    }
+
+    # Itera sui dati per popolare la tabella
+    for i in range(len(group1_data)):
+        if group1_data[i] and group2_data[i]:
+            contingency_table[&quot;group1_present_group2_present&quot;] += 1
+        elif group1_data[i] and not group2_data[i]:
+            contingency_table[&quot;group1_present_group2_absent&quot;] += 1
+        elif not group1_data[i] and group2_data[i]:
+            contingency_table[&quot;group1_absent_group2_present&quot;] += 1
+        else:
+            contingency_table[&quot;group1_absent_group2_absent&quot;] += 1
+
+    return contingency_table
+
+def display_contingency_table(table):
+    &quot;&quot;&quot;
+    Visualizza la tabella di contingenza in un formato leggibile.
+
+    Args:
+        table (dict): Tabella di contingenza da visualizzare.
+    &quot;&quot;&quot;
+    print(&quot;Tabella di Contingenza:&quot;)
+    print(f&quot;  Presente (Gruppo 1) | Assente (Gruppo 1)&quot;)
+    print(&quot;---------------------------------------------&quot;)
+    print(f&quot;Presente (Gruppo 2): {table[&#39;group1_present_group2_present&#39;]:&lt;10} | Assente (Gruppo 2): {table[&#39;group1_present_group2_absent&#39;]:&lt;10}&quot;)
+    print(f&quot;Assente (Gruppo 2):  {table[&#39;group1_absent_group2_present&#39;]:&lt;10} | Assente (Gruppo 2): {table[&#39;group1_absent_group2_absent&#39;]:&lt;10}&quot;)
+
+# Esempio di utilizzo
+dati_gruppo_a = [True, False, True, True, False, True, False, False]
+dati_gruppo_b = [True, True, False, True, False, False, True, False]
+
+tabella_risultante = calculate_contingency_table(dati_gruppo_a, dati_gruppo_b)
+display_contingency_table(tabella_risultante)
+```
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Survived</th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>Pclass</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>80</td>
+      <td>136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>97</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>372</td>
+      <td>119</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="cramer-s-v-statistic">
+<h4>Cramer’s V Statistic<a class="headerlink" href="#cramer-s-v-statistic" title="Permalink to this heading">#</a></h4>
+<p>Cramer’s V statistic can be calculated as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">association</span>
+
+<span class="n">association</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;class&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;survived&#39;</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.33981738800531175
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="relative-risk-and-odds-ratio">
+<h4>Relative Risk and Odds Ratio<a class="headerlink" href="#relative-risk-and-odds-ratio" title="Permalink to this heading">#</a></h4>
+<p>Let’s consider this contingency table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">380</span><span class="p">],</span>
+    <span class="s2">&quot;Non Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">594</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Diseased&quot;</span><span class="p">,</span> <span class="s2">&quot;Healthy&quot;</span><span class="p">])</span>
+<span class="n">contingency</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>380</td>
+      <td>594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can calculate the relative risk as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">relative_risk</span>
+<span class="n">relative_risk</span><span class="p">(</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span> <span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RelativeRiskResult(relative_risk=5.0, exposed_cases=20, exposed_total=400, control_cases=6, control_total=600)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function requires that the various necessary values be passed rather than the contingency matrix to avoid ambiguity.</p>
+<p>The odds ratio is calculated as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">odds_ratio</span>
+<span class="n">odds_ratio</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OddsRatioResult(statistic=5.202179487843056)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="associations-between-continuous-variables">
+<h2>Associations Between Continuous Variables<a class="headerlink" href="#associations-between-continuous-variables" title="Permalink to this heading">#</a></h2>
+<p>To study the associations between continuous variables, we will consider Fisher’s Iris dataset as an example dataset. We will load the dataset using the <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> library and visualize its information and first few rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;iris&#39;</span><span class="p">)</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 150 entries, 0 to 149
+Data columns (total 5 columns):
+ #   Column        Non-Null Count  Dtype  
+---  ------        --------------  -----  
+ 0   sepal_length  150 non-null    float64
+ 1   sepal_width   150 non-null    float64
+ 2   petal_length  150 non-null    float64
+ 3   petal_width   150 non-null    float64
+ 4   species       150 non-null    object 
+dtypes: float64(4), object(1)
+memory usage: 6.0+ KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The dataset contains <span class="math notranslate nohighlight">\(150\)</span> observations reporting the measurements of 4 features (sepal length, sepal width, petal length, and petal width) for <span class="math notranslate nohighlight">\(150\)</span> iris specimens belonging to three different species: Iris setosa, Iris virginica, and Iris versicolor.</p>
+<p>All variables are numerical, except for <code class="docutils literal notranslate"><span class="pre">species</span></code> which is categorical. Let’s visualize its unique values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;setosa&#39;, &#39;versicolor&#39;, &#39;virginica&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s explore the data by calculating the main statistical indicators using <code class="docutils literal notranslate"><span class="pre">describe</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+      <td>150.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>5.843333</td>
+      <td>3.057333</td>
+      <td>3.758000</td>
+      <td>1.199333</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.828066</td>
+      <td>0.435866</td>
+      <td>1.765298</td>
+      <td>0.762238</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>4.300000</td>
+      <td>2.000000</td>
+      <td>1.000000</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>5.100000</td>
+      <td>2.800000</td>
+      <td>1.600000</td>
+      <td>0.300000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>5.800000</td>
+      <td>3.000000</td>
+      <td>4.350000</td>
+      <td>1.300000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>6.400000</td>
+      <td>3.300000</td>
+      <td>5.100000</td>
+      <td>1.800000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>7.900000</td>
+      <td>4.400000</td>
+      <td>6.900000</td>
+      <td>2.500000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<blockquote>
+<div><p><strong>Question 1</strong></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">species</span></code> variable was not included in the summary. Why?</p>
+</div></blockquote>
+<p>Let’s compare the different variables using boxplots:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">iris</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a9889b3ca87b0828a39742ef9d9639169a3855d9e75338e5f277de0a9ae5d88d.png" src="../_images/a9889b3ca87b0828a39742ef9d9639169a3855d9e75338e5f277de0a9ae5d88d.png" />
+</div>
+</div>
+</section>
+<section id="scatter-plot">
+<h2>Scatter Plot<a class="headerlink" href="#scatter-plot" title="Permalink to this heading">#</a></h2>
+<p>We can show a scatterplot in seaborn as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/76283409610d088f833d785d672fd880db3964fec998251986d1ad5dea94bf98.png" src="../_images/76283409610d088f833d785d672fd880db3964fec998251986d1ad5dea94bf98.png" />
+</div>
+</div>
+<p>Alternatively, we can use Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/eefd76215abcdfab8a1e4fa0dda175fa6ef36435ededb01b7a4c13222117310e.png" src="../_images/eefd76215abcdfab8a1e4fa0dda175fa6ef36435ededb01b7a4c13222117310e.png" />
+</div>
+</div>
+<p>With seabord, we can easily color the points differently depending on their belonging to different iris classes using the <code class="docutils literal notranslate"><span class="pre">hue</span></code> parameter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b1f04a4cb77c09ccbb02040538a4a0b50507329e6b03838e5472edba3eb7be9e.png" src="../_images/b1f04a4cb77c09ccbb02040538a4a0b50507329e6b03838e5472edba3eb7be9e.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 2</strong></p>
+<p>What do we learn from the plot? Does the pair of variables considered constitute a discriminant factor for belonging to the different classes?</p>
+</div></blockquote>
+<p>The scatterplot can be made with different pairs of variables. Let’s consider the pair (<code class="docutils literal notranslate"><span class="pre">sepal_length</span></code>, <code class="docutils literal notranslate"><span class="pre">petal_length</span></code>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;petal_length&#39;</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">iris</span><span class="p">[</span><span class="s1">&#39;species&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9fc9f23122bb34f43a1f571a4f1dfab61d8b34ef9b897dbf4bda4262dde38422.png" src="../_images/9fc9f23122bb34f43a1f571a4f1dfab61d8b34ef9b897dbf4bda4262dde38422.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 3</strong></p>
+<p>Compare the last scatterplot displayed with the scatterplot seen previously. Does the new pair of variables constitute a discriminant factor for belonging to different classes?</p>
+</div></blockquote>
+<p>As we can notice from the two plots, each pair of variables allows us to see “a part” of the possible interactions between the different variables. To get a more complete picture, in practice, scatter plots of all possible pairs are visualized. This plot is called a scatter matrix. We can obtain a scatter matrix with <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">iris</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/901e78ad102068b03f80a563fe0f8c17634fd9c0168a9b4074dd16e985619c13.png" src="../_images/901e78ad102068b03f80a563fe0f8c17634fd9c0168a9b4074dd16e985619c13.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 4</strong></p>
+<p>Why are histograms shown on the main diagonal instead of scatter plots? Show the corresponding scatter plots for the pairs of variables on the main diagonal.</p>
+</div></blockquote>
+<p>We can highlight points by class by specifying a variable on which to base the coloring of the points:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">iris</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;species&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d46123de31e58dfeb8edb21141cb1f953c65d24573a69c0853fcc211c8f60834.png" src="../_images/d46123de31e58dfeb8edb21141cb1f953c65d24573a69c0853fcc211c8f60834.png" />
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 5</strong></p>
+<p>Does a pair of variables exist that defines a space in which observations belonging to different classes are most distinct? Does a single variable exist that exhibits particularly different distributions depending on membership in the three classes?</p>
+</div></blockquote>
+</section>
+<section id="means-and-covariances">
+<h2>Means and Covariances<a class="headerlink" href="#means-and-covariances" title="Permalink to this heading">#</a></h2>
+<p>In the <strong>multivariate</strong> case, the <strong>mean</strong> is calculated in a manner entirely analogous to the <strong>univariate</strong> case as the <strong>mean of vectors</strong>. We can trivially calculate the mean of our multivariate data using the <code class="docutils literal notranslate"><span class="pre">mean</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sepal_length    5.843333
+sepal_width     3.057333
+petal_length    3.758000
+petal_width     1.199333
+dtype: float64
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_34355/769219605.py:1: FutureWarning: Dropping of nuisance columns in DataFrame reductions (with &#39;numeric_only=None&#39;) is deprecated; in a future version this will raise TypeError.  Select only valid columns before calling the reduction.
+  print(iris.mean())
+</pre></div>
+</div>
+</div>
+</div>
+<p>The result will be a vector (a Pandas Series) that identifies a point in four-dimensional space representing the average of the observations. Let’s see a simple two-dimensional example, considering only a few variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris2d</span> <span class="o">=</span> <span class="n">iris</span><span class="p">[[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">,</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">]]</span>
+<span class="n">mean_point</span> <span class="o">=</span> <span class="n">iris2d</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">iris2d</span><span class="p">[</span><span class="s1">&#39;sepal_length&#39;</span><span class="p">],</span><span class="n">iris2d</span><span class="p">[</span><span class="s1">&#39;sepal_width&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_point</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">mean_point</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;rx&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c8fd81e79a35c43ddf6f4d9dfdfe8fd585c12db3d320d359c126a7c1757aff19.png" src="../_images/c8fd81e79a35c43ddf6f4d9dfdfe8fd585c12db3d320d359c126a7c1757aff19.png" />
+</div>
+</div>
+<p>The red cross represents the midpoint of the two-dimensional dataset considered.</p>
+<p>I can obtain the covariance matrix using the <code class="docutils literal notranslate"><span class="pre">cov</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>sepal_length</th>
+      <td>0.685694</td>
+      <td>-0.042434</td>
+      <td>1.274315</td>
+      <td>0.516271</td>
+    </tr>
+    <tr>
+      <th>sepal_width</th>
+      <td>-0.042434</td>
+      <td>0.189979</td>
+      <td>-0.329656</td>
+      <td>-0.121639</td>
+    </tr>
+    <tr>
+      <th>petal_length</th>
+      <td>1.274315</td>
+      <td>-0.329656</td>
+      <td>3.116278</td>
+      <td>1.295609</td>
+    </tr>
+    <tr>
+      <th>petal_width</th>
+      <td>0.516271</td>
+      <td>-0.121639</td>
+      <td>1.295609</td>
+      <td>0.581006</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<blockquote>
+<div><p><strong>Question 6</strong></p>
+<p>What is the purpose of the code <code class="docutils literal notranslate"><span class="pre">drop(&quot;species&quot;,</span> <span class="pre">axis=1)</span></code> inserted above?</p>
+<p>What do the values on the main diagonal represent?</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Question 7</strong></p>
+<p>Are there pairs of variables that exhibit strongly positive covariances? Compare the values in the covariance matrix with their corresponding scatterplot visualizations. Do the two indicators tell us the same thing?</p>
+</div></blockquote>
+</section>
+<section id="correlation-indices">
+<h2>Correlation Indices<a class="headerlink" href="#correlation-indices" title="Permalink to this heading">#</a></h2>
+<p>I can calculate the correlation matrix using the Pearson correlation index via the <code class="docutils literal notranslate"><span class="pre">corr</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>sepal_length</th>
+      <td>1.000000</td>
+      <td>-0.117570</td>
+      <td>0.871754</td>
+      <td>0.817941</td>
+    </tr>
+    <tr>
+      <th>sepal_width</th>
+      <td>-0.117570</td>
+      <td>1.000000</td>
+      <td>-0.428440</td>
+      <td>-0.366126</td>
+    </tr>
+    <tr>
+      <th>petal_length</th>
+      <td>0.871754</td>
+      <td>-0.428440</td>
+      <td>1.000000</td>
+      <td>0.962865</td>
+    </tr>
+    <tr>
+      <th>petal_width</th>
+      <td>0.817941</td>
+      <td>-0.366126</td>
+      <td>0.962865</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<blockquote>
+<div><p><strong>Question 8</strong></p>
+<p>Are there pairs of variables that exhibit strongly positive correlations? Compare the values in the covariance matrix with their respective scatterplot plots. Do the two indicators tell us the same thing?</p>
+</div></blockquote>
+<p>It is possible to specify the use of a different correlation index by passing a parameter to the <code class="docutils literal notranslate"><span class="pre">corr</span></code> method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;spearman&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>sepal_length</th>
+      <td>1.000000</td>
+      <td>-0.166778</td>
+      <td>0.881898</td>
+      <td>0.834289</td>
+    </tr>
+    <tr>
+      <th>sepal_width</th>
+      <td>-0.166778</td>
+      <td>1.000000</td>
+      <td>-0.309635</td>
+      <td>-0.289032</td>
+    </tr>
+    <tr>
+      <th>petal_length</th>
+      <td>0.881898</td>
+      <td>-0.309635</td>
+      <td>1.000000</td>
+      <td>0.937667</td>
+    </tr>
+    <tr>
+      <th>petal_width</th>
+      <td>0.834289</td>
+      <td>-0.289032</td>
+      <td>0.937667</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iris</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s1">&#39;kendall&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>sepal_length</th>
+      <td>1.000000</td>
+      <td>-0.076997</td>
+      <td>0.718516</td>
+      <td>0.655309</td>
+    </tr>
+    <tr>
+      <th>sepal_width</th>
+      <td>-0.076997</td>
+      <td>1.000000</td>
+      <td>-0.185994</td>
+      <td>-0.157126</td>
+    </tr>
+    <tr>
+      <th>petal_length</th>
+      <td>0.718516</td>
+      <td>-0.185994</td>
+      <td>1.000000</td>
+      <td>0.806891</td>
+    </tr>
+    <tr>
+      <th>petal_width</th>
+      <td>0.655309</td>
+      <td>-0.157126</td>
+      <td>0.806891</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="correlation-plot">
+<h3>Correlation Plot<a class="headerlink" href="#correlation-plot" title="Permalink to this heading">#</a></h3>
+<p>We can easily obtain a correlation plot in <code class="docutils literal notranslate"><span class="pre">Seaborn</span></code> as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">iris</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># annot=True serves to print the correlation values</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ef6e8b7b902c2f487d21e77a075f1d932234db5a000a2c0326828a259f9b6d14.png" src="../_images/ef6e8b7b902c2f487d21e77a075f1d932234db5a000a2c0326828a259f9b6d14.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Considering the Titanic dataset, calculate for each variable the count, mean, standard deviation, minimum, maximum, median value, first and third quartile. After calculating the requested values individually, use the <code class="docutils literal notranslate"><span class="pre">describe</span></code> method to obtain these values. Which variable is the most dispersed?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Considering the Titanic dataset, for each of the three classes, calculate the means and variances of passenger ages. In which class are the ages least dispersed? Which class contains the youngest individuals? Complete the analysis with bar charts.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Add a new column “Old” to the Titanic dataset, which takes a value of 1 for observations with an age greater than the average value and 0 otherwise. Then, calculate a crosstab that computes the number of “elderly” subjects (subjects for whom old is equal to 1) with respect to the Pclass and Sex variables. Display a barplot based on the table. In which class do men tend to be much older than women?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>Load the mpg dataset using the seaborn library (use the instruction <code class="docutils literal notranslate"><span class="pre">t=sns.load_dataset('mpg')</span></code>). Visualize the scatter matrix by differentiating the colors of the points according to the values of the <code class="docutils literal notranslate"><span class="pre">origin</span></code> variable. Who produces the heaviest cars? Are there pairs of variables that are a decisive factor in distinguishing one origin from the others?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
+<p>Considering the <code class="docutils literal notranslate"><span class="pre">mpg</span></code> dataset, choose a group of variables for which to obtain a parallel coordinates plot. What can we infer from the plot?</p>
+</div></blockquote>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./laboratories"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summarize-the-distribution-of-two-discrete-variables">Summarize the Distribution of Two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#contingency-tables">Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-relative-frequency-distributions">Joint Relative Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-marginal-frequency-distributions">Relative Marginal Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-relative-frequency-distributions">Conditional Relative Frequency Distributions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical Representations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-association-between-two-discrete-variables">Measures of Association Between Two Discrete Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio">Relative Risk and Odds Ratio</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot">Scatter Plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#means-and-covariances">Means and Covariances</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-indices">Correlation Indices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-plot">Correlation Plot</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
