@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction to Pandas &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+    <title>Crash Course on Python for Data Science &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
   
   
   
@@ -64,10 +64,11 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/05_intro_pandas_en';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'laboratories/03_intro_python_data_science';</script>
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Python for Data Science Crash Course" href="02_intro_python_en.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -170,10 +171,10 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_intro_python_en.html">Python for Data Science Crash Course</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_intro_python_data_science.html">Crash Course on Python for Data Science</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Crash Course on Python for Data Science</a></li>
 </ul>
 
     </div>
@@ -228,7 +229,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/05_intro_pandas_en.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/laboratories/03_intro_python_data_science.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -276,7 +277,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/05_intro_pandas_en.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flaboratories/03_intro_python_data_science.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -306,7 +307,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="../_sources/laboratories/05_intro_pandas_en.ipynb" target="_blank"
+      <li><a href="../_sources/laboratories/03_intro_python_data_science.ipynb" target="_blank"
    class="btn btn-sm btn-download-source-button dropdown-item"
    title="Download source file"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -390,7 +391,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to Pandas</h1>
+    <h1>Crash Course on Python for Data Science</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -400,6 +401,24 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy">Numpy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-arrays">Numpy Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linspace-arange-zeros-ones-eye-and-random">Linspace, Arange, Zeros, Ones, Eye and Random</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#max-min-sum-argmax-argmin">max, min, sum, argmax, argmin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-and-slicing">Indexing and Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-indexing-and-slicing">Logical Indexing and Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape">Reshape</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composing-arrays-using-concatenate-and-stack">Composing Arrays Using <code class="docutils literal notranslate"><span class="pre">concatenate</span></code> and <code class="docutils literal notranslate"><span class="pre">stack</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-management-in-numpy">Memory Management in Numpy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-matplotlib">Introduction to Matplotlib</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-plot">2D plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subplot">Subplot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colors-and-styles">Colors and styles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-overlay-and-legend">Line Overlay and Legend</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grids">Grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-pandas">Introduction to Pandas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creation-of-series">Creation of Series</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-series">Indexing Series</a></li>
@@ -438,8 +457,1407 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-pandas">
-<h1>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="crash-course-on-python-for-data-science">
+<h1>Crash Course on Python for Data Science<a class="headerlink" href="#crash-course-on-python-for-data-science" title="Permalink to this heading">#</a></h1>
+<section id="numpy">
+<h2>Numpy<a class="headerlink" href="#numpy" title="Permalink to this heading">#</a></h2>
+<p><strong>Numpy</strong> is the reference library of <strong>scipy</strong> for scientific computing. The core of the library consists of <strong>numpy arrays</strong> which allow for easy handling of operations between vectors and matrices. Python arrays are generally <strong>tensors</strong>, which are numerical structures with a variable number of dimensions, and can therefore be one-dimensional arrays, two-dimensional matrices, or multi-dimensional structures (e.g., 10 x 10 x 10 cuboids). To use numpy arrays, we must first import the <strong>numpy</strong> package:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#the &quot;as&quot; notation allows us to reference the numpy namespace simply with np in the future</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="numpy-arrays">
+<h2>Numpy Arrays<a class="headerlink" href="#numpy-arrays" title="Permalink to this heading">#</a></h2>
+<p>A multi-dimensional numpy array can be defined from a list of lists, as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">l</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">3</span><span class="p">]]</span> <span class="c1">#a list containing three lists</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;List of lists:&quot;</span><span class="p">,</span><span class="n">l</span><span class="p">)</span> <span class="c1">#it is displayed as we defined it</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="c1">#I build a numpy array from the list of lists</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Numpy array:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">a</span><span class="p">)</span> <span class="c1">#each inner list is identified as a row of a two-dimensional matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Numpy array from tuple:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(((</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),(</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))))</span> <span class="c1">#I can also create numpy arrays from tuples</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>List of lists: [[1, 2, 3], [4, 5, 2], [1, 8, 3]]
+Numpy array:
+ [[1 2 3]
+ [4 5 2]
+ [1 8 3]]
+Numpy array from tuple:
+ [[1 2 3]
+ [4 5 6]]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 1</strong></p>
+<p>What is an obvious advantage of NumPy arrays compared to lists, given the examples shown above?</p>
+</div></blockquote>
+<p>Every numpy array has a <em>shape</em> property that allows us to determine the number of dimensions of the structure:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#it is a 3 x 3 matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at some other examples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],[[</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Array:&#39;</span><span class="p">,</span><span class="n">array</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># one-dimensional array, will have only one dimension</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Matrix:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">matrix</span><span class="p">,</span> <span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;matrix:</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="n">tensor</span><span class="p">,</span> <span class="n">tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1"># tensor, will have two dimensions</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Array: [1 2 3 4] (4,)
+Matrix:
+ [[1 2 3 4]
+ [5 4 2 3]
+ [7 5 3 2]
+ [0 2 3 1]] (4, 4)
+matrix:
+ [[[&#39;1&#39; &#39;2&#39; &#39;3&#39; &#39;4&#39;]
+  [&#39;a&#39; &#39;b&#39; &#39;c&#39; &#39;d&#39;]]
+
+ [[&#39;5&#39; &#39;4&#39; &#39;2&#39; &#39;3&#39;]
+  [&#39;a&#39; &#39;b&#39; &#39;c&#39; &#39;d&#39;]]
+
+ [[&#39;7&#39; &#39;5&#39; &#39;3&#39; &#39;2&#39;]
+  [&#39;a&#39; &#39;b&#39; &#39;c&#39; &#39;d&#39;]]
+
+ [[&#39;0&#39; &#39;2&#39; &#39;3&#39; &#39;1&#39;]
+  [&#39;a&#39; &#39;b&#39; &#39;c&#39; &#39;d&#39;]]] (4, 2, 4)
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 2</strong></p>
+<p>In Numpy, is there a formal difference between a one-dimensional array and a matrix containing a single row (or a single column)?</p>
+</div></blockquote>
+<p>Numpy arrays support element-by-element operations. Let’s look at the main operations of this type:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span> 
+<span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">+</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#Vector sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise multiplication:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">*</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#Element-wise multiplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Power of two:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#Square of elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise power:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">**</span><span class="n">a2</span><span class="p">)</span> <span class="c1">#Element-wise power</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scalar product:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a2</span><span class="p">))</span> <span class="c1">#Vector scalar product</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1">#Array minimum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="c1">#Array maximum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span><span class="n">a2</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1">#Sum of all array values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Product:&quot;</span><span class="p">,</span><span class="n">a2</span><span class="o">.</span><span class="n">prod</span><span class="p">())</span> <span class="c1">#Product of all array values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean:&quot;</span><span class="p">,</span><span class="n">a1</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="c1">#Mean of all array values</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sum: [ 5  5 11  5]
+Elementwise multiplication: [ 4  6 24  4]
+Power of two: [ 1  4  9 16]
+Elementwise power: [   1    8 6561    4]
+Vector product: 38
+Minimum: 1
+Maximum: 4
+Sum: 16
+Product: 96
+Mean: 2.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>Operations on matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">m2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">8</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">+</span><span class="n">m2</span><span class="p">)</span> <span class="c1">#matrix sum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise product:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">*</span><span class="n">m2</span><span class="p">)</span> <span class="c1">#element-wise product</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Power of two:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#square of elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elementwise power:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">**</span><span class="n">m2</span><span class="p">)</span> <span class="c1">#element-wise power</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matrix multiplication:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">m2</span><span class="p">))</span> <span class="c1">#matrix multiplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">min</span><span class="p">())</span> <span class="c1">#minimum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Maximum:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">max</span><span class="p">())</span> <span class="c1">#maximum</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum along columns:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span> <span class="c1">#minimum along columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Minimum along rows:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#minimum along rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="c1">#sum of values</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span> <span class="c1">#mean value</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Diagonal:&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">diagonal</span><span class="p">())</span> <span class="c1">#main diagonal of the matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transposed:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">m1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="c1">#transposed matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sum: [[ 9  4  4  8]
+ [ 5  8  8  4]
+ [11  9  5  2]
+ [ 0  3 11  7]]
+Elementwise product:
+ [[ 8  4  3 16]
+ [ 0 16 12  3]
+ [28 20  6  0]
+ [ 0  2 24  6]]
+Power of two:
+ [[ 1  4  9 16]
+ [25 16  4  9]
+ [49 25  9  4]
+ [ 0  4  9  1]]
+Elementwise power:
+ [[   1    4    3  256]
+ [   1  256   64    3]
+ [2401  625    9    1]
+ [   1    2 6561    1]]
+Matrix multiplication:
+ [[20 26 51 30]
+ [48 37 57 42]
+ [68 48 59 45]
+ [12 21 26  8]]
+Minimum: 0
+Maximum: 7
+Minimum along columns: [0 2 2 1]
+Minimum along rows: [1 2 2 0]
+Sum: 47
+Mean: 2.9375
+Diagonal: [1 4 3 1]
+Transposed:
+ [[1 5 7 0]
+ [2 4 5 2]
+ [3 2 3 3]
+ [4 3 2 1]]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 3</strong></p>
+<p>What is the advantage of using the operations illustrated above? What code would be needed to perform the operation <code class="docutils literal notranslate"><span class="pre">a1**a2</span></code> if <code class="docutils literal notranslate"><span class="pre">a1</span></code> and <code class="docutils literal notranslate"><span class="pre">a2</span></code> were Python lists rather than numpy arrays?</p>
+</div></blockquote>
+</section>
+<section id="linspace-arange-zeros-ones-eye-and-random">
+<h2>Linspace, Arange, Zeros, Ones, Eye and Random<a class="headerlink" href="#linspace-arange-zeros-ones-eye-and-random" title="Permalink to this heading">#</a></h2>
+<p>The functions <strong>linspace</strong>, <strong>arange</strong>, <strong>zeros</strong>, <strong>ones</strong>, <strong>eye</strong> and <strong>random</strong> of <strong>numpy</strong> are useful for generating numeric arrays on the fly. In particular, the function <strong>linspace</strong> allows generating a sequence of <strong>n</strong> equally spaced numbers ranging from a minimum value to a maximum value:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span> <span class="c1"># generates 5 equally spaced values ranging from 10 to 20</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[10.  12.5 15.  17.5 20. ]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>arange</strong> is very similar to <strong>range</strong>, but directly returns a <strong>numpy</strong> array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span> <span class="c1">#numbers from 0 to 9</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span> <span class="c1">#numbers from 1 to 5</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1">#even numbers from 0 to 6</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 2 3 4 5 6 7 8 9]
+[1 2 3 4 5]
+[0 2 4 6]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 4</strong></p>
+<p>Is it possible to obtain the same result as <code class="docutils literal notranslate"><span class="pre">arange</span></code> using <code class="docutils literal notranslate"><span class="pre">range</span></code>? How?</p>
+</div></blockquote>
+<p>We can create arrays containing zero or one of arbitrary shapes using <strong>zeros</strong> and <strong>ones</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)))</span><span class="c1">#zeros and ones take as a parameter a tuple containing the desired dimensions</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0. 0. 0. 0.]
+ [0. 0. 0. 0.]
+ [0. 0. 0. 0.]]
+[[1.]
+ [1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function <strong>eye</strong> allows you to create an identity square matrix:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+[[1. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 1.]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>To build an array of random values (uniform distribution) between 0 and 1 (zero included, one excluded), just write:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span> <span class="c1">#an array with 5 random values between 0 and 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span> <span class="c1">#a 3x2 matrix of random values between 0 and 1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.4455531  0.15464262 0.73300802 0.83126699 0.4840601 ]
+[[0.04519461 0.77306473]
+ [0.81167333 0.33469426]
+ [0.51806682 0.16306516]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can generate an array of random values normally (Gaussian) distributed with <strong>randn</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.27659656 -1.47446936]
+ [ 0.30758864  0.95848991]
+ [-0.18955928  0.98689232]
+ [-1.06568839  0.79190779]
+ [ 0.63691861 -1.36459616]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We will talk in more detail about the Gaussian distribution later.</p>
+<p>We can generate integers between a minimum (inclusive) and a maximum (exclusive) using <strong>randint</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span><span class="c1">#three values between 0 and 50 (exclusive)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">50</span><span class="p">,(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)))</span><span class="c1">#2x3 matrix of random integer values between 0 and 50 (exclusive)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0 26 31]
+[[ 7  9  8]
+ [47  3 27]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>To generate random values reproducibly, you can specify a seed:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.69646919 0.28613933 0.22685145 0.55131477 0.71946897]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The code above (including the seed definition) returns the same results if rerun:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.69646919 0.28613933 0.22685145 0.55131477 0.71946897]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 5</strong></p>
+<p>What is the effect of re-running the previous cell changing the seed?</p>
+</div></blockquote>
+</section>
+<section id="max-min-sum-argmax-argmin">
+<h2>max, min, sum, argmax, argmin<a class="headerlink" href="#max-min-sum-argmax-argmin" title="Permalink to this heading">#</a></h2>
+<p>It is possible to calculate maxima and minima and sums of a matrix by rows and columns as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">6</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="o">-</span><span class="mi">7</span><span class="p">],[</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">12</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span> <span class="n">mat</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="c1"># Column maximums</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="c1"># Row maximums</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span> <span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="c1"># Column minimums</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="c1"># Row minimums</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span><span class="c1"># Column sum</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span><span class="c1"># Row sum</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="c1"># Global maximum</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="c1"># Global minimum</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="c1"># Global sum</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[  1  -5   0]
+ [  4   3   6]
+ [  5   8  -7]
+ [ 10   6 -12]]
+
+[10  8  6]
+
+[ 1  6  8 10]
+
+[  1  -5 -12]
+
+[ -5   3  -7 -12]
+
+[ 20  12 -13]
+
+[-4 13  6  4]
+
+10
+-12
+19
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is also possible to obtain the indices at which there are maxima and minima using the argmax function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[3 2 1]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have a maximum in the fourth row in the first column, one in the third row in the second column, and one in the second row in the third column. Let’s verify it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>10
+8
+6
+[10  8  6]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similarly:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 2 1 0]
+[0 0 3]
+[1 1 2 2]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="indexing-and-slicing">
+<h2>Indexing and Slicing<a class="headerlink" href="#indexing-and-slicing" title="Permalink to this heading">#</a></h2>
+<p>Numpy arrays can be indexed in a similar way to Python lists:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;arr[0]       -&gt;&quot;</span><span class="p">,</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#first element of the array</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;arr[:3]      -&gt;&quot;</span><span class="p">,</span><span class="n">arr</span><span class="p">[:</span><span class="mi">3</span><span class="p">])</span> <span class="c1">#first three elements</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;arr[1:5:2]   -&gt;&quot;</span><span class="p">,</span><span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">4</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#from the second to the fourth (inclusive) with a step of 2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>arr[0]       -&gt; 1
+arr[:3]      -&gt; [1 2 3]
+arr[1:5:2]   -&gt; [2 4]
+</pre></div>
+</div>
+</div>
+</div>
+<p>When indexing an array with more than one dimension using a single index, the first dimension is automatically indexed. Let’s look at some examples with two-dimensional matrices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">mat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#matrix 3 x 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[0]     -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#a matrix is a collection of rows, so mat[0] returns the first row</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[-1]     -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#last row</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[::2]     -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[::</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#odd rows</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matrice:
+ [[1 5 2 7]
+ [2 7 3 2]
+ [1 5 2 1]] (3, 4)
+mat[0]     -&gt; [1 5 2 7]
+mat[-1]     -&gt; [1 5 2 1]
+mat[::2]     -&gt; [[1 5 2 7]
+ [1 5 2 1]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see some examples with multi-dimensional tensors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tens</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]],</span>
+                <span class="p">[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+                <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">tens</span><span class="p">,</span><span class="n">tens</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#tensor 2x3x4</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tens[0]    -&gt;&quot;</span><span class="p">,</span><span class="n">tens</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="c1">#this is the first 3x4 matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;tens[-1]    -&gt;&quot;</span><span class="p">,</span><span class="n">tens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span><span class="c1">#last 3x4 matrix</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matrice:
+ [[[1 5 2 7]
+  [2 7 3 2]
+  [1 5 2 1]]
+
+ [[1 5 2 7]
+  [2 7 3 2]
+  [1 5 2 1]]] (2, 3, 4)
+tens[0]    -&gt; [[1 5 2 7]
+ [2 7 3 2]
+ [1 5 2 1]]
+tens[-1]    -&gt; [[1 5 2 7]
+ [2 7 3 2]
+ [1 5 2 1]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Indexing can continue through the other dimensions by specifying an additional index in square brackets or by separating the various indices with a comma:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(([</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">,</span><span class="n">mat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#matrix 3 x 4</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[2][1]  -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#third row, second column</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[0,0]   -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#first row, first column (more compact notation)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[0]     -&gt; &quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#returns the entire first row of the matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[:,0]   -&gt; &quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#returns the first column of the matrix.</span>
+                                <span class="c1">#The two dots &quot;:&quot; mean &quot;leave everything unchanged along this dimension&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[0,:]   -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">,:])</span> <span class="c1">#alternative notation to get the first row of the matrix</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[0:2,:] -&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">,:])</span> <span class="c1">#first two rows</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[:,0:2] -&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="c1">#first two columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[-1]    -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#last row</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matrice:
+ [[1 5 2 7]
+ [2 7 3 2]
+ [1 5 2 1]] (3, 4)
+mat[2][1]  -&gt; 5
+mat[0,0]   -&gt; 1
+mat[0]     -&gt;  [1 5 2 7]
+mat[:,0]   -&gt;  [1 2 1]
+mat[0,:]   -&gt; [1 5 2 7]
+mat[0:2,:] -&gt;
+ [[1 5 2 7]
+ [2 7 3 2]]
+mat[:,0:2] -&gt;
+ [[1 5]
+ [2 7]
+ [1 5]]
+mat[-1]    -&gt; [1 5 2 1]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Case of multi-dimensional tensors:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],</span>
+              <span class="p">[[</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],</span>
+              <span class="p">[[</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]],</span>
+              <span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span><span class="s1">&#39;c&#39;</span><span class="p">,</span><span class="s1">&#39;d&#39;</span><span class="p">]]])</span> 
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[:,:,0] -&gt;&quot;</span><span class="p">,</span> <span class="n">mat</span><span class="p">[:,:,</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#matrix contained in the &quot;first channel&quot; of the tensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[:,:,1] -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[:,:,</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#matrix contained in the &quot;second channel&quot; of the tensor</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[...,0] -&gt;&quot;</span><span class="p">,</span> <span class="n">mat</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span> <span class="c1">#matrix contained in the &quot;first channel&quot; of the tensor (alternative notation)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;mat[...,1] -&gt;&quot;</span><span class="p">,</span><span class="n">mat</span><span class="p">[</span><span class="o">...</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#matrix contained in the &quot;second channel&quot; of the tensor (alternative notation)</span>
+<span class="c1">#the &quot;...&quot; notation means &quot;leave everything unchanged along the omitted dimensions&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>mat[:,:,0] -&gt; [[&#39;1&#39; &#39;a&#39;]
+ [&#39;5&#39; &#39;a&#39;]
+ [&#39;7&#39; &#39;a&#39;]
+ [&#39;0&#39; &#39;a&#39;]]
+mat[:,:,1] -&gt; [[&#39;2&#39; &#39;b&#39;]
+ [&#39;4&#39; &#39;b&#39;]
+ [&#39;5&#39; &#39;b&#39;]
+ [&#39;2&#39; &#39;b&#39;]]
+mat[...,0] -&gt; [[&#39;1&#39; &#39;a&#39;]
+ [&#39;5&#39; &#39;a&#39;]
+ [&#39;7&#39; &#39;a&#39;]
+ [&#39;0&#39; &#39;a&#39;]]
+mat[...,1] -&gt; [[&#39;2&#39; &#39;b&#39;]
+ [&#39;4&#39; &#39;b&#39;]
+ [&#39;5&#39; &#39;b&#39;]
+ [&#39;2&#39; &#39;b&#39;]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Generally, when a subset of data is extracted from an array, it is referred to as <strong>slicing</strong>.</p>
+<blockquote>
+<div><p><strong>Question 6</strong></p>
+<p>Python lists do not support slicing. How can one implement a statement of the type <code class="docutils literal notranslate"><span class="pre">a[2:8:2]</span></code> using Python lists?</p>
+</div></blockquote>
+</section>
+<section id="logical-indexing-and-slicing">
+<h2>Logical Indexing and Slicing<a class="headerlink" href="#logical-indexing-and-slicing" title="Permalink to this heading">#</a></h2>
+<p>In numpy it is also possible to index arrays in a “logical” way, meaning by passing an array of boolean values as indices. For example, if we want to select the first and third value of an array, we must pass the array <code class="docutils literal notranslate"><span class="pre">[True,</span> <span class="pre">False,</span> <span class="pre">True]</span></code> as indices:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">])])</span> <span class="c1"># To select only 1 and 3</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="kc">False</span><span class="p">,</span><span class="kc">True</span><span class="p">,</span><span class="kc">False</span><span class="p">])])</span> <span class="c1"># To select only 2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1 3]
+[2]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Logical indexing is very useful when combined with the ability to build logical arrays “on the fly” by specifying a condition that array elements may or may not satisfy. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#generates an array of boolean values</span>
+<span class="c1">#that will contain True for the values of x</span>
+<span class="c1">#that satisfy the condition x&gt;2</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="o">==</span><span class="mi">3</span><span class="p">)</span> <span class="c1">#True only for the value 3</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 2 3 4 5 6 7 8 9]
+[False False False  True  True  True  True  True  True  True]
+[False False False  True False False False False False False]
+</pre></div>
+</div>
+</div>
+</div>
+<p>By combining these two principles, it is simple to select only some values from an array, based on a condition:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">%</span><span class="k">2</span>==0]) # selects even values
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">%</span><span class="k">2</span>!=0]) # selects odd values
+<span class="nb">print</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">x</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">])</span> <span class="c1"># selects values greater than 2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 2 4 6 8]
+[1 3 5 7 9]
+[3 4 5 6 7 8 9]
+</pre></div>
+</div>
+</div>
+</div>
+<blockquote>
+<div><p><strong>Question 7</strong></p>
+<p>Consider the two arrays <code class="docutils literal notranslate"><span class="pre">a=np.array([1,2,3])</span></code> and <code class="docutils literal notranslate"><span class="pre">b=np.array([5,2,4])</span></code>. Use logical indexing to extract the numbers in <code class="docutils literal notranslate"><span class="pre">a</span></code> that are located at positions containing even values in <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+</div></blockquote>
+</section>
+<section id="reshape">
+<h2>Reshape<a class="headerlink" href="#reshape" title="Permalink to this heading">#</a></h2>
+<p>In some cases, it can be useful to change the “shape” of a matrix. For example, a 3x2 matrix can be modified by rearranging its elements to obtain a 2x3 matrix, a 1x6 matrix, or a 6x1 matrix. This can be done using the “reshape” method:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#matrix 6 x 1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span> <span class="c1">#one-dimensional vector</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">ravel</span><span class="p">())</span><span class="c1">#equivalent to the previous one, but parameterless</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2]
+ [3 4]
+ [5 6]]
+[[1 2 3]
+ [4 5 6]]
+[[1 2 3 4 5 6]]
+[[1]
+ [2]
+ [3]
+ [4]
+ [5]
+ [6]]
+[1 2 3 4 5 6]
+[1 2 3 4 5 6]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We note that, if we read by rows (from left to right, from top to bottom), the order of the elements remains unchanged. We can also let numpy calculate one of the dimensions by replacing it with -1:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]]
+[[1 2 3 4 5 6]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Reshape can take as input the individual dimensions or a tuple containing the shape. In the latter case, it is convenient to perform operations of this kind:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">mat2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat2</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mat1</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span> <span class="c1"># Give mat2 the same shape as mat1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.72904971 0.43857224]
+ [0.0596779  0.39804426]
+ [0.73799541 0.18249173]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="composing-arrays-using-concatenate-and-stack">
+<h2>Composing Arrays Using <code class="docutils literal notranslate"><span class="pre">concatenate</span></code> and <code class="docutils literal notranslate"><span class="pre">stack</span></code><a class="headerlink" href="#composing-arrays-using-concatenate-and-stack" title="Permalink to this heading">#</a></h2>
+<p>Numpy allows combining different arrays using two main functions: <code class="docutils literal notranslate"><span class="pre">concatenate</span></code> and <code class="docutils literal notranslate"><span class="pre">stack</span></code>. The <code class="docutils literal notranslate"><span class="pre">concatenate</span></code> function takes as input a list (or tuple) of arrays and allows concatenating them along a specified existing dimension (<code class="docutils literal notranslate"><span class="pre">axis</span></code>), which by default is zero (row-wise concatenation):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="n">cat</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cat2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cat2</span><span class="p">,</span><span class="n">cat2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
+ [3 4 5]
+ [6 7 8]] (3, 3) 
+
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]
+ [0 1 2]
+ [3 4 5]
+ [6 7 8]] (6, 3) 
+
+[[0 1 2]
+ [3 4 5]
+ [6 7 8]
+ [0 1 2]
+ [3 4 5]
+ [6 7 8]
+ [0 1 2]
+ [3 4 5]
+ [6 7 8]] (9, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It is possible to concatenate arrays along a different dimension by specifying it using the <code class="docutils literal notranslate"><span class="pre">axis</span></code> parameter:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#column-wise concatenation</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="n">cat</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">cat2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#column-wise concatenation</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cat2</span><span class="p">,</span><span class="n">cat2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
+ [3 4 5]
+ [6 7 8]] (3, 3) 
+
+[[0 1 2 0 1 2]
+ [3 4 5 3 4 5]
+ [6 7 8 6 7 8]] (3, 6) 
+
+[[0 1 2 0 1 2 0 1 2]
+ [3 4 5 3 4 5 3 4 5]
+ [6 7 8 6 7 8 6 7 8]] (3, 9)
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the concatenation to be compatible, the arrays in the list must have the same dimensions along those that <strong>are not concatenated</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">cat</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span><span class="n">a</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="c1">#concatenation along axis 0, dimensions along other axes must be equal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3, 6) (3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">cat</span><span class="p">,</span><span class="n">a</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1">#concatenation by columns #error!</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">stack</span></code> function, unlike <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>, allows concatenating arrays along a new dimension. Compare the outputs of the two functions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cat</span><span class="p">,</span><span class="n">cat</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="n">stack</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span><span class="n">stack</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 1 2]
+ [3 4 5]
+ [6 7 8]
+ [0 1 2]
+ [3 4 5]
+ [6 7 8]] (6, 3)
+[[[0 1 2]
+  [3 4 5]
+  [6 7 8]]
+
+ [[0 1 2]
+  [3 4 5]
+  [6 7 8]]] (2, 3, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the case of <code class="docutils literal notranslate"><span class="pre">stack</span></code>, the arrays were concatenated along a new dimension. It is possible to specify alternative dimensions as in the case of <code class="docutils literal notranslate"><span class="pre">concatenate</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stack</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span><span class="n">stack</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[0 1 2]
+  [0 1 2]]
+
+ [[3 4 5]
+  [3 4 5]]
+
+ [[6 7 8]
+  [6 7 8]]] (3, 2, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, the arrays have been concatenated along the second dimension.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stack</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span><span class="n">a</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">stack</span><span class="p">,</span><span class="n">stack</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[[0 0]
+  [1 1]
+  [2 2]]
+
+ [[3 3]
+  [4 4]
+  [5 5]]
+
+ [[6 6]
+  [7 7]
+  [8 8]]] (3, 3, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, the arrays were concatenated along the last dimension.</p>
+</section>
+<section id="types">
+<h2>Types<a class="headerlink" href="#types" title="Permalink to this heading">#</a></h2>
+<p>Every numpy array has its type (see <a class="reference external" href="https://docs.scipy.org/doc/numpy-1.13.0/user/basics.types.html">https://docs.scipy.org/doc/numpy-1.13.0/user/basics.types.html</a> for the list of supported types). We can see the type of an array by inspecting the <code class="docutils literal notranslate"><span class="pre">dtype</span></code> property:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat1</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can specify the type during array construction:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]],</span><span class="nb">int</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also change the type of an array on the fly using <code class="docutils literal notranslate"><span class="pre">astype</span></code>. This is useful, for example, if we want to perform a non-integer division:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.5 1.  1.5]
+ [2.  2.5 3. ]]
+[[0.5 1.  1.5]
+ [2.  2.5 3. ]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="memory-management-in-numpy">
+<h2>Memory Management in Numpy<a class="headerlink" href="#memory-management-in-numpy" title="Permalink to this heading">#</a></h2>
+<p>Numpy manages memory dynamically for efficiency reasons. Therefore, an assignment or a slicing operation generally <strong>does not create a new copy of the data</strong>. Consider for example this code:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]]
+[1 2]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The slicing operation <code class="docutils literal notranslate"><span class="pre">b=a[0,0:2]</span></code> only allowed obtaining a new “view” of a part of <code class="docutils literal notranslate"><span class="pre">a</span></code>, but the data was not replicated in memory. Therefore, if we modify an element of b, the modification will actually be applied to <code class="docutils literal notranslate"><span class="pre">a</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-1  2]
+[[-1  2  3]
+ [ 4  5  6]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>To avoid this kind of behavior, it is possible to use the <code class="docutils literal notranslate"><span class="pre">copy</span></code> method which forces numpy to create a new copy of the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">b</span><span class="o">=</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]]
+[1 2]
+[-1  2]
+[[1 2 3]
+ [4 5 6]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this new version of the code, <code class="docutils literal notranslate"><span class="pre">a</span></code> is no longer modified upon modification of <code class="docutils literal notranslate"><span class="pre">b</span></code>.</p>
+</section>
+<section id="broadcasting">
+<h2>Broadcasting<a class="headerlink" href="#broadcasting" title="Permalink to this heading">#</a></h2>
+<p>Numpy intelligently handles operations between arrays that have different shapes under certain conditions. Let’s look at a practical example: suppose we have a <span class="math notranslate nohighlight">\(2\times3\)</span> matrix and a <span class="math notranslate nohighlight">\(1\times3\)</span> array:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">]],</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="n">arr</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1. 2. 3.]
+ [4. 5. 6.]]
+[2 3 8]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, suppose we want to divide, element by element, all the values of each row of the matrix by the values of the array. We can perform the required operation using a for loop:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat2</span><span class="o">=</span><span class="n">mat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># Copy the content of the matrix to not overwrite it</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">mat2</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span><span class="c1"># Indexes the rows</span>
+    <span class="n">mat2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">=</span><span class="n">mat2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">arr</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.5        0.66666667 0.375     ]
+ [2.         1.66666667 0.75      ]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(3,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we didn’t want to use for loops, we could replicate <em>arr</em> to obtain a <span class="math notranslate nohighlight">\(2 \times 3\)</span> matrix and then perform a simple element-wise division:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">arr2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">arr</span><span class="p">,</span><span class="n">arr</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">arr2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">/</span><span class="n">arr2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[2 3 8]
+ [2 3 8]]
+[[0.5        0.66666667 0.375     ]
+ [2.         1.66666667 0.75      ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The same result can be obtained simply by asking numpy to divide mat by arr:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">mat</span><span class="o">/</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.5        0.66666667 0.375     ]
+ [2.         1.66666667 0.75      ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>This happens because <strong>numpy</strong> compares the dimensions of the two operands (<span class="math notranslate nohighlight">\(2 \times 3\)</span> and <span class="math notranslate nohighlight">\(1 \times 3\)</span>) and adapts the operand with the smaller shape to the one with the larger shape, by replicating its elements along the unit dimension (the first one). In practice, broadcasting generalizes operations between scalars and vectors/matrices like:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">mat</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">arr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 2.  4.  6.]
+ [ 8. 10. 12.]]
+[ 4  6 16]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general, when operations are performed between two arrays, numpy compares the shapes dimension by dimension, from the last to the first. Two dimensions are compatible if:</p>
+<ul class="simple">
+<li><p>They are equal;</p></li>
+<li><p>One of them is equal to one.</p></li>
+</ul>
+<p>Furthermore, the two shapes do not necessarily have to have the same number of dimensions.</p>
+<p>For example, the following shapes are compatible:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ 2 \times 3 \times 5 \\
+ 2 \times 3 \times 5
+ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ 2 \times 3 \times 5 \\
+ 2 \times 1 \times 5
+ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ 2 \times 3 \times 5 \\
+ 3 \times 5
+ \end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+ 2 \times 3 \times 5 \\
+ 3 \times 1
+ \end{split}\]</div>
+<p>Let’s see more examples of broadcasting:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">]],[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">]]])</span>
+<span class="n">mat2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1 shape&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat2 shape&quot;</span><span class="p">,</span><span class="n">mat2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1*Mat2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="o">*</span><span class="n">mat2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mat1 shape (2, 2, 3)
+Mat2 shape (2, 3)
+
+Mat1
+ [[[1 3 5]
+  [7 6 2]]
+
+ [[6 5 2]
+  [8 9 9]]]
+
+Mat2
+ [[2 1 3]
+ [7 6 2]]
+
+Mat1*Mat2
+ [[[ 2  3 15]
+  [49 36  4]]
+
+ [[12  5  6]
+  [56 54 18]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The product between the two tensors was performed by multiplying the two-dimensional matrices <code class="docutils literal notranslate"><span class="pre">mat1[0,...]</span></code> and <code class="docutils literal notranslate"><span class="pre">mat2[0,...]</span></code> by <code class="docutils literal notranslate"><span class="pre">mat2</span></code>. This is equivalent to repeating the elements of <code class="docutils literal notranslate"><span class="pre">mat2</span></code> along the missing dimension and performing a point-by-point product between <code class="docutils literal notranslate"><span class="pre">mat1</span></code> and the adapted version of <code class="docutils literal notranslate"><span class="pre">mat2</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mat1</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="mi">7</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="p">]],[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">8</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">9</span><span class="p">]]])</span>
+<span class="n">mat2</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">]],[[</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">]]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1 shape&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat2 shape&quot;</span><span class="p">,</span><span class="n">mat2</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mat1*Mat2</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">mat1</span><span class="o">*</span><span class="n">mat2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mat1 shape (2, 2, 3)
+Mat2 shape (2, 1, 3)
+
+Mat1
+ [[[1 3 5]
+  [7 6 2]]
+
+ [[6 5 2]
+  [8 9 9]]]
+
+Mat2
+ [[[1 3 5]]
+
+ [[6 5 2]]]
+
+Mat1*Mat2
+ [[[ 1  9 25]
+  [ 7 18 10]]
+
+ [[36 25  4]
+  [48 45 18]]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>In this case, the product between the two tensors was obtained by multiplying all rows of the two-dimensional matrices <code class="docutils literal notranslate"><span class="pre">mat1[0,...]</span></code> by <code class="docutils literal notranslate"><span class="pre">mat2[0]</span></code> (first row of mat2) and all rows of the two-dimensional matrices <code class="docutils literal notranslate"><span class="pre">mat1[1,...]</span></code> by <code class="docutils literal notranslate"><span class="pre">mat2[1]</span></code> (second row of mat2). This is equivalent to repeating all elements of <code class="docutils literal notranslate"><span class="pre">mat2</span></code> along the second dimension (the one containing <span class="math notranslate nohighlight">\(1\)</span>) and performing an element-wise product between <code class="docutils literal notranslate"><span class="pre">mat1</span></code> and the adapted version of <code class="docutils literal notranslate"><span class="pre">mat2</span></code>.</p>
+</section>
+<section id="introduction-to-matplotlib">
+<h2>Introduction to Matplotlib<a class="headerlink" href="#introduction-to-matplotlib" title="Permalink to this heading">#</a></h2>
+<p><strong>Matplotlib</strong> is the reference library for creating graphs in Python. It is a very powerful and well-documented library (<a class="reference external" href="https://matplotlib.org/">https://matplotlib.org/</a>). Let’s look at some classic examples of using the library.</p>
+</section>
+<section id="d-plot">
+<h2>2D plot<a class="headerlink" href="#d-plot" title="Permalink to this heading">#</a></h2>
+<p>Let’s see how to plot the function:</p>
+<div class="math notranslate nohighlight">
+\[
+y = x^2.
+\]</div>
+<p>To plot the function, we will need to provide matplotlib with a series of <span class="math notranslate nohighlight">\((x,y)\)</span> value pairs that satisfy the equation shown above. The simplest way to do this is to:</p>
+<ul class="simple">
+<li><p>Define an arbitrary vector of <span class="math notranslate nohighlight">\(x\)</span> values extracted from the function’s domain;</p></li>
+<li><p>Calculate the respective <span class="math notranslate nohighlight">\(y\)</span> points using the analytical form shown above;</p></li>
+<li><p>Plot the values using matplotlib.</p></li>
+</ul>
+<p>The two vectors can be defined as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span> <span class="c1"># linearly sample 300 points between -100 and 100</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="c1"># calculate the square of each point in x</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Proceed to print:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span> <span class="c1">#imports the pyplot module from matplotlib and calls it plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="c1">#plots the x,y pairs as points in the Cartesian space</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span> <span class="c1">#sets a label for the x-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span> <span class="c1">#sets a label for the y-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;My plot&#39;</span><span class="p">)</span> <span class="c1">#sets the title of the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1">#shows the plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/748a334c8fa426d74a4603d3b3fcd5a03c8747cad626f01780e6752b91d7d37d.png" src="../_images/748a334c8fa426d74a4603d3b3fcd5a03c8747cad626f01780e6752b91d7d37d.png" />
+</div>
+</div>
+<p>It is possible to control various aspects of the plot, including the limits of the x and y axes, the position of the “ticks” (the horizontal and vertical small lines on the axes) or adding a grid. Let’s see some examples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="c1">#display the same plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span><span class="mi">50</span><span class="p">])</span> <span class="c1">#display x values only between -20 and 40</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">2500</span><span class="p">])</span> <span class="c1">#and y values only between 0 and 4000</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">([</span><span class="o">-</span><span class="mi">40</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">40</span><span class="p">])</span> <span class="c1">#insert only -40, 0 and 40 as &quot;ticks&quot; on the x-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">([</span><span class="mi">1000</span><span class="p">,</span><span class="mi">2000</span><span class="p">])</span> <span class="c1">#only 1000 and 2000 as y ticks</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span> <span class="c1">#add a grid</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/31b5184ed716612e8d7c3a9e1050b4997c4bef96fe155f1ff54ed2316be9700f.png" src="../_images/31b5184ed716612e8d7c3a9e1050b4997c4bef96fe155f1ff54ed2316be9700f.png" />
+</div>
+</div>
+</section>
+<section id="subplot">
+<h2>Subplot<a class="headerlink" href="#subplot" title="Permalink to this heading">#</a></h2>
+<p>It can often be useful to compare different plots. To do this, we can make use of the subplot function, which allows us to construct a “grid of plots”.</p>
+<p>Let’s see, for example, how to plot the following functions in a 2 x 2 grid:</p>
+<div class="math notranslate nohighlight">
+\[
+y=x^2, \ \ \ y=log(x), \ \ \  y=x^2 \cdot log(x), \ \ \  y=log(x)/x
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span> <span class="c1">#defines a figure with a given size (in inches)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#defines a 2x2 grid and selects the first cell as the current cell</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#first graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;x^2&#39;</span><span class="p">)</span> <span class="c1">#sets a title for the current cell</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#still in the same 2x2 grid, selects the second cell</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1">#second graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;log(x)&#39;</span><span class="p">)</span> <span class="c1">#sets a title for the current cell</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1">#selects the third cell</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1">#third graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;x^2 log(x)&#39;</span><span class="p">)</span> <span class="c1">#sets a title for the current cell</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span> <span class="c1">#selects the fourth cell</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">300</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="n">x</span><span class="p">)</span> <span class="c1">#fourth graph</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;log(x)/x&#39;</span><span class="p">)</span> <span class="c1">#sets a title for the current cell</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> <span class="c1">#shows the figure</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/805e66c91975c053cb568c94ca73b89882f3d0a16e7620616201eadb415a0bac.png" src="../_images/805e66c91975c053cb568c94ca73b89882f3d0a16e7620616201eadb415a0bac.png" />
+</div>
+</div>
+</section>
+<section id="colors-and-styles">
+<h2>Colors and styles<a class="headerlink" href="#colors-and-styles" title="Permalink to this heading">#</a></h2>
+<p>It is possible to use different colors and styles for the charts. Below are some examples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">)</span> <span class="c1">#abbreviated version of plt.subplot(2,3,1)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;--&#39;</span><span class="p">)</span> <span class="c1">#dashed line</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">232</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">)</span> <span class="c1">#only points</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">233</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="c1">#red line, linewidth 2</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">234</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o&#39;</span><span class="p">)</span> <span class="c1">#circles</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">235</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o-g&#39;</span><span class="p">)</span> <span class="c1">#circles connected by green lines</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">236</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="s1">&#39;o--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span> <span class="c1">#circles connected by dashed lines, linewidth 0.5</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e2c2425872911da283c3a6924206e01bacd6c555ba64e6f4c4cfa622b5eacb25.png" src="../_images/e2c2425872911da283c3a6924206e01bacd6c555ba64e6f4c4cfa622b5eacb25.png" />
+</div>
+</div>
+</section>
+<section id="line-overlay-and-legend">
+<h2>Line Overlay and Legend<a class="headerlink" href="#line-overlay-and-legend" title="Permalink to this heading">#</a></h2>
+<p>It’s simple to overlay multiple lines using <strong>matplotlib</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># For the second plot, matplotlib will automatically change color</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;x^2&#39;</span><span class="p">,</span><span class="s1">&#39;x^3&#39;</span><span class="p">])</span> <span class="c1"># We can also add a legend.</span>
+<span class="c1"># The legend elements will be associated with the lines in the order they were plotted</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bac78a62404d3a6e8ecea5e5d763297ef34d6f130bde1990d7834d49a94ebbe5.png" src="../_images/bac78a62404d3a6e8ecea5e5d763297ef34d6f130bde1990d7834d49a94ebbe5.png" />
+</div>
+</div>
+</section>
+<section id="grids">
+<h2>Grids<a class="headerlink" href="#grids" title="Permalink to this heading">#</a></h2>
+<p>It is often useful to superimpose a grid on your plots. This can be done using <code class="docutils literal notranslate"><span class="pre">plt.grid()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="o">**</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># For the second plot, matplotlib will automatically change color</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;x^2&#39;</span><span class="p">,</span><span class="s1">&#39;x^3&#39;</span><span class="p">])</span> <span class="c1"># We can also add a legend.</span>
+<span class="c1"># The legend elements will be associated with the lines in the order they were plotted</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b3beed067913fbf8f7e9352f7520a1ab521526697af4f5c9629b66838c8153f3.png" src="../_images/b3beed067913fbf8f7e9352f7520a1ab521526697af4f5c9629b66838c8153f3.png" />
+</div>
+</div>
+<p>Matplotlib is a very versatile library. On Matplotlib’s official website, there is a gallery of plot examples with their respective code (<a class="reference external" href="https://matplotlib.org/stable/gallery/index.html">https://matplotlib.org/stable/gallery/index.html</a>). We will see in more detail how to obtain more complex visualizations during the course.</p>
+</section>
+<section id="introduction-to-pandas">
+<h2>Introduction to Pandas<a class="headerlink" href="#introduction-to-pandas" title="Permalink to this heading">#</a></h2>
 <p>We’ve seen how Python, combined with numpy and matplotlib, can be a powerful tool for scientific computing. However, there are other libraries that provide greater abstraction for easier data management and analysis. In this lab, we will cover the basics of the Pandas library, which is useful for data analysis. Specifically, we will see:</p>
 <ul class="simple">
 <li><p>How to create and manage data series (Pandas Series);</p></li>
@@ -447,6 +1865,7 @@ document.write(`
 <li><p>Examples of how to manipulate data in a DataFrame.</p></li>
 </ul>
 <p>Pandas is a high-level library that provides various tools and data structures for data analysis. In particular, Pandas is very useful for loading, manipulating, and visualizing data quickly and conveniently before moving on to the actual analysis. The two main data structures in Pandas are <code class="docutils literal notranslate"><span class="pre">Series</span></code> and <code class="docutils literal notranslate"><span class="pre">DataFrame</span></code>.</p>
+</section>
 <section id="series">
 <h2>Series<a class="headerlink" href="#series" title="Permalink to this heading">#</a></h2>
 <p>A <code class="docutils literal notranslate"><span class="pre">Series</span></code> is a one-dimensional structure (a sequence of data) very similar to a NumPy array. Unlike it, its elements can be indexed using labels, as well as numbers. The values contained in a series can be of any type.</p>
@@ -6807,7 +8226,37 @@ memory usage: 1.0+ MB
 <section id="exercises">
 <h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
 <blockquote>
-<div><p>Exercise 1</p>
+<div><p><strong>Exercise 1</strong></p>
+<p>Define a 3x4 matrix, then:</p>
+<ul class="simple">
+<li><p>Print the first row of the matrix;</p></li>
+<li><p>Print the second column of the matrix;</p></li>
+<li><p>Sum the first and last columns of the matrix;</p></li>
+<li><p>Sum the elements along the main diagonal;</p></li>
+<li><p>Print the number of elements in the matrix.</p></li>
+</ul>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Exercise 2</strong></p>
+<p>Generate an array of <span class="math notranslate nohighlight">\(100\)</span> numbers between <span class="math notranslate nohighlight">\(2\)</span> and <span class="math notranslate nohighlight">\(4\)</span> and calculate the sum of the elements whose squares have a value greater than <span class="math notranslate nohighlight">\(8\)</span>.</p>
+</div></blockquote>
+<blockquote>
+<div><p><strong>Exercise 3</strong></p>
+<p>Generate the following matrix writing the smallest amount of code possible:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span>
+<span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
+<span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span>
+</pre></div>
+</div>
+<p>Repeat the exercise generating a <span class="math notranslate nohighlight">\(25 \times 13\)</span> matrix of the same type.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>Write the code to obtain this diagram:</p>
+<p><img alt="image.png" src="data:image/png;base64,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" /></p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
 <p>Load the dataset available at the following URL: <a class="reference external" href="https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv">https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv</a> so as to use the values of the “PassengerId” column as indices and apply the following transformations:</p>
 <ul class="simple">
 <li><p>Remove rows containing NaN values;</p></li>
@@ -6817,23 +8266,23 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 2</p>
+<div><p>Exercise 6</p>
 <p>Consider the dataset loaded and modified in the previous exercise. Find the name of the passenger with ticket code “345779”.</p>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 3</p>
+<div><p>Exercise 7</p>
 <p>What are the names of the 5 youngest passengers?</p>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 4</p>
+<div><p>Exercise 8</p>
 <p>Consider the dataset loaded and modified in the previous exercise. Select all observations relating to passengers between 20 and 30 years of age.</p>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 5</p>
+<div><p>Exercise 9</p>
 <p>Consider the dataset loaded and modified in the previous exercises. Calculate the average fare paid by female passengers in second class.</p>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 6</p>
+<div><p>Exercise 10</p>
 <p>Consider the dataset loaded and modified in the previous exercises. Construct a crosstab to answer the following questions:</p>
 <ul class="simple">
 <li><p>How many male passengers survived?</p></li>
@@ -6841,7 +8290,7 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 7</p>
+<div><p>Exercise 11</p>
 <p>Consider the dataset loaded and modified in the previous exercises. Construct a crosstab that allows you to answer the following questions:</p>
 <ul class="simple">
 <li><p>How many male passengers survived in first class?</p></li>
@@ -6850,7 +8299,7 @@ memory usage: 1.0+ MB
 </ul>
 </div></blockquote>
 <blockquote>
-<div><p>Exercise 8</p>
+<div><p>Exercise 12</p>
 <p>Consider the following DataFrame:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Category&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;NumberOfElements&#39;</span><span class="p">:[</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;CheckedElements&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]})</span>
 </pre></div>
@@ -6904,6 +8353,15 @@ memory usage: 1.0+ MB
                 <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="02_intro_python_en.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Python for Data Science Crash Course</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -6919,6 +8377,24 @@ memory usage: 1.0+ MB
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy">Numpy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-arrays">Numpy Arrays</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linspace-arange-zeros-ones-eye-and-random">Linspace, Arange, Zeros, Ones, Eye and Random</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#max-min-sum-argmax-argmin">max, min, sum, argmax, argmin</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-and-slicing">Indexing and Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logical-indexing-and-slicing">Logical Indexing and Slicing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reshape">Reshape</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#composing-arrays-using-concatenate-and-stack">Composing Arrays Using <code class="docutils literal notranslate"><span class="pre">concatenate</span></code> and <code class="docutils literal notranslate"><span class="pre">stack</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#types">Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#memory-management-in-numpy">Memory Management in Numpy</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#broadcasting">Broadcasting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-matplotlib">Introduction to Matplotlib</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#d-plot">2D plot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subplot">Subplot</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#colors-and-styles">Colors and styles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#line-overlay-and-legend">Line Overlay and Legend</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grids">Grids</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-pandas">Introduction to Pandas</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#series">Series</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creation-of-series">Creation of Series</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#indexing-series">Indexing Series</a></li>
