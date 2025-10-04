@@ -7,11 +7,14 @@ options:
   numbered: True
 
 parts:
-- caption: Setup and Python Crash Course
+- caption: Lecture 1
   chapters:
   - file: laboratories/01_setup
-  - file: laboratories/02_intro_python_en
-  - file: laboratories/03_intro_python_data_science
+  - file: laboratories/02_python_crash_course
+  - file: laboratories/03_python_data_science_crash_course
+- caption: Lecture 2
+  chapters:
+  - file: lectures/01_intro_data_analysis
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
