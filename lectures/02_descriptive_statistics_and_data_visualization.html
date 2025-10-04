@@ -167,11 +167,15 @@ const thebe_selector_output = ".output, .cell_output"
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Setup and Python Crash Course</span></p>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_intro_python_en.html">Python Crash Course</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_intro_python_data_science.html">Python for Data Science Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
 </ul>
 
     </div>
@@ -645,6 +649,131 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Titanic Dataset Shape: (891, 11)
+
+First 5 rows:
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </section>
 </section>
@@ -789,6 +918,55 @@ document.write(`
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Titanic Dataset Info:
+&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 891 entries, 1 to 891
+Data columns (total 11 columns):
+ #   Column    Non-Null Count  Dtype  
+---  ------    --------------  -----  
+ 0   Survived  891 non-null    int64  
+ 1   Pclass    891 non-null    int64  
+ 2   Name      891 non-null    object 
+ 3   Sex       891 non-null    object 
+ 4   Age       714 non-null    float64
+ 5   SibSp     891 non-null    int64  
+ 6   Parch     891 non-null    int64  
+ 7   Ticket    891 non-null    object 
+ 8   Fare      891 non-null    float64
+ 9   Cabin     204 non-null    object 
+ 10  Embarked  889 non-null    object 
+dtypes: float64(2), int64(4), object(5)
+memory usage: 83.5+ KB
+None
+
+==================================================
+
+Quantitative Variables:
+- Age: float64
+- SibSp: int64
+- Parch: int64
+- Fare: float64
+
+Qualitative Variables:
+- Survived: int64
+- Pclass: int64
+- Name: object
+- Sex: object
+- Ticket: object
+- Cabin: object
+- Embarked: object
+
+Age Groups Distribution:
+Age_Group
+Young Adult    358
+Adult          209
+Child          139
+Senior           8
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 </section>
 </section>
@@ -851,6 +1029,34 @@ document.write(`
 <span class="n">wide_again</span> <span class="o">=</span> <span class="n">long_data</span><span class="o">.</span><span class="n">pivot</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="s1">&#39;Student&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;Subject&#39;</span><span class="p">,</span> <span class="n">values</span><span class="o">=</span><span class="s1">&#39;Score&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Back to Wide Format:&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">wide_again</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wide Format:
+   Student  Math  Science  English
+0    Alice    85       88       92
+1      Bob    92       85       88
+2  Charlie    78       92       85
+
+Long Format:
+   Student  Subject  Score
+0    Alice     Math     85
+1      Bob     Math     92
+2  Charlie     Math     78
+3    Alice  Science     88
+4      Bob  Science     85
+5  Charlie  Science     92
+6    Alice  English     92
+7      Bob  English     88
+8  Charlie  English     85
+
+Back to Wide Format:
+Subject  English  Math  Science
+Student                        
+Alice         92    85       88
+Bob           88    92       85
+Charlie       85    78       92
 </pre></div>
 </div>
 </div>
