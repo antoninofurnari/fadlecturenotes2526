@@ -1,0 +1,2619 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Describing and Visualizing the Data &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/02_describing_and_visualizing_the_data';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Data Analysis Key Concepts, Loading and Inspecting the Data" href="01_intro_data_analysis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Describing and Visualizing the Data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/02_describing_and_visualizing_the_data.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/02_describing_and_visualizing_the_data.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/02_describing_and_visualizing_the_data.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Describing and Visualizing the Data</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-and-relative-frequencies">Absolute and Relative Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-frequencies">Absolute Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-chart-of-absolute-frequencies">Bar Chart of Absolute Frequencies</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-frequencies">Relative Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-chart-of-relative-frequencies">Bar Chart of Relative Frequencies</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#barplots-and-stacked-barplots">Barplots and Stacked Barplots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pie-charts">Pie Charts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-cumulative-distribution-function-ecdf">Empirical Cumulative Distribution Function (ECDF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-number-of-bins-sturges-and-rice">Choosing the Number of Bins: Sturges and Rice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-samples-using-histograms">Comparing Samples Using Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation">Density Estimation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics">Summary Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#size">Size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-central-tendency">Measures of central tendency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles-percentiles-and-quartiles">Quantiles, Percentiles, and Quartiles</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles">Quantiles</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#percentiles">Percentiles</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quartiles">Quartiles</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-maximum-and-range">Minimum, Maximum, and Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interquartile-range-iqr">Interquartile Range (IQR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-and-standard-deviation">Variance and Standard Deviation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalizations">Data Normalizations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-0-and-1">Normalization between 0 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-1-and-1">Normalization between -1 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standardization-z-scoring">Standardization (z-scoring)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-indicators">Shape Indicators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#asymmetry-skewness">Asymmetry (skewness)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis-kurtosis">Kurtosis (kurtosis)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary">Statistical Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="describing-and-visualizing-the-data">
+<h1>Describing and Visualizing the Data<a class="headerlink" href="#describing-and-visualizing-the-data" title="Permalink to this heading">#</a></h1>
+<p>We have seen how to access the data and perform some basic manipulations. In practice, datasets are often large enough to make it difficult to grasp their structure or patterns by simply printing rows or scanning tables. This is where <strong>descriptive statistics</strong> and <strong>visualization techniques</strong> become essential tools.</p>
+<p>Describing and visualizing the data helps us:</p>
+<ul class="simple">
+<li><p>Gather insights on the dataset</p></li>
+<li><p>Understand the main characteristics of each variable</p></li>
+<li><p>Detect missing or anomalous values</p></li>
+<li><p>Identify relationships between variables</p></li>
+<li><p>Spot trends or clusters of data which are similar</p></li>
+<li><p>Guide the choice of pre-processing and further modeling</p></li>
+</ul>
+<p>To make some example, we will consider a simple dataset where weights (in pounds), heights (in inches), and sex of various subjects. The dataset will look like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">hw</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight_pounds.csv&#39;</span><span class="p">)</span>
+<span class="n">hw</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">hw</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 4231 entries, 0 to 4230
+Data columns (total 3 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   sex     4231 non-null   object 
+ 1   height  4231 non-null   int64  
+ 2   weight  4231 non-null   float64
+dtypes: float64(1), int64(1), object(1)
+memory usage: 99.3+ KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M</td>
+      <td>74</td>
+      <td>53.484771</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>70</td>
+      <td>38.056472</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>61</td>
+      <td>34.970812</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>68</td>
+      <td>35.999365</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>66</td>
+      <td>34.559390</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Since we are inspecting the dataset, it is worth to answer these questions:</p>
+<ul class="simple">
+<li><p>How many observations do we have?</p></li>
+<li><p>How many variables?</p></li>
+<li><p>What are the measuring scales of each variable?</p></li>
+<li><p>Which variables are discrete? Which continuous? Which numerical?</p></li>
+<li><p>Are there missing values?</p></li>
+</ul>
+<p>We will begin by focusing on the univariate sample of heights:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+<span class="n">heights</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       74
+1       70
+2       61
+3       68
+4       66
+        ..
+4226    69
+4227    69
+4228    64
+4229    64
+4230    61
+Name: height, Length: 4231, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="absolute-and-relative-frequencies">
+<h2>Absolute and Relative Frequencies<a class="headerlink" href="#absolute-and-relative-frequencies" title="Permalink to this heading">#</a></h2>
+<section id="absolute-frequencies">
+<h3>Absolute Frequencies<a class="headerlink" href="#absolute-frequencies" title="Permalink to this heading">#</a></h3>
+<p>A first way to describe data is to calculate the number of times each value appears. These are called “absolute frequencies”. Absolute frequencies are generally calculated for discrete variables where observations take a finite number of values.</p>
+<p>Let</p>
+<div class="math notranslate nohighlight">
+\[a_1, a_2, \ldots, a_n\]</div>
+<p>be the values that the variable under consideration can take.</p>
+<p>The absolute frequencies <span class="math notranslate nohighlight">\(n_i\)</span> are defined as the number of times that <span class="math notranslate nohighlight">\(a_i\)</span> appears in the sample. Note that:</p>
+<div class="math notranslate nohighlight">
+\[\sum_i n_i = n\]</div>
+<p>Where <span class="math notranslate nohighlight">\(n\)</span> is the total number of elements in the sample.</p>
+<p>We can compute unique values <span class="math notranslate nohighlight">\(a_j\)</span> as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([74, 70, 61, 68, 66, 65, 64, 67, 72, 71, 76, 69, 63, 75, 60, 59, 73])
+</pre></div>
+</div>
+</div>
+</div>
+<p>The absolute frequencies can be computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>height
+64    435
+61    411
+66    391
+67    377
+68    355
+65    351
+69    302
+63    291
+70    272
+72    260
+71    235
+73    146
+60    130
+74    104
+75     72
+59     52
+76     47
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that this will sort the values by frequency. We can sort them by value as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>height
+59     52
+60    130
+61    411
+63    291
+64    435
+65    351
+66    391
+67    377
+68    355
+69    302
+70    272
+71    235
+72    260
+73    146
+74    104
+75     72
+76     47
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="bar-chart-of-absolute-frequencies">
+<h4>Bar Chart of Absolute Frequencies<a class="headerlink" href="#bar-chart-of-absolute-frequencies" title="Permalink to this heading">#</a></h4>
+<p>The data frequencies can be graphically represented using a bar chart that places the unique value (<span class="math notranslate nohighlight">\(a_i\)</span>) on the x-axis and represents the absolute frequency <span class="math notranslate nohighlight">\(n_i\)</span> as the height of the bar.</p>
+<p>In our example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7e757f207e0d3e0c8640cca41066460739359a4e0220c95f21e5335c6f2581c3.png" src="../_images/7e757f207e0d3e0c8640cca41066460739359a4e0220c95f21e5335c6f2581c3.png" />
+</div>
+</div>
+<p>The graph above tells us something about the number of occurrences of a given value and also gives us an idea of which values are more or less frequent. We see that the data follows a “bell” shape. We will often find this type of shape and will discuss it further later.</p>
+</section>
+</section>
+<section id="relative-frequencies">
+<h3>Relative Frequencies<a class="headerlink" href="#relative-frequencies" title="Permalink to this heading">#</a></h3>
+<p>Absolute frequencies allow us to get a more precise idea of how data are distributed, regardless of the size of our sample. For example, we know that the sample contains more individuals with a height of <span class="math notranslate nohighlight">\(167.64\ cm\)</span> than individuals with a height of <span class="math notranslate nohighlight">\(193.04\ cm\)</span>. However, this representation is linked to the total number of elements contained in the sample. For example, a similarly distributed sample, but with more observations, will result in larger absolute frequencies. We can obtain a representation independent of the sample size by analyzing relative frequencies, defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[f_j = f(a_j) = \frac{n_j}{n}, j=1,2,\ldots,k\]</div>
+<p>Note that, given the definition, we will have:</p>
+<div class="math notranslate nohighlight">
+\[ n_j \leq n \Rightarrow f_j \leq 1\ \forall j \]</div>
+<div class="math notranslate nohighlight">
+\[ \sum_j f_j = \sum_j \frac{n_j}{n} = \frac{1}{n}\sum_j n_j = \frac{n}{n} = 1\]</div>
+<p>We can obtain relative frequencies still with value_counts, but this time we will pass the argument <code class="docutils literal notranslate"><span class="pre">normalize=True</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>height
+59    0.012290
+60    0.030726
+61    0.097140
+63    0.068778
+64    0.102813
+65    0.082959
+66    0.092413
+67    0.089104
+68    0.083905
+69    0.071378
+70    0.064287
+71    0.055542
+72    0.061451
+73    0.034507
+74    0.024580
+75    0.017017
+76    0.011108
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<section id="bar-chart-of-relative-frequencies">
+<h4>Bar Chart of Relative Frequencies<a class="headerlink" href="#bar-chart-of-relative-frequencies" title="Permalink to this heading">#</a></h4>
+<p>By plotting the relative frequencies using a bar chart, we obtain a graph very similar to the one showing absolute frequencies, but with a different scale on the y-axis.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">())</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ab584af819525d678cd6c0680d265724115a3f9a6cd6c26d4243db485e2c9971.png" src="../_images/ab584af819525d678cd6c0680d265724115a3f9a6cd6c26d4243db485e2c9971.png" />
+</div>
+</div>
+<p>Relative frequency bar charts are useful for comparing different samples. For example, we can consider the heights of men and women in the weights-and-heights dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pmf_height_m</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">][</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+<span class="n">pmf_height_f</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;F&#39;</span><span class="p">][</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="c1"># We add and subtract 0.2 from the indices to &quot;shift&quot; the bars and make them</span>
+<span class="c1"># visible when overlapping. We also set alpha=0.9 to make the bars</span>
+<span class="c1"># partially transparent.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pmf_height_m</span><span class="o">.</span><span class="n">index</span><span class="o">+</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">pmf_height_m</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">pmf_height_f</span><span class="o">.</span><span class="n">index</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">pmf_height_f</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">(),</span> <span class="n">rotation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">])</span> <span class="c1"># Display a legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ab94fd61a034f0ddd7d19f2a1d840d453d23a012dad98b82f5cc6c319b78ec09.png" src="../_images/ab94fd61a034f0ddd7d19f2a1d840d453d23a012dad98b82f5cc6c319b78ec09.png" />
+</div>
+</div>
+<p>From the comparison above, we can already make some qualitative observations about the two samples. In particular, we notice (unsurprisingly) that men are generally taller than women. This doesn’t mean that there aren’t men who are shorter than some women, or vice versa, but such cases are reasonably less frequent.</p>
+</section>
+<section id="barplots-and-stacked-barplots">
+<h4>Barplots and Stacked Barplots<a class="headerlink" href="#barplots-and-stacked-barplots" title="Permalink to this heading">#</a></h4>
+<p>We can also used barplots and stacked barplots to count the number of elements in a given class. For instance, a barplot counting the number of subjects in the “male” or “female” class looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Calculate proportions</span>
+<span class="n">sex_counts</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+
+<span class="c1"># Create bar plot</span>
+<span class="n">sex_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="s1">&#39;salmon&#39;</span><span class="p">])</span>
+
+<span class="c1"># Customize plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Proportion of Males and Females&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Proportion&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/13df6761f76a42071d6c6aa173dd6c353a5a357aac88546d8159d9b147195c57.png" src="../_images/13df6761f76a42071d6c6aa173dd6c353a5a357aac88546d8159d9b147195c57.png" />
+</div>
+</div>
+<p>We can obtain the normalized version by passing normalize=True to value_counts:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Calculate proportions</span>
+<span class="n">sex_counts</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Create bar plot</span>
+<span class="n">sex_counts</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="s1">&#39;salmon&#39;</span><span class="p">])</span>
+
+<span class="c1"># Customize plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Proportion of Males and Females&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Proportion&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6c37108e7a7b9fac4b6e253d89baf5152ec348da477e4d63cd0eb02e190d6803.png" src="../_images/6c37108e7a7b9fac4b6e253d89baf5152ec348da477e4d63cd0eb02e190d6803.png" />
+</div>
+</div>
+<p>When numbers sum to one, another popular visualization is that of the stacked plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Compute proportions grouped by a single dummy category</span>
+<span class="n">sex_props</span> <span class="o">=</span> <span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="s1">&#39;All&#39;</span><span class="p">)[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+
+<span class="c1"># Plot as stacked bar</span>
+<span class="n">sex_props</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="s1">&#39;salmon&#39;</span><span class="p">])</span>
+
+<span class="c1"># Customize plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Stacked Bar: Proportion of Males and Females&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Proportion&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper center&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.15</span><span class="p">),</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/7cd27c5f3637264e0e03664f9eeee76c837a71f972ac7d08972803e4b39bfea1.png" src="../_images/7cd27c5f3637264e0e03664f9eeee76c837a71f972ac7d08972803e4b39bfea1.png" />
+</div>
+</div>
+</section>
+<section id="pie-charts">
+<h4>Pie Charts<a class="headerlink" href="#pie-charts" title="Permalink to this heading">#</a></h4>
+<p>As an alternative to bar charts, relative frequencies can also be displayed using pie charts.</p>
+<p>In the case of heights:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/438cca8c9b4719303d975e38f87be81d344404cf8b7cb5514ae3f5147c97645a.png" src="../_images/438cca8c9b4719303d975e38f87be81d344404cf8b7cb5514ae3f5147c97645a.png" />
+</div>
+</div>
+<p>Pie charts works better when we have fewer elements. For instance, let’s say we want to show the percentage of males and females in our dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;Female&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Proportion of Males and Females&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/01c9c84bb0862238f29087c1be919281e52e7afcadae4f677f6db6d3891daf46.png" src="../_images/01c9c84bb0862238f29087c1be919281e52e7afcadae4f677f6db6d3891daf46.png" />
+</div>
+</div>
+<p>While pie charts can be intuitive when there is no specific ordering of the elements we want to show, they often introduce more problems than other chart types. In particular, it’s difficult for the human eye to accurately compare angles or assess relative sizes—especially when slices are similar in proportion or not arranged consistently. This can lead to misinterpretation or visual clutter, making bar charts or other alternatives generally more effective for comparing categories.</p>
+<p>An illustrative example is below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Sample data: three categories with similar proportions</span>
+<span class="n">sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">36</span><span class="p">]</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Category A&#39;</span><span class="p">,</span> <span class="s1">&#39;Category B&#39;</span><span class="p">,</span> <span class="s1">&#39;Category C&#39;</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lightcoral&#39;</span><span class="p">,</span> <span class="s1">&#39;gold&#39;</span><span class="p">,</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">]</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Pie chart without labels</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Pie Chart Without Labels&#39;</span><span class="p">)</span>
+
+<span class="c1"># Pie chart with labels</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">,</span> <span class="n">autopct</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%1.1f%%</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Pie Chart With Labels&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Same Data, Different Perception&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/995e7ff4ec458e490ebcbb3ff6cb1a4ad6bfac3d2b779390f7f2c5bcbc42d1dc.png" src="../_images/995e7ff4ec458e490ebcbb3ff6cb1a4ad6bfac3d2b779390f7f2c5bcbc42d1dc.png" />
+</div>
+</div>
+<p>The figure shows the same plot with and without labels. Without labels, even significant differences as <span class="math notranslate nohighlight">\(4%\)</span> are not easy to spot.</p>
+<p>In short: pie charts should be used with extra care!</p>
+</section>
+</section>
+</section>
+<section id="empirical-cumulative-distribution-function-ecdf">
+<h2>Empirical Cumulative Distribution Function (ECDF)<a class="headerlink" href="#empirical-cumulative-distribution-function-ecdf" title="Permalink to this heading">#</a></h2>
+<p>Relative frequencies work particularly well when there are few unique values. However, when the number of unique values grows, the discrete frequencies calculated for the values become very small and thus subject to noise (e.g., due to measurement errors).</p>
+<p>Let’s now consider the sample of weights and its relative frequencies:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span>
+<span class="n">weights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>weight
+20.571066    0.003309
+20.982487    0.000945
+21.188198    0.000473
+21.393908    0.000473
+21.599619    0.003073
+               ...   
+59.244669    0.000236
+59.450380    0.000236
+59.656091    0.001654
+60.684644    0.001891
+61.301776    0.000236
+Name: proportion, Length: 172, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We note that we now have many more unique values (172) and that weights now have decimal values as well.</p>
+<p>This suggests that, while heights were discretized—probably rounded when collected—weights were recorded with greater precision. As a result, the weight variable behaves more like a continuous numerical feature, whereas height appears more discretized or categorical in nature. This distinction influences how we visualize and model these variables.</p>
+<p>Let’s see the plot of absolute frequencies:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5cb612b77105abbdd36799309736bcf4e427b91612d3e947608ecac0b441c66a.png" src="../_images/5cb612b77105abbdd36799309736bcf4e427b91612d3e947608ecac0b441c66a.png" />
+</div>
+</div>
+<p>Not very easy to read, right?</p>
+<p>The representation is affected by noise, whereby two very close values are treated as two distinct cases in probability calculations. We will see some ways to overcome this problem. One of them consists of calculating an <strong>Empirical Cumulative Distribution Function (ECDF)</strong>. An <strong>ECDF</strong> calculates for a value <span class="math notranslate nohighlight">\(x\)</span> the sum of the relative frequencies of all values <span class="math notranslate nohighlight">\(y\)</span> less than or equal to <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ECDF(x) = \sum_{a_j: a_j\leq x} f(a_j)\]</div>
+<p>Where <span class="math notranslate nohighlight">\(a_j\)</span> are the unique values within the sample, while in general <span class="math notranslate nohighlight">\(x\in \mathbb{R}\)</span>.</p>
+<p>Consider a simple dataset of numerical values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">a</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1
+1     5
+2     2
+3     6
+4     5
+5     4
+6     3
+7     5
+8     4
+9     2
+10    4
+11    5
+12    6
+13    4
+14    4
+15    3
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The relative frequencies will be as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    0.0625
+2    0.1250
+3    0.1250
+4    0.3125
+5    0.2500
+6    0.1250
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The ECDF calculated on the unique values will be the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1    0.0625
+2    0.1875
+3    0.3125
+4    0.6250
+5    0.8750
+6    1.0000
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>It should be noted that the values of the ECDF are always increasing and the last value is equal to 1 (the sum of all relative frequencies).</p>
+<p>An ECDF can be represented graphically by placing the <span class="math notranslate nohighlight">\(x\)</span> values on the x-axis and the <span class="math notranslate nohighlight">\(ECDF(x)\)</span> values on the y-axis. For example, the ECDF of the weights in our weights-heights dataset will be the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ca677e6f3705b05629eb2c58b48b18a2f19b35a295c3f4a5220e544b3858202b.png" src="../_images/ca677e6f3705b05629eb2c58b48b18a2f19b35a295c3f4a5220e544b3858202b.png" />
+</div>
+</div>
+<p>The definition of the ECDF tells us that, given a point with coordinates <span class="math notranslate nohighlight">\((x,y)\)</span>, the sum of the frequencies of elements less than or equal to <span class="math notranslate nohighlight">\(x\)</span> is equal to <span class="math notranslate nohighlight">\(y\)</span>. Alternatively, we can say that <span class="math notranslate nohighlight">\(y\%\)</span> of the elements have a value less than <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>Observing the graph above, we can say that:</p>
+<ul class="simple">
+<li><p>Approximately <span class="math notranslate nohighlight">\(40\%\)</span> of subjects have a weight less than <span class="math notranslate nohighlight">\(\approx 33\)</span> pounds (about <span class="math notranslate nohighlight">\(66kg\)</span>);</p></li>
+<li><p>Approximately <span class="math notranslate nohighlight">\(80\%\)</span> of subjects have a weight less than <span class="math notranslate nohighlight">\(\approx 42\)</span> pounds (about <span class="math notranslate nohighlight">\(84Kg\)</span>);</p></li>
+</ul>
+<p>ECDFs are useful for graphically checking if two phenomena have similar distributions. We can, for example, use them to compare the weight distributions of men and women:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ecdf_weight_m</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+<span class="n">ecdf_weight_f</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;F&#39;</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecdf_weight_m</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ecdf_weight_m</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ecdf_weight_f</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">ecdf_weight_f</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;F&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/434a2fda68971ce294dcc4d5469b3abc92c98b0ecfc96ba05c65028c38c0d1b9.png" src="../_images/434a2fda68971ce294dcc4d5469b3abc92c98b0ecfc96ba05c65028c38c0d1b9.png" />
+</div>
+</div>
+<p>Observing the graph above, we can say that:</p>
+<ul class="simple">
+<li><p>Approximately <span class="math notranslate nohighlight">\(40\%\)</span> of men weigh less than <span class="math notranslate nohighlight">\(80Kg\)</span>;</p></li>
+<li><p>Approximately <span class="math notranslate nohighlight">\(40\%\)</span> of women weigh less than <span class="math notranslate nohighlight">\(60Kg\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(100\%\)</span> of men weigh less than <span class="math notranslate nohighlight">\(140Kg\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(100\%\)</span> of women weigh less than <span class="math notranslate nohighlight">\(130Kg\)</span>.</p></li>
+</ul>
+<p>In general, the graph above tells us that men tend to be heavier than women.</p>
+</section>
+<section id="histograms">
+<h2>Histograms<a class="headerlink" href="#histograms" title="Permalink to this heading">#</a></h2>
+<p>Another way to fix the noise problem is to group similar observations in the same “class”. In practice, we will define intervals, which we call “bins” and assign each element to its corresponding bin. While this can be done in a variety of ways, bins are often chosen to be equals. This can be done using the cut function of Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights_quantized</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">heights_quantized</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       (72.6, 74.3]
+1       (69.2, 70.9]
+2       (60.7, 62.4]
+3       (67.5, 69.2]
+4       (65.8, 67.5]
+            ...     
+4226    (67.5, 69.2]
+4227    (67.5, 69.2]
+4228    (62.4, 64.1]
+4229    (62.4, 64.1]
+4230    (60.7, 62.4]
+Name: height, Length: 4231, dtype: category
+Categories (10, interval[float64, right]): [(58.983, 60.7] &lt; (60.7, 62.4] &lt; (62.4, 64.1] &lt; (64.1, 65.8] ... (69.2, 70.9] &lt; (70.9, 72.6] &lt; (72.6, 74.3] &lt; (74.3, 76.0]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize absolute frequencies of this binned version of the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">heights_quantized</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cd003a1b49126bd7885f3d407a23dc52fcae00d6630e63483aa909463bf2dce7.png" src="../_images/cd003a1b49126bd7885f3d407a23dc52fcae00d6630e63483aa909463bf2dce7.png" />
+</div>
+</div>
+<p>The visualization we obtain is an histogram, and can be obtained also as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">_</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">heights</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># We capture the &quot;edges&quot; of the bins</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="c1"># Set x-ticks to the edges of the bins for better readability</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bd93776d1db05308c5b780db19771ece714c637cba731ab366a98117651bd738.png" src="../_images/bd93776d1db05308c5b780db19771ece714c637cba731ab366a98117651bd738.png" />
+</div>
+</div>
+<p>Each histogram “bin” covers a specific range. Common practice is to divide the data range, from minimum to maximum, into a certain number of bins of equal width.</p>
+<section id="choosing-the-number-of-bins-sturges-and-rice">
+<h3>Choosing the Number of Bins: Sturges and Rice<a class="headerlink" href="#choosing-the-number-of-bins-sturges-and-rice" title="Permalink to this heading">#</a></h3>
+<p>The number of bins can be specified arbitrarily or determined based on the graphical result you want to achieve. There are two heuristic criteria for finding starting values:</p>
+<ul class="simple">
+<li><p>Sturges: <span class="math notranslate nohighlight">\(\#bins=3.3\log(n)\)</span></p></li>
+<li><p>Rice: <span class="math notranslate nohighlight">\(\#bins=2\cdot n^{1/3}\)</span></p></li>
+</ul>
+<p>Where <span class="math notranslate nohighlight">\(n\)</span> is the number of elements.</p>
+<p>It should be noted that the number of bins can change the graphical result. Below are two examples obtained by calculating the number of bins with the two criteria considered:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">bins_struges</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mf">3.3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)))</span>
+<span class="n">bins_rice</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Struges (</span><span class="si">{}</span><span class="s1"> bins)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bins_struges</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins_struges</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Rice (</span><span class="si">{}</span><span class="s1"> bins)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">bins_rice</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">bins_rice</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/fb58ac231bcc4646aef4c39603da08a58abe85b0b46959efa634c7eb38ea22fb.png" src="../_images/fb58ac231bcc4646aef4c39603da08a58abe85b0b46959efa634c7eb38ea22fb.png" />
+</div>
+</div>
+<p>Alternatively, we can define arbitrary ranges for our bins. For example, considering the following limits for the bins <code class="docutils literal notranslate"><span class="pre">[20,25,30,35,40,45,50,55,60,65]</span></code>, we would obtain the following histogram:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">_</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">25</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">65</span><span class="p">])</span> <span class="c1"># construct a histogram with defined bins</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1019eacc5c6b1f12d20fb741377193acfa9f323ec1f59ef53727251c1a312404.png" src="../_images/1019eacc5c6b1f12d20fb741377193acfa9f323ec1f59ef53727251c1a312404.png" />
+</div>
+</div>
+<p>The histogram shown above reports the absolute frequencies for each bin and allows us to answer questions such as “how many subjects have a weight between <span class="math notranslate nohighlight">\(30\)</span> and <span class="math notranslate nohighlight">\(35\)</span> pounds”?</p>
+<p>In particular cases, it is also possible to define histograms with bins of variable size. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">_</span><span class="p">,</span><span class="n">edges</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">weights</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">35</span><span class="p">,</span><span class="mi">40</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">51</span><span class="p">,</span><span class="mi">52</span><span class="p">,</span><span class="mi">55</span><span class="p">,</span><span class="mi">60</span><span class="p">,</span><span class="mi">65</span><span class="p">])</span> <span class="c1"># construct a histogram with the defined bins</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/480fa220e6d49911e864dc0c9b27f6e937eb4e9c73dc633fb98e282b4692e980.png" src="../_images/480fa220e6d49911e864dc0c9b27f6e937eb4e9c73dc633fb98e282b4692e980.png" />
+</div>
+</div>
+</section>
+<section id="comparing-samples-using-histograms">
+<h3>Comparing Samples Using Histograms<a class="headerlink" href="#comparing-samples-using-histograms" title="Permalink to this heading">#</a></h3>
+<p>Histograms can be useful for comparing samples. The following graph compares the weights of men and women in our weights-heights sample:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;F&#39;</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">][</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/001ea5688c30a9dfcf22a50884671467c912e3fe97981336479269dddfd9d671.png" src="../_images/001ea5688c30a9dfcf22a50884671467c912e3fe97981336479269dddfd9d671.png" />
+</div>
+</div>
+<p>Note that we can obtain a similar results directly from Pandas using the “groupby” function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9c4ec23cf9cd3fce9b3b655b23132148ee463f8d4b25397dd49a2f2c9d9208ea.png" src="../_images/9c4ec23cf9cd3fce9b3b655b23132148ee463f8d4b25397dd49a2f2c9d9208ea.png" />
+</div>
+</div>
+</section>
+<section id="density-estimation">
+<h3>Density Estimation<a class="headerlink" href="#density-estimation" title="Permalink to this heading">#</a></h3>
+<p>One disadvantage of histograms is that they arbitrarily categorize continuous data using bins. The choice of bin intervals changes the final appearance of the histogram.</p>
+<p>Density estimation attempts to solve this problem by obtaining a “continuous” version of the histogram. Instead of dividing the <span class="math notranslate nohighlight">\(x\)</span>-axis into bins, density estimation calculates a value for each point on the <span class="math notranslate nohighlight">\(x\)</span>-axis, thus obtaining a continuous representation.</p>
+<p>We will look more closely at how density estimation is performed later in the course. In the one-dimensional case, it can be calculated as shown in the optional deep dive below. For now, we know that density estimation can be calculated with a dedicated function “density” that depends on a single <strong>bandwidth</strong> parameter (with a good default value being computed by the libraries), determining the “sensitivity to detail” of the density estimation.</p>
+<p>Let’s compare the weight density estimation in our weight-height dataset with its corresponding histogram:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/badf3ff91e741115c77ed7c5edb98fa8021ec2b8f4a38408537d87df639730da.png" src="../_images/badf3ff91e741115c77ed7c5edb98fa8021ec2b8f4a38408537d87df639730da.png" />
+</div>
+</div>
+<p>If in the case of histograms changing the number of bins changed the graphical result, here it is changing the bandwidth that changes the graphical result. The following graph shows several examples of density estimation with different bandwidth values:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">bw_method</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">bw_method</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">bw_method</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">bw_method</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">bw_method</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;h=0.05&#39;</span><span class="p">,</span><span class="s1">&#39;h=0.1&#39;</span><span class="p">,</span><span class="s1">&#39;h=0.2&#39;</span><span class="p">,</span><span class="s1">&#39;h=0.3&#39;</span><span class="p">,</span><span class="s1">&#39;h=0.4&#39;</span><span class="p">,</span><span class="s1">&#39;histogram&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c2e2c39212bdeb31dca6d96088a33c434060c35d17ef804c80922c079291a4ed.png" src="../_images/c2e2c39212bdeb31dca6d96088a33c434060c35d17ef804c80922c079291a4ed.png" />
+</div>
+</div>
+<p>We can compare two samples using density estimations in Pandas very easily as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5784526ef7d47c0daa37ec30e3e9aa6b46adb018a0806890f03076092b540284.png" src="../_images/5784526ef7d47c0daa37ec30e3e9aa6b46adb018a0806890f03076092b540284.png" />
+</div>
+</div>
+<p>We can also mix histograms and density plots as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="c1"># density=True to normalize the histograms</span>
+<span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">density</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d707da51840e8a5dab7deecd9117d4600b28017a36910f5962c0835f24b1c3bb.png" src="../_images/d707da51840e8a5dab7deecd9117d4600b28017a36910f5962c0835f24b1c3bb.png" />
+</div>
+</div>
+<p>In this case, we had to specify “density=True” when computing the histogram to make sure that the ranges on the y axes of density estimation and histogram were the same. This leads us to a <strong>density histogram</strong>. We will see the theoretical details of this in a later lecture.</p>
+</section>
+</section>
+<section id="summary-statistics">
+<h2>Summary Statistics<a class="headerlink" href="#summary-statistics" title="Permalink to this heading">#</a></h2>
+<p>For now, we have seen graphical ways to represent the data. In practice, it can be useful to attach some numerical values to the data in order to summarize it.</p>
+<p><strong>Descriptive statistics</strong> deals with describing, representing, and summarizing a data sample pertaining to a population. The tools of descriptive statistics can be both numerical and graphical. The analyzed data can be described according to various aspects. Therefore, there are various objective “indicators”:</p>
+<ul class="simple">
+<li><p><strong>sample size</strong>;</p></li>
+<li><p><strong>central indicators</strong>: mean, median, mode;</p></li>
+<li><p><strong>Dispersion indicators</strong>: extremes, range, quantiles, percentiles, quartiles, interquartile range, variance;</p></li>
+</ul>
+<p>We will investigate these tools on the <code class="docutils literal notranslate"><span class="pre">Titanic</span></code> dataset. Let’s load it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">,</span>
+                     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">)</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We will start by focusing on the <strong>univariate</strong> sample of ages:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="n">age</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PassengerId
+1      22.0
+2      38.0
+3      26.0
+4      35.0
+5      35.0
+       ... 
+887    27.0
+888    19.0
+889     NaN
+890    26.0
+891    32.0
+Name: Age, Length: 891, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The sample contains <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values, which will have to be handled appropriately.</p>
+</section>
+<section id="size">
+<h2>Size<a class="headerlink" href="#size" title="Permalink to this heading">#</a></h2>
+<p>The size of a univariate sample <span class="math notranslate nohighlight">\(\{x^{(i)}\}_i^N\)</span> is given by the number of values it contains: <span class="math notranslate nohighlight">\(|\{x^{(i)}\}_i^N| = N\)</span>. The size of each column can also be different as there may be missing values, generally indicated by <code class="docutils literal notranslate"><span class="pre">NA</span></code> or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>. In our case:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.series.Series&#39;&gt;
+Index: 891 entries, 1 to 891
+Series name: Age
+Non-Null Count  Dtype  
+--------------  -----  
+714 non-null    float64
+dtypes: float64(1)
+memory usage: 13.9 KB
+</pre></div>
+</div>
+</div>
+</div>
+<p>The summary above indicates that, although we have <span class="math notranslate nohighlight">\(891\)</span> values, only <span class="math notranslate nohighlight">\(714\)</span> of these are non-null. These are the “real” size of the sample.</p>
+</section>
+<section id="measures-of-central-tendency">
+<h2>Measures of central tendency<a class="headerlink" href="#measures-of-central-tendency" title="Permalink to this heading">#</a></h2>
+<p>Central measures give an approximate idea of the order of magnitude of the sample values.</p>
+<section id="mean">
+<h3>Mean<a class="headerlink" href="#mean" title="Permalink to this heading">#</a></h3>
+<p>The mean of a sample is defined as the sum of its values divided by its size:</p>
+<div class="math notranslate nohighlight">
+\[\overline X = \frac{1}{N}\sum_i^N x^{(i)}\]</div>
+<p>The mean of our sample will be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(29.69911764705882)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that the mean function will automatically ignore the missing data.</p>
+<p>This statistic is very easy to interpret: the average age is about 30 years.</p>
+<p>Let’s see where this descriptive statistic stands in a graphical representation of the density of the sample:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/7fd53c7b7f9713ef05216884a3f8ec150df5f29d605f46b1957c1dd7fe8ed504.png" src="../_images/7fd53c7b7f9713ef05216884a3f8ec150df5f29d605f46b1957c1dd7fe8ed504.png" />
+</div>
+</div>
+</section>
+<section id="median">
+<h3>Median<a class="headerlink" href="#median" title="Permalink to this heading">#</a></h3>
+<p>When the elements of a sample can be ordered (for example, if they are numerical values), the median of a sample (or the median element) is the element that divides the ordered set of sample values into two equal parts.</p>
+<p>The median element can be obtained by ordering the sample values and proceeding as follows:</p>
+<ul class="simple">
+<li><p>If the number of elements is odd, take the central element. For example <span class="math notranslate nohighlight">\([1,2,\mathbf{2},3,5] \to 2\)</span>.</p></li>
+<li><p>If the number of elements is even, take the average of the two central ones. For example <span class="math notranslate nohighlight">\([1,2,\mathbf{2},\mathbf{3},3,5] \to \frac{2+3}{2} = 2.5\)</span>.</p></li>
+</ul>
+<p>In the case of our sample:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median value:&quot;</span><span class="p">,</span><span class="n">age</span><span class="o">.</span><span class="n">median</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Median value: 28.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>From a formal point of view, if we have <span class="math notranslate nohighlight">\(n\)</span> observations <span class="math notranslate nohighlight">\(x^{(1)}, \ldots, x^{(n)}\)</span>, which can be ordered as <span class="math notranslate nohighlight">\(x^{(i_i)},\ldots, x^{(i_n)}\)</span>, the calculation of the median can be expressed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\tilde x_{0.5} = \begin{cases}
+x_{(n+1)/2} &amp; \text{if } n \textit{ is odd}\\
+    \frac{1}{2}(x_{n/2}+x_{n/2+1}) &amp; \text{otherwise.}
+\end{cases}
+\end{split}\]</div>
+<p>To be convinced of the above formulation, we can see tw toy examples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odd_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">odd_sample</span><span class="o">.</span><span class="n">sort_values</span><span class="p">())</span>
+<span class="n">odd_sample</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      1
+1      2
+2      3
+3      4
+4    100
+dtype: int64
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The median is the central element 3.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">even_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">even_sample</span><span class="o">.</span><span class="n">sort_values</span><span class="p">())</span>
+<span class="n">even_sample</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      1
+1      2
+2      3
+3      4
+4      5
+5    100
+dtype: int64
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>3.5
+</pre></div>
+</div>
+</div>
+</div>
+<p>The median is the average between the two central elements 3 and 4.</p>
+<p>Let’s see where this descriptive statistic stands in a graphical representation of the density of the sample:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/cfd7a86c2ac748261b6c88f3faa491ef6ecceebeb74e0048fd47c4e8e564196d.png" src="../_images/cfd7a86c2ac748261b6c88f3faa491ef6ecceebeb74e0048fd47c4e8e564196d.png" />
+</div>
+</div>
+<p>As we can see, depending on the density of the data, the two values are not always identical.</p>
+</section>
+<section id="quantiles-percentiles-and-quartiles">
+<h3>Quantiles, Percentiles, and Quartiles<a class="headerlink" href="#quantiles-percentiles-and-quartiles" title="Permalink to this heading">#</a></h3>
+<p>Quantiles, percentiles, and quartiles generalize the concept of the median.</p>
+<section id="quantiles">
+<h4>Quantiles<a class="headerlink" href="#quantiles" title="Permalink to this heading">#</a></h4>
+<p>A quantile of order <span class="math notranslate nohighlight">\(\alpha\)</span> is a value <span class="math notranslate nohighlight">\(q_\alpha\)</span> that divides a sample into two parts with sizes proportional to <span class="math notranslate nohighlight">\(\alpha\)</span> and <span class="math notranslate nohighlight">\(1-\alpha\)</span>. Values less than or equal to <span class="math notranslate nohighlight">\(q_\alpha\)</span> belong to the first part of the division, while values greater than <span class="math notranslate nohighlight">\(q_\alpha\)</span> belong to the second part.</p>
+<p>For example, given the already ordered sample <code class="docutils literal notranslate"><span class="pre">[1,2,3,3,4,5,6,6,7,8,8,9]</span></code>, a quantile <span class="math notranslate nohighlight">\(q_{0.25}\)</span> will divide the sample into two parts with sizes proportional to <span class="math notranslate nohighlight">\(0.25\)</span> and <span class="math notranslate nohighlight">\(1-0.25=0.75\)</span>. In this case <span class="math notranslate nohighlight">\(q_{0.25}=3\)</span> and the two parts will be <code class="docutils literal notranslate"><span class="pre">[1,2,3,3]</span></code> and <code class="docutils literal notranslate"><span class="pre">[4,5,6,6,7,8,8,9]</span></code>.</p>
+<p>In this case too, as with the median, averages of adjacent values are taken where appropriate.</p>
+<p>Quantiles should be interpreted as follows:</p>
+<blockquote>
+<div><p>If a quantile of order <span class="math notranslate nohighlight">\(\alpha\)</span> is equal to the number <span class="math notranslate nohighlight">\(x\)</span>, then it means that <span class="math notranslate nohighlight">\(\alpha \times n\)</span> elements have a value less than or equal to <span class="math notranslate nohighlight">\(x\)</span>, where <span class="math notranslate nohighlight">\(n\)</span> is the number of elements in the sample.</p>
+</div></blockquote>
+<p>It should be noted that:</p>
+<ul class="simple">
+<li><p>The minimum is a quantile of order 0;</p></li>
+<li><p>The maximum is a quantile of order 1;</p></li>
+<li><p>The median is a quantile of order 0.5.</p></li>
+</ul>
+<p>Let’s see some examples on our sample:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 0 Quantile (minimum):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 0.5 Quantile (median):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 1 Quantile (maximum):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Order 0.15 Quantile:&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.15</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Order 0 Quantile (minimum): 0.42
+Order 0.5 Quantile (median): 28.0
+Order 1 Quantile (maximum): 80.0
+Order 0.15 Quantile: 17.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the above data we deduce that:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(50\%\)</span> of the passengers are younger than 28.</p></li>
+<li><p><span class="math notranslate nohighlight">\(15\%\)</span> of the passengers are younger than 17.</p></li>
+</ul>
+</section>
+<section id="percentiles">
+<h4>Percentiles<a class="headerlink" href="#percentiles" title="Permalink to this heading">#</a></h4>
+<p>Percentiles are simply quantiles expressed as a percentage. A quantile of order <span class="math notranslate nohighlight">\(0.25\)</span> is a percentile of order <span class="math notranslate nohighlight">\(25\%\)</span>. In practice, we still use the quantile function to compute them:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">25</span><span class="o">/</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(20.125)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quartiles">
+<h4>Quartiles<a class="headerlink" href="#quartiles" title="Permalink to this heading">#</a></h4>
+<p>Quartiles are specific quantiles that divide the sample into four parts. In particular:</p>
+<ul class="simple">
+<li><p>The quartile of order 0 is a quantile of order 0;</p></li>
+<li><p>The quartile of order 1 is a quantile of order <span class="math notranslate nohighlight">\(1/4=0.25\)</span>;</p></li>
+<li><p>The quartile of order 2 is a quantile of order <span class="math notranslate nohighlight">\(2/4=0.5\)</span>;</p></li>
+<li><p>The quartile of order 3 is a quantile of order <span class="math notranslate nohighlight">\(3/4=0.75\)</span>;</p></li>
+<li><p>The quartile of order 4 is a quantile of order <span class="math notranslate nohighlight">\(4/4=1\)</span>.</p></li>
+</ul>
+<p>Also in this case, we use the quantile function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quartile of order 0 (minimum):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">0</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quartile of order 1:&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quartile of order 2 (median):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quartile of order 3:&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Quartile of order 4 (maximum):&quot;</span><span class="p">,</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mi">4</span><span class="o">/</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Quartile of order 0 (minimum): 0.42
+Quartile of order 1: 20.125
+Quartile of order 2 (median): 28.0
+Quartile of order 3: 38.0
+Quartile of order 4 (maximum): 80.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see this in graphical terms:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4b82771cbb73213d9b7600093bea1b31ace9358534af7eebcafa0b424062f6b0.png" src="../_images/4b82771cbb73213d9b7600093bea1b31ace9358534af7eebcafa0b424062f6b0.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="mode">
+<h3>Mode<a class="headerlink" href="#mode" title="Permalink to this heading">#</a></h3>
+<p>The <strong>mode</strong> of a sample is the value that appears <strong>most frequently</strong> within the data. It represents the most common observation. It can se computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    24.0
+Name: Age, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>In formal terms, the mode <span class="math notranslate nohighlight">\(\overline x_M\)</span> of a sample is given by:</p>
+<div class="math notranslate nohighlight">
+\[\overline x_M = a_j \Leftrightarrow n_j = \max\{n_1,\ldots,n_k\}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(a_j\)</span> are the unique values of the sample (values without repetition)</p></li>
+<li><p><span class="math notranslate nohighlight">\(n_j\)</span> are their respective absolute frequencies (how many times a value repeats)</p></li>
+</ul>
+<p>Let’s see this with a toy example:</p>
+<p>Let’s see how to compute it manually, with a toy example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     1
+1     2
+2     3
+3     4
+4     2
+5     5
+6     4
+7     2
+8     6
+9     5
+10    8
+11    4
+12    3
+13    2
+14    3
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The unique values <span class="math notranslate nohighlight">\(a_j\)</span> with the respective absolute frequencies <span class="math notranslate nohighlight">\(n_j\)</span> (counts) are computed as:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">value_counts</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2    4
+3    3
+4    3
+5    2
+1    1
+6    1
+8    1
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>In the output above, the first column represents the unique values <span class="math notranslate nohighlight">\(a_j\)</span>, while the second column represents the absolute frequencies <span class="math notranslate nohighlight">\(n_j\)</span>. Since the list is already sorted by counts, we can extract the maximum as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mode:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">data</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mode:
+ 2
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mode is <span class="math notranslate nohighlight">\(2\)</span> as this number repeats most times (it repeats <span class="math notranslate nohighlight">\(4\)</span> times).</p>
+<p>In graphical terms:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Drop missing ages</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Compute mode (may return multiple values, so we take the first)</span>
+<span class="n">mode_age</span> <span class="o">=</span> <span class="n">ages</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Plot density</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;steelblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">mode_age</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkred&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Mode Age: </span><span class="si">{</span><span class="n">mode_age</span><span class="si">:</span><span class="s1">.1f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Customize plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Age Distribution with Mode (Titanic Dataset)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5166b24f7cc62e7b896b0e1c003fd6d5f986649181782f028962724e84e428a9.png" src="../_images/5166b24f7cc62e7b896b0e1c003fd6d5f986649181782f028962724e84e428a9.png" />
+</div>
+</div>
+<p>The mode is the “peak” of the density of the data as it represents the most common value.</p>
+</section>
+</section>
+<section id="measures-of-dispersion">
+<h2>Measures of Dispersion<a class="headerlink" href="#measures-of-dispersion" title="Permalink to this heading">#</a></h2>
+<p>Measures of dispersion serve to quantify to what extent the values of a distribution are “dispersed”, or “far from each other”.</p>
+<section id="minimum-maximum-and-range">
+<h3>Minimum, Maximum, and Range<a class="headerlink" href="#minimum-maximum-and-range" title="Permalink to this heading">#</a></h3>
+<p>Simple indices of dispersion are the minimum (<span class="math notranslate nohighlight">\(min \{x^{(i)}\}_i^N\)</span>), the maximum (<span class="math notranslate nohighlight">\(max \{x^{(i)}\}_i^N\)</span>), and the range (<span class="math notranslate nohighlight">\(max \{x^{(i)}\}_i^N\)</span> - <span class="math notranslate nohighlight">\(min \{x^{(i)}\}_i^N\)</span>). These are easily computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Min value:&quot;</span><span class="p">,</span><span class="n">age</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Max value:&quot;</span><span class="p">,</span><span class="n">age</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Range:&quot;</span><span class="p">,</span><span class="n">age</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">age</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Min value: 0.42
+Max value: 80.0
+Range: 79.58
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see this graphically:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/5216c9befdf5872f9b7b0e52e5399fa42b9ea2275588d10e54f264df6764f6b1.png" src="../_images/5216c9befdf5872f9b7b0e52e5399fa42b9ea2275588d10e54f264df6764f6b1.png" />
+</div>
+</div>
+<p>We can see that there is some density before 0 because the density estimation function “interpolates” what may happen before the zero if we had data there. This is an artifacts of the continuous nature of this visualization.</p>
+</section>
+<section id="interquartile-range-iqr">
+<h3>Interquartile Range (IQR)<a class="headerlink" href="#interquartile-range-iqr" title="Permalink to this heading">#</a></h3>
+<p>The range is not a very robust measure of dispersion, as it does not take into account the presence of any outliers. Consider, for example, the following “artificial” samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">sample1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">sample2</span> <span class="o">=</span> <span class="n">sample1</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">sample2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">=-</span><span class="mi">5</span> <span class="c1"># we replace two values with the outliers -5</span>
+<span class="n">sample2</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">15</span> <span class="c1"># and 15</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;s1&#39;</span><span class="p">:</span><span class="n">sample1</span><span class="p">,</span><span class="s1">&#39;s2&#39;</span><span class="p">:</span><span class="n">sample2</span><span class="p">})</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+<span class="c1"># df.plot.box()</span>
+<span class="c1"># plt.grid()</span>
+<span class="c1"># plt.show()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Range sample 1:&quot;</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;s1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;s1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Range sample 2:&quot;</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;s2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;s2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>         s1         s2
+0  3.000000  -5.000000
+1  3.444444   3.444444
+2  3.888889   3.888889
+3  4.333333   4.333333
+4  4.777778   4.777778
+5  5.222222   5.222222
+6  5.666667   5.666667
+7  6.111111   6.111111
+8  6.555556   6.555556
+9  7.000000  15.000000
+Range sample 1: 4.0
+Range sample 2: 20.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>The samples are similar, but the presence of two outliers (-5 and 15) in the second sample makes the ranges very different (4 and 20).</p>
+<p>A <strong>more expressive measure of dispersion</strong> is therefore the <strong>interquartile range</strong> (or <strong>interquartile distance</strong>), which is measured as the difference between the third and first quartiles:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q11</span><span class="p">,</span><span class="n">q13</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;s1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span>
+<span class="n">q21</span><span class="p">,</span><span class="n">q23</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;s2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The interquartile range of sample 1 is:&quot;</span><span class="p">,</span><span class="n">q13</span><span class="o">-</span><span class="n">q11</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The interquartile range of sample 2 is:&quot;</span><span class="p">,</span><span class="n">q23</span><span class="o">-</span><span class="n">q21</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The interquartile range of sample 1 is: 2.0
+The interquartile range of sample 2 is: 2.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how to compute the IQR in the case of the Age sample:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">q1</span><span class="p">,</span><span class="n">q3</span> <span class="o">=</span> <span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="o">/</span><span class="mi">4</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The interquartile range of age is:&quot;</span><span class="p">,</span><span class="n">q3</span><span class="o">-</span><span class="n">q1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The interquartile range of age is: 17.875
+</pre></div>
+</div>
+</div>
+</div>
+<p>Graphically:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/999e06e9a712871fe6e7698ff57ac9711cdb79ea40f33ed5b8064da8dfcb4c84.png" src="../_images/999e06e9a712871fe6e7698ff57ac9711cdb79ea40f33ed5b8064da8dfcb4c84.png" />
+</div>
+</div>
+</section>
+<section id="variance-and-standard-deviation">
+<h3>Variance and Standard Deviation<a class="headerlink" href="#variance-and-standard-deviation" title="Permalink to this heading">#</a></h3>
+<p><strong>Variance</strong> (also known as <strong>mean squared deviation</strong>) provides an estimate of how much the observed data deviates from the mean. Variance calculates the mean of the squares of the deviations of the values from the mean, penalizing large deviations from the mean value (due to outliers) more heavily than small deviations:</p>
+<div class="math notranslate nohighlight">
+\[s^2 = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n}\]</div>
+<p>Here we use the symbol <span class="math notranslate nohighlight">\(s\)</span> instead of the symbol <span class="math notranslate nohighlight">\(\sigma\)</span> seen in the case of probability distributions, because <span class="math notranslate nohighlight">\(s\)</span> is a value “estimated” from the data and not “theoretical” as in the case of <span class="math notranslate nohighlight">\(\sigma\)</span>. It should be noted, however, that in practice, there is no universal convention, so in many cases <span class="math notranslate nohighlight">\(\sigma\)</span> is also used for estimated values.</p>
+<p>We can attribute a geometric meaning to variance, as shown in the graph below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4f857df95f0cd8b2b463121715b66ff46270c505a7c41c3740ae7e29585ba111.png" src="../_images/4f857df95f0cd8b2b463121715b66ff46270c505a7c41c3740ae7e29585ba111.png" />
+</div>
+</div>
+<p>In the graph, the bottom plot shows a univariate sample <span class="math notranslate nohighlight">\(\{x_i\}_i^N\)</span>. The top plot shows the same sample “exploded” on the <span class="math notranslate nohighlight">\(y\)</span>-axis for visualization purposes. In the top plot, the black dashed line indicates the sample mean, while the red lines are the terms <span class="math notranslate nohighlight">\((x_i-\overline x)\)</span> that appear in the variance formula. The variance calculates the average of the lengths of these segments.</p>
+<p>The following graph shows a less “dispersed” sample:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/dd320f85179b196e53d0785201d786adea68ffc89e6f096b76cd8e1df7b9202f.png" src="../_images/dd320f85179b196e53d0785201d786adea68ffc89e6f096b76cd8e1df7b9202f.png" />
+</div>
+</div>
+<p>The variance of age will be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>211.0191247463081
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dispersion indices seen so far (excluding variance) have the same <strong>unit of measurement</strong> as the input data. In the case of ages, the data are measured in years. It is therefore correct to say that <strong>minimum</strong>, <strong>maximum</strong>, <strong>range</strong>, <strong>interquartile range</strong>, and <strong>mean absolute deviation</strong> calculated on weights are measured in years.</p>
+<p>The same does not apply to the variance, which will be measured in <strong>years squared</strong>. If we want to obtain a <strong>commensurable</strong> measure of dispersion, we can calculate the square root of the variance, thus obtaining the <strong>standard deviation</strong> (or <strong>root mean square deviation</strong>), which is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[s = \sqrt{s^2}=\sqrt{\frac{\sum_{i=1}{n}(x_i-x^2)}{n}}\]</div>
+<p>We can compute the standard deviation as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.526497332334044
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s see how these measures of dispersion relate to distributions with different shapes. We will consider the ages of passengers in the three classes of the Titanic:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/f58100e213023c334336b867b6dd7544e63e34da434c95bc676b5029d4211951.png" src="../_images/f58100e213023c334336b867b6dd7544e63e34da434c95bc676b5029d4211951.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Class 1 ages:
+Mean: 38.233440860215055
+Min: 0.92
+Max: 80.0
+Range: 79.08
+IQR: 22.0
+Variance: 219.12454269107818
+Std: 14.802855896450462
+
+Class 2 ages:
+Mean: 29.87763005780347
+Min: 0.67
+Max: 70.0
+Range: 69.33
+IQR: 13.0
+Variance: 196.03015190885873
+Std: 14.001076812476201
+
+Class 3 ages:
+Mean: 25.14061971830986
+Min: 0.42
+Max: 74.0
+Range: 73.58
+IQR: 14.0
+Variance: 156.13497645102254
+Std: 12.495398210982415
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see a correspondence between the graphical forms of the distributions and the dispersion measures. Indeed, passengers in class 3 are “less dispersed” and “younger” than in the other classes.</p>
+</section>
+<section id="data-normalizations">
+<h3>Data Normalizations<a class="headerlink" href="#data-normalizations" title="Permalink to this heading">#</a></h3>
+<p>The observed data dispersion indicators strongly depend on the nature of the data and their unit of measurement. For example, ages are measured in years, while weights are in Kg or pounds. Therefore, there are data normalization techniques that make data based on different units of measurement comparable to each other.</p>
+<section id="normalization-between-0-and-1">
+<h4>Normalization between 0 and 1<a class="headerlink" href="#normalization-between-0-and-1" title="Permalink to this heading">#</a></h4>
+<p>This normalization scales the data so that the minimum and maximum values are exactly equal to <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{norm} = (x-x_{min})/(x_{max}-x_{min})
+\]</div>
+<p>In the case of weights:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_norm</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span><span class="o">-</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">weights_norm</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       0.808081
+1       0.429293
+2       0.353535
+3       0.378788
+4       0.343434
+          ...   
+4226    0.080808
+4227    0.434343
+4228    0.353535
+4229    0.191919
+4230    0.050505
+Name: weight, Length: 4231, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="normalization-between-1-and-1">
+<h4>Normalization between -1 and 1<a class="headerlink" href="#normalization-between-1-and-1" title="Permalink to this heading">#</a></h4>
+<p>In this case, the data are rescaled so that the new minimum and maximum are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[
+x_{norm} = (x_{max}+x_{min}-2\cdot x)/(x_{max}-x_{min})
+\]</div>
+<p>We can perform this transformation in Pandas as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">weights_norm2</span> <span class="o">=</span> <span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">weights</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">-</span><span class="n">weights</span><span class="o">.</span><span class="n">min</span><span class="p">())</span>
+<span class="n">weights_norm2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0      -0.616162
+1       0.141414
+2       0.292929
+3       0.242424
+4       0.313131
+          ...   
+4226    0.838384
+4227    0.131313
+4228    0.292929
+4229    0.616162
+4230    0.898990
+Name: weight, Length: 4231, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="standardization-z-scoring">
+<h4>Standardization (z-scoring)<a class="headerlink" href="#standardization-z-scoring" title="Permalink to this heading">#</a></h4>
+<p>In many cases, it is useful to normalize data so that they have zero mean and unit standard deviation. This type of normalization is called “z-scoring” and is performed by subtracting the mean from the data and dividing by the standard deviation.</p>
+<div class="math notranslate nohighlight">
+\[
+z_i = \frac{x_i-\overline x}{s_x}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(s_x\)</span> is the standard deviation of the population to which <span class="math notranslate nohighlight">\(X\)</span> belongs. Note that zeta scores are <strong>dimensionless</strong> (i.e., they have no unit of measurement).</p>
+<p>To understand the effect of this normalization, let’s observe the density estimates of the samples before and after normalization:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">zscore</span>
+<span class="n">hwz</span> <span class="o">=</span> <span class="n">hw</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">hwz</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">hwz</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+<span class="n">hwz</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">hwz</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
+
+<span class="n">hw</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">kde</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;No z-scoring&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">hwz</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">kde</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;z-scoring&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b93364619ed0d6e27bab4eb5550a386aa76808cceb92d1641af60d1d49da2bdb.png" src="../_images/b93364619ed0d6e27bab4eb5550a386aa76808cceb92d1641af60d1d49da2bdb.png" />
+<img alt="../_images/fa3d021cfc1da95c682c3855ec0584ca4923f559e0d6730ab9477f33555f3f92.png" src="../_images/fa3d021cfc1da95c682c3855ec0584ca4923f559e0d6730ab9477f33555f3f92.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="shape-indicators">
+<h3>Shape Indicators<a class="headerlink" href="#shape-indicators" title="Permalink to this heading">#</a></h3>
+<p>Let’s now look at some indicators that allow us to get an idea of certain aspects of the “shape” of data distribution.</p>
+<section id="asymmetry-skewness">
+<h4>Asymmetry (skewness)<a class="headerlink" href="#asymmetry-skewness" title="Permalink to this heading">#</a></h4>
+<p>Skewness is an indicator of the “imbalance” to the left (negative value) or to the right (positive value) of a data sample with respect to the central value. The formula for skewness is as follows:</p>
+<div class="math notranslate nohighlight">
+\[ \sum_i^n \frac{(x_i-\overline x)^3}{n \cdot s_x^3}\]</div>
+<p>The skewness values will be:</p>
+<ul class="simple">
+<li><p><strong>Negative</strong> if the distribution is skewed to the left;</p></li>
+<li><p><strong>Positive</strong> if the distribution is skewed to the right;</p></li>
+<li><p><strong>Close to zero</strong> in the case of unskewed distributions.</p></li>
+</ul>
+<p>We can compute the skewness as follows</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">skew</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.38910778230082704)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at some examples of distributions and skewness:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/a423b9d0a636ef20702016eb3d4b5e124ca60121133c9af869ccb351fba939ab.png" src="../_images/a423b9d0a636ef20702016eb3d4b5e124ca60121133c9af869ccb351fba939ab.png" />
+</div>
+</div>
+</section>
+<section id="kurtosis-kurtosis">
+<h4>Kurtosis (kurtosis)<a class="headerlink" href="#kurtosis-kurtosis" title="Permalink to this heading">#</a></h4>
+<p>The kurtosis index measures the “thickness” of the tails of a density distribution. It is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+K = \frac{1}{n} \sum_{i=1}^{n} \left(\frac{X_i - \bar{X}}{s}\right)^4 - 3
+\]</div>
+<p>The index is interpreted as follows:</p>
+<ul class="simple">
+<li><p>If it is greater than zero, the distribution is <em>leptokurtic</em>, i.e., more “peaked” than a Normal distribution;</p></li>
+<li><p>If it is less than zero, the distribution is <em>platykurtic</em>, i.e., more “flat” than a Normal distribution;</p></li>
+<li><p>If it is equal to zero, the distribution is <em>mesokurtic</em>, i.e., the tails are similar to those of a normal distribution.</p></li>
+</ul>
+<p>We will see what a normal distribution is later in the course.</p>
+<p>We can compute the kurtosis as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">kurtosis</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>np.float64(0.17827415364210353)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s look at some examples of Kurtosis values:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/6008c72a4478b22bbe3ebab988003435179284ff545871d03d326a2618c2ea57.png" src="../_images/6008c72a4478b22bbe3ebab988003435179284ff545871d03d326a2618c2ea57.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="statistical-summary">
+<h2>Statistical Summary<a class="headerlink" href="#statistical-summary" title="Permalink to this heading">#</a></h2>
+<p>When we compute values like <strong>mean</strong>, <strong>median</strong>, <strong>mode</strong>, <strong>minimum</strong>, <strong>maximum</strong>, <strong>range</strong>, <strong>standard deviation</strong>, <strong>variance</strong>, and <strong>interquartile range</strong>, we’re building what is known as a <strong>statistical summary</strong> of a dataset. These measures help us understand the <strong>central tendency</strong>, <strong>spread</strong>, and <strong>shape</strong> of a distribution—whether it’s symmetric, skewed, concentrated, or dispersed.</p>
+<p>In practice, we can obtain many of these summary statistics quickly using the <code class="docutils literal notranslate"><span class="pre">.describe()</span></code> method in <strong>pandas</strong>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">age</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    714.000000
+mean      29.699118
+std       14.526497
+min        0.420000
+25%       20.125000
+50%       28.000000
+75%       38.000000
+max       80.000000
+Name: Age, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>This returns:</p>
+<ul class="simple">
+<li><p><strong>count</strong>: number of non-missing values</p></li>
+<li><p><strong>mean</strong>: average value</p></li>
+<li><p><strong>std</strong>: standard deviation</p></li>
+<li><p><strong>min</strong> and <strong>max</strong>: smallest and largest values</p></li>
+<li><p><strong>25%</strong>, <strong>50%</strong>, <strong>75%</strong>: the first quartile (Q1), median (Q2), and third quartile (Q3)</p></li>
+</ul>
+<p>If you want to include other measures like mode or variance, you can compute them separately:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Mode (most frequent age): </span><span class="si">{</span><span class="n">age</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance: </span><span class="si">{</span><span class="n">age</span><span class="o">.</span><span class="n">var</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;IQR (Interquartile Range): </span><span class="si">{</span><span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.75</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">age</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.25</span><span class="p">)</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mode (most frequent age): 24.0
+Variance: 211.02
+IQR (Interquartile Range): 17.88
+</pre></div>
+</div>
+</div>
+</div>
+<p>These tools are essential for both exploratory data analysis and communicating insights clearly—whether you’re comparing groups, detecting outliers, or preparing data for modeling.</p>
+</section>
+<section id="boxplots">
+<h2>Boxplots<a class="headerlink" href="#boxplots" title="Permalink to this heading">#</a></h2>
+<p>Boxplots are a compact visualization method for representing certain descriptive characteristics of the data under analysis. In particular, given a sample, a boxplot can effectively represent the following quantities:</p>
+<ul class="simple">
+<li><p>Median value;</p></li>
+<li><p>First and third quartile;</p></li>
+<li><p>Minimum and maximum (depending on the boxplot’s “version,” as discussed below).</p></li>
+</ul>
+<p>A boxplot appears as follows:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/26a77388474ba0156e4819db69b96bfc81bf809cf59906e8cbb2a0889e6abf1b.png" src="../_images/26a77388474ba0156e4819db69b96bfc81bf809cf59906e8cbb2a0889e6abf1b.png" />
+</div>
+</div>
+<p>The boxplot is shown as a “box” with “whiskers” where:</p>
+<ul class="simple">
+<li><p>the bottom edge of the box indicates the first quartile;</p></li>
+<li><p>the top edge of the box indicates the third quartile;</p></li>
+<li><p>the horizontal line in the middle of the box represents the median value of the sample;</p></li>
+<li><p>the lower whisker represents the first value in the sample that is greater than or equal to the first quartile minus one and a half times the distance between the third and the first quartile;</p></li>
+<li><p>the upper whisker represents the first value in the sample that is less than or equal to the third quartile plus one and a half times the distance between the third and the first quartile;</p></li>
+<li><p>the dots represent the “out-of-bounds” values that fall outside the interval marked by the whiskers. They are generally considered as “outliers”.</p></li>
+</ul>
+<p>To illustrate the usefulness of boxplots, we will consider the dataset of weights and heights seen previously:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M</td>
+      <td>74</td>
+      <td>53.484771</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>70</td>
+      <td>38.056472</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>61</td>
+      <td>34.970812</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>68</td>
+      <td>35.999365</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>66</td>
+      <td>34.559390</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4226</th>
+      <td>F</td>
+      <td>69</td>
+      <td>23.862436</td>
+    </tr>
+    <tr>
+      <th>4227</th>
+      <td>M</td>
+      <td>69</td>
+      <td>38.262182</td>
+    </tr>
+    <tr>
+      <th>4228</th>
+      <td>F</td>
+      <td>64</td>
+      <td>34.970812</td>
+    </tr>
+    <tr>
+      <th>4229</th>
+      <td>F</td>
+      <td>64</td>
+      <td>28.388071</td>
+    </tr>
+    <tr>
+      <th>4230</th>
+      <td>F</td>
+      <td>61</td>
+      <td>22.628172</td>
+    </tr>
+  </tbody>
+</table>
+<p>4231 rows × 3 columns</p>
+</div></div></div>
+</div>
+<p>Let’s choose the “weight” variable and show the <strong>statistical summary</strong>, that is, the list of all the descriptive statistics indicators discussed so far:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>count    4231.000000
+mean       35.818062
+std         7.987908
+min        20.571066
+25%        29.828045
+50%        34.970812
+75%        41.142132
+max        61.301776
+Name: weight, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>The boxplot of the weights is computed as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">box</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3978e81a3678c5b318c1bc81e4b00f44aa0e8e0cdcfc8c5cb709032fed19be5c.png" src="../_images/3978e81a3678c5b318c1bc81e4b00f44aa0e8e0cdcfc8c5cb709032fed19be5c.png" />
+</div>
+</div>
+<p>Boxplots can be useful to compare samples. For example, the following boxplots compare the distributions of weights between men and women:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;weight&#39;</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="s1">&#39;sex&#39;</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/df00d8fd69d41bf3438152238fdb780fff1e5d9561eb41198b27b29c91b8d026.png" src="../_images/df00d8fd69d41bf3438152238fdb780fff1e5d9561eb41198b27b29c91b8d026.png" />
+</div>
+</div>
+<p>From the graph above, we can note that weight has different distributions in males and females, with males overall weighing more, as one would expect.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chapter 2 of: Heumann, Christian, and Michael Schomaker Shalabh. Introduction to statistics and data analysis. Springer International Publishing Switzerland, 2016.</p></li>
+<li><p>Chapter 3 of: Heumann, Christian, and Michael Schomaker Shalabh. Introduction to statistics and data analysis. Springer International Publishing Switzerland, 2016.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="01_intro_data_analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Analysis Key Concepts, Loading and Inspecting the Data</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-and-relative-frequencies">Absolute and Relative Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#absolute-frequencies">Absolute Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-chart-of-absolute-frequencies">Bar Chart of Absolute Frequencies</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-frequencies">Relative Frequencies</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bar-chart-of-relative-frequencies">Bar Chart of Relative Frequencies</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#barplots-and-stacked-barplots">Barplots and Stacked Barplots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pie-charts">Pie Charts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-cumulative-distribution-function-ecdf">Empirical Cumulative Distribution Function (ECDF)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#histograms">Histograms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#choosing-the-number-of-bins-sturges-and-rice">Choosing the Number of Bins: Sturges and Rice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-samples-using-histograms">Comparing Samples Using Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#density-estimation">Density Estimation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-statistics">Summary Statistics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#size">Size</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-central-tendency">Measures of central tendency</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean">Mean</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median">Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles-percentiles-and-quartiles">Quantiles, Percentiles, and Quartiles</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantiles">Quantiles</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#percentiles">Percentiles</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quartiles">Quartiles</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mode">Mode</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measures-of-dispersion">Measures of Dispersion</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minimum-maximum-and-range">Minimum, Maximum, and Range</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interquartile-range-iqr">Interquartile Range (IQR)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-and-standard-deviation">Variance and Standard Deviation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-normalizations">Data Normalizations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-0-and-1">Normalization between 0 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#normalization-between-1-and-1">Normalization between -1 and 1</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#standardization-z-scoring">Standardization (z-scoring)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shape-indicators">Shape Indicators</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#asymmetry-skewness">Asymmetry (skewness)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#kurtosis-kurtosis">Kurtosis (kurtosis)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary">Statistical Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
