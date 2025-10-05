@@ -15,6 +15,9 @@ parts:
 - caption: Lecture 2
   chapters:
   - file: lectures/01_intro_data_analysis
+- caption: Lecture 3
+  chapters:
+  - file: lectures/02_describing_and_visualizing_the_data
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
