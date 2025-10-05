@@ -1,0 +1,2226 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Probability for Data Analysis &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/03_probability_for_data_analysis';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/03_probability_for_data_analysis.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/03_probability_for_data_analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/03_probability_for_data_analysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Probability for Data Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-examples">Real-World Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-probability-theory-matters">Why Probability Theory Matters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-experiments">Random Experiments</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-rolling-a-die">Example: Rolling a Die</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-variables">Random Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-titanic-example">Toy Titanic Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-definition-of-data">Working Definition of Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-axioms">Probability Axioms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace-probability">Laplace Probability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-probabilities-from-observations">Estimating probabilities from observations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#frequentist-approach">Frequentist approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-approach">Bayesian Approach</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-probability">Example of Probability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-of-frequentist-probability-values">Computation of frequentist probability values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability">Joint probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-joint-probability">Example Joint Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-of-a-joint-probability-table">Computation of a Joint Probability Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical representations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-rule-marginal-probability">Sum Rule (Marginal Probability)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-and-product-rule">Conditional Probability and Product Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-rule-factorization">Product Rule (Factorization)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-compute-a-conditional-probability">How to compute a conditional probability?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Graphical Representations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule-of-conditional-probabilities">The Chain Rule of Conditional Probabilities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes’ Theorem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-probability-example">Bayesian Probability Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-and-conditional-independence">Independence and Conditional Independence</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-independence">Conditional independence</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-probability-manipulation">Example of Probability Manipulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-overall-probability-that-a-passenger-survived">What is the overall probability that a passenger survived?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-probability-that-a-passenger-was-in-1st-class-and-they-survived">What is the probability that a passenger was in 1st class and they survived?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-probability-that-a-passenger-survived-given-that-they-were-in-3rd-class">What is the probability that a passenger survived, given that they were in 3rd class?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excercise">Excercise</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="probability-for-data-analysis">
+<h1>Probability for Data Analysis<a class="headerlink" href="#probability-for-data-analysis" title="Permalink to this heading">#</a></h1>
+<p>When working with data, we often ask: <strong>what values will variables assume?</strong></p>
+<p>In some cases, we can predict these values with perfect accuracy—like solving a system of equations that describes the speed of an object using Newtonian physics. These are <strong>deterministic systems</strong>, where outcomes follow directly from initial conditions.</p>
+<p>But in many real-world scenarios, we face <strong>uncertainty</strong>. Modeling the relationship between variables in a deterministic way is not always possible. This uncertainty can arise from several sources:</p>
+<ul class="simple">
+<li><p><strong>Inherent randomness</strong>: Some events are truly stochastic, like rolling a die or drawing a card. Even with perfect knowledge, the outcome is unpredictable.</p></li>
+<li><p><strong>Incomplete observability</strong>: Sometimes we can’t see everything. In the Monty Hall problem, the game is deterministic, but the player lacks full information—so the outcome feels uncertain.</p></li>
+<li><p><strong>Incomplete modeling</strong>: Even in deterministic systems, we may lack the tools to model them fully. For example, a robot with only an RGB camera may estimate object positions in 2D, but cannot reconstruct full 3D coordinates. The missing dimensions introduce uncertainty.</p></li>
+</ul>
+<section id="real-world-examples">
+<h2>Real-World Examples<a class="headerlink" href="#real-world-examples" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Tossing a coin or rolling a die</strong>: These are often treated as random events, even if they could be modeled deterministically in theory. The complexity of initial conditions makes prediction intractable.</p></li>
+<li><p><strong>Diagnosing a medical condition</strong>: Different pathologies may share symptoms. Even with detailed observations, we may not be able to determine the exact diagnosis with certainty.</p></li>
+</ul>
+</section>
+<section id="why-probability-theory-matters">
+<h2>Why Probability Theory Matters<a class="headerlink" href="#why-probability-theory-matters" title="Permalink to this heading">#</a></h2>
+<p>Probability theory provides a <strong>consistent framework</strong> for reasoning about uncertainty. It allows us to:</p>
+<ul class="simple">
+<li><p>Quantify uncertain events</p></li>
+<li><p>Combine known and unknown information</p></li>
+<li><p>Derive new probabilistic statements using formal rules</p></li>
+</ul>
+<p>In data analysis, probability is essential for:</p>
+<ul class="simple">
+<li><p>Modeling randomness and variability</p></li>
+<li><p>Making predictions under uncertainty</p></li>
+<li><p>Interpreting patterns and relationships in data</p></li>
+</ul>
+<p>In this lecture, we’ll revisit the core concepts of probability theory—starting with random variables—and apply them to real datasets like the Titanic. We’ll use tools like the <strong>sum rule</strong>, <strong>product rule</strong>, and <strong>Bayes’ theorem</strong> to answer questions such as:</p>
+<ul class="simple">
+<li><p>What is the probability that a passenger survived?</p></li>
+<li><p>What is the probability that a passenger was in 1st class, given that they survived?</p></li>
+<li><p>What is the probability that a passenger was in 3rd class, given that they died?</p></li>
+</ul>
+<p>These examples will help us connect abstract probability rules to concrete data-driven reasoning.</p>
+<section id="random-experiments">
+<h3>Random Experiments<a class="headerlink" href="#random-experiments" title="Permalink to this heading">#</a></h3>
+<p>In practice, when data acquisition is affected by uncertainty, we refer to the process as a <strong>random experiment</strong>. Informally, we define a random experiment as:</p>
+<blockquote>
+<div><p>An experiment that can be repeated any number of times, potentially leading to different outcomes.</p>
+</div></blockquote>
+<p>We introduce the following terminology:</p>
+<ul class="simple">
+<li><p><strong>Sample space</strong>  <span class="math notranslate nohighlight">\(\Omega = \{\omega_1, \ldots, \omega_k\}\)</span>  The set of all possible outcomes of the experiment.</p></li>
+<li><p><strong>Simple event</strong> <span class="math notranslate nohighlight">\(\omega_i\)</span>: a single possible outcome.</p></li>
+<li><p><strong>Event</strong> <span class="math notranslate nohighlight">\(A \subseteq \Omega\)</span>: a subset of the sample space representing a condition or outcome of interest. We usually denote  <span class="math notranslate nohighlight">\(\overline{A} = \Omega \setminus A\)</span>  as the complementary event to <span class="math notranslate nohighlight">\(A\)</span>, i.e., the event that <span class="math notranslate nohighlight">\(A\)</span> does not occur.</p></li>
+</ul>
+<p>By definition:</p>
+<ul class="simple">
+<li><p>The sample space <span class="math notranslate nohighlight">\(\Omega\)</span> is called the <strong>sure event</strong> or <strong>certain event</strong>, since it includes all possible outcomes.</p></li>
+<li><p>The empty set <span class="math notranslate nohighlight">\(\emptyset\)</span> is called the <strong>impossible event</strong>, as it contains no outcomes.</p></li>
+</ul>
+<section id="example-rolling-a-die">
+<h4>Example: Rolling a Die<a class="headerlink" href="#example-rolling-a-die" title="Permalink to this heading">#</a></h4>
+<p>Consider the random experiment of rolling a fair six-sided die. The outcome is the number shown on the top face when the die lands.</p>
+<ul class="simple">
+<li><p><strong>Sample space</strong>: <span class="math notranslate nohighlight">\(\Omega = \{1, 2, 3, 4, 5, 6\}\)</span></p></li>
+<li><p><strong>Simple event</strong>: <span class="math notranslate nohighlight">\(\omega_1 = 1\)</span> represents the outcome “we roll a 1”.</p></li>
+<li><p><strong>Event examples</strong>:</p>
+<ul>
+<li><p>“We obtain a 1”:  <span class="math notranslate nohighlight">\(A = \{1\}\)</span></p></li>
+<li><p>“We obtain an even number”:  <span class="math notranslate nohighlight">\(A = \{2, 4, 6\}\)</span></p></li>
+<li><p>Complement of the above:  <span class="math notranslate nohighlight">\(\overline{A} = \{1, 3, 5\}\)</span>  Represents “we obtain an odd number”.</p></li>
+</ul>
+</li>
+</ul>
+<p>This framework allows us to describe uncertainty in a structured way, preparing us to assign probabilities to events and reason about their likelihood.</p>
+</section>
+</section>
+</section>
+<section id="random-variables">
+<h2>Random Variables<a class="headerlink" href="#random-variables" title="Permalink to this heading">#</a></h2>
+<p>We have so far talked about “statistical variables”. When
+dealing with uncertain events, we need to use the concept of ‘random
+variables’. Informally (from wikipedia):</p>
+<blockquote>
+<div><p>A random variable is a variable whose values depend on outcomes of a random phenomenon.</p>
+</div></blockquote>
+<p>A random variable is characterized by a set of possible values often
+called <em>sample space</em>, <em>probability space</em>, or <em>alphabet</em> (this last term comes from
+information theory, where we often deal with sources emitting symbols
+from an alphabet, in which case the values of <span class="math notranslate nohighlight">\(X\)</span> will be the symbols).</p>
+<p>The definition of a random variable is very similar to that of a statistical variable. Formally, if <span class="math notranslate nohighlight">\(\Omega\)</span> is the <em>sample space</em>, we will define a random variable as a function:</p>
+<div class="math notranslate nohighlight">
+\[ X : \Omega \to E \]</div>
+<p>Where <strong>E is a measurable space</strong> and often <span class="math notranslate nohighlight">\(E=\mathbb{R}\)</span>. This definition is similar to the one of statistical variable we have given before.</p>
+<p>A random variable is generally denoted by a <em>capital letter</em>, such as
+<span class="math notranslate nohighlight">\(X\)</span>.</p>
+<p>Similar to statistical variables, random variables can be <em>discrete</em> or <em>continuous</em>, <em>scalar</em> or <em>multi-dimensional</em>.</p>
+<p>The following table lists some examples.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>Discrete</strong></p></th>
+<th class="head"><p><strong>Continuous</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Scalar</strong></p></td>
+<td><p>Tossing a coin</p></td>
+<td><p>Height of a person</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Multidimensional</strong></p></td>
+<td><p>Pair of dice</p></td>
+<td><p>Coordinates of a car</p></td>
+</tr>
+</tbody>
+</table>
+<section id="toy-titanic-example">
+<h3>Toy Titanic Example<a class="headerlink" href="#toy-titanic-example" title="Permalink to this heading">#</a></h3>
+<p><img alt="" src="../_images/titanic.png" /></p>
+<p>We will now consider a toy example derived inspired to the Titanic dataset.</p>
+<p>In this example, we will assume to have a very small ship with passengers in three classes and belonging to two possible genders (male or female).</p>
+<p>To reason in terms of probability, we have to think of a random experiment first. To this aim, let’s imagine the process of randomly picking a passenger from the list. This passenger will belong to one of the three classes and one of the two sexes. We will see how to use probability theory to answer different questions such as:</p>
+<ul class="simple">
+<li><p>Is it more likely to pick a woman or a man?</p></li>
+<li><p>If I pick a person from first class, is it more likely to pick a woman or a man?</p></li>
+<li><p>If I know I picked a woman, is it more likely that I am picking from first, second or third class?</p></li>
+</ul>
+<p>As you can see, answering these questions allows us to better understand and characterize the data, but can also be useful for practical applications. For instance, we may deliver different services to the different classes depending on the people who populate the classes.</p>
+<p>More technically, we will consider the experiment of randomly drawing a passenger from one of
+the three classes. This happens in two stages:</p>
+<ul class="simple">
+<li><p>We first randomly pick one of the three classes;</p></li>
+<li><p>Then we randomly pick one of the passengers in the class;</p></li>
+<li><p>After observing the sex of the passenger, we replace them in the same
+class.</p></li>
+</ul>
+<p>The outcome of the experiment can be characterized by <em>two random
+variables</em>:</p>
+<ul class="simple">
+<li><p>C represents the class, which can take values <span class="math notranslate nohighlight">\(1, 2, 3\)</span></p></li>
+<li><p>S represents the sex of the passenger, which can take values <span class="math notranslate nohighlight">\(male\)</span> and <span class="math notranslate nohighlight">\(female\)</span></p></li>
+</ul>
+<p>If we pick a male passenger marble from the third class, then the outcome of the experiment can be characterized by the values <span class="math notranslate nohighlight">\(C = 3\)</span>, <span class="math notranslate nohighlight">\(S = male\)</span>;</p>
+</section>
+</section>
+<section id="working-definition-of-data">
+<h2>Working Definition of Data<a class="headerlink" href="#working-definition-of-data" title="Permalink to this heading">#</a></h2>
+<p>We will define “data” as follows:</p>
+<blockquote>
+<div><p>The values assumed by a random variable</p>
+</div></blockquote>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>For instance, if the sex of a passenger is <span class="math notranslate nohighlight">\(male\)</span>, then
+<span class="math notranslate nohighlight">\(S = male\)</span> <em>is data</em>;</p></li>
+<li><p>It should be clear that the ‘data’ is <em>the pair</em> &lt;random variable,
+value&gt; and not just the value. Indeed <span class="math notranslate nohighlight">\(male\)</span> alone would not be
+very useful (we don’t know which phenomenon it is related to),
+whereas <span class="math notranslate nohighlight">\(S = male\)</span> can be useful, as we know that <span class="math notranslate nohighlight">\(S\)</span> is the random
+variable describing the sex of the passenger;</p></li>
+<li><p>In this example, the data <span class="math notranslate nohighlight">\(S = male\)</span> is representing a fact: ‘I
+randomly picked a passenger and their sex was <span class="math notranslate nohighlight">\(male\)</span>’. This is also called ‘an
+event’;</p></li>
+</ul>
+</section>
+</section>
+<section id="probability">
+<h2>Probability<a class="headerlink" href="#probability" title="Permalink to this heading">#</a></h2>
+<p>Since random variables are related to stochastic phenomena, we cannot
+say much about the outcome of a single phenomenon.</p>
+<p>However, we expect to be able to characterize the class of experiments
+related to a random variable, to infer rules on what values the random
+variable is likely to take.</p>
+<p>For instance, in the case of coin tossing, we can observe that, if I
+toss a coin for a large number of times, the number of heads will be
+roughly similar to the number of tails.</p>
+<p>This kind of observations is useful, as it can give us a prior on what
+values we are likely to encounter and what are not.</p>
+<p>To formally express such rules, we can define the concept of probability
+on a random variable.</p>
+<p>Specifically, it is possible to assign a probability value to a given
+outcome. This is generally represented with a capital P:</p>
+<ul class="simple">
+<li><p>For instance, <span class="math notranslate nohighlight">\(P(C = 1)\)</span> represents the probability of picking a
+from the first class in the previous example;</p></li>
+<li><p>A probability <span class="math notranslate nohighlight">\(P(C = 1)\)</span> is a number comprised between 0 and 1 which
+quantifies how likely we believe the event to be;</p>
+<ul>
+<li><p>0 means impossible;</p></li>
+<li><p>1 means certain;</p></li>
+</ul>
+</li>
+</ul>
+<p>When it is clear from the context which variable we are referring to,
+the probability can also be expressed simply as:</p>
+<div class="math notranslate nohighlight">
+\[P(male) = P(S = male)\]</div>
+<section id="probability-axioms">
+<h3>Probability Axioms<a class="headerlink" href="#probability-axioms" title="Permalink to this heading">#</a></h3>
+<p>Kolmogorov in 1933 provided three axioms which define the “main rules” that probability should follow:</p>
+<p><strong>Axiom 1</strong>
+Any event has a probability in the range <span class="math notranslate nohighlight">\([0,1]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[0 \leq P(A) \leq 1, \forall A\subseteq \Omega\]</div>
+<p><strong>Axiom 2</strong>
+The certain event has probability 1:</p>
+<div class="math notranslate nohighlight">
+\[P(\Omega) = 1\]</div>
+<p><strong>Axiom 3</strong>
+If <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are disjoint event (i.e., <span class="math notranslate nohighlight">\(A \cap B = \emptyset\)</span>), then:</p>
+<div class="math notranslate nohighlight">
+\[P(A \cup B) = P(A) + P(B)\]</div>
+<p>From these axioms, the following corollaries follow:</p>
+<p><strong>Complement rule</strong>
+$<span class="math notranslate nohighlight">\(P(\overline{A}) = 1 - P(A)\)</span>$</p>
+<p><strong>Probability of the impossible event</strong>
+$<span class="math notranslate nohighlight">\(P(\emptyset) = P(\overline{\Omega}) = 1 - P(\Omega) = 0\)</span>$</p>
+<p><strong>General addition rule (for any events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>)</strong>
+$<span class="math notranslate nohighlight">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span>$</p>
+<p><strong>Monotonicity (if <span class="math notranslate nohighlight">\(A \subseteq B\)</span>)</strong>
+$<span class="math notranslate nohighlight">\(A \subseteq B \Rightarrow P(A) \leq P(B)\)</span>$</p>
+</section>
+<section id="laplace-probability">
+<h3>Laplace Probability<a class="headerlink" href="#laplace-probability" title="Permalink to this heading">#</a></h3>
+<p><strong>When all outcomes in a random experiment are considered equally probable</strong>, this is called a <strong>Laplace experiment</strong>. In this case, we can calculate the probability of a given event <span class="math notranslate nohighlight">\(A\)</span> as the ratio between the favorable outcomes and the possible outcomes:</p>
+<div class="math notranslate nohighlight">
+\[P(A) = \frac{|A|}{|\Omega|} = \frac{\text{number of favorable outcomes}}{\text{number of possible outcomes}}\]</div>
+<p>For instance, if we are tossing a die:</p>
+<ul class="simple">
+<li><p>The probability of obtaining any of the faces will be: <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>;</p></li>
+<li><p>The probability of obtaining an even number will be: <span class="math notranslate nohighlight">\(\frac{|\{2,4,6\}|}{|\{1,2,3,4,5,6\}|} = \frac{3}{6} = \frac{1}{2}\)</span>.</p></li>
+</ul>
+</section>
+<section id="estimating-probabilities-from-observations">
+<h3>Estimating probabilities from observations<a class="headerlink" href="#estimating-probabilities-from-observations" title="Permalink to this heading">#</a></h3>
+<p>What about the cases in which we cannot make any assumption on the equal probability of events? In those cases we would like to estimate probabilities from observations. There are two main approaches to do so: frequentist and Bayesian.</p>
+<section id="frequentist-approach">
+<h4>Frequentist approach<a class="headerlink" href="#frequentist-approach" title="Permalink to this heading">#</a></h4>
+<p>Probability theory was initially developed to analyze the frequency of
+events. For instance, it can be used to study events like drawing a
+certain hand of cards in a poker game. These events are repeatable and
+can be dealt with using frequencies. In this sense, when we say that an
+event has probability <span class="math notranslate nohighlight">\(p\)</span> of occurring, it means that if we repeat the
+experiment infinitely many times, then a proportion <span class="math notranslate nohighlight">\(p\)</span> of the
+repetitions would result in that outcome.</p>
+<p>According to the frequentist approach, we can estimate probabilities by
+repeating an experiment for a large number of times and then computing:</p>
+<ul class="simple">
+<li><p>The number of trials: how many times we performed the experiment;</p></li>
+<li><p>The number of favorable outcomes: how many times the outcome of the
+experiment was favorable.</p></li>
+</ul>
+<p>The probability is hence obtained by dividing the number of favorable
+outcomes by the number of trials.</p>
+<p>For instance, let’s suppose we want to estimate the probability of
+obtaining a ‘head’ by tossing a coin. Let’s suppose we toss the coin
+1000 times and obtain 499 heads and 501 tails. We can compute the
+probability of obtaining head as follows:</p>
+<ul class="simple">
+<li><p>Number of trials: 1000;</p></li>
+<li><p>Number of favorable outcomes: 499.</p></li>
+</ul>
+<p>The probability of obtaining head will be 499/1000=0.49</p>
+<p>This is the approach we have seen so far in the course when dealing with relative frequencies.</p>
+<section id="examples">
+<h5>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h5>
+<ul class="simple">
+<li><p>The probability of obtaining ‘head’ when tossing a coin is 0.5. We
+know that because, if we toss a coin for a large number of times,
+about half of the times, we will obtain ‘head’;</p></li>
+<li><p>The probability of picking a red ball from a box with 40 red balls
+and 60 blue balls is 0.4. We know this because, if we repeat the
+experiment for a large number of times, we will observe that
+proportion.</p></li>
+</ul>
+</section>
+</section>
+<section id="bayesian-approach">
+<h4>Bayesian Approach<a class="headerlink" href="#bayesian-approach" title="Permalink to this heading">#</a></h4>
+<p>The Bayesian approach to probability offers a different perspective on probability theory. Unlike the frequentist approach, which focuses on analyzing the frequency of events based on observations, the <strong>Bayesian approach allows us to incorporate prior knowledge and update our beliefs as new information becomes available</strong>.</p>
+<p>In Bayesian probability, we view <strong>probability as a measure of uncertainty or belief</strong>. When we assign a probability to an event, it reflects our <strong>subjective degree of belief in the event’s likelihood</strong>. This approach is particularly useful when dealing with unique or one-time events where frequency-based analysis may not be applicable (e.g., “<strong>what is the probability that the sun will extinguish in 5 billion years?</strong>”).</p>
+<p>We will discuss better the Bayesian approach when we’ll discuss Bayes theorem.</p>
+</section>
+</section>
+<section id="example-of-probability">
+<h3>Example of Probability<a class="headerlink" href="#example-of-probability" title="Permalink to this heading">#</a></h3>
+<p><img alt="" src="../_images/titanic.png" /></p>
+<p>Let’s consider the previous example of randomly picking passengers.</p>
+<p>Suppose we repeat this experiment for <span class="math notranslate nohighlight">\(100\)</span> times and observe that:</p>
+<ul class="simple">
+<li><p>We pick the first class <span class="math notranslate nohighlight">\(24\)</span> times;</p></li>
+<li><p>We pick the second class <span class="math notranslate nohighlight">\(32\)</span> times;</p></li>
+<li><p>We pick the third class <span class="math notranslate nohighlight">\(44\)</span> times;</p></li>
+<li><p>Once we selected a urn, we are equally likely to select any of the
+passengers contained in it, but we know that sexes are not distributed evenly in the classes (see figure).</p></li>
+</ul>
+<p>Using a frequentist approach, we can define the probabilities:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(C = 1) = \frac{24}{100}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 2) = \frac{32}{100}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 3) = \frac{44}{100}\)</span></p></li>
+</ul>
+<p>This is done by using the formula:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(X = x) = \frac{\#\ of\ times\ X = x}{\#\ trials}\)</span></p></li>
+</ul>
+</section>
+<section id="computation-of-frequentist-probability-values">
+<h3>Computation of frequentist probability values<a class="headerlink" href="#computation-of-frequentist-probability-values" title="Permalink to this heading">#</a></h3>
+<p>In frequentist terms, probabilities are the same as relative frequencies we have seen in the previous lectures. Let’s see how to compute such probabilities on the real Titanic dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">,</span>
+                     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">)</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>  <span class="c1"># relative frequencies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pclass
+1    0.242424
+2    0.206510
+3    0.551066
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can also visualize them for more clarity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>  <span class="c1"># relative frequencies</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d2e6b6423ed48fe01652b8b080f6515b023e3f89f7aebb7a7231c8939256871b.png" src="../_images/d2e6b6423ed48fe01652b8b080f6515b023e3f89f7aebb7a7231c8939256871b.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="joint-probability">
+<h2>Joint probability<a class="headerlink" href="#joint-probability" title="Permalink to this heading">#</a></h2>
+<p>We can define <strong>univariate</strong> (= with respect to only one variable)
+probabilities <span class="math notranslate nohighlight">\(P(C)\)</span> as we have seen in the previous
+examples.</p>
+<p>However, in many cases, it is useful to define probabilities on more
+than one variable at the time. For instance, we could be interested in
+studying the probability of picking a given fruit from a given box. In
+this case, we would be interested in the <strong>joint probability</strong> <span class="math notranslate nohighlight">\(P(C,S)\)</span>.</p>
+<p>In general, we can have joint probabilities with arbitrary numbers of
+variable. For instance,
+<span class="math notranslate nohighlight">\(P\left( X_{1},X_{2},X_{3},\ldots,X_{n} \right)\)</span>.</p>
+<p>Joint probabilities are symmetric, i.e., <span class="math notranslate nohighlight">\(P(X,Y) = P(Y,X)\)</span>.</p>
+<p>We should note that, when dealing with multiple unidimensional
+variables, we can always define a new multi-variate variable comprising
+all of them:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(X = \left\lbrack X_{1},X_{2} \right\rbrack;\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X) = P\left( X_{1},X_{2} \right)\)</span>.</p></li>
+</ul>
+<section id="example-joint-probability">
+<h3>Example Joint Probability<a class="headerlink" href="#example-joint-probability" title="Permalink to this heading">#</a></h3>
+<p><img alt="" src="../_images/titanic.png" /></p>
+<p>We can see the concept of joint probability in the context of the
+Titanic example.</p>
+<p>We have seen how to define the univariate probability <span class="math notranslate nohighlight">\(P(C)\)</span> over the
+whole probability space of <span class="math notranslate nohighlight">\(C\)</span>.</p>
+<p>However, we could be interested in the probability of both variables
+jointly: <span class="math notranslate nohighlight">\(P(C,S)\)</span>, i.e., the joint probability of <span class="math notranslate nohighlight">\(C\)</span> and <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>To ‘measure’ the joint probability, we could repeat the experiment
+many times and observe the outcomes.</p>
+<p>We can then build a table which keeps track of how many
+times we observed a given combination:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+<th class="head"><p>Second Class</p></th>
+<th class="head"><p>Third Class</p></th>
+<th class="head"><p>All</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>7</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>6</p></td>
+<td><p>8</p></td>
+<td><p>11</p></td>
+<td><p>25</p></td>
+</tr>
+</tbody>
+</table>
+<p>A table like this is called a “<strong>contincency table</strong>”.</p>
+<p>From the table above, we can easily derive the joint probability of a
+given pair of values using the <strong>frequentist approach</strong>. For instance:</p>
+<div class="math notranslate nohighlight">
+\[P(C = 1,S = male) = \frac{\#\ times\ (1,male)\ occurs}{\#\ trials} = \frac{3}{25}\]</div>
+<p>Similarly, we can derive other values:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(C = 1,S = female) = \frac{3}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 2,S = male) = \frac{5}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 2,S = female) = \frac{3}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 3,S = male) = \frac{7}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 3,S = female) = \frac{4}{25}\)</span></p></li>
+</ul>
+<p>Note that we can also obtain the univariate probabilities by using the
+values in the “sum” row and column. For instance:</p>
+<div class="math notranslate nohighlight">
+\[P(C = 1) = \frac{\#\ times\ C=1\ occurred}{\#\ trials} = \frac{3 + 3}{25} = \frac{6}{25}\]</div>
+<p>Similarly:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(S = male) = \frac{15}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(S = female) = \frac{10}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 2) = \frac{8}{25}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C = 3) = \frac{11}{25}\)</span></p></li>
+</ul>
+<p>These univariate probabilities computed starting from joint
+probabilities are usually called <strong>marginal probabilities</strong>, because we are using
+the sums in the margin of the table.</p>
+<p>We can obtain a joint probability table by dividing the table by the total number of trials (25):</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+<th class="head"><p>Second Class</p></th>
+<th class="head"><p>Third Class</p></th>
+<th class="head"><p>All</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>3/25</p></td>
+<td><p>5/25</p></td>
+<td><p>7/25</p></td>
+<td><p>15/25</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>3/25</p></td>
+<td><p>3/25</p></td>
+<td><p>4/25</p></td>
+<td><p>10/25</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>6/25</p></td>
+<td><p>8/25</p></td>
+<td><p>11/25</p></td>
+<td><p>25/25</p></td>
+</tr>
+</tbody>
+</table>
+<p>Alternatively, with decimal values:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+<th class="head"><p>Second Class</p></th>
+<th class="head"><p>Third Class</p></th>
+<th class="head"><p>All</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>0.12</p></td>
+<td><p>0.2</p></td>
+<td><p>0.28</p></td>
+<td><p>0.6</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>0.12</p></td>
+<td><p>0.12</p></td>
+<td><p>0.16</p></td>
+<td><p>0.8</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>0.24</p></td>
+<td><p>0.32</p></td>
+<td><p>0.44</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<section id="computation-of-a-joint-probability-table">
+<h4>Computation of a Joint Probability Table<a class="headerlink" href="#computation-of-a-joint-probability-table" title="Permalink to this heading">#</a></h4>
+<p>To compute a joint probability table from data, we should first compute a contingency table, which is also called a crosstab in Pandas:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The table above indicates, for example, that <span class="math notranslate nohighlight">\(94\)</span> passengers in class <span class="math notranslate nohighlight">\(1\)</span> were female. By specifying <code class="docutils literal notranslate"><span class="pre">margins=True</span></code>, we can obtain row and column sums, which will indicate the absolute frequencies of each variable:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span><span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>94</td>
+      <td>76</td>
+      <td>144</td>
+      <td>314</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>122</td>
+      <td>108</td>
+      <td>347</td>
+      <td>577</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>216</td>
+      <td>184</td>
+      <td>491</td>
+      <td>891</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can obtain the joint relative frequency table by passing <code class="docutils literal notranslate"><span class="pre">normalize=True</span></code> to the crosstab function:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.105499</td>
+      <td>0.085297</td>
+      <td>0.161616</td>
+      <td>0.352413</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.136925</td>
+      <td>0.121212</td>
+      <td>0.389450</td>
+      <td>0.647587</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>It should be noted that the marginal relative frequencies obtained are identical to the relative frequencies of the univariate samples:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sex
+male      0.647587
+female    0.352413
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>That are exactly the values in the last column of the previous table. Similarly, the univariate probabilities of Pclass are the same as the last row of the previous table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pclass
+3    0.551066
+1    0.242424
+2    0.206510
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="graphical-representations">
+<h4>Graphical representations<a class="headerlink" href="#graphical-representations" title="Permalink to this heading">#</a></h4>
+<p>We can use contingency tables and joint probability tables to obtain graphical representations. For example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3acd362aa29b52bd7e28e47479d31b86de518a504dc553819e2d5b5b9a6ac71d.png" src="../_images/3acd362aa29b52bd7e28e47479d31b86de518a504dc553819e2d5b5b9a6ac71d.png" />
+</div>
+</div>
+<p>The diagram above shows the distributions of people in the two classes, grouped by the two different sexes.</p>
+<p>From this, we note that many passengers are men and in third class. In these cases, a stacked plot can sometimes be useful:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/48668dff1b753cac4bb53fcd328a6756b3baae579e609973d908a73c4adcdcd2.png" src="../_images/48668dff1b753cac4bb53fcd328a6756b3baae579e609973d908a73c4adcdcd2.png" />
+</div>
+</div>
+<p>We can reason in terms of joint probabilities by normalizing the counts:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9ac28cd91862a702aaa266501d97c10a4bf7923871e2519f2b48de28938e2fb4.png" src="../_images/9ac28cd91862a702aaa266501d97c10a4bf7923871e2519f2b48de28938e2fb4.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="sum-rule-marginal-probability">
+<h2>Sum Rule (Marginal Probability)<a class="headerlink" href="#sum-rule-marginal-probability" title="Permalink to this heading">#</a></h2>
+<p>In the previous example, we have seen how we can compute <strong>marginal
+(univariate) probabilities</strong> from the contingency table. This is
+possible because the contingency table contains information on how the
+different possible outcomes distribute over the sample space.</p>
+<p>In general, we can compute marginal probabilities form joint
+probabilities (i.e., we don’t need to have the non-normalized frequency
+counts of the contingency table). Let us consider the general contingency table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_1\)</span></p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_2\)</span></p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_l\)</span></p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>X=<span class="math notranslate nohighlight">\(x_1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{12}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1+}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>X=<span class="math notranslate nohighlight">\(x_2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{22}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>X=<span class="math notranslate nohighlight">\(x_k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{kl}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Total</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n_{ij}\)</span> is the number of times that we observe <span class="math notranslate nohighlight">\(X=x_i\)</span> and <span class="math notranslate nohighlight">\(Y=y_j\)</span> simultaneously (e.g., <span class="math notranslate nohighlight">\(C=1\)</span> and <span class="math notranslate nohighlight">\(S=male\)</span>);</p></li>
+<li><p><span class="math notranslate nohighlight">\(n_{i+}\)</span> is the sum of all occurrences in which <span class="math notranslate nohighlight">\(X = x_{i}\)</span> (i.e., we are summing all values in row <span class="math notranslate nohighlight">\(i\)</span>): <span class="math notranslate nohighlight">\(n_{i+} = \sum_{j} n_{ij}\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(n_{+j}\)</span> is the sum of all occurrences in which <span class="math notranslate nohighlight">\(Y = y_{j}\)</span> (i.e., we are summing all values in column <span class="math notranslate nohighlight">\(j\)</span>): <span class="math notranslate nohighlight">\(n_{+j} = \sum_{i} n_{ij}\)</span>;</p></li>
+</ul>
+<p>We can compute the joint probability <span class="math notranslate nohighlight">\(P(X = x_{i},Y = y_{j})\)</span> with a
+frequentist approach using the formula:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x_{i},\ Y = y_{j} \right) = \frac{n_{ij}}{n}\]</div>
+<p>We note that we can define the marginal probabilities of X and Y
+as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P\left( X = x_{i} \right) = \frac{n_{i+}}{n}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( Y = y_{j} \right) = \frac{n_{+j}}{n}\)</span>.</p></li>
+</ul>
+<p>We can hence write the marginal probability of <span class="math notranslate nohighlight">\(X\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x_{i} \right) = \frac{n_{i+}}{n} = \frac{\sum_{j}n_{ij}}{n} = \sum_{j}\frac{n_{ij}}{n} = \sum_{j}^{}{P(X = x_{i},Y = y_{j})}\]</div>
+<p>This result is known as the <strong>sum rule of probability</strong>, which allows to
+estimate marginal probabilities from joint probabilities. This can be
+seen in more general terms as:</p>
+<div class="math notranslate nohighlight">
+\[P(X = x) = \sum_{y}^{}{P(X = x,Y = y)}\]</div>
+<p>The act of computing <span class="math notranslate nohighlight">\(P(X)\)</span> from <span class="math notranslate nohighlight">\(P(X,Y)\)</span> is also known as
+marginalization.</p>
+</section>
+<section id="conditional-probability-and-product-rule">
+<h2>Conditional Probability and Product Rule<a class="headerlink" href="#conditional-probability-and-product-rule" title="Permalink to this heading">#</a></h2>
+<p><strong>In many cases, we are interested in the probability of some event,
+given that some other event happened.</strong></p>
+<p>This is called <strong>conditional</strong> <strong>probability</strong> and is denoted as</p>
+<div class="math notranslate nohighlight">
+\[P(X=x|Y=y)\]</div>
+<p>and read as</p>
+<blockquote>
+<div><p>P of X=x given that Y=y</p>
+</div></blockquote>
+<p>In this context, <span class="math notranslate nohighlight">\(Y = y\)</span> is the condition, and we are
+interested in studying the probability of X only in the cases in which
+the condition is verified.</p>
+<p>For instance, in our toy Titanic, we could be interested in
+<span class="math notranslate nohighlight">\(P(S = male|C = 1)\)</span>, i.e., what is the probability of picking a male,
+given that we know that we are drawing from the first class?</p>
+<p>Let’s consider our example contingency table of two variables again:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_1\)</span></p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_2\)</span></p></th>
+<th class="head"><p>…</p></th>
+<th class="head"><p>Y=<span class="math notranslate nohighlight">\(y_l\)</span></p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>X=<span class="math notranslate nohighlight">\(x_1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{11}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{12}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{1+}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>X=<span class="math notranslate nohighlight">\(x_2\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{21}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{22}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{2+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+<td><p>…</p></td>
+</tr>
+<tr class="row-odd"><td><p>X=<span class="math notranslate nohighlight">\(x_k\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{kl}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{k+}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Total</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+1}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+2}\)</span></p></td>
+<td><p>…</p></td>
+<td><p><span class="math notranslate nohighlight">\(n_{+l}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>We can compute the conditional probability
+<span class="math notranslate nohighlight">\(P(X = x_{i}|Y = y_{j})\)</span> using the frequentist approach:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x_{i} \middle| Y = y_{j} \right) = \frac{\#\ cases\ in\ which\ X = x_{i}\ and\ Y = y_{i}}{\#\ cases\ in\ which\ Y = y_{j}} = \frac{n_{ij}}{n_{+j}}\]</div>
+<p>If we multiply the expression above by <span class="math notranslate nohighlight">\(1 = \frac{n}{n}\)</span>, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x_{i} \middle| Y = y_{j} \right) = \frac{n_{ij}}{n}\frac{n}{n_{+j}} = \frac{\frac{n_{ij}}{n}}{\frac{n_{+j}}{n}} = \frac{P\left( X = x_{i},Y = y_{j} \right)}{P(Y = y_{j})}\]</div>
+<p>This leads us to the general definition of conditional probability:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x \middle| Y = y \right) = \frac{P(X = x,\ Y = y)}{P(Y = y)}\]</div>
+<p>The conditional probability is defined only when <span class="math notranslate nohighlight">\(P(Y = y) &gt; 0\)</span>, that
+is, we cannot define a probability conditioned on an event that never
+happens. It should be noted that, in general
+<span class="math notranslate nohighlight">\(P\left( X \middle| Y \right) \neq P(X)\)</span>.</p>
+<section id="product-rule-factorization">
+<h3>Product Rule (Factorization)<a class="headerlink" href="#product-rule-factorization" title="Permalink to this heading">#</a></h3>
+<p>We can see the definition of conditional probability:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x \middle| Y = y \right) = \frac{P(X = x,\ Y = y)}{P(Y = y)}\]</div>
+<p>As follows:</p>
+<div class="math notranslate nohighlight">
+\[P(X = x,Y = y) = P\left( X = x \middle| Y = y \right)P(Y = y)\]</div>
+<p>which is often referred to as <strong>the product rule</strong>.</p>
+<p><em>The product rule allows to compute joint probabilities starting from
+conditional probabilities and marginal probabilities.</em> This is useful
+because measuring joint probabilities generally involves creating large
+tables, whereas conditional and marginal probabilities might be easier
+to derive.</p>
+<p>This operation of expressing a joint probability in terms of two factors
+is known as <em>factorization</em>.</p>
+</section>
+<section id="how-to-compute-a-conditional-probability">
+<h3>How to compute a conditional probability?<a class="headerlink" href="#how-to-compute-a-conditional-probability" title="Permalink to this heading">#</a></h3>
+<p>We just said that factorization can be useful for computing joint
+probabilities starting from conditional probabilities. However, two
+questions arise:</p>
+<ul class="simple">
+<li><p>How can we compute a conditional probability?</p></li>
+<li><p>Is it easier than computing a joint probability?</p></li>
+</ul>
+<p>Since conditional probabilities are obtained by <em>restricting</em> the
+probability space to <em>a subset</em> of the events, we can compute
+conditional probabilities by considering the observations which satisfy
+the condition.</p>
+<p>For example, let’s say we want to compute the conditional probability:</p>
+<div class="math notranslate nohighlight">
+\[P(S|C = 1)\]</div>
+<p>That is to say, the probability of picking a person of a given sex, given
+that we know that we are considering the first class. Let’s consider again our contingency table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+<th class="head"><p>Second Class</p></th>
+<th class="head"><p>Third Class</p></th>
+<th class="head"><p>All</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>3</p></td>
+<td><p>5</p></td>
+<td><p>7</p></td>
+<td><p>15</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>3</p></td>
+<td><p>3</p></td>
+<td><p>4</p></td>
+<td><p>10</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>6</p></td>
+<td><p>8</p></td>
+<td><p>11</p></td>
+<td><p>25</p></td>
+</tr>
+</tbody>
+</table>
+<p>To compute this probability, we can just <em>consider all the observations
+that satisfy the condition</em> <span class="math notranslate nohighlight">\(C = 1\)</span>, which is equivalent to taking the
+first column of the full contingency table and compute the
+probabilities in a frequentist way:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>3</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>6</p></td>
+</tr>
+</tbody>
+</table>
+<div class="math notranslate nohighlight">
+\[ P(S=male|C=1) = \frac{3}{6} \]</div>
+<div class="math notranslate nohighlight">
+\[ P(S=female|C=1) = \frac{3}{6} \]</div>
+<p>Note that, in general, when the number of variables is large, this
+approach allows to save a lot of space and time as it is not necessary
+to even build the first contingency table, but only the second,
+restricted one is required (for instance, one may choose not to record
+all observations in which we where picking form the other classes).</p>
+<p>Of course, the table above can be normalized to obtain a conditional probability table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p>First Class</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>male</p></td>
+<td><p>0.5</p></td>
+</tr>
+<tr class="row-odd"><td><p>female</p></td>
+<td><p>0.5</p></td>
+</tr>
+<tr class="row-even"><td><p>All</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>In Python, it is possible to obtain the conditional relative frequencies by normalizing by the appropriate row. Rather than conditioning on class, let’s condition on sex in this case. We can do so by normalizing by rows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=0 indicates to condition on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.299363</td>
+      <td>0.242038</td>
+      <td>0.458599</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.211438</td>
+      <td>0.187175</td>
+      <td>0.601386</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>From the table above, for example, we can infer:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=1|Sex=female) = 0.290363\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=2|Sex=female) = 0.242038\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(f(Pclass=3|Sex=female) = 0.458599\)</span></p></li>
+</ul>
+<p>These are the frequencies of women in the three classes. Similarly, the second row represents the conditional frequencies with respect to <code class="docutils literal notranslate"><span class="pre">Sex=male</span></code>. From the table, we notice that the distribution of passengers changes across the three classes. In particular, among men, the third class is more frequent than among women.</p>
+<p>We can obtain the complementary perspective by conditioning on class instead:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=1 indicates conditioning on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Sex</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>female</th>
+      <td>0.435185</td>
+      <td>0.413043</td>
+      <td>0.293279</td>
+      <td>0.352413</td>
+    </tr>
+    <tr>
+      <th>male</th>
+      <td>0.564815</td>
+      <td>0.586957</td>
+      <td>0.706721</td>
+      <td>0.647587</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>In this case, each column will be a probability distribution. For example:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Sex=female|Pclass=1) = 0.435185\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Sex=male|Pclass=1) = 0.564815\)</span></p></li>
+</ul>
+<p>We note that the proportion between men and women changes in the three classes, and in particular in the third class there are many more men than women.</p>
+</section>
+<section id="id1">
+<h3>Graphical Representations<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Similarly to joint probabilities, we can also obtain visualizations from conditional probabilities. For instance:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/033e3d75d4c9989b0c70e0561a95282738fd376e0748b02f3e3e8f3c9e2f5e61.png" src="../_images/033e3d75d4c9989b0c70e0561a95282738fd376e0748b02f3e3e8f3c9e2f5e61.png" />
+</div>
+</div>
+<p>The diagram above shows the distributions of passengers in the three classes for the two sexes. Now, these are two valid probability distributions summing to one for all the three values (three classes). This is clearer with a stacked plot:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c7279869a89a99f6f3cfec0d81b5b8de771f893229f3aa54f26765ddfd2585fc.png" src="../_images/c7279869a89a99f6f3cfec0d81b5b8de771f893229f3aa54f26765ddfd2585fc.png" />
+</div>
+</div>
+<p>We can obtain the graph of conditional frequencies with respect to the classes for a complementary view. In this case, to have a meaningful graph, we need to transpose the contingency table with a <code class="docutils literal notranslate"><span class="pre">.T</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># normalize=1 indicates conditioning on the first variable</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/bc8fb5194eca9783b3ad3ab6e676f0fdcee743c1c49e01710f8ac51123e8c3f7.png" src="../_images/bc8fb5194eca9783b3ad3ab6e676f0fdcee743c1c49e01710f8ac51123e8c3f7.png" />
+</div>
+</div>
+<p>This graph now shows the distribution of sexes in the three classes, clearly showing that class 3 contains mostly males.</p>
+</section>
+</section>
+<section id="the-chain-rule-of-conditional-probabilities">
+<h2>The Chain Rule of Conditional Probabilities<a class="headerlink" href="#the-chain-rule-of-conditional-probabilities" title="Permalink to this heading">#</a></h2>
+<p>When dealing with multiple variables, the product rule can be applied in
+an iterative fashion, thus obtaining the ‘chain rule’ of conditional
+probabilities.</p>
+<p>For instance:</p>
+<div class="math notranslate nohighlight">
+\[P(X,Y,Z) = P\left( X \middle| Y,Z \right)P(Y,Z)\]</div>
+<p>Since:</p>
+<div class="math notranslate nohighlight">
+\[P(Y,Z) = P\left( Y \middle| Z \right)P(Z)\]</div>
+<p>We obtain:</p>
+<div class="math notranslate nohighlight">
+\[P(X,Y,Z) = P\left( X \middle| Y,Z \right)P\left( Y \middle| Z \right)P(Z)\]</div>
+<p>Since joint probabilities are symmetric, we could equally obtain:</p>
+<div class="math notranslate nohighlight">
+\[P(X,Y,Z) = P\left( Z \middle| Y,X \right)P\left( Y \middle| X \right)P(X)\]</div>
+<p>This rule can be formalized as follows:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X_{1},\ldots,\ X_{n} \right) = P\left( X_{1} \right)\prod_{i = 2}^{n}{P(X_{i}|X_{1},\ldots,\ X_{i - 1})}\]</div>
+</section>
+<section id="bayes-theorem">
+<h2>Bayes’ Theorem<a class="headerlink" href="#bayes-theorem" title="Permalink to this heading">#</a></h2>
+<p>Given two variables A and B, from the product rule, we obtain:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(A,B) = P\left( A \middle| B \right)P(B)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B,A) = P\left( B \middle| A \right)P(A)\)</span></p></li>
+</ul>
+<p>Since joint probabilities are symmetric, we have:</p>
+<div class="math notranslate nohighlight">
+\[P(A,B) = P(B,A) \rightarrow P\left( A \middle| B \right)P(B) = P\left( B \middle| A \right)P(A)\]</div>
+<p>Which implies:</p>
+<div class="math notranslate nohighlight">
+\[P\left( A \middle| B \right) = \frac{P\left( B \middle| A \right)P(A)}{P(B)}\]</div>
+<p>This last expression is known as Bayes’ Theorem (or Bayes’ rule).</p>
+<p>Technically speaking, the Bayes’ rule can be used to “turn”
+probabilities of the kind <span class="math notranslate nohighlight">\(P(A|B)\)</span> into probabilities of the kind
+<span class="math notranslate nohighlight">\(P(B|A)\)</span>.</p>
+<p>More formally, the Bayes’ rule can be used to <strong>update
+our expectation that some event will happen (event A) when we observe
+some evidence (event B)</strong>. This links to the Bayesian interpretation of
+probability, according to which probability can be seen as <strong>a
+<em>reasonable expectation</em> representing <em>the quantification of a degree of
+belief</em></strong> (i.e., how much we believe some event will happen).</p>
+<p>The different terms in the Bayes’ rule have specific names:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(A)\)</span> is called ‘the prior’ – this is our expectation that A
+happens when we do not have any other data to rely on</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B|A)\)</span> is called ‘the likelihood’ – this quantifies how likely it
+is to observe event B happening if we assume that event A has
+happened</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B)\)</span> is called ‘the evidence’ – this models the probability of
+observing event B</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A|B)\)</span> is called ‘the posterior’ – this is our updated
+probability, i.e., how likely it is A to happen once we have
+observed B happening</p></li>
+</ul>
+<p>We’ll see an example in the section below.</p>
+<section id="bayesian-probability-example">
+<h3>Bayesian Probability Example<a class="headerlink" href="#bayesian-probability-example" title="Permalink to this heading">#</a></h3>
+<p>Let’s imagine we are trying to understand if a friend has COVID or not.
+If we do not know anything about our friend’s symptoms (i.e., we don’t
+know if they have any symptoms or not), then we would expect our friend
+to have COVID with a “prior” probability <span class="math notranslate nohighlight">\(P(C)\)</span>. If we know that
+currently one people over two has COVID, we expect:</p>
+<div class="math notranslate nohighlight">
+\[P(C) = \frac{1}{2}\]</div>
+<p>Now, if our friend tells us he has fever, things change a bit. We are
+now interested in modeling the probability:
+<span class="math notranslate nohighlight">\(P\left( C \middle| F \right)\)</span>. We can try to model it using Bayes’
+rule:</p>
+<div class="math notranslate nohighlight">
+\[P\left( C \middle| F \right) = \frac{P\left( F \middle| C \right)P(C)}{P(F)}\]</div>
+<p>Note that it is not straightforward to estimate <span class="math notranslate nohighlight">\(P(C|F)\)</span> in a
+frequentist way. Ideally, we should take all people with a fever on
+earth and check how many of them has COVID. This is not feasible as
+people with just fever may never do a COVID test. On the contrary,
+measuring <span class="math notranslate nohighlight">\(P(F|C)\)</span> is easier: we take all people which we know have
+COVID (these may not be all people with COVID, but probably a large
+enough sample) and see how many of them have a fever. Let’s suppose that
+one people with COVID out of three has a fever. Then we can expect:</p>
+<div class="math notranslate nohighlight">
+\[P\left( F \middle| C \right) = \frac{1}{3}\]</div>
+<p>Now we need to estimate the evidence <span class="math notranslate nohighlight">\(P(F)\)</span>. This can be done by
+considering how frequent it is for people to have a fever. Let’s say we
+use historical data and find out that one person out of five has fever.
+We finally have:</p>
+<div class="math notranslate nohighlight">
+\[P\left( C \middle| F \right) = \frac{\frac{1}{3}\frac{1}{2}}{\frac{1}{5}} = \frac{5}{6}\]</div>
+<p>We can interpret this use of the Bayes’ theorem as follows:</p>
+<ul class="simple">
+<li><p>Before knowing anything about symptoms, we could only guess that our
+friend had COVID with a prior probability of <span class="math notranslate nohighlight">\(P(C) = \frac{1}{2}\)</span></p></li>
+<li><p>When we get to know that our friend has a fever, our expectation
+changes. We know that people with COVID often get a fever, but we
+also know that not all people with COVID get a fever, so we are not
+going to say that we are 100% certain that our friend has fever.
+Instead, we use Bayes’ rule to obtain an updated estimate
+<span class="math notranslate nohighlight">\(P\left( C \middle| F \right) = \frac{5}{6}\)</span> based on our knowledge
+of the likelihood <span class="math notranslate nohighlight">\(P(F|C)\)</span> (how likely it is for people with symptom
+to have COVID) and the evidence <span class="math notranslate nohighlight">\(P(F)\)</span> (how common is this symptom
+– if it is too common, then it is not so informative)</p></li>
+</ul>
+</section>
+</section>
+<section id="independence-and-conditional-independence">
+<h2>Independence and Conditional Independence<a class="headerlink" href="#independence-and-conditional-independence" title="Permalink to this heading">#</a></h2>
+<p>Two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are independent if the outcome of one of the
+two does not influence the outcome of the other. Formally speaking, two
+variables are <strong>said to be independent</strong> if and only if:</p>
+<div class="math notranslate nohighlight">
+\[P(X,Y) = P(X)P(Y)\]</div>
+<p>It should be noted that the expression above <strong>is generally not true</strong>
+as we cannot always assume that two variables are independent.</p>
+<p>Independence can be denoted as:</p>
+<div class="math notranslate nohighlight">
+\[X\bot Y\]</div>
+<p>Moreover, if two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are independent, then:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X \middle| Y \right) = \frac{P(X,Y)}{P(Y)} = \frac{P(X)P(Y)}{P(Y)} = P(X)\]</div>
+<p>This makes sense because it means that “the fact that <span class="math notranslate nohighlight">\(Y\)</span> happens does
+not influence the fact that <span class="math notranslate nohighlight">\(X\)</span> happens”, which is what we would expect
+of two independent variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<section id="id2">
+<h3>Examples<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Intuitively, two variables are independent if the values of one of them
+do not affect the values of the other one:</p>
+<ul class="simple">
+<li><p>Weight and height of a person are <strong>not independent</strong>. Indeed,
+taller people are usually heavier.</p></li>
+<li><p>Height and richness are <strong>independent</strong>, as the richness does not
+depend on the height of a person.</p></li>
+</ul>
+</section>
+<section id="conditional-independence">
+<h3>Conditional independence<a class="headerlink" href="#conditional-independence" title="Permalink to this heading">#</a></h3>
+<p>Two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are said to be <strong>conditionally
+independent</strong> given a random variable <span class="math notranslate nohighlight">\(Z\)</span> if:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X,Y \middle| Z \right) = P\left( X \middle| Z \right)P\left( Y \middle| Z \right)\]</div>
+<p>Conditional independence can be denoted as:</p>
+<div class="math notranslate nohighlight">
+\[X\bot Y\ |\ Z\]</div>
+<section id="id3">
+<h4>Example<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h4>
+<p>Height and vocabulary are not independent: taller people are usually
+older, and hence they have a more sophisticated vocabulary (they know
+more words). However, if we condition on age, they become independent.
+Indeed, among people of the same age, height should not influence
+vocabulary. Hence, height and vocabulary are <strong>conditionally
+independent</strong> with respect to age.</p>
+</section>
+</section>
+</section>
+<section id="example-of-probability-manipulation">
+<h2>Example of Probability Manipulation<a class="headerlink" href="#example-of-probability-manipulation" title="Permalink to this heading">#</a></h2>
+<p>Let’s now consider a real probability manipulation example. This time we will consider the following variables: <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> and <code class="docutils literal notranslate"><span class="pre">Survived</span></code>. We will use observed proportions to answer questions such as:</p>
+<ol class="arabic simple">
+<li><p>What is the overall probability that a passenger survived?</p></li>
+<li><p>What is the probability that a passenger was in 1st class and they survived?</p></li>
+<li><p>What is the probability that a passenger survived, given that they were in 3rd class?</p></li>
+</ol>
+<p>We will start by defining two random variables:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\( Pclass \in \{1, 2, 3\} \)</span>: Passenger class</p></li>
+<li><p><span class="math notranslate nohighlight">\( Survived \in \{0, 1\} \)</span>: Survival outcome (0 = died, 1 = survived)</p></li>
+</ul>
+<section id="what-is-the-overall-probability-that-a-passenger-survived">
+<h3>What is the overall probability that a passenger survived?<a class="headerlink" href="#what-is-the-overall-probability-that-a-passenger-survived" title="Permalink to this heading">#</a></h3>
+<p>To answer this question, we need to compute the overall probabilites of surviving (<span class="math notranslate nohighlight">\(P(Survived)\)</span>):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Survived
+0    0.616162
+1    0.383838
+Name: proportion, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>From the table above, we can say:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Survived=1) = 0.39\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Survived=0) = 0.61\)</span></p></li>
+</ul>
+</section>
+<section id="what-is-the-probability-that-a-passenger-was-in-1st-class-and-they-survived">
+<h3>What is the probability that a passenger was in 1st class and they survived?<a class="headerlink" href="#what-is-the-probability-that-a-passenger-was-in-1st-class-and-they-survived" title="Permalink to this heading">#</a></h3>
+<p>To answer this question, we need to compute the joint probability:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Survived</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.089787</td>
+      <td>0.108866</td>
+      <td>0.417508</td>
+      <td>0.616162</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.152637</td>
+      <td>0.097643</td>
+      <td>0.133558</td>
+      <td>0.383838</td>
+    </tr>
+    <tr>
+      <th>All</th>
+      <td>0.242424</td>
+      <td>0.206510</td>
+      <td>0.551066</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>From the table above, we can answer our question as follows:</p>
+<div class="math notranslate nohighlight">
+\[P(Pclass=1, Survived=1) = 0.09\]</div>
+</section>
+<section id="what-is-the-probability-that-a-passenger-survived-given-that-they-were-in-3rd-class">
+<h3>What is the probability that a passenger survived, given that they were in 3rd class?<a class="headerlink" href="#what-is-the-probability-that-a-passenger-survived-given-that-they-were-in-3rd-class" title="Permalink to this heading">#</a></h3>
+<p>To answer this question, we need to compute a conditional distribution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">margins</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Pclass</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>All</th>
+    </tr>
+    <tr>
+      <th>Survived</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.37037</td>
+      <td>0.527174</td>
+      <td>0.757637</td>
+      <td>0.616162</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.62963</td>
+      <td>0.472826</td>
+      <td>0.242363</td>
+      <td>0.383838</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To answer the question, we can say:</p>
+<div class="math notranslate nohighlight">
+\[P(Survived=1|Pclass=3) = 0.24\]</div>
+</section>
+<section id="excercise">
+<h3>Excercise<a class="headerlink" href="#excercise" title="Permalink to this heading">#</a></h3>
+<p>Suppose that we have three colored boxes r (red), b (blue), and g
+(green). Box r contains 3 apples, 4 oranges, and 3 limes, box b contains
+1 apple, 1 orange, and 0 limes, and box g contains 3 apples, 3 oranges,
+and 4 limes. If a box is chosen at random with probabilities P(r)=0.2,
+P(b)=0.2, P(g)=0.6, and a piece of fruit is extracted from the box (with
+equal probability of selecting any of the items in the box), then what
+is the probability of selecting an apple? If we observe that the
+selected fruit is in fact an orange, what is the probability that it
+came from the green box?</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Parts of chapter 1 of [1];</p></li>
+<li><p>Most of chapter 3 of [2];</p></li>
+<li><p>Parts of chapters 5-7 of [3].</p></li>
+</ul>
+<p>[1] Bishop, Christopher M. <em>Pattern recognition and machine learning</em>.
+springer, 2006.
+<a class="reference external" href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf</a></p>
+<p>[2] Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. <em>Deep
+learning</em>. MIT press, 2016. <a class="reference external" href="https://www.deeplearningbook.org/">https://www.deeplearningbook.org/</a></p>
+<p>[3] Heumann, Christian, and Michael Schomaker Shalabh. Introduction to statistics and data analysis. Springer International Publishing Switzerland, 2016.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-examples">Real-World Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-probability-theory-matters">Why Probability Theory Matters</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#random-experiments">Random Experiments</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-rolling-a-die">Example: Rolling a Die</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-variables">Random Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#toy-titanic-example">Toy Titanic Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#working-definition-of-data">Working Definition of Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#probability">Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-axioms">Probability Axioms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#laplace-probability">Laplace Probability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-probabilities-from-observations">Estimating probabilities from observations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#frequentist-approach">Frequentist approach</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-approach">Bayesian Approach</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-probability">Example of Probability</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-of-frequentist-probability-values">Computation of frequentist probability values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability">Joint probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-joint-probability">Example Joint Probability</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#computation-of-a-joint-probability-table">Computation of a Joint Probability Table</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representations">Graphical representations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-rule-marginal-probability">Sum Rule (Marginal Probability)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability-and-product-rule">Conditional Probability and Product Rule</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#product-rule-factorization">Product Rule (Factorization)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-compute-a-conditional-probability">How to compute a conditional probability?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Graphical Representations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-chain-rule-of-conditional-probabilities">The Chain Rule of Conditional Probabilities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bayes-theorem">Bayes’ Theorem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bayesian-probability-example">Bayesian Probability Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#independence-and-conditional-independence">Independence and Conditional Independence</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Examples</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-independence">Conditional independence</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example-of-probability-manipulation">Example of Probability Manipulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-overall-probability-that-a-passenger-survived">What is the overall probability that a passenger survived?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-probability-that-a-passenger-was-in-1st-class-and-they-survived">What is the probability that a passenger was in 1st class and they survived?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-probability-that-a-passenger-survived-given-that-they-were-in-3rd-class">What is the probability that a passenger survived, given that they were in 3rd class?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excercise">Excercise</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
