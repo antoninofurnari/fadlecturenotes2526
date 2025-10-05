@@ -18,6 +18,9 @@ parts:
 - caption: Lecture 3
   chapters:
   - file: lectures/02_describing_and_visualizing_the_data
+- caption: Lecture 4
+  chapters:
+  - file: lectures/03_probability_for_data_analysis.ipynb
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
