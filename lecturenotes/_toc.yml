@@ -21,6 +21,9 @@ parts:
 - caption: Lecture 4
   chapters:
   - file: lectures/03_probability_for_data_analysis.ipynb
+- caption: Lecture 5
+  chapters:
+  - file: lectures/04_association_between_variables.ipynb
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
