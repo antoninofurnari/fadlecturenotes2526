@@ -1976,6 +1976,15 @@ The interquartile range of sample 2 is: 2.0
 <p><strong>Variance</strong> (also known as <strong>mean squared deviation</strong>) provides an estimate of how much the observed data deviates from the mean. Variance calculates the mean of the squares of the deviations of the values from the mean, penalizing large deviations from the mean value (due to outliers) more heavily than small deviations:</p>
 <div class="math notranslate nohighlight">
 \[s^2 = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n}\]</div>
+<p>It can be shown that, when computing variance from smaller samples, it can lead to <strong>biased estimates</strong>. Hence, it is very common to use the <strong>Sample variance</strong> with <span class="math notranslate nohighlight">\(n-1\)</span> in the denominator:</p>
+<div class="math notranslate nohighlight">
+\[s^2 = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n-1}\]</div>
+<p>We will see it better later in the course, but for now consider that:</p>
+<ul class="simple">
+<li><p>The variance formula can be used when we have access to the whole population;</p></li>
+<li><p>The sample variance formula should be used in all other cases;</p></li>
+<li><p>When sample size is large enough, the two give very similar result (for large values of n: <span class="math notranslate nohighlight">\(n-1 \approx n\)</span>).</p></li>
+</ul>
 <p>Here we use the symbol <span class="math notranslate nohighlight">\(s\)</span> instead of the symbol <span class="math notranslate nohighlight">\(\sigma\)</span> seen in the case of probability distributions, because <span class="math notranslate nohighlight">\(s\)</span> is a value “estimated” from the data and not “theoretical” as in the case of <span class="math notranslate nohighlight">\(\sigma\)</span>. It should be noted, however, that in practice, there is no universal convention, so in many cases <span class="math notranslate nohighlight">\(\sigma\)</span> is also used for estimated values.</p>
 <p>We can attribute a geometric meaning to variance, as shown in the graph below:</p>
 <div class="cell tag_remove-input docutils container">
@@ -2007,6 +2016,9 @@ The interquartile range of sample 2 is: 2.0
 <p>The same does not apply to the variance, which will be measured in <strong>years squared</strong>. If we want to obtain a <strong>commensurable</strong> measure of dispersion, we can calculate the square root of the variance, thus obtaining the <strong>standard deviation</strong> (or <strong>root mean square deviation</strong>), which is defined as follows:</p>
 <div class="math notranslate nohighlight">
 \[s = \sqrt{s^2}=\sqrt{\frac{\sum_{i=1}{n}(x_i-x^2)}{n}}\]</div>
+<p>Similarly, we often use the <strong>sample standard deviation</strong>:</p>
+<div class="math notranslate nohighlight">
+\[s = \sqrt{s^2}=\sqrt{\frac{\sum_{i=1}{n}(x_i-x^2)}{n-1}}\]</div>
 <p>We can compute the standard deviation as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
