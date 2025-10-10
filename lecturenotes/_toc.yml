@@ -20,13 +20,16 @@ parts:
   - file: lectures/02_describing_and_visualizing_the_data
 - caption: Lecture 4
   chapters:
-  - file: lectures/03_probability_for_data_analysis.ipynb
+  - file: lectures/03_probability_for_data_analysis
 - caption: Lecture 5
   chapters:
-  - file: lectures/04_association_between_variables.ipynb
+  - file: lectures/04_association_between_variables
 - caption: Lecture 6
   chapters:
-  - file: lectures/05_data_distributions.ipynb
+  - file: lectures/05_data_distributions
+- caption: Lecture 7
+  chapters:
+  - file: lectures/07_statistical_inference
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
