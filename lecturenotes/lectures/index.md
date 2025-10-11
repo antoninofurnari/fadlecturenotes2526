@@ -3,6 +3,8 @@ This Jupyter Book contains lecture notes for the [Fundamentals of Data Analysis 
 
 The notes are informal and meant to be used as teaching material - they may contain errors. 
 
+A server to study with multiple-choice question tests in Italian, is available [here](https://fadquestions.onrender.com).
+
 To point out any mistake, you can open an issue.
 
 ```{tableofcontents}
