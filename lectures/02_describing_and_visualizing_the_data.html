@@ -197,6 +197,14 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -250,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/02_describing_and_visualizing_the_data.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes2526/lectures/02_describing_and_visualizing_the_data.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +289,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -298,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/02_describing_and_visualizing_the_data.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/02_describing_and_visualizing_the_data.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -475,6 +483,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary">Statistical Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -2486,6 +2495,37 @@ Name: weight, dtype: float64
 </div>
 <p>From the graph above, we can note that weight has different distributions in males and females, with males overall weighing more, as one would expect.</p>
 </section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Considering the Titanic dataset, show the bar charts of absolute and relative frequencies of the values in the <code class="docutils literal notranslate"><span class="pre">Pclass</span></code> column. Randomly choosing among the passengers, what is the probability that they embarked in second class?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Considering the Titanic dataset, show the histogram of the ages of passengers embarked in first class. Use an appropriate criterion to choose the number of bins.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Modify the plot from the previous exercise to construct a histogram that answers the question “if I randomly choose a passenger boarded in first class, what is the probability that their age is between <span class="math notranslate nohighlight">\(20\)</span> and <span class="math notranslate nohighlight">\(30\)</span> years?”</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>Considering the Titanic dataset, compare the cumulative age distributions of passengers embarked in the various classes. Are the distributions similar? In which class are the youngest subjects embarked?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
+<p>Considering the Titanic dataset, show with a stacked bar plot the percentages of passengers belonging to the three classes separately for the two sexes. Are there any differences in the distribution?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 6</p>
+<p>Considering the Titanic dataset, calculate for each variable the count, mean, standard deviation, minimum, maximum, median, first quartile, and third quartile. After calculating the requested values individually, use the <code class="docutils literal notranslate"><span class="pre">describe</span></code> method to obtain these values. Which variable is the most dispersed?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 7</p>
+<p>Considering the Titanic dataset, for each of the three classes, calculate the mean and variance of passenger ages. In which class are the ages least dispersed? Which class contains the youngest individuals? Complete the analysis with bar charts.</p>
+</div></blockquote>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -2611,6 +2651,7 @@ Name: weight, dtype: float64
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-summary">Statistical Summary</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#boxplots">Boxplots</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>

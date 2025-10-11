@@ -68,6 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Statistical Inference" href="06_statistical_inference.html" />
     <link rel="prev" title="Association between variables" href="04_association_between_variables.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -196,6 +197,14 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Distributions</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -249,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/05_data_distributions.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes2526/lectures/05_data_distributions.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -280,7 +289,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -297,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/05_data_distributions.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/05_data_distributions.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -439,6 +448,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-variables">Continuous Variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-functions-pdf">Probability Density Functions (PDF)</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-uniform-pdf">Example: Uniform PDF</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#approximating-a-pdf-with-density-histograms-and-density-estimates">Approximating a PDF with Density Histograms and Density Estimates</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distribution-functions-cdf">Cumulative Distribution Functions (CDF)</a></li>
@@ -759,6 +769,91 @@ generally are) much more complicated than that.</p>
 <img alt="../_images/ae53cb33e911ffc32c49057972c62082d537f8167705cdf148c7cffc4b28810c.png" src="../_images/ae53cb33e911ffc32c49057972c62082d537f8167705cdf148c7cffc4b28810c.png" />
 </div>
 </div>
+</section>
+<section id="approximating-a-pdf-with-density-histograms-and-density-estimates">
+<h4>Approximating a PDF with Density Histograms and Density Estimates<a class="headerlink" href="#approximating-a-pdf-with-density-histograms-and-density-estimates" title="Permalink to this heading">#</a></h4>
+<p>Imagine we are working with the Titanic dataset. While a standard frequency histogram can show us the <em>number</em> of passengers in each age group, it doesn’t directly answer a question like:</p>
+<blockquote>
+<div><p>What is the probability that a randomly selected passenger’s age is between 30 and 40?</p>
+</div></blockquote>
+<p>If we knew the true Probability Density Function (PDF), ( f(x) ), for the age of the entire population from which the passengers were drawn, we could find this exact probability by calculating the integral:</p>
+<div class="math notranslate nohighlight">
+\[
+P(30 \le \text{Age} \le 40) = \int_{30}^{40} f(x) \, dx
+\]</div>
+<p>Since we only have a sample of passengers, we can’t know the true PDF. Instead, we can approximate it using a <strong>density histogram</strong>. This type of histogram is normalized so that the <strong>total area of all its bars equals 1</strong>, making it an empirical counterpart to a theoretical PDF.</p>
+<p>The key idea is that the area of each bar approximates the integral of the PDF over that bar’s interval. The area for a single bin ( j ), with height ( h_j ) and width ( w_j ), is:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Area}_j = h_j \cdot w_j \approx \int_{\text{bin } j} f(x) \, dx
+\]</div>
+<p>By constructing the histogram this way, the sum of the areas of all bars is equal to 1, mirroring the fundamental property of a PDF:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_{j} h_j \cdot w_j \approx \int_{-\infty}^{\infty} f(x) \, dx = 1
+\]</div>
+<p>In our Titanic example, the area of the bar corresponding to the 30–40 age range would give us an empirical estimate of the probability we are looking for. The resulting plot is visually similar to a frequency histogram, but the scale of the y-axis changes from a simple count to <strong>density</strong>, a scale that ensures the bar’s area correctly represents probability.</p>
+<p>To draw a density histogram in Python, we just pass the argument <code class="docutils literal notranslate"><span class="pre">density=True</span></code> to the <code class="docutils literal notranslate"><span class="pre">hist</span></code> function of matplotlib or pandas.</p>
+<p>The example below compares a normalized histogram to a density histogram:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c1"># Load the Titanic dataset and extract the &#39;Age&#39; column, dropping missing values</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">)</span>
+<span class="n">ages</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Create a figure with two subplots for side-by-side comparison</span>
+<span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># --- Plot 1: Normalized Histogram (Probability) ---</span>
+<span class="c1"># The sum of bar heights will equal 1</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ages</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">ages</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">weights</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Normalized Histogram (Probability)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Probability (Sum of heights = 1)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># --- Plot 2: Density Histogram ---</span>
+<span class="c1"># The total area of the bars will equal 1</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">ages</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;salmon&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Density Histogram&#39;</span><span class="p">)</span>
+
+<span class="c1"># Fit a normal distribution and overlay its PDF</span>
+<span class="n">mu_hat</span><span class="p">,</span> <span class="n">sigma_hat</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ages</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ages</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">ages</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">pdf_fitted</span> <span class="o">=</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">mu_hat</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">sigma_hat</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf_fitted</span><span class="p">,</span> <span class="s1">&#39;r-&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fitted Normal PDF&#39;</span><span class="p">)</span>
+
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Density Histogram&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Density (Total area = 1)&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Add an overall title and show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Normalized vs. Density Histograms for Passenger Ages&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>  <span class="c1"># Adjust layout to make space for suptitle</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/74d4ffc660790933d26fe49ecd2068ef721c7632574f344e2e191167132e9baf.png" src="../_images/74d4ffc660790933d26fe49ecd2068ef721c7632574f344e2e191167132e9baf.png" />
+</div>
+</div>
+<p>The figure above contrasts two important ways to normalize a histogram using Titanic passenger ages, each with a distinct but related interpretation:</p>
+<ul class="simple">
+<li><p><strong>Normalized Histogram (Left)</strong>:<br />
+The y-axis represents <strong>probability</strong>. Each bar’s height shows the proportion of passengers in that age bin, so the <strong>sum of all bar heights equals 1</strong>. This treats the binned data like a discrete probability distribution and allows direct reading of probabilities (e.g., the chance of being 20–24 years old is roughly 0.12 or 12%).</p></li>
+<li><p><strong>Density Histogram (Right)</strong>:<br />
+The y-axis represents <strong>density</strong>—probability per unit on the x-axis (e.g., per year of age). Here, it’s the <strong>area</strong> of each bar (height × width) that reflects probability. The <strong>total area of all bars equals 1</strong>, mirroring the behavior of a continuous Probability Density Function (PDF).</p></li>
+</ul>
+<p><strong>Key takeaway</strong>:<br />
+The density histogram is the correct empirical approximation of a continuous PDF. That’s why the smooth red PDF curve aligns with the right plot’s y-axis but would be mis-scaled on the left. While both histograms are normalized, only the density version properly reflects continuous probability.</p>
 </section>
 </section>
 <section id="cumulative-distribution-functions-cdf">
@@ -1413,6 +1508,15 @@ learning</em>. MIT press, 2016. <a class="reference external" href="https://www.
         <p class="prev-next-title">Association between variables</p>
       </div>
     </a>
+    <a class="right-next"
+       href="06_statistical_inference.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Statistical Inference</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1446,6 +1550,7 @@ learning</em>. MIT press, 2016. <a class="reference external" href="https://www.
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-variables">Continuous Variables</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#probability-density-functions-pdf">Probability Density Functions (PDF)</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-uniform-pdf">Example: Uniform PDF</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#approximating-a-pdf-with-density-histograms-and-density-estimates">Approximating a PDF with Density Histograms and Density Estimates</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cumulative-distribution-functions-cdf">Cumulative Distribution Functions (CDF)</a></li>

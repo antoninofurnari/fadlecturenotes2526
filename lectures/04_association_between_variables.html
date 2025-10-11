@@ -197,6 +197,14 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -250,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes/blob/master/lecturenotes/lectures/04_association_between_variables.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes2526/lectures/04_association_between_variables.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -281,7 +289,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes" target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -298,7 +306,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://github.com/antoninofurnari/fadlecturenotes/issues/new?title=Issue%20on%20page%20%2Flectures/04_association_between_variables.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/04_association_between_variables.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -429,18 +437,20 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-optional">Relative Risk (Optional)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio-optional">Odds Ratio (Optional)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio-in-python">Relative Risk and Odds Ratio in Python</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plots">Scatter plots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-matrix">Scatter Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hexbin-plots-a-2d-histogram">Hexbin Plots: A 2D Histogram</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#density-and-contour-plots-a-smoother-view-of-distribution">Density and Contour Plots: A Smoother View of Distribution</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient">Pearson Correlation Coefficient</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pearson-s-correlation-coefficient-values">Interpretation of Pearson’s Correlation Coefficient Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient-and-discrete-variables">Pearson Correlation Coefficient and Discrete Variables</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spearman-s-rank-correlation-coefficient">Spearman’s Rank Correlation Coefficient</a></li>
@@ -448,6 +458,15 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix">Correlation Matrix</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-measures-of-correlation-between-discrete-variables-optional">Additional Measures of Correlation Between Discrete Variables (Optional)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk">Relative Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio">Odds Ratio</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio-in-python">Relative Risk and Odds Ratio in Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -1009,225 +1028,6 @@ Name: proportion, dtype: float64
 </div>
 <p>This value indicates a small association between the two variables, because the value is greater than <span class="math notranslate nohighlight">\(0\)</span> but still not close to <span class="math notranslate nohighlight">\(1\)</span>.</p>
 </section>
-<section id="relative-risk-optional">
-<h3>Relative Risk (Optional)<a class="headerlink" href="#relative-risk-optional" title="Permalink to this heading">#</a></h3>
-<p>Relative risk is one of the most common methods for measuring the degree of correlation between two discrete variables in epidemiology.</p>
-<p>Let’s look at an example (from <a class="reference external" href="https://en.wikipedia.org/wiki/Odds_ratio">here</a>): suppose that in a village of <span class="math notranslate nohighlight">\(1000\)</span> people, the incidence of a rare disease has increased. Investigating, we discover that recently a part of the population has been exposed to radiation.</p>
-<p>The data relating to diseased and healthy subjects exposed or not exposed to the risk (the radiation) is summarized by the following contingency table that relates the “Diseased/Healthy” variable to the “Exposed/Non Exposed” one:</p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Exposed</th>
-      <th>Non Exposed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Diseased</th>
-      <td>20</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>Healthy</th>
-      <td>380</td>
-      <td>594</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>The table indicates the number of people who have contracted a given disease or not, in relation to whether they have been exposed to a certain risk or not (e.g., to a pollutant).</p>
-<p>The risk of developing the disease if exposed can be calculated with the following probability:</p>
-<div class="math notranslate nohighlight">
-\[P(Diseased|Exposed) = \frac{\#\ (Diseased, Exposed)}{\#\ Exposed} = \frac{20}{20+380} = 0.05\]</div>
-<p>We see that we have a <span class="math notranslate nohighlight">\(5\%\)</span> risk of developing the disease if exposed to radiation. For example, among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, we expect to find <span class="math notranslate nohighlight">\(5\)</span> sick.</p>
-<p>The risk calculated above, by itself, does not tell us much about the association between the variables “Exposed” and “Non Exposed”. Let’s now consider the probability of contracting the disease if not exposed to the risk:</p>
-<div class="math notranslate nohighlight">
-\[P(Diseased|Non\ Exposed) = \frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed} = \frac{6}{6+594} = 0.01\]</div>
-<p>This value tells us that we have a risk of about <span class="math notranslate nohighlight">\(1\%\)</span> of contracting the disease if not exposed. In practice, out of <span class="math notranslate nohighlight">\(100\)</span> subjects not exposed to the risk, <span class="math notranslate nohighlight">\(1\)</span> gets sick.</p>
-<p>It is useful to compare these two risk values. Indeed, although the <span class="math notranslate nohighlight">\(5\%\)</span> risk of getting sick among exposed subjects is not a very high number in absolute terms, it must also be said that the proportion of sick subjects not exposed to the risk is much lower (<span class="math notranslate nohighlight">\(1\%\)</span>). We therefore define relative risk as the ratio between these two risks (or probabilities):</p>
-<div class="math notranslate nohighlight">
-\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{0.05}{0.01}=5\]</div>
-<p>We interpret this value as follows:</p>
-<blockquote>
-<div><p>The proportion of subjects who contract the disease is <span class="math notranslate nohighlight">\(5\)</span> times greater among those who have been exposed to the risk, compared to the group of those who have not.</p>
-</div></blockquote>
-<p>For example, if among <span class="math notranslate nohighlight">\(100\)</span> people not exposed to the risk, generally <span class="math notranslate nohighlight">\(10\)</span> get sick (a risk of <span class="math notranslate nohighlight">\(10\%\)</span>), then we expect that among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, as many as <span class="math notranslate nohighlight">\(50\%\)</span> will get sick!</p>
-<p>Relative risk tells us nothing about the absolute risk (the proportion of people who get sick), but only about how observing subjects exposed to the risk, compared to observing subjects not exposed to the risk, can influence the proportion of sick subjects.</p>
-<p>Generally:</p>
-<ul class="simple">
-<li><p><span class="math notranslate nohighlight">\(RR=1\)</span> indicates that exposure to the risk is irrelevant in the development of the disease (the variables are independent);</p></li>
-<li><p><span class="math notranslate nohighlight">\(RR&gt;1\)</span> indicates that exposure to the risk is positively associated with the development of the disease (there are more sick people among subjects exposed to the risk);</p></li>
-<li><p><span class="math notranslate nohighlight">\(RR&lt;1\)</span> indicates that exposure to the risk is negatively associated with the development of the disease (there are fewer sick people among subjects exposed to the risk). In this case, it is said that the risk “protects” against the onset of the disease (useful if the “risk” is actually taking a drug).</p></li>
-</ul>
-<p><strong>Note that relative risk measures a correlation between variables, not a cause-and-effect relationship, so it is not always correct to say that in the presence of a relative risk greater than 1, exposure to the risk “causes” the disease. However, there are tools (causal analysis) that allow us to verify in which cases we can give this interpretation. These tools are fundamental for ascertaining whether a particular drug causes (or is co-responsible for) a recovery or whether a particular habit (e.g., smoking) causes (or is co-responsible for) the onset of a disease. We will see more examples later in the course.</strong></p>
-</section>
-<section id="odds-ratio-optional">
-<h3>Odds Ratio (Optional)<a class="headerlink" href="#odds-ratio-optional" title="Permalink to this heading">#</a></h3>
-<p>Relative risk cannot always be calculated. In fact, in the previous case, we assumed we had access to all population data: for all <span class="math notranslate nohighlight">\(1000\)</span> inhabitants, we knew who had been exposed to the risk and who had not, and who had developed the disease and who had not. In many cases, we might not have all this data. For example, imagine that the incident occurred <span class="math notranslate nohighlight">\(50\)</span> years ago and that at the time only a random sample of <span class="math notranslate nohighlight">\(50\%\)</span> of the <span class="math notranslate nohighlight">\(1000\)</span> inhabitants of the village was interviewed. Suppose we obtain the following contingency table:</p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Exposed</th>
-      <th>Non Exposed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Diseased</th>
-      <td>20</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>Healthy</th>
-      <td>10</td>
-      <td>16</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>Note that this case (that of sampling) will be the most frequent, as we often do not have access to the entire population, but only to a sample.</p>
-<p>In this case, we cannot calculate the relative risk as the real numbers of people exposed and not exposed to risk, which were in the denominator of the risk calculation expressions, are not available. If we still apply the formula, we will get an estimate biased by our sampling:</p>
-<div class="math notranslate nohighlight">
-\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{20/(20+10)}{6/(6+16)}=2.45\]</div>
-<p>Although we cannot calculate the relative risk as we do not know the absolute number of sick and exposed people, <strong>we expect our sample to be a good representation of the population</strong>, therefore we can reason in terms of “odds”.</p>
-<p>Odds are a probability concept widely used in betting, because they allow the bettor to easily calculate the payout to collect. For example, if team <span class="math notranslate nohighlight">\(A\)</span>’s victory over team <span class="math notranslate nohighlight">\(B\)</span> in a soccer match is given as <span class="math notranslate nohighlight">\(5:1\)</span>, the bookmaker expects team <span class="math notranslate nohighlight">\(A\)</span> to be <span class="math notranslate nohighlight">\(5\)</span> times more likely to win than team <span class="math notranslate nohighlight">\(B\)</span>. If I bet <span class="math notranslate nohighlight">\(2\)</span> euros on team <span class="math notranslate nohighlight">\(B\)</span> and team <span class="math notranslate nohighlight">\(B\)</span> wins, then I will win <span class="math notranslate nohighlight">\(5\times 2 = 10\)</span> euros (I bet on a rare event). The odd in this case would be defined as:</p>
-<div class="math notranslate nohighlight">
-\[odd = \frac{5}{1} = 5\]</div>
-<p>Alternatively, I can reason in terms of probability. Given the scheme above, I expect that, if we played the match <span class="math notranslate nohighlight">\(100\)</span> times, then the probability of victories for team <span class="math notranslate nohighlight">\(A\)</span> would be equal to <span class="math notranslate nohighlight">\(P(A\ wins)=\frac{5}{5+1}\)</span>, while the probability of loss would be equal to <span class="math notranslate nohighlight">\(P(A\ loses)=\frac{1}{5+1}\)</span>. The odd can be defined in terms of these probabilities:</p>
-<div class="math notranslate nohighlight">
-\[odd = \frac{P(A\ wins)}{P(A\ loses)} = \frac{\frac{5}{5+1}}{\frac{1}{5+1}} = 5\]</div>
-<p>In general, the odd for an event <span class="math notranslate nohighlight">\(E\)</span> is the probability that the event occurs, divided by the probability that the event does not occur:</p>
-<div class="math notranslate nohighlight">
-\[odd = \frac{P(E)}{1-P(E)}\]</div>
-<p>The odd is a concept similar to risk because it tells us how much greater the frequency of an event occurring (A wins) is compared to the frequency of the event not occurring. Let’s apply this concept to our example. We define two odds (just as we defined two risks):</p>
-<ul class="simple">
-<li><p>The odds of getting sick if exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)} = \frac{\frac{20}{20+10}}{\frac{10}{20+10}} = \frac{20}{10} = 2\)</span></p></li>
-<li><p>The odds of getting sick if not exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)} = \frac{\frac{6}{6+16}}{\frac{16}{6+16}} = \frac{6}{16} = 0.375\)</span></p></li>
-</ul>
-<p>It should be noted that in the formulas above, the absolute counts, i.e., those we do not trust given the sampling, “cancel out”.</p>
-<p>The odds ratio will be defined as follows:</p>
-<div class="math notranslate nohighlight">
-\[odd = \frac{\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)}}{\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)}} = \frac{2}{0.375} \approx 5.3\]</div>
-<p>We note that the obtained odds ratio is very close to the previously calculated relative risk of <span class="math notranslate nohighlight">\(5\)</span>. <strong>In practice, it can be demonstrated that, if it is assumed that the disease is rare (rare-disease assumption), the odds ratio and the relative risk converge to similar values.</strong> It is therefore a fairly common practice to make this assumption and calculate the odds ratio instead of the relative risk.</p>
-<section id="relative-risk-and-odds-ratio-in-python">
-<h4>Relative Risk and Odds Ratio in Python<a class="headerlink" href="#relative-risk-and-odds-ratio-in-python" title="Permalink to this heading">#</a></h4>
-<p>Let’s consider this contingency table:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
-    <span class="s2">&quot;Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">380</span><span class="p">],</span>
-    <span class="s2">&quot;Non Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">594</span><span class="p">]</span>
-<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Diseased&quot;</span><span class="p">,</span> <span class="s2">&quot;Healthy&quot;</span><span class="p">])</span>
-<span class="n">contingency</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Exposed</th>
-      <th>Non Exposed</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Diseased</th>
-      <td>20</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <th>Healthy</th>
-      <td>380</td>
-      <td>594</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
-</div>
-<p>We can calculate the relative risk as follows:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">relative_risk</span>
-<span class="n">relative_risk</span><span class="p">(</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span> <span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RelativeRiskResult(relative_risk=5.0, exposed_cases=20, exposed_total=400, control_cases=6, control_total=600)
-</pre></div>
-</div>
-</div>
-</div>
-<p>The function requires that the various necessary values be passed rather than the contingency matrix to avoid ambiguity.</p>
-<p>The odds ratio is calculated as follows:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">odds_ratio</span>
-<span class="n">odds_ratio</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OddsRatioResult(statistic=5.202179487843029)
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
 </section>
 <section id="associations-between-continuous-variables">
 <h2>Associations Between Continuous Variables<a class="headerlink" href="#associations-between-continuous-variables" title="Permalink to this heading">#</a></h2>
@@ -1340,7 +1140,10 @@ diagnostic group, a factor with levels <code class="docutils literal notranslate
 </ul>
 <section id="graphical-representation-of-two-continuous-variables">
 <h3>Graphical Representation of Two Continuous Variables<a class="headerlink" href="#graphical-representation-of-two-continuous-variables" title="Permalink to this heading">#</a></h3>
-<p>Let’s start by considering the variables <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code>. The first useful form of representation is the <strong>scatterplot</strong>, which visualizes observations as two-dimensional data:</p>
+<p>Let’s start by considering the variables <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code>.</p>
+<section id="scatter-plots">
+<h4>Scatter plots<a class="headerlink" href="#scatter-plots" title="Permalink to this heading">#</a></h4>
+<p>The first useful form of representation is the <strong>scatter plot</strong>, which visualizes observations as two-dimensional data:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -1365,6 +1168,9 @@ diagnostic group, a factor with levels <code class="docutils literal notranslate
 <img alt="../_images/a78d512d5236e3102497242d8af36c63a89958bdfa27f68897399ebd5c85f2c4.png" src="../_images/a78d512d5236e3102497242d8af36c63a89958bdfa27f68897399ebd5c85f2c4.png" />
 </div>
 </div>
+</section>
+<section id="scatter-matrix">
+<h4>Scatter Matrix<a class="headerlink" href="#scatter-matrix" title="Permalink to this heading">#</a></h4>
 <p>We note that in this case the relationship appears less marked, but we still note an ascending trend of <code class="docutils literal notranslate"><span class="pre">sspg</span></code> as <code class="docutils literal notranslate"><span class="pre">relwt</span></code> grows. It is often useful to try to study correlations with a <strong>scattermatrix</strong> that shows all possible scatterplots. In the case of our example:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1399,6 +1205,84 @@ diagnostic group, a factor with levels <code class="docutils literal notranslate
 <img alt="../_images/393cae03e7d70562c94700684c933f69fee4bcc3968277917975caf583f43492.png" src="../_images/393cae03e7d70562c94700684c933f69fee4bcc3968277917975caf583f43492.png" />
 </div>
 </div>
+</section>
+<section id="hexbin-plots-a-2d-histogram">
+<h4>Hexbin Plots: A 2D Histogram<a class="headerlink" href="#hexbin-plots-a-2d-histogram" title="Permalink to this heading">#</a></h4>
+<p>When a scatterplot contains a large number of data points, we can encounter the problem of <strong>overplotting</strong>, where points are plotted on top of each other. This makes it difficult to discern the density of the data, as heavily populated areas can look the same as moderately populated ones.</p>
+<blockquote>
+<div><p>A <strong>hexbin plot</strong> is an excellent alternative that addresses this issue[cite: 48]. It divides the two-dimensional space into a grid of hexagonal bins and then colors each hexagon based on the number of data points it contains. Think of it as a two-dimensional histogram, which effectively visualizes data density.</p>
+</div></blockquote>
+<p>Let’s generate a hexbin plot for the <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code> variables. We can adjust the <code class="docutils literal notranslate"><span class="pre">gridsize</span></code> parameter to control the number of bins (and thus their size).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="c1"># let&#39;s use the hexbin function</span>
+<span class="c1"># cmap is the color map</span>
+<span class="c1"># gridsize regulates the number of hexagons</span>
+<span class="n">data</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">hexbin</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;sspg&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;glutest&#39;</span><span class="p">,</span> <span class="n">gridsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Steady State Plasma Glucose (sspg)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Plasma Glucose (glutest)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hexbin Plot of sspg vs. glutest&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d6e9fb48eb3dfef3de126f6944dbadf421027e919a3c72f00d0cdda42f0a9d4e.png" src="../_images/d6e9fb48eb3dfef3de126f6944dbadf421027e919a3c72f00d0cdda42f0a9d4e.png" />
+</div>
+</div>
+<p>This plot clearly shows that the highest concentration of data points (the darkest hexagons) is where both <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code> values are low. This is a level of detail about the data’s distribution that might be obscured in a dense, standard scatterplot.</p>
+</section>
+<section id="density-and-contour-plots-a-smoother-view-of-distribution">
+<h4>Density and Contour Plots: A Smoother View of Distribution<a class="headerlink" href="#density-and-contour-plots-a-smoother-view-of-distribution" title="Permalink to this heading">#</a></h4>
+<p>Just as we used Kernel Density Estimation (KDE) to create a smooth curve representing the distribution of a single variable, we can apply the same principle to two variables. This gives us a smoother alternative to the binned approach of the hexbin plot.</p>
+<p>The result is a <strong>2D density plot</strong>, which visualizes the estimated probability density of data points using a continuous color gradient. We can also overlay <strong>contour lines</strong>, which connect points of equal density, much like a topographical map shows lines of equal elevation. 🗺️</p>
+<p>This method is excellent for identifying the shape and peaks of a bivariate distribution without being constrained by the grid of a histogram or hexbin plot. We’ll revisit the theory behind <strong>Kernel Density Estimation</strong> in a later lecture, but for now, let’s focus on its application.</p>
+<p>Let’s create a density plot for the <code class="docutils literal notranslate"><span class="pre">sspg</span></code> and <code class="docutils literal notranslate"><span class="pre">glutest</span></code> variables using the <code class="docutils literal notranslate"><span class="pre">seaborn</span></code> library.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># Create a figure and a set of subplots (1 row, 2 columns)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># --- Plot 1: Left Subplot (Density + Contour) ---</span>
+<span class="c1"># we&#39;ll use kdeplot from seaborn</span>
+<span class="c1"># we use it twice: first to fill the density, then to draw the contours</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;sspg&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;glutest&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="c1"># levels regulates the number of contour lines</span>
+<span class="c1"># color and linewidths regulate the appearance of the contour lines</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;sspg&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;glutest&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Density Plot with Contours&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Steady State Plasma Glucose (sspg)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Test Plasma Glucose (glutest)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># --- Plot 2: Right Subplot (Contour Only) ---</span>
+<span class="c1"># only the contours</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;sspg&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;glutest&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Contour Plot Only&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Steady State Plasma Glucose (sspg)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># Hide y-axis label for a cleaner look</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># Adjust the layout to prevent titles/labels from overlapping</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+<span class="c1"># Display the plots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a9a25df31d0fc266f781ab4561ecfa7a3f5f3cd41b8b4ca74750161b9278c32.png" src="../_images/8a9a25df31d0fc266f781ab4561ecfa7a3f5f3cd41b8b4ca74750161b9278c32.png" />
+</div>
+</div>
+<p>In the plot on the left, the color-filled areas provide an intuitive map of the data’s density; the darkest regions represent the highest concentration of points, while the contour lines enclose areas of progressively lower density. This visualization clearly highlights a single, dense cluster in the lower-left corner.</p>
+<p>The <strong>contour-only plot</strong> on the right is particularly useful when you need to <strong>compare multiple distributions on the same axes</strong>. While overlaying several filled density plots would result in colors obscuring each other, using only the contour lines for each group allows you to clearly see how the centers and shapes of different distributions overlap or diverge without the visual clutter.</p>
+</section>
 </section>
 <section id="covariance">
 <h3>Covariance<a class="headerlink" href="#covariance" title="Permalink to this heading">#</a></h3>
@@ -1622,6 +1506,73 @@ z(X) = \frac{X-\overline X}{s_x}
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/75bb1c802d4a7003f44589275c9831e68e2538bbd0e87ff133d7dff7049d088a.png" src="../_images/75bb1c802d4a7003f44589275c9831e68e2538bbd0e87ff133d7dff7049d088a.png" />
+</div>
+</div>
+</section>
+<section id="pearson-correlation-coefficient-and-discrete-variables">
+<h4>Pearson Correlation Coefficient and Discrete Variables<a class="headerlink" href="#pearson-correlation-coefficient-and-discrete-variables" title="Permalink to this heading">#</a></h4>
+<p>It’s important to remember that the <strong>Pearson correlation coefficient is designed to measure the linear relationship between two continuous variables</strong>. It is not suitable for nominal categorical variables (e.g., “City” or “Favorite Color”), as the categories have no inherent numerical order.</p>
+<p>However, a notable exception exists for the specific case where you have <strong>one continuous variable and one dichotomous</strong> variable (a discrete variable with only two categories, like “Yes/No” or “Survived/Died”). In this scenario, you can convert the two categories into the numbers <code class="docutils literal notranslate"><span class="pre">0</span></code> and <code class="docutils literal notranslate"><span class="pre">1</span></code>. By applying the standard Pearson formula to this data, you calculate what is known as the <strong>point-biserial correlation coefficient (<span class="math notranslate nohighlight">\(r_{pb}\)</span>)</strong>.</p>
+<p>The example below shows how to compute the point-biserial correlation coefficient between <code class="docutils literal notranslate"><span class="pre">Sex</span></code> and <code class="docutils literal notranslate"><span class="pre">Age</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">pointbiserialr</span><span class="p">,</span> <span class="n">pearsonr</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Drop rows where &#39;Age&#39; is missing to perform the correlation</span>
+<span class="n">titanic_cleaned</span> <span class="o">=</span> <span class="n">titanic</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+
+<span class="c1"># Extract the two variables of interest</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">titanic_cleaned</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="n">survived</span> <span class="o">=</span> <span class="n">titanic_cleaned</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">({</span><span class="s1">&#39;male&#39;</span><span class="p">:</span><span class="s1">&#39;1&#39;</span><span class="p">,</span><span class="s1">&#39;female&#39;</span><span class="p">:</span><span class="s1">&#39;0&#39;</span><span class="p">})</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># --- Method 1: Using the specific pointbiserialr function ---</span>
+<span class="n">pbr_result</span> <span class="o">=</span> <span class="n">pointbiserialr</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">survived</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Point-Biserial Correlation: </span><span class="si">{</span><span class="n">pbr_result</span><span class="o">.</span><span class="n">correlation</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># --- Method 2: Verifying with the standard Pearson correlation function ---</span>
+<span class="c1"># The result should be identical</span>
+<span class="n">pearson_result</span> <span class="o">=</span> <span class="n">pearsonr</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">survived</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pearson Correlation (on the same data): </span><span class="si">{</span><span class="n">pearson_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Point-Biserial Correlation: 0.0933
+Pearson Correlation (on the same data): 0.0933
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see a small positive association: males tend to be older. This is also confirmed by the boxplot below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># Set up the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Create boxplots to compare the age distribution by sex</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">titanic_cleaned</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s1">&#39;Sex&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add titles and labels for clarity</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Age Distribution by Sex on the Titanic&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Sex&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+
+<span class="c1"># Display the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5e57352532699f8b678faf0577fc7241e1220682a4ffbfc2675f74608195ba08.png" src="../_images/5e57352532699f8b678faf0577fc7241e1220682a4ffbfc2675f74608195ba08.png" />
 </div>
 </div>
 </section>
@@ -2047,6 +1998,270 @@ We can compute a correlation matrix with the <code class="docutils literal notra
 </div>
 </section>
 </section>
+<section id="additional-measures-of-correlation-between-discrete-variables-optional">
+<h2>Additional Measures of Correlation Between Discrete Variables (Optional)<a class="headerlink" href="#additional-measures-of-correlation-between-discrete-variables-optional" title="Permalink to this heading">#</a></h2>
+<p>This section reports optional material on two measures of correlation between discrete variables which are often used in epidemiology and biostatistics.</p>
+<section id="relative-risk">
+<h3>Relative Risk<a class="headerlink" href="#relative-risk" title="Permalink to this heading">#</a></h3>
+<p>Relative risk is one of the most common methods for measuring the degree of correlation between two discrete variables in epidemiology.</p>
+<p>Let’s look at an example (from <a class="reference external" href="https://en.wikipedia.org/wiki/Odds_ratio">here</a>): suppose that in a village of <span class="math notranslate nohighlight">\(1000\)</span> people, the incidence of a rare disease has increased. Investigating, we discover that recently a part of the population has been exposed to radiation.</p>
+<p>The data relating to diseased and healthy subjects exposed or not exposed to the risk (the radiation) is summarized by the following contingency table that relates the “Diseased/Healthy” variable to the “Exposed/Non Exposed” one:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">380</span><span class="p">],</span>
+    <span class="s2">&quot;Non Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">594</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Diseased&quot;</span><span class="p">,</span> <span class="s2">&quot;Healthy&quot;</span><span class="p">])</span>
+<span class="n">contingency</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>380</td>
+      <td>594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The table indicates the number of people who have contracted a given disease or not, in relation to whether they have been exposed to a certain risk or not (e.g., to a pollutant).</p>
+<p>The risk of developing the disease if exposed can be calculated with the following probability:</p>
+<div class="math notranslate nohighlight">
+\[P(Diseased|Exposed) = \frac{\#\ (Diseased, Exposed)}{\#\ Exposed} = \frac{20}{20+380} = 0.05\]</div>
+<p>We see that we have a <span class="math notranslate nohighlight">\(5\%\)</span> risk of developing the disease if exposed to radiation. For example, among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, we expect to find <span class="math notranslate nohighlight">\(5\)</span> sick.</p>
+<p>The risk calculated above, by itself, does not tell us much about the association between the variables “Exposed” and “Non Exposed”. Let’s now consider the probability of contracting the disease if not exposed to the risk:</p>
+<div class="math notranslate nohighlight">
+\[P(Diseased|Non\ Exposed) = \frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed} = \frac{6}{6+594} = 0.01\]</div>
+<p>This value tells us that we have a risk of about <span class="math notranslate nohighlight">\(1\%\)</span> of contracting the disease if not exposed. In practice, out of <span class="math notranslate nohighlight">\(100\)</span> subjects not exposed to the risk, <span class="math notranslate nohighlight">\(1\)</span> gets sick.</p>
+<p>It is useful to compare these two risk values. Indeed, although the <span class="math notranslate nohighlight">\(5\%\)</span> risk of getting sick among exposed subjects is not a very high number in absolute terms, it must also be said that the proportion of sick subjects not exposed to the risk is much lower (<span class="math notranslate nohighlight">\(1\%\)</span>). We therefore define relative risk as the ratio between these two risks (or probabilities):</p>
+<div class="math notranslate nohighlight">
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{0.05}{0.01}=5\]</div>
+<p>We interpret this value as follows:</p>
+<blockquote>
+<div><p>The proportion of subjects who contract the disease is <span class="math notranslate nohighlight">\(5\)</span> times greater among those who have been exposed to the risk, compared to the group of those who have not.</p>
+</div></blockquote>
+<p>For example, if among <span class="math notranslate nohighlight">\(100\)</span> people not exposed to the risk, generally <span class="math notranslate nohighlight">\(10\)</span> get sick (a risk of <span class="math notranslate nohighlight">\(10\%\)</span>), then we expect that among <span class="math notranslate nohighlight">\(100\)</span> people exposed to the risk, as many as <span class="math notranslate nohighlight">\(50\%\)</span> will get sick!</p>
+<p>Relative risk tells us nothing about the absolute risk (the proportion of people who get sick), but only about how observing subjects exposed to the risk, compared to observing subjects not exposed to the risk, can influence the proportion of sick subjects.</p>
+<p>Generally:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(RR=1\)</span> indicates that exposure to the risk is irrelevant in the development of the disease (the variables are independent);</p></li>
+<li><p><span class="math notranslate nohighlight">\(RR&gt;1\)</span> indicates that exposure to the risk is positively associated with the development of the disease (there are more sick people among subjects exposed to the risk);</p></li>
+<li><p><span class="math notranslate nohighlight">\(RR&lt;1\)</span> indicates that exposure to the risk is negatively associated with the development of the disease (there are fewer sick people among subjects exposed to the risk). In this case, it is said that the risk “protects” against the onset of the disease (useful if the “risk” is actually taking a drug).</p></li>
+</ul>
+<p><strong>Note that relative risk measures a correlation between variables, not a cause-and-effect relationship, so it is not always correct to say that in the presence of a relative risk greater than 1, exposure to the risk “causes” the disease. However, there are tools (causal analysis) that allow us to verify in which cases we can give this interpretation. These tools are fundamental for ascertaining whether a particular drug causes (or is co-responsible for) a recovery or whether a particular habit (e.g., smoking) causes (or is co-responsible for) the onset of a disease. We will see more examples later in the course.</strong></p>
+</section>
+<section id="odds-ratio">
+<h3>Odds Ratio<a class="headerlink" href="#odds-ratio" title="Permalink to this heading">#</a></h3>
+<p>Relative risk cannot always be calculated. In fact, in the previous case, we assumed we had access to all population data: for all <span class="math notranslate nohighlight">\(1000\)</span> inhabitants, we knew who had been exposed to the risk and who had not, and who had developed the disease and who had not. In many cases, we might not have all this data. For example, imagine that the incident occurred <span class="math notranslate nohighlight">\(50\)</span> years ago and that at the time only a random sample of <span class="math notranslate nohighlight">\(50\%\)</span> of the <span class="math notranslate nohighlight">\(1000\)</span> inhabitants of the village was interviewed. Suppose we obtain the following contingency table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contingency2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span>
+    <span class="s2">&quot;Non Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">16</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Diseased&quot;</span><span class="p">,</span> <span class="s2">&quot;Healthy&quot;</span><span class="p">])</span>
+<span class="n">contingency2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>10</td>
+      <td>16</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that this case (that of sampling) will be the most frequent, as we often do not have access to the entire population, but only to a sample.</p>
+<p>In this case, we cannot calculate the relative risk as the real numbers of people exposed and not exposed to risk, which were in the denominator of the risk calculation expressions, are not available. If we still apply the formula, we will get an estimate biased by our sampling:</p>
+<div class="math notranslate nohighlight">
+\[\textit{RR} = \frac{P(Diseased|Exposed)}{P(Diseased|Non\ Exposed)} = \frac{\frac{\#\ (Diseased, Exposed)}{\#\ Exposed}}{\frac{\#\ (Diseased, Non\ Exposed)}{\#\ Non\ Exposed}} = \frac{20/(20+10)}{6/(6+16)}=2.45\]</div>
+<p>Although we cannot calculate the relative risk as we do not know the absolute number of sick and exposed people, <strong>we expect our sample to be a good representation of the population</strong>, therefore we can reason in terms of “odds”.</p>
+<p>Odds are a probability concept widely used in betting, because they allow the bettor to easily calculate the payout to collect. For example, if team <span class="math notranslate nohighlight">\(A\)</span>’s victory over team <span class="math notranslate nohighlight">\(B\)</span> in a soccer match is given as <span class="math notranslate nohighlight">\(5:1\)</span>, the bookmaker expects team <span class="math notranslate nohighlight">\(A\)</span> to be <span class="math notranslate nohighlight">\(5\)</span> times more likely to win than team <span class="math notranslate nohighlight">\(B\)</span>. If I bet <span class="math notranslate nohighlight">\(2\)</span> euros on team <span class="math notranslate nohighlight">\(B\)</span> and team <span class="math notranslate nohighlight">\(B\)</span> wins, then I will win <span class="math notranslate nohighlight">\(5\times 2 = 10\)</span> euros (I bet on a rare event). The odd in this case would be defined as:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{5}{1} = 5\]</div>
+<p>Alternatively, I can reason in terms of probability. Given the scheme above, I expect that, if we played the match <span class="math notranslate nohighlight">\(100\)</span> times, then the probability of victories for team <span class="math notranslate nohighlight">\(A\)</span> would be equal to <span class="math notranslate nohighlight">\(P(A\ wins)=\frac{5}{5+1}\)</span>, while the probability of loss would be equal to <span class="math notranslate nohighlight">\(P(A\ loses)=\frac{1}{5+1}\)</span>. The odd can be defined in terms of these probabilities:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{P(A\ wins)}{P(A\ loses)} = \frac{\frac{5}{5+1}}{\frac{1}{5+1}} = 5\]</div>
+<p>In general, the odd for an event <span class="math notranslate nohighlight">\(E\)</span> is the probability that the event occurs, divided by the probability that the event does not occur:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{P(E)}{1-P(E)}\]</div>
+<p>The odd is a concept similar to risk because it tells us how much greater the frequency of an event occurring (A wins) is compared to the frequency of the event not occurring. Let’s apply this concept to our example. We define two odds (just as we defined two risks):</p>
+<ul class="simple">
+<li><p>The odds of getting sick if exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)} = \frac{\frac{20}{20+10}}{\frac{10}{20+10}} = \frac{20}{10} = 2\)</span></p></li>
+<li><p>The odds of getting sick if not exposed: <span class="math notranslate nohighlight">\(\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)} = \frac{\frac{6}{6+16}}{\frac{16}{6+16}} = \frac{6}{16} = 0.375\)</span></p></li>
+</ul>
+<p>It should be noted that in the formulas above, the absolute counts, i.e., those we do not trust given the sampling, “cancel out”.</p>
+<p>The odds ratio will be defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[odd = \frac{\frac{P(Diseased|Exposed)}{P(Healthy|Exposed)}}{\frac{P(Diseased|Non\ Exposed)}{P(Healthy|Non\ Exposed)}} = \frac{2}{0.375} \approx 5.3\]</div>
+<p>We note that the obtained odds ratio is very close to the previously calculated relative risk of <span class="math notranslate nohighlight">\(5\)</span>. <strong>In practice, it can be demonstrated that, if it is assumed that the disease is rare (rare-disease assumption), the odds ratio and the relative risk converge to similar values.</strong> It is therefore a fairly common practice to make this assumption and calculate the odds ratio instead of the relative risk.</p>
+<section id="relative-risk-and-odds-ratio-in-python">
+<h4>Relative Risk and Odds Ratio in Python<a class="headerlink" href="#relative-risk-and-odds-ratio-in-python" title="Permalink to this heading">#</a></h4>
+<p>Let’s consider this contingency table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">contingency</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s2">&quot;Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">380</span><span class="p">],</span>
+    <span class="s2">&quot;Non Exposed&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">594</span><span class="p">]</span>
+<span class="p">},</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Diseased&quot;</span><span class="p">,</span> <span class="s2">&quot;Healthy&quot;</span><span class="p">])</span>
+<span class="n">contingency</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Exposed</th>
+      <th>Non Exposed</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Diseased</th>
+      <td>20</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>Healthy</th>
+      <td>380</td>
+      <td>594</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can calculate the relative risk as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">relative_risk</span>
+<span class="n">relative_risk</span><span class="p">(</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span><span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">][</span><span class="s1">&#39;Diseased&#39;</span><span class="p">],</span> <span class="n">contingency</span><span class="p">[</span><span class="s1">&#39;Non Exposed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>RelativeRiskResult(relative_risk=5.0, exposed_cases=20, exposed_total=400, control_cases=6, control_total=600)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The function requires that the various necessary values be passed rather than the contingency matrix to avoid ambiguity.</p>
+<p>The odds ratio is calculated as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">odds_ratio</span>
+<span class="n">odds_ratio</span><span class="p">(</span><span class="n">contingency</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>OddsRatioResult(statistic=5.202179487843029)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Considering the Titanic dataset, calculate for each variable the count, mean, standard deviation, minimum, maximum, median value, first and third quartile. After calculating the requested values individually, use the <code class="docutils literal notranslate"><span class="pre">describe</span></code> method to obtain these values. Which variable is the most dispersed?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Considering the Titanic dataset, for each of the three classes, calculate the means and variances of passenger ages. In which class are the ages least dispersed? Which class contains the youngest individuals? Complete the analysis with bar charts.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Add a new column “Old” to the Titanic dataset, which takes a value of 1 for observations with an age greater than the average value and 0 otherwise. Then, calculate a crosstab that computes the number of “elderly” subjects (subjects for whom old is equal to 1) with respect to the Pclass and Sex variables. Display a barplot based on the table. In which class do men tend to be much older than women?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>Load the mpg dataset using the seaborn library (use the instruction <code class="docutils literal notranslate"><span class="pre">t=sns.load_dataset('mpg')</span></code>). Visualize the scatter matrix by differentiating the colors of the points according to the values of the <code class="docutils literal notranslate"><span class="pre">origin</span></code> variable. Who produces the heaviest cars? Are there pairs of variables that are a decisive factor in distinguishing one origin from the others?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
+<p>Considering the <code class="docutils literal notranslate"><span class="pre">mpg</span></code> dataset, choose a group of variables for which to obtain a parallel coordinates plot. What can we infer from the plot?</p>
+</div></blockquote>
+</section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
@@ -2126,18 +2341,20 @@ We can compute a correlation matrix with the <code class="docutils literal notra
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-s-mathcal-x-2-statistic">Pearson’s <span class="math notranslate nohighlight">\(\mathcal{X}^2\)</span> Statistic</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cramer-s-v-statistic">Cramer’s V Statistic</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-optional">Relative Risk (Optional)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio-optional">Odds Ratio (Optional)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio-in-python">Relative Risk and Odds Ratio in Python</a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#associations-between-continuous-variables">Associations Between Continuous Variables</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#graphical-representation-of-two-continuous-variables">Graphical Representation of Two Continuous Variables</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plots">Scatter plots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-matrix">Scatter Matrix</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#hexbin-plots-a-2d-histogram">Hexbin Plots: A 2D Histogram</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#density-and-contour-plots-a-smoother-view-of-distribution">Density and Contour Plots: A Smoother View of Distribution</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#covariance">Covariance</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient">Pearson Correlation Coefficient</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-pearson-s-correlation-coefficient-values">Interpretation of Pearson’s Correlation Coefficient Values</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-correlation-coefficient-and-discrete-variables">Pearson Correlation Coefficient and Discrete Variables</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#spearman-s-rank-correlation-coefficient">Spearman’s Rank Correlation Coefficient</a></li>
@@ -2145,6 +2362,15 @@ We can compute a correlation matrix with the <code class="docutils literal notra
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix">Correlation Matrix</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-measures-of-correlation-between-discrete-variables-optional">Additional Measures of Correlation Between Discrete Variables (Optional)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk">Relative Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#odds-ratio">Odds Ratio</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relative-risk-and-odds-ratio-in-python">Relative Risk and Odds Ratio in Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>

@@ -1,0 +1,2863 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Statistical Inference &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/06_statistical_inference';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Storytelling with Data" href="07_storytelling_with_data.html" />
+    <link rel="prev" title="Data Distributions" href="05_data_distributions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes2526/lectures/06_statistical_inference.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/06_statistical_inference.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/06_statistical_inference.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Statistical Inference</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-random-sample">Simple random sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-sampling">Stratified Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-in-python">Sampling in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distribution-of-the-mean">Sampling Distribution of the Mean</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">Standard Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-student-distribution">t-Student Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-confidence-interval-for-cookie-weights">Example: Confidence Interval for Cookie Weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-confidence-intervals-in-practice">Computing Confidence Intervals in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-means">Confidence Intervals for Means</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-variances">Confidence Intervals for Variances</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-proportion">Confidence Intervals for Proportion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-and-variance-of-estimators">Bias and Variance of Estimators</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-of-an-estimator">Bias of an Estimator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-estimator-for-the-variance">Unbiased Estimator for the Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-of-an-estimator">Variance of an Estimator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-for-cookie-weights">Hypothesis Testing for Cookie Weights</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses-tests-in-general">Hypotheses Tests in General</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-important-tests">Other Important Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-t-test">One Sample T-Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#two-sample-t-test">Two Sample T-Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-square-test-for-independence">Chi-Square Test for Independence</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-square-goodness-of-fit-test">Chi-Square Goodness-of-Fit Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-spearman-correlation-test">Pearson/Spearman Correlation Test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assessing-whether-a-sample-is-normally-distributed">Assessing whether a Sample is Normally Distributed</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-quantile-plots-q-q-plots">Quantile-Quantile Plots (Q-Q Plots)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapiro-wilk-normality-test">Shapiro-Wilk Normality Test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-agostino-s-k-squared-test">D’Agostino’s K-squared test</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="statistical-inference">
+<h1>Statistical Inference<a class="headerlink" href="#statistical-inference" title="Permalink to this heading">#</a></h1>
+<p>So far, we have seen methods for describing a sample of data (descriptive statistics) and we have reasoned on abstract concepts using basic probability theory concepts. In practice, we are often interested in the properties of a <strong>population</strong>, rather than a sample or some abstract quantities. Examples are:</p>
+<ul class="simple">
+<li><p>What is the percentage of votes each candidate will get at an election?</p></li>
+<li><p>What is the proportion of defective goods in a manufacturing process?</p></li>
+<li><p>Is there a relationship between smoking and developing a given disease in the world population?</p></li>
+</ul>
+<p>One approach to answer these questions would be to collect the whole population, but this is often unfeasible (e.g., interviewing <strong>all voters</strong>) and sometimes impossible.</p>
+<p>The statistician’s approach is instead to <strong>sample</strong> a subset of the whole population and try to <strong>infer some of the properties of the population from the sample</strong>. This part of statistics is called <strong>statistical inference</strong>. Analyzing data using such techniques is often called an <strong>inferential analysis</strong>. In this part of the course, we will review different statistical tools for inferential analysis and show some concrete examples, without giving a formal definition of such tools, which is left to other courses.</p>
+<section id="sampling">
+<h2>Sampling<a class="headerlink" href="#sampling" title="Permalink to this heading">#</a></h2>
+<p>The first step towards an inferential analysis is the <strong>sampling process</strong>. When we acquire a pre-made dataset, sampling is already done, while when we collect data, we are actually sampling from the population. In both cases, it is important to reason on the properties of the sample we will work on.</p>
+<section id="simple-random-sample">
+<h3>Simple random sample<a class="headerlink" href="#simple-random-sample" title="Permalink to this heading">#</a></h3>
+<p>The easiest way to sample from a population is <strong>randomly</strong>. A simple random sample makes two assumptions:</p>
+<ul class="simple">
+<li><p><strong>Unbiasedness</strong>: each element of the population has the same probability of being selected;</p></li>
+<li><p><strong>Independence</strong>: selecting one of the elements of the population does not affect the selection of the other elements in any way.</p></li>
+</ul>
+<p>This approach guarantees that, if we collect a large number of elements, the obtained sample will be a good representative of the population. For instance, if in the population of interest we have <span class="math notranslate nohighlight">\(10\%\)</span> of people over <span class="math notranslate nohighlight">\(70\)</span>, we expect this proportion to be roughly represented in the sample as well.</p>
+<p>An example of bad sampling:</p>
+<blockquote>
+<div><p>We want to ask the inhabitants of a city whether they are satisfied with the quality of life in that city. To sample a large quantity of subjects, we go to the main square and ask passengers to reply to a few questions. If a ground of friends stops we interview all of them to maximize the number of examples we can obtain.</p>
+</div></blockquote>
+<p>The sampling design outlined above has two important issues:</p>
+<ul class="simple">
+<li><p><strong>Unbiasedness</strong>: the selection process is biased (<strong>selection bias</strong>). We selected a single location in the city (the main square) and hence we are <strong>oversampling</strong> people who tend to spend time there (e.g., because they work in the city center), versus people who do not spend much time there (e.g., because they work in the periphery).</p></li>
+<li><p><strong>Independence</strong>: when we interview groups of people, in fact, we are breaking the independence assumption, Indeed, selecting one of the people is not independent of selecting others (the members of the same group).</p></li>
+</ul>
+<p>Another example of flawed sampling:</p>
+<blockquote>
+<div><p>We want to check how many people believe a given conspiracy theory. To do so, I send a message to all my contacts (<span class="math notranslate nohighlight">\(500\)</span>). About <span class="math notranslate nohighlight">\(200\)</span> of them reply to my message and <span class="math notranslate nohighlight">\(180\)</span> of them say they do believe that theory. <span class="math notranslate nohighlight">\(80\%\)</span> of people actually believe it!</p>
+</div></blockquote>
+<p>Also here there are important issues:</p>
+<ul class="simple">
+<li><p><strong>Selection bias</strong>: I am not randomly sampling. Instead, I am choosing among my contacts.</p></li>
+<li><p><strong>Response bias</strong>: Only <span class="math notranslate nohighlight">\(200\)</span> people replied. Chances are that only people who are very motivated will reply. Maybe most of the believers did, while the others just ignored my message.</p></li>
+</ul>
+<p>Another example:</p>
+<blockquote>
+<div><p>We interview people on their voting preferences by dialing random phone numbers.</p>
+</div></blockquote>
+<p>While this may seem sound, we will not end up with a simple random sample because we will not select people without a phone number and we will oversample people with more than one numbers (e.g., work and home).</p>
+<p>The plot below shows the importance of sample size:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/b1a3ba451130051a5d81298e4498b6634d0882960644a04f4fbfca370eeb8896.png" src="../_images/b1a3ba451130051a5d81298e4498b6634d0882960644a04f4fbfca370eeb8896.png" />
+</div>
+</div>
+</section>
+<section id="stratified-sampling">
+<h3>Stratified Sampling<a class="headerlink" href="#stratified-sampling" title="Permalink to this heading">#</a></h3>
+<p>Sometimes, the population under study is <strong>heterogeneous</strong>, meaning it contains distinct subgroups with different characteristics. In such cases, <strong>simple random sampling</strong> may fail to capture the diversity of the population, leading to <strong>under-representation</strong> of certain groups.</p>
+<p>For example, suppose we hypothesize that the variable <code class="docutils literal notranslate"><span class="pre">Occupation</span></code> influences voting preferences. If we randomly sample from the entire population, we might unintentionally select too few individuals from certain occupations, skewing our results.</p>
+<p>To address this, we can use <strong>stratified sampling</strong>. This involves:</p>
+<ul class="simple">
+<li><p>Dividing the population into <strong>homogeneous subgroups</strong> (<em>strata</em>) based on a relevant variable, such as <code class="docutils literal notranslate"><span class="pre">Occupation</span></code></p></li>
+<li><p>Performing <strong>random sampling within each stratum</strong>, ensuring proportional representation</p></li>
+</ul>
+<p>This method improves representativeness but requires <strong>prior knowledge or assumptions</strong> about the population structure.</p>
+<blockquote>
+<div><p><strong>Illustration</strong><br />
+The figure below shows:</p>
+<ul class="simple">
+<li><p>A heterogeneous population</p></li>
+<li><p>A sample obtained via uniform random sampling</p></li>
+<li><p>A sample obtained via stratified sampling</p></li>
+</ul>
+</div></blockquote>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/fc7b6a1137714448bacf40b08d2f88a68c1f59aa7734fdaf2e262b0c5b8939fe.png" src="../_images/fc7b6a1137714448bacf40b08d2f88a68c1f59aa7734fdaf2e262b0c5b8939fe.png" />
+</div>
+</div>
+</section>
+<section id="sampling-in-python">
+<h3>Sampling in Python<a class="headerlink" href="#sampling-in-python" title="Permalink to this heading">#</a></h3>
+<p>In Python we can easily sample from known distributions using numpy <code class="docutils literal notranslate"><span class="pre">random</span></code> module, as shown in the example below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Set the sample size</span>
+<span class="n">sample_size</span> <span class="o">=</span> <span class="mi">1000</span>
+
+<span class="c1"># Sample from the Normal (Gaussian) Distribution</span>
+<span class="n">mean_normal</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">std_dev_normal</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">samples_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">mean_normal</span><span class="p">,</span> <span class="n">std_dev_normal</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+
+<span class="c1"># Sample from the Exponential Distribution</span>
+<span class="n">rate_exponential</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">samples_exponential</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">rate_exponential</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+
+<span class="c1"># Sample from the Uniform Distribution</span>
+<span class="n">low_uniform</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">high_uniform</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">samples_uniform</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low_uniform</span><span class="p">,</span> <span class="n">high_uniform</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+
+<span class="c1"># Sample from the Laplace Distribution</span>
+<span class="n">loc_laplace</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">scale_laplace</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">samples_laplace</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">laplace</span><span class="p">(</span><span class="n">loc_laplace</span><span class="p">,</span> <span class="n">scale_laplace</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+
+<span class="c1"># Sample from the Poisson Distribution</span>
+<span class="n">lam_poisson</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">samples_poisson</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">lam_poisson</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">)</span>
+
+<span class="c1"># Create histograms to visualize the distributions</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">samples_normal</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Normal Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">samples_exponential</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Exponential Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">samples_uniform</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Uniform Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">samples_laplace</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Laplace Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">samples_poisson</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Poisson Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/c4165c50a2685c602791e0e9976fe2498bd38dbc90877bfb636033fe5ed2ded1.png" src="../_images/c4165c50a2685c602791e0e9976fe2498bd38dbc90877bfb636033fe5ed2ded1.png" />
+</div>
+</div>
+<p>We can also sample from an existing sample to obtain a <strong>subsample</strong>. This can be done starting from a dataset. For instance, let us consider the <em>weight-height</em> dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">data</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight.csv&#39;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 4231 entries, 0 to 4230
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   sex     4231 non-null   object 
+ 1   BMI     4231 non-null   float64
+ 2   height  4231 non-null   float64
+ 3   weight  4231 non-null   float64
+dtypes: float64(3), object(1)
+memory usage: 132.3+ KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M</td>
+      <td>33.36</td>
+      <td>187.96</td>
+      <td>117.933920</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>26.54</td>
+      <td>177.80</td>
+      <td>83.914520</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>32.13</td>
+      <td>154.94</td>
+      <td>77.110640</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>26.62</td>
+      <td>172.72</td>
+      <td>79.378600</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>27.13</td>
+      <td>167.64</td>
+      <td>76.203456</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can obtain a subsample of 1000 observations as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample1</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">sample1</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">sample1</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 1000 entries, 129 to 3443
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   sex     1000 non-null   object 
+ 1   BMI     1000 non-null   float64
+ 2   height  1000 non-null   float64
+ 3   weight  1000 non-null   float64
+dtypes: float64(3), object(1)
+memory usage: 39.1+ KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>129</th>
+      <td>M</td>
+      <td>33.90</td>
+      <td>182.88</td>
+      <td>113.398000</td>
+    </tr>
+    <tr>
+      <th>3065</th>
+      <td>F</td>
+      <td>22.32</td>
+      <td>162.56</td>
+      <td>58.966960</td>
+    </tr>
+    <tr>
+      <th>2755</th>
+      <td>M</td>
+      <td>31.68</td>
+      <td>185.42</td>
+      <td>108.862080</td>
+    </tr>
+    <tr>
+      <th>3505</th>
+      <td>F</td>
+      <td>21.65</td>
+      <td>165.10</td>
+      <td>58.966960</td>
+    </tr>
+    <tr>
+      <th>1785</th>
+      <td>F</td>
+      <td>20.92</td>
+      <td>162.56</td>
+      <td>55.338224</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Sampling will be random and uniform. As can be seen the indexes of the rows are shuffled. By default, Pandas will sample without replacement. We can sample with replacement specifying <code class="docutils literal notranslate"><span class="pre">replace=True</span></code>. For instance, we can obtain a larger sample (with repetitions) as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sample2</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sample2</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">sample2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+Index: 5000 entries, 1637 to 1037
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   sex     5000 non-null   object 
+ 1   BMI     5000 non-null   float64
+ 2   height  5000 non-null   float64
+ 3   weight  5000 non-null   float64
+dtypes: float64(3), object(1)
+memory usage: 195.3+ KB
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1637</th>
+      <td>F</td>
+      <td>26.53</td>
+      <td>157.48</td>
+      <td>65.77084</td>
+    </tr>
+    <tr>
+      <th>4082</th>
+      <td>M</td>
+      <td>26.54</td>
+      <td>177.80</td>
+      <td>83.91452</td>
+    </tr>
+    <tr>
+      <th>1890</th>
+      <td>F</td>
+      <td>28.33</td>
+      <td>152.40</td>
+      <td>65.77084</td>
+    </tr>
+    <tr>
+      <th>3205</th>
+      <td>M</td>
+      <td>24.39</td>
+      <td>177.80</td>
+      <td>77.11064</td>
+    </tr>
+    <tr>
+      <th>477</th>
+      <td>F</td>
+      <td>24.02</td>
+      <td>162.56</td>
+      <td>63.50288</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can perform stratified sampling as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define the stratification variable</span>
+<span class="n">strata_variable</span> <span class="o">=</span> <span class="s1">&#39;sex&#39;</span>
+
+<span class="c1"># Number of samples per stratum</span>
+<span class="n">samples_per_stratum</span> <span class="o">=</span> <span class="mi">500</span>
+
+<span class="c1"># Perform stratified sampling with include_groups=False</span>
+<span class="n">stratified_sample</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">strata_variable</span><span class="p">,</span> <span class="n">group_keys</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">samples_per_stratum</span><span class="p">),</span> <span class="n">include_groups</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Inspect the result</span>
+<span class="n">stratified_sample</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">stratified_sample</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1000 entries, 0 to 999
+Data columns (total 4 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   sex     1000 non-null   object 
+ 1   BMI     1000 non-null   float64
+ 2   height  1000 non-null   float64
+ 3   weight  1000 non-null   float64
+dtypes: float64(3), object(1)
+memory usage: 31.4+ KB
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_62824/1972380443.py:10: DeprecationWarning: DataFrameGroupBy.apply operated on the grouping columns. This behavior is deprecated, and in a future version of pandas the grouping columns will be excluded from the operation. Either pass `include_groups=False` to exclude the groupings or explicitly select the grouping columns after groupby to silence this warning.
+  .apply(lambda x: x.sample(samples_per_stratum), include_groups=True)
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>F</td>
+      <td>26.31</td>
+      <td>170.18</td>
+      <td>76.203456</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>F</td>
+      <td>27.45</td>
+      <td>167.64</td>
+      <td>77.110640</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>28.29</td>
+      <td>165.10</td>
+      <td>77.110640</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>F</td>
+      <td>30.03</td>
+      <td>162.56</td>
+      <td>79.378600</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>29.16</td>
+      <td>162.56</td>
+      <td>77.110640</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Note that, with this method, sampled observations will be sorted by <code class="docutils literal notranslate"><span class="pre">sex</span></code>. To get rid of this bias, we can shuffle the dataframe as follows:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stratified_sample</span> <span class="o">=</span> <span class="n">stratified_sample</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">stratified_sample</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">stratified_sample</span><span class="p">),</span> <span class="n">replace</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+<span class="n">stratified_sample</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>898</th>
+      <td>M</td>
+      <td>26.55</td>
+      <td>175.26</td>
+      <td>81.646560</td>
+    </tr>
+    <tr>
+      <th>452</th>
+      <td>F</td>
+      <td>29.01</td>
+      <td>162.56</td>
+      <td>76.657048</td>
+    </tr>
+    <tr>
+      <th>665</th>
+      <td>M</td>
+      <td>28.89</td>
+      <td>187.96</td>
+      <td>102.058200</td>
+    </tr>
+    <tr>
+      <th>200</th>
+      <td>F</td>
+      <td>31.26</td>
+      <td>152.40</td>
+      <td>72.574720</td>
+    </tr>
+    <tr>
+      <th>378</th>
+      <td>F</td>
+      <td>21.92</td>
+      <td>170.18</td>
+      <td>63.502880</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Males and females will be perfectly balanced by design in this stratified sample:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">stratified_sample</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sex
+M    500
+F    500
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="sampling-distribution-of-the-mean">
+<h2>Sampling Distribution of the Mean<a class="headerlink" href="#sampling-distribution-of-the-mean" title="Permalink to this heading">#</a></h2>
+<p>Let’s consider this problem:</p>
+<blockquote>
+<div><p>A bakery sells packages of cookies labeled as weighing <strong>1kg</strong>. Due to small variations in the production process, the actual weight of each package may differ slightly. To ensure quality, the bakery wants to verify that the average weight is close to the target.</p>
+</div></blockquote>
+<p>We take a <strong>random sample of <span class="math notranslate nohighlight">\(n = 1000\)</span></strong> packages and measure their weights <span class="math notranslate nohighlight">\(x_1, x_2, \ldots, x_n\)</span>. We compute the sample mean:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = \frac{x_1 + x_2 + \ldots + x_n}{n} = 1000.2 \text{g}
+\]</div>
+<p>This value is close to the target of 1000g, so we might conclude that the production process is accurate. But what if we took another sample? Would we get the same result?</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = \frac{x_1 + x_2 + \ldots + x_n}{n} = 999.7 \text{g}
+\]</div>
+<p>This is still close to the target, but slightly lower than before. If we repeated this process many times, we would get a <strong>distribution of sample means</strong>.</p>
+<p>We treat each package’s weight as a <strong>random variable</strong> <span class="math notranslate nohighlight">\(X_i\)</span>, with:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+E[X_i] = \mu \\
+Var[X_i] = \sigma^2
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> are the <strong>true mean and standard deviation</strong> of the population.</p>
+<p>The sample mean <span class="math notranslate nohighlight">\(\overline{X}\)</span> is also a random variable:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{X} = \frac{X_1 + X_2 + \ldots + X_n}{n}
+\]</div>
+<p>Note that, while we cannot make assumptions for the individual <span class="math notranslate nohighlight">\(X_i\)</span>, for the <strong>central limit theorem</strong>, we know that:</p>
+<blockquote>
+<div><p>For large <span class="math notranslate nohighlight">\(n\)</span>, the distribution of <span class="math notranslate nohighlight">\(\overline{X}\)</span> will be approximately <strong>normal</strong>, regardless of the shape of the original data.</p>
+</div></blockquote>
+<p>We can derive the expected value, variance and standard deviation of <span class="math notranslate nohighlight">\(X\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+E[\overline{X}] = E\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n} \sum_{i=1}^n E[X_i] = \mu
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Var[\overline{X}] = Var\left[\frac{1}{n} \sum_{i=1}^n X_i\right] = \frac{1}{n^2} \sum_{i=1}^n Var[X_i] = \frac{\sigma^2}{n}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+Std[\overline{X}] = \frac{\sigma}{\sqrt{n}}
+\]</div>
+<p>We note that:</p>
+<ul class="simple">
+<li><p>The <strong>expected value of the sample means</strong> (the mean of the means) converges to the <strong>mean of the population</strong>. This is the value we want to estimate: the actual average weight of packages.</p></li>
+<li><p>The <strong>standard deviation of the distribution</strong> quantifies the precision according to which we can measure the mean. A small standard deviation indicates that sample means have small variability, so a single estimate will likely be closer to the true mean and hence more reliable.</p></li>
+</ul>
+<p>This is exemplified by the following figure:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/06fc447c92e735f7676cf88f4fe97b809ccdbddef415d07fd530a6acec2563c9.png" src="../_images/06fc447c92e735f7676cf88f4fe97b809ccdbddef415d07fd530a6acec2563c9.png" />
+</div>
+</div>
+<section id="standard-error">
+<h3>Standard Error<a class="headerlink" href="#standard-error" title="Permalink to this heading">#</a></h3>
+<p>While useful to quantify our precision in the estimation of the true mean, the standard deviation depends on the variance of the population, which is unknown.</p>
+<p>In practice, we estimate it using the sample standard deviation:</p>
+<div class="math notranslate nohighlight">
+\[
+s_{n-1} = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \overline{x})^2}
+\]</div>
+<p>and define the Standard Error (SE) as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+SE(\overline{x}) = \frac{s_{n-1}}{\sqrt{n}}
+\]</div>
+<p>Similar to the standard deviation, <strong>the standard error quantifies our uncertainty in the estimation of the true mean</strong>.</p>
+<p>Note that the standard error is <strong>inversely proportional to the square root of the sample size</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+SE(\overline{x}) \propto \frac{1}{\sqrt{n}}
+\]</div>
+<p>This relationship is common in many statistical estimators. It means that:</p>
+<ul class="simple">
+<li><p>If we <strong>double the sample size</strong>, the error <strong>reduces by about 30%</strong>.</p></li>
+<li><p>To <strong>halve the error</strong>, we need to <strong>quadruple the sample size</strong>.</p></li>
+</ul>
+<p>This is a key insight: reducing uncertainty requires much more data than we might expect.</p>
+<p>The standard error tells us how close our sample mean <span class="math notranslate nohighlight">\(\overline{x}\)</span> is likely to be to the true mean <span class="math notranslate nohighlight">\(\mu\)</span>. A small standard error means that repeated samples will yield similar results, and our estimate is precise. A large standard error means more variability and less confidence in the estimate.</p>
+<p>This is shown in the graph below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/fb218abf1c65b94173224fc3fc7bb4d9eb7ea76845dda9be2030cac23ad53338.png" src="../_images/fb218abf1c65b94173224fc3fc7bb4d9eb7ea76845dda9be2030cac23ad53338.png" />
+</div>
+</div>
+<p>This figure illustrates how <strong>sample size affects the precision of the sample mean</strong>. Each panel shows the distribution of sample means obtained by repeatedly sampling from the same population (mean = 1000g, standard deviation = 20g), but with different sample sizes:</p>
+<ul class="simple">
+<li><p><strong>Left (n = 10)</strong>: The distribution is wide, indicating high variability. Small samples lead to more fluctuation in the estimated mean.</p></li>
+<li><p><strong>Center (n = 100)</strong>: The distribution narrows, showing improved stability. The sample means are more tightly clustered around the true mean.</p></li>
+<li><p><strong>Right (n = 1000)</strong>: The distribution is very narrow. Large samples yield highly consistent estimates, with minimal deviation from the true mean.</p></li>
+</ul>
+<p>This visual reinforces the key idea that <strong>larger samples reduce the standard error</strong>, making our estimates more reliable. The spread of the sampling distribution shrinks proportionally to <span class="math notranslate nohighlight">\(1/\sqrt{n}\)</span>.</p>
+</section>
+<section id="t-student-distribution">
+<h3>t-Student Distribution<a class="headerlink" href="#t-student-distribution" title="Permalink to this heading">#</a></h3>
+<p>When <span class="math notranslate nohighlight">\(n\)</span> is small, the distribution of <span class="math notranslate nohighlight">\(\overline{X}\)</span> is <strong>not exactly normal</strong>. Instead, we use the <strong>t-Student distribution</strong>, which accounts for extra uncertainty:</p>
+<div class="math notranslate nohighlight">
+\[
+t_{n-1} = \frac{\overline{X} - \mu}{s_{n-1} / \sqrt{n}}
+\]</div>
+<p>This follows a t-distribution with <span class="math notranslate nohighlight">\(n - 1\)</span> degrees of freedom. The t-distribution looks like a Gaussian but has <strong>heavier tails</strong>, meaning more room for extreme values. As <span class="math notranslate nohighlight">\(n\)</span> increases, the t-distribution <strong>converges to the normal distribution</strong>.</p>
+<blockquote>
+<div><p>Note that the t-Student distribution is obtained by applying standardization using the standard error rather than the standard deviation (which is unknown).</p>
+</div></blockquote>
+<p>The relationship between a t-Student and Gaussian distribution is shown in the figure below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/54ac11df7458e450fb4bc0ea641b31727180d88e4cd5b4c3a86a64c1cb8ba302.png" src="../_images/54ac11df7458e450fb4bc0ea641b31727180d88e4cd5b4c3a86a64c1cb8ba302.png" />
+</div>
+</div>
+<p>As <span class="math notranslate nohighlight">\(n\)</span> gets larger, the t-Distribution approximates a Gaussian distribution.</p>
+<p>We can now characterize how the means will distribute. In particular, <strong>for large values of <span class="math notranslate nohighlight">\(n\)</span>, sample means will distribute according to a Gaussian distribution with standard deviation equal to the sample standard deviation</strong>.</p>
+</section>
+</section>
+<section id="confidence-intervals">
+<h2>Confidence Intervals<a class="headerlink" href="#confidence-intervals" title="Permalink to this heading">#</a></h2>
+<p>Let’s return to our bakery example. We want to estimate the <strong>true average weight</strong> <span class="math notranslate nohighlight">\(\mu\)</span> of cookie packages, which are labeled as 1kg. We take a sample of <span class="math notranslate nohighlight">\(n = 1000\)</span> packages and compute:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = 1000.2 \text{g}
+\]</div>
+<p>This is our estimate of the true mean. However, we know that this value may vary depending on the sample we draw. If we took another sample, we might get a slightly different result. It is interesting to define the <strong>bounds of such variation</strong>, to understand where the true mean <span class="math notranslate nohighlight">\(\mu\)</span> is likely to be found relative to our estimate <span class="math notranslate nohighlight">\(\overline{x}\)</span>.</p>
+<p>Remember that the sample mean <span class="math notranslate nohighlight">\(\overline{X}\)</span> follows a <strong>Gaussian distribution</strong> centered at <span class="math notranslate nohighlight">\(\mu\)</span> due to the <strong>Central Limit Theorem</strong>.</p>
+<p>We also know that about <span class="math notranslate nohighlight">\(68.3\%\)</span> of the density of the Gaussian distribution will be within <span class="math notranslate nohighlight">\(\mu-\sigma\)</span> and <span class="math notranslate nohighlight">\(\overline{x}+\sigma\)</span>, so we can write:</p>
+<div class="math notranslate nohighlight">
+\[P\left(\mu-\sigma \leq \overline{x} \leq \mu+\sigma\right) = 0.683\]</div>
+<p>Which means that, if we perform several independent samplings, with sample size <span class="math notranslate nohighlight">\(n\)</span>, the probability of obtaining a defect rate <span class="math notranslate nohighlight">\(\overline{x}\)</span> in the range <span class="math notranslate nohighlight">\([\mu-\sigma, \mu+\sigma]\)</span> is <span class="math notranslate nohighlight">\(68.3\%\)</span>.</p>
+<p>It is easy to show that:</p>
+<div class="math notranslate nohighlight">
+\[\overline{x} \in [\mu-\sigma, \mu+\sigma] \Leftrightarrow \mu \in [\overline{x}-\sigma, \overline{x}+\sigma]\]</div>
+<p>This is graphically shown in the plot below. The blue segment is the one of bounds <span class="math notranslate nohighlight">\([\mu-\sigma, \mu+\sigma]\)</span>. Note that, all times a point <span class="math notranslate nohighlight">\(\overline{x}\)</span> happens to be in the blue segment centered around <span class="math notranslate nohighlight">\(\mu\)</span>, then <span class="math notranslate nohighlight">\(\mu\)</span> is in the segment centered around <span class="math notranslate nohighlight">\(\overline{x}\)</span>.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/770cd2d19b5ce1aaa0d1ef5eb16c112ff8a60390cc9f2197132e2f4545cc9975.png" src="../_images/770cd2d19b5ce1aaa0d1ef5eb16c112ff8a60390cc9f2197132e2f4545cc9975.png" />
+</div>
+</div>
+<p>This allows us to write:</p>
+<div class="math notranslate nohighlight">
+\[P\left(\overline{x}-\sigma \leq \mu \leq \hat p+\sigma\right) = 0.683\]</div>
+<p>which has a powerful interpretation:</p>
+<blockquote>
+<div><p>If we draw many independent samples of size <span class="math notranslate nohighlight">\(n\)</span> and compute <span class="math notranslate nohighlight">\(\overline{x}\)</span> from the samples, the true mean <span class="math notranslate nohighlight">\(\mu\)</span> will lie in the interval <span class="math notranslate nohighlight">\([\overline{x}-\sigma, \overline{x}+\sigma]\)</span> <span class="math notranslate nohighlight">\(68.3\%\)</span> of the times</p>
+</div></blockquote>
+<p>Alternatively</p>
+<blockquote>
+<div><p>We can say with a confidence of <span class="math notranslate nohighlight">\(68.3\%\)</span> that the true mean will be in the <span class="math notranslate nohighlight">\([\overline{x}-\sigma, \overline{x}+\sigma]\)</span> interval.</p>
+</div></blockquote>
+<p>In this context, <span class="math notranslate nohighlight">\([\overline{x}-\sigma, \overline{x}+\sigma]\)</span> is called a <strong>confidence interval</strong>.</p>
+<p>We still have to compute actual numbers for our confidence interval, but we don’t have the standard deviation <span class="math notranslate nohighlight">\(\sigma\)</span>. In practice, we replace it with the standard error and obtain the confidence interval:</p>
+<div class="math notranslate nohighlight">
+\[[\overline{x}-SE(\overline{x}), \overline{x}+SE(\overline{x})]\]</div>
+<p>We note that <span class="math notranslate nohighlight">\(68.3\)</span> is a very peculiar number and also a relatively low probability. In general, given a chosen percentage <span class="math notranslate nohighlight">\(p\)</span>, that we call a <strong>confidence level</strong>, we can obtain a number <span class="math notranslate nohighlight">\(\beta\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[P\left(\overline{x}-\beta \sigma \leq \mu \leq \hat p+\beta \sigma\right) = p\]</div>
+<p>leading to the following confidence interval:</p>
+<div class="math notranslate nohighlight">
+\[[\overline{x}-\beta SE(\overline{x}), \overline{x}+\beta SE(\overline{x})]\]</div>
+<p>Alternatively, we will say that we chose a <strong>significance level</strong> <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, which quantifies the number of times we admin the true mean will be out of the confidence interval.</p>
+<p>It is very common to set <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, which leads to <span class="math notranslate nohighlight">\(\beta=1.96\)</span> and the following confidence interval:</p>
+<div class="math notranslate nohighlight">
+\[[\overline{x}-1.96 \cdot SE(\overline{x}), \overline{x}+1.96 \cdot SE(\overline{x})]\]</div>
+<section id="example-confidence-interval-for-cookie-weights">
+<h3>Example: Confidence Interval for Cookie Weights<a class="headerlink" href="#example-confidence-interval-for-cookie-weights" title="Permalink to this heading">#</a></h3>
+<p>Let’s suppose we want to estimate the <strong>true average weight</strong> <span class="math notranslate nohighlight">\(\mu\)</span> of cookie packages sold by a bakery. We take a sample of <span class="math notranslate nohighlight">\(n = 1000\)</span> packages and compute the sample mean:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = 1000.2 \text{g}
+\]</div>
+<p>We also compute the sample standard deviation:</p>
+<div class="math notranslate nohighlight">
+\[
+s_{n-1} = 0.5 \text{g}
+\]</div>
+<p>Our estimate <span class="math notranslate nohighlight">\(\overline{x}\)</span> is close to the labeled weight of 1000g, but we know it may vary depending on the sample. It is useful to define the <strong>bounds of such variation</strong>, to understand where the true mean <span class="math notranslate nohighlight">\(\mu\)</span> is likely to be found relative to our estimate.</p>
+<p>To do this, we build a <strong>confidence interval</strong>. We first choose a <strong>confidence level</strong>. For example, if we want to be <strong>95% confident</strong>, we define:</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha = 0.05
+\]</div>
+<p>This means we accept a <span class="math notranslate nohighlight">\(5\%\)</span> chance that the true mean lies outside our interval. Since the sample mean <span class="math notranslate nohighlight">\(\overline{X}\)</span> follows a <strong>Gaussian distribution</strong>, we know that <strong>95% of the density</strong> lies within <span class="math notranslate nohighlight">\(1.96\)</span> standard deviations from the mean. So we write:</p>
+<div class="math notranslate nohighlight">
+\[
+P\left(\overline{X} - 1.96 \cdot SE(\overline{X}) \leq \mu \leq \overline{X} + 1.96 \cdot SE(\overline{X})\right) = 0.95
+\]</div>
+<p>We compute the standard error:</p>
+<div class="math notranslate nohighlight">
+\[
+SE(\overline{x}) = \frac{s_{n-1}}{\sqrt{n}} = \frac{0.1}{\sqrt{1000}} = 0.02 \text{g}
+\]</div>
+<p>Then the confidence interval becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+[1000.2 - 1.96 \cdot 0.02,\ 1000.2 + 1.96 \cdot 0.02] = [1000.18,\ 1000.22]
+\]</div>
+<p>This means we are <strong>95% confident</strong> that the true average weight of cookie packages lies between <strong>1000.18g and 1000.22g</strong>.</p>
+<p>Since the interval is narrow, we can say that our estimate is precise. If the sample size were smaller, the interval would be wider, reflecting greater uncertainty in the estimate.</p>
+</section>
+<section id="computing-confidence-intervals-in-practice">
+<h3>Computing Confidence Intervals in Practice<a class="headerlink" href="#computing-confidence-intervals-in-practice" title="Permalink to this heading">#</a></h3>
+<p>We have seen how to compute confidence interval “by hand” in the case of the estimation of proportions (defect rate).In practice, depending on the quantities for which we want to estimate confidence bounds, we will need to use different distributions. For instance, when estimating means, we will have to use the t-Student distribution with <span class="math notranslate nohighlight">\(n-1\)</span> degrees of freedom. We will not see all methods in detail, but the main libraries implement all confidence bounds estimation procedure for us.</p>
+<p>The main estimation procedures are related to:</p>
+<ul class="simple">
+<li><p>Estimation of confidence bounds for means;</p></li>
+<li><p>Estimation of confidence bounds for variances;</p></li>
+<li><p>Estimation of confidence bounds for proportions.</p></li>
+</ul>
+<p>We will see how to compute these practically in the laboratory sessions.</p>
+<section id="confidence-intervals-for-means">
+<h4>Confidence Intervals for Means<a class="headerlink" href="#confidence-intervals-for-means" title="Permalink to this heading">#</a></h4>
+<p>We can compute confidence intervals for the estimation of means with <code class="docutils literal notranslate"><span class="pre">scipy</span></code>. Let us see how to compute confidence intervals for the mean of <code class="docutils literal notranslate"><span class="pre">height</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+<span class="n">standard_error</span> <span class="o">=</span> <span class="n">std</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="n">confidence_level</span> <span class="o">=</span> <span class="mf">0.95</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">confidence_level</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">standard_error</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard deviation of the sample: </span><span class="si">{</span><span class="n">std</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard error of the sample: </span><span class="si">{</span><span class="n">standard_error</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence interval: [</span><span class="si">{</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean: 169.89
+Standard deviation of the sample: 9.96
+Standard error of the sample: 0.15
+Confidence interval: [169.59, 170.19]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us set the confidence level to <span class="math notranslate nohighlight">\(0.99\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="n">mean</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">])</span>
+<span class="n">standard_error</span> <span class="o">=</span> <span class="n">std</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+
+<span class="n">confidence_level</span> <span class="o">=</span> <span class="mf">0.99</span>
+
+<span class="n">interval</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">confidence_level</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">standard_error</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Estimated mean: </span><span class="si">{</span><span class="n">mean</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard deviation of the sample: </span><span class="si">{</span><span class="n">std</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Standard error of the sample: </span><span class="si">{</span><span class="n">standard_error</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence interval: [</span><span class="si">{</span><span class="n">interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estimated mean: 169.89
+Standard deviation of the sample: 9.96
+Standard error of the sample: 0.15
+Confidence interval: [169.50, 170.29]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-for-variances">
+<h4>Confidence Intervals for Variances<a class="headerlink" href="#confidence-intervals-for-variances" title="Permalink to this heading">#</a></h4>
+<p>To compute confidence intervals for the estimation of variances, we have to use the <span class="math notranslate nohighlight">\(\chi^2\)</span> distribution:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Set the desired confidence level</span>
+<span class="n">confidence_level</span> <span class="o">=</span> <span class="mf">0.95</span>  <span class="c1"># Change this to the desired confidence level (e.g., 0.95 for 95% confidence)</span>
+
+<span class="c1"># Calculate the confidence interval for the population variance</span>
+<span class="n">confidence_interval</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">chi2</span><span class="o">.</span><span class="n">interval</span><span class="p">(</span><span class="n">confidence_level</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Calculate the sample variance</span>
+<span class="n">sample_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># ddof=1 for sample variance</span>
+
+<span class="c1"># Calculate the lower and upper bounds of the confidence interval</span>
+<span class="n">variance_lower</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sample_variance</span> <span class="o">/</span> <span class="n">confidence_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">variance_upper</span> <span class="o">=</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sample_variance</span> <span class="o">/</span> <span class="n">confidence_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample Variance: </span><span class="si">{</span><span class="n">sample_variance</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence Interval for Variance: (</span><span class="si">{</span><span class="n">variance_lower</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">variance_upper</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample Variance: 99.13
+Confidence Interval for Variance: (95.04, 103.49)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-for-proportion">
+<h4>Confidence Intervals for Proportion<a class="headerlink" href="#confidence-intervals-for-proportion" title="Permalink to this heading">#</a></h4>
+<p>Let us see how to compute confidence intervals for the proportion of females over males:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">females</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()[</span><span class="s1">&#39;F&#39;</span><span class="p">]</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Set the desired confidence level</span>
+<span class="n">confidence_level</span> <span class="o">=</span> <span class="mf">0.95</span>  <span class="c1"># Change this to the desired confidence level (e.g., 0.95 for 95% confidence)</span>
+
+<span class="c1"># Calculate the proportion (sample proportion)</span>
+<span class="n">proportion</span> <span class="o">=</span> <span class="n">females</span> <span class="o">/</span> <span class="n">total</span>
+
+<span class="c1"># Compute the confidence interval for the proportion</span>
+<span class="n">conf_interval</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">proportion_confint</span><span class="p">(</span><span class="n">females</span><span class="p">,</span> <span class="n">total</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mi">1</span> <span class="o">-</span> <span class="n">confidence_level</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;normal&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Sample Proportion: </span><span class="si">{</span><span class="n">proportion</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Confidence Interval for Proportion: (</span><span class="si">{</span><span class="n">conf_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">conf_interval</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sample Proportion: 0.54
+Confidence Interval for Proportion: (0.53, 0.56)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="bias-and-variance-of-estimators">
+<h2>Bias and Variance of Estimators<a class="headerlink" href="#bias-and-variance-of-estimators" title="Permalink to this heading">#</a></h2>
+<p>Let’s return to our bakery example. We want to estimate the <strong>true average weight</strong> <span class="math notranslate nohighlight">\(\mu\)</span> of cookie packages. To do this, we take a sample of <span class="math notranslate nohighlight">\(n\)</span> packages and compute the sample mean:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]</div>
+<p>This formula is called an <strong>estimator</strong> of the population mean. The value we obtain from a specific sample is called an <strong>estimate</strong>. Since the sample changes each time we repeat the experiment, the estimate will vary.</p>
+<p>It is useful to study how this estimator behaves across different samples—specifically, we want to understand its <strong>bias</strong> and <strong>variance</strong>.</p>
+<section id="bias-of-an-estimator">
+<h3>Bias of an Estimator<a class="headerlink" href="#bias-of-an-estimator" title="Permalink to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(X\)</span> be a random variable and let <span class="math notranslate nohighlight">\(x = (x_1, x_2, \ldots, x_n)\)</span> be a sample from the population. Let <span class="math notranslate nohighlight">\(T(X)\)</span> be an estimator of a population quantity <span class="math notranslate nohighlight">\(\phi\)</span> (for instance, the mean weight). Then:</p>
+<div class="math notranslate nohighlight">
+\[
+T(x) = \frac{1}{n} \sum_{i=1}^{n} x_i
+\]</div>
+<p>is our estimator for <span class="math notranslate nohighlight">\(\phi\)</span>. Since the sample changes, <span class="math notranslate nohighlight">\(T(X)\)</span> is a <strong>random variable</strong>.</p>
+<p>The <strong>bias</strong> of the estimator is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+Bias_\phi(T(X)) = E[T(X)] - \phi
+\]</div>
+<p>This measures whether the estimator systematically overestimates or underestimates the true value. If:</p>
+<div class="math notranslate nohighlight">
+\[
+E[T(X)] = \phi
+\]</div>
+<p>then the estimator is <strong>unbiased</strong>, meaning that, on average, it gives the correct result.</p>
+<p>In our case, the sample mean <span class="math notranslate nohighlight">\(\overline{x}\)</span> is an <strong>unbiased estimator</strong> of the population mean. If we repeated the sampling many times and averaged all the sample means, we would get a value close to <span class="math notranslate nohighlight">\(\mu\)</span>.</p>
+</section>
+<section id="unbiased-estimator-for-the-variance">
+<h3>Unbiased Estimator for the Variance<a class="headerlink" href="#unbiased-estimator-for-the-variance" title="Permalink to this heading">#</a></h3>
+<p>To estimate the variance of cookie weights, we may compute:</p>
+<div class="math notranslate nohighlight">
+\[
+s_n^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})^2
+\]</div>
+<p>This formula is <strong>biased</strong>—it tends to underestimate the true variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Specifically:</p>
+<div class="math notranslate nohighlight">
+\[
+E[s_n^2] = \frac{n-1}{n} \sigma^2
+\]</div>
+<p>To correct this, we use the <strong>unbiased estimator</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+s_{n-1}^2 = \frac{1}{n-1} \sum_{i=1}^{n} (x_i - \overline{x})^2
+\]</div>
+<p>This is the version we use when estimating the standard error and building confidence intervals. For large <span class="math notranslate nohighlight">\(n\)</span>, the difference between <span class="math notranslate nohighlight">\(s_n^2\)</span> and <span class="math notranslate nohighlight">\(s_{n-1}^2\)</span> becomes negligible.</p>
+</section>
+<section id="variance-of-an-estimator">
+<h3>Variance of an Estimator<a class="headerlink" href="#variance-of-an-estimator" title="Permalink to this heading">#</a></h3>
+<p>The <strong>variance</strong> of an estimator tells us how much the estimate fluctuates across different samples. It is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+Var(T(X)) = E[(T(X) - E[T(X)])^2]
+\]</div>
+<p>A low variance means that repeated samples give similar results. A high variance means that estimates are unstable and vary widely.</p>
+</section>
+<section id="bias-variance-tradeoff">
+<h3>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h3>
+<p>Ideally, we want an estimator with <strong>low bias</strong> and <strong>low variance</strong>. This means that:</p>
+<ul class="simple">
+<li><p>The estimates are close to each other (low variance),</p></li>
+<li><p>And they are close to the true value (low bias).</p></li>
+</ul>
+<p>In practice, we can visualize four scenarios:</p>
+<ul class="simple">
+<li><p><strong>Low bias, low variance</strong>: estimates are tightly clustered around the true value.</p></li>
+<li><p><strong>Low bias, high variance</strong>: estimates are scattered but centered correctly.</p></li>
+<li><p><strong>High bias, low variance</strong>: estimates are consistent but systematically wrong.</p></li>
+<li><p><strong>High bias, high variance</strong>: estimates are scattered and off-target.</p></li>
+</ul>
+<p>This is often illustrated as a target with darts: the true value is the bullseye, and each dart is an estimate. The goal is to hit close to the center, consistently.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/917708d3d9e941d6cb154b772b2d531da0f765e86c3bb1ed1aa109f7404b5d37.png" src="../_images/917708d3d9e941d6cb154b772b2d531da0f765e86c3bb1ed1aa109f7404b5d37.png" />
+</div>
+</div>
+<p>The four cases are:</p>
+<ul class="simple">
+<li><p>Low bias, low variance: all estimates will be close to the true value;</p></li>
+<li><p>Low bias, high variance: in average, estimates will be close to the true value, but different estimates may greatly differ;</p></li>
+<li><p>High bias, low variance: while different estimates will be similar, they all are very far away from the true value;</p></li>
+<li><p>High bias, high variance: we don’t have many guarantees - estimates will all be different, but also far from the real value, even in average.</p></li>
+</ul>
+<p>It’s clear that having low bias and low variance is desirable, but, as we will see, this is not always easy to achieve. In practice, we’ll see that in many cases it there is a trade-off between bias and variance, meaning that <strong>we can tweak our estimator to find a balance between these two properties</strong>.</p>
+</section>
+</section>
+<section id="hypothesis-testing">
+<h2>Hypothesis Testing<a class="headerlink" href="#hypothesis-testing" title="Permalink to this heading">#</a></h2>
+<p>Confidence intervals provide a range of plausible values for a population parameter based on a sample. A <strong>hypothesis test</strong>, instead, is used to <strong>challenge a specific claim</strong> about that parameter. Examples of hypotheses we might want to test include:</p>
+<ul class="simple">
+<li><p>The average weight of cookie packages is exactly 1000g.</p></li>
+<li><p>Two different ovens produce cookies with the same average weight.</p></li>
+<li><p>The proportion of underweight packages is below a regulatory threshold.</p></li>
+</ul>
+<p>If the hypothesis is rejected, we conclude that the claim is likely false. Otherwise, we do not have enough evidence to reject it, and we act as if it were true.</p>
+<section id="hypothesis-testing-for-cookie-weights">
+<h3>Hypothesis Testing for Cookie Weights<a class="headerlink" href="#hypothesis-testing-for-cookie-weights" title="Permalink to this heading">#</a></h3>
+<p>Let’s return to our bakery. The packaging machine is set to produce cookie packages weighing <strong>exactly 1000g</strong>. We take a sample of <span class="math notranslate nohighlight">\(n = 1000\)</span> packages and compute:</p>
+<div class="math notranslate nohighlight">
+\[
+\overline{x} = 1000.0005 \text{g}, \quad s_{n-1} = 0.01 \text{g}
+\]</div>
+<p>We assume the small deviation is due to measurement noise or natural variation, and we are inclined to believe that the <strong>true mean is still <span class="math notranslate nohighlight">\(\mu = 1000\)</span>g</strong>.</p>
+<p>However, our quality control manager raises a concern: what if the population mean is <strong>not</strong> 1000g? She proposes a formal test to challenge the assumption. We define:</p>
+<ul class="simple">
+<li><p><strong>Null hypothesis</strong> (<span class="math notranslate nohighlight">\(H_0\)</span>): the population mean is <span class="math notranslate nohighlight">\(\mu_0 = 1000\)</span>g</p></li>
+<li><p><strong>Alternative hypothesis</strong> (<span class="math notranslate nohighlight">\(H_a\)</span>): the population mean is different from 1000g</p></li>
+</ul>
+<p>Before proceeding, we ask what margin of error is acceptable. The manager says she can tolerate a <strong>5% chance of wrongly rejecting <span class="math notranslate nohighlight">\(H_0\)</span></strong>. This defines our <strong>significance level</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\alpha = 0.05
+\]</div>
+<p>We now ask: <strong>how much does our sample mean <span class="math notranslate nohighlight">\(\overline{x} = 1000.1\)</span>g deviate from the assumed mean <span class="math notranslate nohighlight">\(\mu_0 = 1000\)</span>g?</strong> More precisely, <strong>what is the probability of observing a difference this large (or larger) just by chance?</strong></p>
+<p>To answer this, we compute the <strong>test statistic</strong> using the t-distribution:</p>
+<div class="math notranslate nohighlight">
+\[
+t = \frac{\overline{x} - \mu_0}{s_{n-1}/\sqrt{n}} = \frac{1000.0005 - 1000}{0.01 / \sqrt{1000}} = 1.58\n\]</div>
+<p>This tells us how many standard errors our estimate is away from the hypothesized mean.</p>
+<p>We now ask: <strong>what is the probability of observing a value this extreme or more extreme, assuming <span class="math notranslate nohighlight">\(H_0\)</span> is true?</strong> This is the <strong>p-value</strong>, defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+P(|z| &gt; |t|)
+\]</div>
+<p>This is the area under the tails of the t-distribution beyond <span class="math notranslate nohighlight">\(t\)</span> and <span class="math notranslate nohighlight">\(-t\)</span>:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test statistic (t): 1.5811
+</pre></div>
+</div>
+<img alt="../_images/940ecb1beb4057c461860859174cb9480d22ed6ff029369cbe03d6a2bf2cea1d.png" src="../_images/940ecb1beb4057c461860859174cb9480d22ed6ff029369cbe03d6a2bf2cea1d.png" />
+</div>
+</div>
+<p>Since the t-Student distribution is symmetrical, we can easily compute the p-value as:</p>
+<div class="math notranslate nohighlight">
+\[\text{p-value} = 2(1-CDF_t(t))\]</div>
+<p>In our case, we obtain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_stat</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_bar</span> <span class="o">-</span> <span class="n">mu_0</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">s</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">t</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">t_stat</span><span class="p">,</span><span class="w"> </span><span class="n">df</span><span class="p">,</span><span class="w"> </span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.11
+</pre></div>
+</div>
+</div>
+</div>
+<p>This is a large number! How to interpret it?</p>
+<blockquote>
+<div><p>If the true mean is <span class="math notranslate nohighlight">\(\mu=1000\)</span> and we repeat sampling many times (<span class="math notranslate nohighlight">\(n=1000\)</span>), then <span class="math notranslate nohighlight">\(11\%\)</span> of the times we obtain a deviation more extreme than the observed one.</p>
+</div></blockquote>
+<p>We now compare this number to the significance level of <span class="math notranslate nohighlight">\(5\%\)</span>. If we reject the null hypothesis, we risk to make a mistake <span class="math notranslate nohighlight">\(11\%\)</span> of times, which is above the threshold of <span class="math notranslate nohighlight">\(5\%\)</span>. Hence, <strong>we cannot reject the null hypothesis</strong> under these circumstances.</p>
+<p>Does this mean that the two means are the same? <strong>We don’t know, the test does not tell us what to do in this case!</strong> But we may try to collect more measurements hoping to reduce uncertainty.</p>
+<p>We suspect that our sample is too small, so we collect a total of <span class="math notranslate nohighlight">\(n=5000\)</span> examples and obtains:</p>
+<div class="math notranslate nohighlight">
+\[\overline x = 1000.0001\]</div>
+<div class="math notranslate nohighlight">
+\[s_{n-1} = 0.0031\]</div>
+<p>The mean has decreased a little and the standard deviation has decreased. We recompute the statistic and obtain:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2.28
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have a larger (more extreme) statistic. We hence compute our p-value:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.02
+</pre></div>
+</div>
+</div>
+</div>
+<p>This p-value is now below the threshold of <span class="math notranslate nohighlight">\(5\%\)</span>. We can now reject the null hypothesis and conclude that the population mean is different than <span class="math notranslate nohighlight">\(1000g\)</span>.</p>
+<section id="one-tailed-tests">
+<h4>One-tailed Tests<a class="headerlink" href="#one-tailed-tests" title="Permalink to this heading">#</a></h4>
+<p>The tests seen above is a “two-tailed test” in which we summed the areas in the two tails of the distribution. Depending on the form of the alternative hypothesis, in particular:</p>
+<ul class="simple">
+<li><p>If the alternative hypothesis has the form <span class="math notranslate nohighlight">\(\mu \neq \mu_0\)</span>, then we want to check when the deviation from the assumed mean is larger than the observed one: <span class="math notranslate nohighlight">\(P(|x| &gt; |z|)\)</span>;</p></li>
+<li><p>If the alternative hypothesis has the form <span class="math notranslate nohighlight">\(\mu &gt; \mu_0\)</span>, then we want to check when the deviation from the assumed mean is positive and larger than the observed one: <span class="math notranslate nohighlight">\(P(x &gt; z)\)</span>;</p></li>
+<li><p>If the alternative hypothesis has the form <span class="math notranslate nohighlight">\(\mu &lt; \mu_0\)</span>, then we want to check when the deviation from the assumed mean is negative and smaller than the observed one: <span class="math notranslate nohighlight">\(P(x &lt; z)\)</span>.</p></li>
+</ul>
+<p>This will affect the computation of the p-value as shown in the following figure:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/ca471f6bf7e2bc9fb23cd6529c0d197d48a430b9dad845d1f71d24bc6c786ccf.png" src="../_images/ca471f6bf7e2bc9fb23cd6529c0d197d48a430b9dad845d1f71d24bc6c786ccf.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="hypotheses-tests-in-general">
+<h3>Hypotheses Tests in General<a class="headerlink" href="#hypotheses-tests-in-general" title="Permalink to this heading">#</a></h3>
+<p>A hypothesis test generally includes:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_0\)</span>: the <strong>null hypothesis</strong>, e.g., the means of two populations are equal;</p></li>
+<li><p><span class="math notranslate nohighlight">\(H_a\)</span>: the <strong>alternative hypothesis</strong>, e.g., the means of two populations are not equal (this determines if the test is one- or two-tailed);</p></li>
+<li><p>a <strong>test statistics</strong> which quantifies how likely it is to reject the null hypothesis. The test statistics follows a specific distribution which depends on the type of statistical tests we are performing. E.g., it can follow a t-Student distribution;</p></li>
+<li><p>a <strong>significance level</strong> <span class="math notranslate nohighlight">\(\alpha\)</span> which defines the sensitivity of the test. A common value is <span class="math notranslate nohighlight">\(\alpha=0.05\)</span>, which means that we can wrongly reject the null hypothesis <span class="math notranslate nohighlight">\(5\%\)</span> of the times when it is in fact true. It represents the degree of error that we are willing to accept when performing hypothesis testing. Common values are <span class="math notranslate nohighlight">\(0.1\)</span>, <span class="math notranslate nohighlight">\(0.05\)</span>, <span class="math notranslate nohighlight">\(0.01\)</span>;</p></li>
+<li><p>the <strong>p-value</strong>: this quantifies the probability of sampling a test statistics at least as extreme as the one observed under the null hypothesis. In practice, the p-value measures the probability that the null hypothesis is true but we are observing test statistic leading to rejection nevertheless.</p></li>
+</ul>
+<p>The null hypothesis is rejected if the <strong>p-value is larger than the chosen significance level <span class="math notranslate nohighlight">\(\alpha\)</span></strong>. We will not see in details all the possible hypothesis tests, but all of them follow a similar scheme.</p>
+</section>
+<section id="other-important-tests">
+<h3>Other Important Tests<a class="headerlink" href="#other-important-tests" title="Permalink to this heading">#</a></h3>
+<p>In this section, we briefly see the main statistical tests which can be used in practice, besides the one for means. We will not see how they are formulated, but we will see how to interpret them. We will see a few other tests when we’ll talk about linear regression.</p>
+<section id="one-sample-t-test">
+<h4>One Sample T-Test<a class="headerlink" href="#one-sample-t-test" title="Permalink to this heading">#</a></h4>
+<p>This is the test for sample means we have previously seen. It is used to <strong>determine whether the mean of a single sample is significantly different from a known or hypothesized value.</strong></p>
+<p>This test allows to assess whether a sample has a given mean. Let us check if the average height in our dataset is equal to <span class="math notranslate nohighlight">\(170cm\)</span>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Define the null hypothesis mean (population mean you want to test against)</span>
+<span class="n">null_hypothesis_mean</span> <span class="o">=</span> <span class="mi">170</span>
+
+<span class="c1"># Perform a one-sample t-test</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">null_hypothesis_mean</span><span class="p">)</span>
+
+<span class="c1"># Set the desired significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Check the p-value against the significance level</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reject the null hypothesis. The data provides enough evidence to conclude that the population mean is different from </span><span class="si">{</span><span class="n">null_hypothesis_mean</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fail to reject the null hypothesis. The data does not provide enough evidence to conclude that the population mean is different from </span><span class="si">{</span><span class="n">null_hypothesis_mean</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t-statistic: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fail to reject the null hypothesis. The data does not provide enough evidence to conclude that the population mean is different from 170.
+t-statistic: -0.69
+P-value: 0.4872
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let us now check if the average height is <span class="math notranslate nohighlight">\(170\)</span> among males only:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Define the null hypothesis mean (population mean you want to test against)</span>
+<span class="n">null_hypothesis_mean</span> <span class="o">=</span> <span class="mi">170</span>
+
+<span class="n">data2</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform a one-sample t-test</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_1samp</span><span class="p">(</span><span class="n">data2</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">],</span> <span class="n">null_hypothesis_mean</span><span class="p">)</span>
+
+<span class="c1"># Set the desired significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Check the p-value against the significance level</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Reject the null hypothesis. The data provides enough evidence to conclude that the population mean is different from </span><span class="si">{</span><span class="n">null_hypothesis_mean</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fail to reject the null hypothesis. The data does not provide enough evidence to conclude that the population mean is different from </span><span class="si">{</span><span class="n">null_hypothesis_mean</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;t-statistic: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Reject the null hypothesis. The data provides enough evidence to conclude that the population mean is different from 170.
+t-statistic: 45.52
+P-value: 0.0000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="two-sample-t-test">
+<h4>Two Sample T-Test<a class="headerlink" href="#two-sample-t-test" title="Permalink to this heading">#</a></h4>
+<p>A two-sample t-test is used to determine if there is a significant difference between the means of two independent samples. It’s often used when you want to compare the means of two different populations or treatments. The test assesses whether the difference between the sample means is statistically significant or if it could have occurred due to random chance. Also in this case, the test statistic will follow a t-Student distribution.</p>
+<p>Let us now compare the average heights in two samples we previously obtained via random sampling. We expect no differences:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+
+<span class="n">h1</span> <span class="o">=</span> <span class="n">sample1</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+<span class="n">h2</span> <span class="o">=</span> <span class="n">sample2</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform independent two-sample t-test</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">)</span>
+
+<span class="c1"># Define significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test statistic: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Significance level: </span><span class="si">{</span><span class="n">alpha</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Comment on result</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conclusion: there is a significant difference between the mean exam scores of the two classes.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conclusion: there is no significant difference between the mean exam scores of the two classes.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test statistic: -0.47
+Significance level: 0.05
+P-value: 0.64
+Conclusion: there is no significant difference between the mean exam scores of the two classes.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">hw</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight.csv&#39;</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">2.54</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span><span class="o">/</span><span class="mf">2.205</span>
+<span class="n">hw</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sex</th>
+      <th>BMI</th>
+      <th>height</th>
+      <th>weight</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>M</td>
+      <td>33.36</td>
+      <td>74</td>
+      <td>53.484771</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>M</td>
+      <td>26.54</td>
+      <td>70</td>
+      <td>38.056472</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>F</td>
+      <td>32.13</td>
+      <td>61</td>
+      <td>34.970812</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>M</td>
+      <td>26.62</td>
+      <td>68</td>
+      <td>35.999365</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>F</td>
+      <td>27.13</td>
+      <td>66</td>
+      <td>34.559390</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4226</th>
+      <td>F</td>
+      <td>17.12</td>
+      <td>69</td>
+      <td>23.862436</td>
+    </tr>
+    <tr>
+      <th>4227</th>
+      <td>M</td>
+      <td>27.47</td>
+      <td>69</td>
+      <td>38.262182</td>
+    </tr>
+    <tr>
+      <th>4228</th>
+      <td>F</td>
+      <td>29.16</td>
+      <td>64</td>
+      <td>34.970812</td>
+    </tr>
+    <tr>
+      <th>4229</th>
+      <td>F</td>
+      <td>23.68</td>
+      <td>64</td>
+      <td>28.388071</td>
+    </tr>
+    <tr>
+      <th>4230</th>
+      <td>F</td>
+      <td>20.12</td>
+      <td>61</td>
+      <td>22.628172</td>
+    </tr>
+  </tbody>
+</table>
+<p>4231 rows × 4 columns</p>
+</div></div></div>
+</div>
+<p>If we compute the average <code class="docutils literal notranslate"><span class="pre">BMI</span></code> for males and females we obtain:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hw</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;sex&#39;</span><span class="p">)[</span><span class="s1">&#39;BMI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sex
+F    26.929287
+M    27.684959
+Name: BMI, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>We see a small difference. Is this due to chance or is it significant? If we run a two-sample t-test, we obtain the following results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+
+<span class="n">male_bmi</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;M&#39;</span><span class="p">][</span><span class="s1">&#39;BMI&#39;</span><span class="p">]</span>
+<span class="n">female_bmi</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;sex&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;F&#39;</span><span class="p">][</span><span class="s1">&#39;BMI&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform independent two-sample t-test</span>
+<span class="n">t_stat</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">ttest_ind</span><span class="p">(</span><span class="n">male_bmi</span><span class="p">,</span> <span class="n">female_bmi</span><span class="p">)</span>
+
+<span class="c1"># Define significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test statistic: </span><span class="si">{</span><span class="n">t_stat</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Significance level: </span><span class="si">{</span><span class="n">alpha</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Comment on result</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conclusion: there is a significant difference between the two means.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Conclusion: there is no significant difference between the two means.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test statistic: 4.64
+Significance level: 0.05
+P-value: 0.00
+Conclusion: there is a significant difference between the two means.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="chi-square-test-for-independence">
+<h4>Chi-Square Test for Independence<a class="headerlink" href="#chi-square-test-for-independence" title="Permalink to this heading">#</a></h4>
+<p>The Chi-Square Test for Independence is a statistical test used to determine whether there is an association or independence between two or more categorical variables. This test is particularly useful when we want to assess whether changes in one categorical variable are related to changes in another categorical variable. The typical scenario is to set up a contingency table to compare the observed frequencies (counts) of the joint categories of the two variables to the expected frequencies that would occur under the assumption of independence.</p>
+<p>The null hypothesis for the Chi-Square Test for Independence is that <strong>there is no association between the two categorical variables</strong> (they are independent), while the alternative hypothesis suggests that there is an association (they are dependent).</p>
+<p>The test statistics follows a Chi-square distribution (we won’t see the details) in this case.</p>
+<p>Let’s consider the Titanic dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">titanic</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;https://raw.githubusercontent.com/agconti/kaggle-titanic/master/data/train.csv&#39;</span><span class="p">,</span>
+                     <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;PassengerId&#39;</span><span class="p">)</span>
+<span class="n">titanic</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Survived</th>
+      <th>Pclass</th>
+      <th>Name</th>
+      <th>Sex</th>
+      <th>Age</th>
+      <th>SibSp</th>
+      <th>Parch</th>
+      <th>Ticket</th>
+      <th>Fare</th>
+      <th>Cabin</th>
+      <th>Embarked</th>
+    </tr>
+    <tr>
+      <th>PassengerId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Braund, Mr. Owen Harris</td>
+      <td>male</td>
+      <td>22.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>A/5 21171</td>
+      <td>7.2500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cumings, Mrs. John Bradley (Florence Briggs Th...</td>
+      <td>female</td>
+      <td>38.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17599</td>
+      <td>71.2833</td>
+      <td>C85</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>3</td>
+      <td>Heikkinen, Miss. Laina</td>
+      <td>female</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>STON/O2. 3101282</td>
+      <td>7.9250</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Futrelle, Mrs. Jacques Heath (Lily May Peel)</td>
+      <td>female</td>
+      <td>35.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>113803</td>
+      <td>53.1000</td>
+      <td>C123</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Allen, Mr. William Henry</td>
+      <td>male</td>
+      <td>35.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>373450</td>
+      <td>8.0500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>887</th>
+      <td>0</td>
+      <td>2</td>
+      <td>Montvila, Rev. Juozas</td>
+      <td>male</td>
+      <td>27.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>211536</td>
+      <td>13.0000</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>888</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Graham, Miss. Margaret Edith</td>
+      <td>female</td>
+      <td>19.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>112053</td>
+      <td>30.0000</td>
+      <td>B42</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>889</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Johnston, Miss. Catherine Helen "Carrie"</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>2</td>
+      <td>W./C. 6607</td>
+      <td>23.4500</td>
+      <td>NaN</td>
+      <td>S</td>
+    </tr>
+    <tr>
+      <th>890</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Behr, Mr. Karl Howell</td>
+      <td>male</td>
+      <td>26.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>111369</td>
+      <td>30.0000</td>
+      <td>C148</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <th>891</th>
+      <td>0</td>
+      <td>3</td>
+      <td>Dooley, Mr. Patrick</td>
+      <td>male</td>
+      <td>32.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>370376</td>
+      <td>7.7500</td>
+      <td>NaN</td>
+      <td>Q</td>
+    </tr>
+  </tbody>
+</table>
+<p>891 rows × 11 columns</p>
+</div></div></div>
+</div>
+<p>Let’s consider the following contingency table:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">contingency_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">])</span>
+<span class="n">contingency_table</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Survived</th>
+      <th>0</th>
+      <th>1</th>
+    </tr>
+    <tr>
+      <th>Pclass</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>80</td>
+      <td>136</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>97</td>
+      <td>87</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>372</td>
+      <td>119</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>We can visualize the distributions of Survived in the three classes for more clarity:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">],</span> <span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Survived&#39;</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2ecf06676eaa957d8d3c4718f9cfeafd5046849b94b5c4d3943b920ccf7d63a5.png" src="../_images/2ecf06676eaa957d8d3c4718f9cfeafd5046849b94b5c4d3943b920ccf7d63a5.png" />
+</div>
+</div>
+<p>We expect some form of correlation between the two variables. Indeed, the chi-square statistics and Cramer V statistics are:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
+<span class="kn">from</span> <span class="nn">scipy.stats.contingency</span> <span class="kn">import</span> <span class="n">association</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Chi-square statistic: </span><span class="si">{</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency_table</span><span class="p">)</span><span class="o">.</span><span class="n">statistic</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Cramer V statistic: </span><span class="si">{</span><span class="n">association</span><span class="p">(</span><span class="n">contingency_table</span><span class="p">)</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chi-square statistic: 102.89
+Cramer V statistic: 0.34
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have numbers different from zero, but <strong>is this due to chance or is it statistically significant</strong>? If we run a chi-square contingency test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chi2_contingency</span>
+
+<span class="c1"># Perform the Chi-Square Test for Independence</span>
+<span class="n">chi2</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">chi2_contingency</span><span class="p">(</span><span class="n">contingency_table</span><span class="p">)</span>
+
+<span class="c1"># Set the significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Print the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Chi-Square Statistic:&quot;</span><span class="p">,</span> <span class="n">chi2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value:&quot;</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="c1"># Interpret the results</span>
+<span class="k">if</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">There is a significant association between &#39;Pclass&#39; and &#39;survived&#39;.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">There is no significant association between &#39;Pclass&#39; and &#39;survived&#39;.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Chi-Square Statistic: 102.88898875696056
+p-value: 4.549251711298793e-23
+
+There is a significant association between &#39;Pclass&#39; and &#39;survived&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="chi-square-goodness-of-fit-test">
+<h4>Chi-Square Goodness-of-Fit Test<a class="headerlink" href="#chi-square-goodness-of-fit-test" title="Permalink to this heading">#</a></h4>
+<p>The Chi-Square Goodness of Fit test is a statistical test used to determine whether observed categorical data (frequencies) fit a specified distribution or expected frequencies. This test is often used to assess whether the observed data deviates significantly from a hypothesized distribution. The typical scenario is to compare observed frequencies with expected frequencies based on a theoretical model or prior knowledge.</p>
+<p>The null hypothesis for the Chi-Square Goodness of Fit test is that <strong>there is no significant difference between the observed and expected frequencies</strong>, meaning the observed data fits the specified distribution. The alternative hypothesis suggests that there is a significant difference.</p>
+<p>The test statistics follows a Chi-square distribution in this case.</p>
+<p>Let us consider the Titanic dataset again. We know that the distribution of <code class="docutils literal notranslate"><span class="pre">Sex</span></code> among passengers is biased:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e229d4d048004895ece2a93d00c185a5903076fb208349bb1b4edca378ab0dc7.png" src="../_images/e229d4d048004895ece2a93d00c185a5903076fb208349bb1b4edca378ab0dc7.png" />
+</div>
+</div>
+<p>We now consider the distribution of <code class="docutils literal notranslate"><span class="pre">Sex</span></code> among passengers less than <span class="math notranslate nohighlight">\(18\)</span> years old:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">minor</span><span class="o">=</span><span class="n">titanic</span><span class="p">[</span><span class="n">titanic</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mi">18</span><span class="p">]</span>
+<span class="n">observed_frequencies</span> <span class="o">=</span> <span class="n">minor</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">observed_frequencies</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">observed_frequencies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d0282b7904110e3b875b62111330e45dd76a5113de7964649ff647c715b0610d.png" src="../_images/d0282b7904110e3b875b62111330e45dd76a5113de7964649ff647c715b0610d.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sex
+male      58
+female    55
+Name: count, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<p>This looks less biased, but there are still minor differences between the counts. Are these due to chance? If <code class="docutils literal notranslate"><span class="pre">Sex</span></code> was distributed uniformly (as we hypothesize), we would have the following frequencies:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expected_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">113</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">113</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">expected_frequencies</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[56.5, 56.5]
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can run a Goodness-of-fit test to check if the observed frequencies match the expected ones:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">chisquare</span>
+
+<span class="c1"># Load the Titanic dataset</span>
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;titanic&quot;</span><span class="p">)</span>
+
+<span class="n">observed_frequencies</span> <span class="o">=</span> <span class="n">minor</span><span class="p">[</span><span class="s1">&#39;Sex&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+
+<span class="c1"># Define expected frequencies that closely match the observed data</span>
+<span class="n">expected_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">113</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">113</span><span class="o">/</span><span class="mi">2</span><span class="p">]</span>
+
+<span class="n">chi2</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">chisquare</span><span class="p">(</span><span class="n">f_obs</span><span class="o">=</span><span class="n">observed_frequencies</span><span class="p">,</span> <span class="n">f_exp</span><span class="o">=</span><span class="n">expected_frequencies</span><span class="p">)</span>
+
+<span class="c1"># Set the significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Print the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Observed Frequencies:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">observed_frequencies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Expected Frequencies:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">expected_frequencies</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Chi-Square Statistic:&quot;</span><span class="p">,</span> <span class="n">chi2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;p-value:&quot;</span><span class="p">,</span> <span class="n">p_value</span><span class="p">)</span>
+
+<span class="c1"># Interpret the results</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The observed data significantly deviates from the expected distribution.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">The observed data fits the expected distribution.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observed Frequencies:
+[58 55]
+
+Expected Frequencies:
+[56.5, 56.5]
+
+Chi-Square Statistic: 0.07964601769911504
+p-value: 0.7777776907897473
+
+The observed data fits the expected distribution.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Given the large p-value, we could not reject the null hypothesis that there are significant differences between expected and observed frequencies.</p>
+</section>
+<section id="pearson-spearman-correlation-test">
+<h4>Pearson/Spearman Correlation Test<a class="headerlink" href="#pearson-spearman-correlation-test" title="Permalink to this heading">#</a></h4>
+<p>We have seen how to compute Pearson/Spearman correlation coefficient. However, what can we say when we get small values? Are those supposed to be zero, but we got something different from zero due to sampling, or are they significantly different from zero?</p>
+<p>The statistical tests associated with the correlation coefficients are used to determine whether the observed correlation between two variables is statistically significant or if it might have occurred due to random chance. This test assesses whether the correlation in the sample data is likely to reflect a true correlation in the population.</p>
+<p>The null hypothesis is that <strong>there is no statistically significant correlation between the two variables in the population</strong>. In other words, the true correlation coefficient in the population is zero.</p>
+<p>Let us consider the Titanic dataset. We find the following correlation between the <code class="docutils literal notranslate"><span class="pre">Age</span></code> and <code class="docutils literal notranslate"><span class="pre">Fare</span></code> variables:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s1">&#39;Fare&#39;</span><span class="p">)</span>
+<span class="n">tt</span><span class="o">=</span><span class="n">titanic</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Correlation between age and fare: </span><span class="si">{</span><span class="n">titanic</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Fare&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Correlation between age and fare: 0.10
+</pre></div>
+</div>
+<img alt="../_images/ff8f5d144b104e945aa592ae33c7c1792ec709e1072732c3d1a5035eea873380.png" src="../_images/ff8f5d144b104e945aa592ae33c7c1792ec709e1072732c3d1a5035eea873380.png" />
+</div>
+</div>
+<p>Is this small positive correlation “true” or due to chance? Let us run a statistical test:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+
+<span class="n">tt</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Fare&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Extract the &#39;age&#39; and &#39;fare&#39; columns</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="n">fare</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform a Pearson correlation test</span>
+<span class="n">r</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">pearsonr</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">fare</span><span class="p">)</span>
+
+<span class="c1"># Define the significance level</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Display the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Pearson correlation coefficient (r): </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compare the p-value to alpha</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reject the null hypothesis. There is a significant correlation between age and fare.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fail to reject the null hypothesis. There is no significant correlation between age and fare.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Pearson correlation coefficient (r): 0.0960666917690389
+P-value: 0.010216277504447016
+Reject the null hypothesis. There is a significant correlation between age and fare.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The p-value is small enough to reject the null hypothesis: the correlation is small but statistically significant.</p>
+<p>Similar tests exist for Spearman coefficient:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+
+<span class="n">tt</span> <span class="o">=</span> <span class="n">titanic</span><span class="p">[[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Fare&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Extract the &#39;age&#39; and &#39;fare&#39; columns</span>
+<span class="n">age</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span>
+<span class="n">fare</span> <span class="o">=</span> <span class="n">tt</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">]</span>
+
+<span class="c1"># Perform a Pearson correlation test</span>
+<span class="n">r</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">spearmanr</span><span class="p">(</span><span class="n">age</span><span class="p">,</span> <span class="n">fare</span><span class="p">)</span>
+
+<span class="c1"># Define the significance level</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="c1"># Display the results</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Spearman correlation coefficient (r): </span><span class="si">{</span><span class="n">r</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Compare the p-value to alpha</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Reject the null hypothesis. There is a significant correlation between age and fare.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fail to reject the null hypothesis. There is no significant correlation between age and fare.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spearman correlation coefficient (r): 0.1350512177342878
+P-value: 0.0002958090324306092
+Reject the null hypothesis. There is a significant correlation between age and fare.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="assessing-whether-a-sample-is-normally-distributed">
+<h2>Assessing whether a Sample is Normally Distributed<a class="headerlink" href="#assessing-whether-a-sample-is-normally-distributed" title="Permalink to this heading">#</a></h2>
+<p>While the Normal distribution is pervasive, in some cases, it is useful to assess whether a given sample follows a normal distribution before assuming this is true. Let us consider the dataset of heights and weights and plot the distribution of weights:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">hw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight.csv&#39;</span><span class="p">)</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>  <span class="c1"># Convert height to inches</span>
+<span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.205</span>               <span class="c1"># Convert weight to pounds</span>
+
+<span class="c1"># Set up the plotting style</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;whitegrid&quot;</span><span class="p">)</span>
+
+<span class="c1"># Plotting for weight</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Histogram and Density Plot for Weight&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Weight (pounds)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2a6dff8f9791862149d973ddec78d29308a2ae640e0d209844a7e4483ab3d0ea.png" src="../_images/2a6dff8f9791862149d973ddec78d29308a2ae640e0d209844a7e4483ab3d0ea.png" />
+</div>
+</div>
+<p>Does the distribution look Gaussian? Let us compute Skewness and Kurtosis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">skew</span><span class="p">,</span> <span class="n">kurtosis</span>
+
+<span class="c1"># Load and preprocess the data</span>
+<span class="n">hw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight_pounds.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Calculate skewness and kurtosis for weight</span>
+<span class="n">weight_skewness</span> <span class="o">=</span> <span class="n">skew</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
+<span class="n">weight_kurtosis</span> <span class="o">=</span> <span class="n">kurtosis</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>  
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Skewness of weight: </span><span class="si">{</span><span class="n">weight_skewness</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Kurtosis of weight: </span><span class="si">{</span><span class="n">weight_kurtosis</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Skewness of weight: 0.57
+Kurtosis of weight: -0.06
+</pre></div>
+</div>
+</div>
+</div>
+<p>We not that:</p>
+<ul class="simple">
+<li><p>We have a positive Skewness: this indicates that the distribution is skewed towards the right side (the right tail is longer) as compared to a Normal distribution;</p></li>
+<li><p>We have a Kurtosis slightly lower than zero: the distribution is slightly “flatter” than a Normal distribution.</p></li>
+</ul>
+<p>While Skewness and Kurtosis can help characterize deviations from normality, there are tests which can be used.</p>
+<section id="quantile-quantile-plots-q-q-plots">
+<h3>Quantile-Quantile Plots (Q-Q Plots)<a class="headerlink" href="#quantile-quantile-plots-q-q-plots" title="Permalink to this heading">#</a></h3>
+<p>Quantile-Quantile plots, or Q-Q plots, are a powerful tool to <strong>assess how well a sample matches a theoretical distribution</strong>. The idea is simple: we compare the <strong>quantiles of the empirical data</strong> with the <strong>quantiles of a reference distribution</strong>—typically the normal distribution.</p>
+<p>To make the comparison meaningful and remove scale effects, the empirical data is often <strong>standardized into z-scores</strong>. If the sample truly follows the theoretical distribution, the quantiles will align, and the points will fall along the diagonal line <span class="math notranslate nohighlight">\(y = x\)</span>.</p>
+<p>Deviations from this line reveal <strong>systematic differences</strong> between the empirical and theoretical distributions. For example:</p>
+<ul class="simple">
+<li><p>A curve that bends away from the diagonal suggests skewness.</p></li>
+<li><p>S-shaped patterns may indicate heavier or lighter tails than expected.</p></li>
+</ul>
+<p>In the following graph, we show the Q-Q plot for the sample of cookie package weights. It helps us visually evaluate whether the sample distribution is approximately normal—a key assumption in many statistical methods.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.graphics.gofplots</span> <span class="kn">import</span> <span class="n">qqplot</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># fit=True means the distribution should be fitted to the data</span>
+<span class="c1"># and the data should be standardized</span>
+<span class="c1"># line=&#39;45&#39; means a 45-degree reference line will be plotted</span>
+<span class="n">qqplot</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">],</span> <span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/952bf42c3d5a6cc4e64caf08086064c8720009b14aea6122911fe64ff73e03f4.png" src="../_images/952bf42c3d5a6cc4e64caf08086064c8720009b14aea6122911fe64ff73e03f4.png" />
+</div>
+</div>
+<p>The plot relates the “theoretical” quantiles with those of the sample. The fact that the points on the plot do not lie on the diagonal indicates that there is a discrepancy between the empirical data distribution and the Gaussian distribution.</p>
+<p>Analyzing a Q-Q Plot can be complex. In practice, <strong>there are some guidelines to understand how a sample deviates from a theoretical distribution</strong>. The following figure compares the q-q plots of different distributions:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/1a6281e8ac2d6d186bb49aab0132097889f61c127d5df1f966d1f376c3b75433.png" src="../_images/1a6281e8ac2d6d186bb49aab0132097889f61c127d5df1f966d1f376c3b75433.png" />
+</div>
+</div>
+<p>Every time we observe a Q-Q Plot, we can relate these features to characteristics of the distribution. Clearly, these characteristics can also combine to create more complex Q-Q Plots, as seen in the case of weights.</p>
+</section>
+<section id="shapiro-wilk-normality-test">
+<h3>Shapiro-Wilk Normality Test<a class="headerlink" href="#shapiro-wilk-normality-test" title="Permalink to this heading">#</a></h3>
+<p>The Shapiro-Wilk test is a statistical test used to assess whether a sample follows a Gaussian (normal) distribution. It is used with small samples (<span class="math notranslate nohighlight">\(n\leq 2000\)</span>) It works by comparing the observed data to what you would expect if the data were drawn from a truly Gaussian distribution.</p>
+<p>The null hypothesis for this test is that the population is normally distributed.</p>
+<p>We will not see the formal details of this test, but we can use it in our analyses. Here is the result on the <code class="docutils literal notranslate"><span class="pre">weight</span></code> sample in our height-weight dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">shapiro</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Perform the Shapiro-Wilk test</span>
+<span class="n">statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">shapiro</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
+
+<span class="c1"># Set the significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test statistic: </span><span class="si">{</span><span class="n">statistic</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">0.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check the p-value against the significance level</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample looks Gaussian (fail to reject H0)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample does not look Gaussian (reject H0)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test statistic: 0.97
+P-value: 0.00
+Sample does not look Gaussian (reject H0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-agostino-s-k-squared-test">
+<h3>D’Agostino’s K-squared test<a class="headerlink" href="#d-agostino-s-k-squared-test" title="Permalink to this heading">#</a></h3>
+<p>When samples are large (<span class="math notranslate nohighlight">\(n \geq 50\)</span>), the D’Agostino’s K-squared test is more used. It is based on Skewness and Kurtosis.</p>
+<p>The null hypothesis for this test is that the population is normally distributed.</p>
+<p>Here is the result for our example:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">normaltest</span>
+
+<span class="c1"># Perform D&#39;Agostino&#39;s K-squared test</span>
+<span class="n">statistic</span><span class="p">,</span> <span class="n">p_value</span> <span class="o">=</span> <span class="n">normaltest</span><span class="p">(</span><span class="n">hw</span><span class="p">[</span><span class="s1">&#39;weight&#39;</span><span class="p">])</span>
+
+<span class="c1"># Set the significance level (alpha)</span>
+<span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.05</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test statistic: </span><span class="si">{</span><span class="n">statistic</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;P-value: </span><span class="si">{</span><span class="n">p_value</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check the p-value against the significance level</span>
+<span class="k">if</span> <span class="n">p_value</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample looks Gaussian (fail to reject H0)&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sample does not look Gaussian (reject H0)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Test statistic: 201.64
+P-value: 0.00
+Sample does not look Gaussian (reject H0)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Consider the sample of all passengers in the titanic dataset. Compute the mean age of all passengers. Then, compute the confidence bounds for this mean setting the confidence level to 0.95. Is the estimated mean a reliable estimate of the population mean?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Consider the samples of all passengers in the titanic dataset. Compute the variance of the ages of all passengers. Then, compute the confidence bounds for this variance setting the confidence level to 0.95. Is the estimated variance a reliable estimate of the population variance?</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 3</p>
+<p>Extract the sample of values of Sex of passengers in second class in the titanic dataset. Compute the contingency table of absolute counts of the Sex column. Compute the confidence bounds for the proportions of Sex in the sample. Are the estimated bounds reliable? Repeat the analysis for class 1 and 3.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 4</p>
+<p>The average age of women in the US population is 40. Run a statistical test to assess whether the sample of ages in the <code class="docutils literal notranslate"><span class="pre">infert</span></code> dataset has the same mean as the US population. What is the result of the test? Are women in <code class="docutils literal notranslate"><span class="pre">infert</span></code> younger or older than the average?</p>
+<p>You can load the dataset installing the <code class="docutils literal notranslate"><span class="pre">pydataset</span></code> library with <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">pydataset</span></code> and then:</p>
+<p><code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">pydataset</span> <span class="pre">import</span> <span class="pre">data;</span> <span class="pre">infert</span> <span class="pre">=</span> <span class="pre">data(&quot;infert&quot;)</span></code></p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 5</p>
+<p>Consider the <code class="docutils literal notranslate"><span class="pre">titanic</span></code> dataset. Follow these steps to assess that males and females <strong>are not equally distributed</strong>:</p>
+<ul class="simple">
+<li><p>Obtain a table of absolute frequencies of the values of <code class="docutils literal notranslate"><span class="pre">Sex</span></code>;</p></li>
+<li><p>Show a barplot comparing the proportions of male and female passengers. Do these look equally distributed?</p></li>
+<li><p>Run a statistical test to assess whether the proportion of males and females are equal (<span class="math notranslate nohighlight">\(p=0.5\)</span>). What is the result of the test?</p></li>
+<li><p>Run the statistical test setting <span class="math notranslate nohighlight">\(p=1/3\)</span>. Is the result different? Can we reject the null hypothesis? Why?</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chapters 6-8 of [1];</p></li>
+<li><p>Parts of chapter 9 of [2].</p></li>
+</ul>
+<p>[1] Gonick, L., &amp; Smith, W. (1993). The cartoon guide to statistics. HarperCollins Publishers, Inc.</p>
+<p>[2] Heumann, Christian, and Michael Schomaker Shalabh. Introduction to statistics and data analysis. Springer International Publishing Switzerland, 2016.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="05_data_distributions.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Distributions</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="07_storytelling_with_data.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Storytelling with Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling">Sampling</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#simple-random-sample">Simple random sample</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-sampling">Stratified Sampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-in-python">Sampling in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sampling-distribution-of-the-mean">Sampling Distribution of the Mean</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-error">Standard Error</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#t-student-distribution">t-Student Distribution</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals">Confidence Intervals</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-confidence-interval-for-cookie-weights">Example: Confidence Interval for Cookie Weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-confidence-intervals-in-practice">Computing Confidence Intervals in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-means">Confidence Intervals for Means</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-variances">Confidence Intervals for Variances</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-proportion">Confidence Intervals for Proportion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-and-variance-of-estimators">Bias and Variance of Estimators</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-of-an-estimator">Bias of an Estimator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unbiased-estimator-for-the-variance">Unbiased Estimator for the Variance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-of-an-estimator">Variance of an Estimator</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-for-cookie-weights">Hypothesis Testing for Cookie Weights</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses-tests-in-general">Hypotheses Tests in General</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#other-important-tests">Other Important Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-sample-t-test">One Sample T-Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#two-sample-t-test">Two Sample T-Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-square-test-for-independence">Chi-Square Test for Independence</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#chi-square-goodness-of-fit-test">Chi-Square Goodness-of-Fit Test</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#pearson-spearman-correlation-test">Pearson/Spearman Correlation Test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assessing-whether-a-sample-is-normally-distributed">Assessing whether a Sample is Normally Distributed</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-quantile-plots-q-q-plots">Quantile-Quantile Plots (Q-Q Plots)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#shapiro-wilk-normality-test">Shapiro-Wilk Normality Test</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#d-agostino-s-k-squared-test">D’Agostino’s K-squared test</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
