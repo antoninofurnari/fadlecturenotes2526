@@ -460,6 +460,15 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-for-cookie-weights">Hypothesis Testing for Cookie Weights</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-errors-in-statistical-tests">Types of Errors in Statistical Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#type-i-error-false-positive">Type I Error (False Positive)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#type-ii-error-false-negative">Type II Error (False Negative)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-decisions">Summary of Decisions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-error-trade-off">The Error Trade-Off</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
 </ul>
 </li>
@@ -1550,7 +1559,8 @@ Var(T(X)) = E[(T(X) - E[T(X)])^2]
 <p>To answer this, we compute the <strong>test statistic</strong> using the t-distribution:</p>
 <div class="math notranslate nohighlight">
 \[
-t = \frac{\overline{x} - \mu_0}{s_{n-1}/\sqrt{n}} = \frac{1000.0005 - 1000}{0.01 / \sqrt{1000}} = 1.58\n\]</div>
+t = \frac{\overline{x} - \mu_0}{s_{n-1}/\sqrt{n}} = \frac{1000.0005 - 1000}{0.01 / \sqrt{1000}} = 1.58\n
+\]</div>
 <p>This tells us how many standard errors our estimate is away from the hypothesized mean.</p>
 <p>We now ask: <strong>what is the probability of observing a value this extreme or more extreme, assuming <span class="math notranslate nohighlight">\(H_0\)</span> is true?</strong> This is the <strong>p-value</strong>, defined as:</p>
 <div class="math notranslate nohighlight">
@@ -1611,6 +1621,53 @@ P(|z| &gt; |t|)
 </div>
 </div>
 <p>This p-value is now below the threshold of <span class="math notranslate nohighlight">\(5\%\)</span>. We can now reject the null hypothesis and conclude that the population mean is different than <span class="math notranslate nohighlight">\(1000g\)</span>.</p>
+<section id="types-of-errors-in-statistical-tests">
+<h4>Types of Errors in Statistical Tests<a class="headerlink" href="#types-of-errors-in-statistical-tests" title="Permalink to this heading">#</a></h4>
+<p>Our statistical test provides evidence to either <strong>reject</strong> the null hypothesis in favor of the alternative or <strong>fail to reject</strong> it. However, since our decision is based on a sample, not the entire population, we can never be 100% certain. This uncertainty leads to the possibility of making two types of errors.</p>
+<section id="type-i-error-false-positive">
+<h5>Type I Error (False Positive)<a class="headerlink" href="#type-i-error-false-positive" title="Permalink to this heading">#</a></h5>
+<p>A <strong>Type I Error</strong> occurs when we <strong>incorrectly reject a true null hypothesis</strong>. In other words, we conclude there is an effect or a difference when, in reality, there isn’t one.</p>
+<ul class="simple">
+<li><p><strong>Analogy (Spam Filter):</strong> A Type I error is like a legitimate email being incorrectly classified as spam and sent to the junk folder. The null hypothesis is “the email is not spam,” and we mistakenly reject it.</p></li>
+</ul>
+<p>The probability of committing a Type I error the <strong>significance level</strong> <strong>alpha (<span class="math notranslate nohighlight">\(\alpha\)</span>)</strong>. When we set a significance level of <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, we are accepting a 5% risk of making a Type I error.</p>
+</section>
+<section id="type-ii-error-false-negative">
+<h5>Type II Error (False Negative)<a class="headerlink" href="#type-ii-error-false-negative" title="Permalink to this heading">#</a></h5>
+<p>A <strong>Type II Error</strong> occurs when we <strong>fail to reject a false null hypothesis</strong>. This means we miss a real effect or difference that actually exists.</p>
+<ul class="simple">
+<li><p><strong>Analogy (Spam Filter):</strong> A Type II error is like a spam email being incorrectly allowed into your main inbox. The null hypothesis is “the email is not spam,” and even though it’s false (it <em>is</em> spam), we fail to reject it.</p></li>
+</ul>
+<p>The probability of committing a Type II error is denoted by the Greek letter <strong>beta (<span class="math notranslate nohighlight">\(\beta\)</span>)</strong>. The complement of this probability, <span class="math notranslate nohighlight">\(1 - \beta\)</span>, is known as the <strong>power</strong> of a statistical test—the probability of correctly detecting a real effect.</p>
+</section>
+<section id="summary-of-decisions">
+<h5>Summary of Decisions<a class="headerlink" href="#summary-of-decisions" title="Permalink to this heading">#</a></h5>
+<p>We can summarize the relationship between our decision and reality in a table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p></p></th>
+<th class="head text-left"><p><strong>Null Hypothesis (<span class="math notranslate nohighlight">\(H_0\)</span>) is True</strong></p></th>
+<th class="head text-left"><p><strong>Null Hypothesis (<span class="math notranslate nohighlight">\(H_0\)</span>) is False</strong></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>Fail to Reject <span class="math notranslate nohighlight">\(H_0\)</span></strong></p></td>
+<td class="text-left"><p>✅ Correct Decision (True Negative)</p></td>
+<td class="text-left"><p>❌ <strong>Type II Error</strong> (False Negative)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>Reject <span class="math notranslate nohighlight">\(H_0\)</span></strong></p></td>
+<td class="text-left"><p>❌ <strong>Type I Error</strong> (False Positive)</p></td>
+<td class="text-left"><p>✅ Correct Decision (True Positive)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="the-error-trade-off">
+<h3>The Error Trade-Off<a class="headerlink" href="#the-error-trade-off" title="Permalink to this heading">#</a></h3>
+<p>In practice, there is an inverse relationship between Type I and Type II errors. Decreasing the probability of one type of error often increases the probability of the other. For example, making your spam filter extremely strict (to reduce false negatives) will inevitably cause it to flag more legitimate emails as spam (increasing false positives).</p>
+<p>Choosing the right significance level (<span class="math notranslate nohighlight">\(\alpha\)</span>) depends on the context and the consequences of each error, a critical judgment you must make in any data analysis problem.</p>
 <section id="one-tailed-tests">
 <h4>One-tailed Tests<a class="headerlink" href="#one-tailed-tests" title="Permalink to this heading">#</a></h4>
 <p>The tests seen above is a “two-tailed test” in which we summed the areas in the two tails of the distribution. Depending on the form of the alternative hypothesis, in particular:</p>
@@ -2784,6 +2841,15 @@ Sample does not look Gaussian (reject H0)
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing">Hypothesis Testing</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypothesis-testing-for-cookie-weights">Hypothesis Testing for Cookie Weights</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-errors-in-statistical-tests">Types of Errors in Statistical Tests</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#type-i-error-false-positive">Type I Error (False Positive)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#type-ii-error-false-negative">Type II Error (False Negative)</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-decisions">Summary of Decisions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-error-trade-off">The Error Trade-Off</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
 </ul>
 </li>
