@@ -29,7 +29,10 @@ parts:
   - file: lectures/05_data_distributions
 - caption: Lecture 7
   chapters:
-  - file: lectures/07_statistical_inference
+  - file: lectures/06_statistical_inference
+- caption: Lecture 8
+  chapters:
+  - file: lectures/07_storytelling_with_data
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
