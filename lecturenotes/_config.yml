@@ -23,8 +23,8 @@ notebook_interface            : "notebook"
 
 # Launch button settings
 repository:
-  url                         : https://github.com/antoninofurnari/fadlecturenotes
-  path_to_book                : "lecturenotes/"
+  url                         : https://github.com/antoninofurnari/fadlecturenotes2526/
+  path_to_book                : "lecturenotes2526/"
   branch                      : "master"
 
 launch_buttons:
@@ -40,7 +40,7 @@ latex:
 
 sphinx:
   extra_extensions:
-    - sphinxcontrib.mermaid
+    # - sphinxcontrib.mermaid
     - sphinx_multitoc_numbering
   # config:
   #   html_theme_options:
