@@ -565,15 +565,7 @@ document.write(`
 <li><p>Performing <strong>random sampling within each stratum</strong>, ensuring proportional representation</p></li>
 </ul>
 <p>This method improves representativeness but requires <strong>prior knowledge or assumptions</strong> about the population structure.</p>
-<blockquote>
-<div><p><strong>Illustration</strong><br />
-The figure below shows:</p>
-<ul class="simple">
-<li><p>A heterogeneous population</p></li>
-<li><p>A sample obtained via uniform random sampling</p></li>
-<li><p>A sample obtained via stratified sampling</p></li>
-</ul>
-</div></blockquote>
+<p>The figure below shows a heterogeneous population, a sample obtained via uniform random sampling, and a sample obtained via stratified sampling.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/fc7b6a1137714448bacf40b08d2f88a68c1f59aa7734fdaf2e262b0c5b8939fe.png" src="../_images/fc7b6a1137714448bacf40b08d2f88a68c1f59aa7734fdaf2e262b0c5b8939fe.png" />
@@ -1214,7 +1206,7 @@ t_{n-1} = \frac{\overline{X} - \mu}{s_{n-1} / \sqrt{n}}
 <p>The relationship between a t-Student and Gaussian distribution is shown in the figure below:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/54ac11df7458e450fb4bc0ea641b31727180d88e4cd5b4c3a86a64c1cb8ba302.png" src="../_images/54ac11df7458e450fb4bc0ea641b31727180d88e4cd5b4c3a86a64c1cb8ba302.png" />
+<img alt="../_images/f3eed214fbd6338ab91724ce68d1cf3bdf1d2628c69edab64eda20763ba80bb7.png" src="../_images/f3eed214fbd6338ab91724ce68d1cf3bdf1d2628c69edab64eda20763ba80bb7.png" />
 </div>
 </div>
 <p>As <span class="math notranslate nohighlight">\(n\)</span> gets larger, the t-Distribution approximates a Gaussian distribution.</p>
@@ -1278,7 +1270,7 @@ t_{n-1} = \frac{\overline{X} - \mu}{s_{n-1} / \sqrt{n}}
 <p>We also compute the sample standard deviation:</p>
 <div class="math notranslate nohighlight">
 \[
-s_{n-1} = 0.5 \text{g}
+s_{n-1} = 0.1 \text{g}
 \]</div>
 <p>Our estimate <span class="math notranslate nohighlight">\(\overline{x}\)</span> is close to the labeled weight of 1000g, but we know it may vary depending on the sample. It is useful to define the <strong>bounds of such variation</strong>, to understand where the true mean <span class="math notranslate nohighlight">\(\mu\)</span> is likely to be found relative to our estimate.</p>
 <p>To do this, we build a <strong>confidence interval</strong>. We first choose a <strong>confidence level</strong>. For example, if we want to be <strong>95% confident</strong>, we define:</p>
@@ -1444,7 +1436,7 @@ Confidence Interval for Proportion: (0.53, 0.56)
 <section id="bootstrapping-inference-through-resampling">
 <h3>Bootstrapping: Inference Through Resampling<a class="headerlink" href="#bootstrapping-inference-through-resampling" title="Permalink to this heading">#</a></h3>
 <p>So far, we’ve built confidence intervals using formulas that rely on the Central Limit Theorem and assumptions about the underlying distribution (e.g., normality). But <strong>what if our sample size is small</strong>, the distribution is clearly not normal, or <strong>we want to find a confidence interval for a statistic where no simple formula exists (like the median)</strong>?</p>
-<p><img alt="" src="_static/lecture_specific/statistical_inference/bootstrapping.png" /></p>
+<p><img alt="" src="../_images/bootstrapping.png" /></p>
 <p>This is where <strong>bootstrapping</strong> comes in. It’s a powerful computational method that allows us to estimate the sampling distribution of any statistic using only our original sample. The name comes from the phrase “to pull oneself up by one’s own bootstraps”, reflecting the idea that we use the sample itself to learn about its own uncertainty.</p>
 <p>The core idea is to treat the <strong>sample as a stand-in for the population</strong>. We then simulate the process of drawing new samples by resampling <em>from our own sample</em>.</p>
 <p>The process is straightforward and relies on computation rather than complex formulas:</p>
