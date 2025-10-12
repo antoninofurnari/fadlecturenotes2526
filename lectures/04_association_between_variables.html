@@ -1293,6 +1293,12 @@ diagnostic group, a factor with levels <code class="docutils literal notranslate
 Cov(X,Y) = \frac{1}{n}\sum_i^n (x^{(i)} - \overline x) (y^{(i)} - \overline y)
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> are the two variables of interest, <span class="math notranslate nohighlight">\(x^{(i)}\)</span> is the value of <span class="math notranslate nohighlight">\(X\)</span> for the i-th observation, <span class="math notranslate nohighlight">\(y^{(i)}\)</span> is the value of <span class="math notranslate nohighlight">\(Y\)</span> for the i-th observation, and <span class="math notranslate nohighlight">\(\overline x\)</span>, <span class="math notranslate nohighlight">\(\overline y\)</span> are the means of the observations for the two variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>Note that we can obtain an unbiased estimation of the covariance similar to the variance as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+Cov(X,Y) = \frac{1}{n-1}\sum_i^n (x^{(i)} - \overline x) (y^{(i)} - \overline y)
+\]</div>
+<p>This is important especially with small samples.</p>
 <p>The main “actors” in the formula above are the terms:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\((x^{(i)}-\overline x)\)</span>: measures the distance between a point <span class="math notranslate nohighlight">\(x^{(i)}\)</span> and its respective mean <span class="math notranslate nohighlight">\(\overline x\)</span>. If the value of the point in question is above the mean, then this difference will be positive, otherwise negative.</p></li>

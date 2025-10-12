@@ -449,6 +449,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-proportion">Confidence Intervals for Proportion</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrapping-inference-through-resampling">Bootstrapping: Inference Through Resampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-bootstrap-confidence-interval-for-mean-height">Example: Bootstrap Confidence Interval for Mean Height</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-and-variance-of-estimators">Bias and Variance of Estimators</a><ul class="nav section-nav flex-column">
@@ -1439,6 +1441,58 @@ Confidence Interval for Proportion: (0.53, 0.56)
 </div>
 </section>
 </section>
+<section id="bootstrapping-inference-through-resampling">
+<h3>Bootstrapping: Inference Through Resampling<a class="headerlink" href="#bootstrapping-inference-through-resampling" title="Permalink to this heading">#</a></h3>
+<p>So far, we’ve built confidence intervals using formulas that rely on the Central Limit Theorem and assumptions about the underlying distribution (e.g., normality). But <strong>what if our sample size is small</strong>, the distribution is clearly not normal, or <strong>we want to find a confidence interval for a statistic where no simple formula exists (like the median)</strong>?</p>
+<p><img alt="" src="_static/lecture_specific/statistical_inference/bootstrapping.png" /></p>
+<p>This is where <strong>bootstrapping</strong> comes in. It’s a powerful computational method that allows us to estimate the sampling distribution of any statistic using only our original sample. The name comes from the phrase “to pull oneself up by one’s own bootstraps”, reflecting the idea that we use the sample itself to learn about its own uncertainty.</p>
+<p>The core idea is to treat the <strong>sample as a stand-in for the population</strong>. We then simulate the process of drawing new samples by resampling <em>from our own sample</em>.</p>
+<p>The process is straightforward and relies on computation rather than complex formulas:</p>
+<ol class="arabic simple">
+<li><p><strong>Start with your original sample</strong> of size <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+<li><p><strong>Create a “bootstrap sample”</strong> by drawing <span class="math notranslate nohighlight">\(n\)</span> observations from your original sample <strong>with replacement</strong>. This new sample will be the same size as the original, but some data points may appear multiple times, while others may not appear at all.</p></li>
+<li><p><strong>Calculate the statistic of interest</strong> (e.g., mean, median, standard deviation) for this bootstrap sample.</p></li>
+<li><p><strong>Repeat steps 2 and 3 thousands of times</strong> (e.g., 10,000 times), recording the statistic each time.</p></li>
+<li><p><strong>Build the bootstrap distribution</strong>. The collection of all the statistics you calculated forms an empirical sampling distribution. We can now use this distribution to estimate properties like the standard error or confidence intervals.</p></li>
+</ol>
+<p>For a 95% confidence interval, we can simply take the 2.5th and 97.5th percentiles of our bootstrap distribution.</p>
+</section>
+<section id="example-bootstrap-confidence-interval-for-mean-height">
+<h3>Example: Bootstrap Confidence Interval for Mean Height<a class="headerlink" href="#example-bootstrap-confidence-interval-for-mean-height" title="Permalink to this heading">#</a></h3>
+<p>Let’s use bootstrapping to find the 95% confidence interval for the mean height in our <code class="docutils literal notranslate"><span class="pre">height_weight</span></code> dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;http://antoninofurnari.it/downloads/height_weight.csv&#39;</span><span class="p">)</span>
+<span class="n">original_sample</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+
+<span class="c1"># The data must be passed as a sequence (e.g., a tuple)</span>
+<span class="n">data_tuple</span> <span class="o">=</span> <span class="p">(</span><span class="n">original_sample</span><span class="p">,)</span>
+
+<span class="c1"># Use scipy.stats.bootstrap to perform the resampling and calculate the interval</span>
+<span class="c1"># We pass the data, the statistic to compute (np.mean), and the number of resamples.</span>
+<span class="n">bootstrap_result</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">bootstrap</span><span class="p">(</span><span class="n">data_tuple</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">n_resamples</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">confidence_level</span><span class="o">=</span><span class="mf">0.95</span><span class="p">)</span>
+
+<span class="c1"># Extract the confidence interval from the result object</span>
+<span class="n">confidence_interval</span> <span class="o">=</span> <span class="n">bootstrap_result</span><span class="o">.</span><span class="n">confidence_interval</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original sample mean: </span><span class="si">{</span><span class="n">original_sample</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SciPy Bootstrap 95% Confidence Interval for the Mean: [</span><span class="si">{</span><span class="n">confidence_interval</span><span class="o">.</span><span class="n">low</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">confidence_interval</span><span class="o">.</span><span class="n">high</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">]&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original sample mean: 169.89
+SciPy Bootstrap 95% Confidence Interval for the Mean: [169.59, 170.19]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 <section id="bias-and-variance-of-estimators">
 <h2>Bias and Variance of Estimators<a class="headerlink" href="#bias-and-variance-of-estimators" title="Permalink to this heading">#</a></h2>
@@ -1555,11 +1609,11 @@ Var(T(X)) = E[(T(X) - E[T(X)])^2]
 \[
 \alpha = 0.05
 \]</div>
-<p>We now ask: <strong>how much does our sample mean <span class="math notranslate nohighlight">\(\overline{x} = 1000.1\)</span>g deviate from the assumed mean <span class="math notranslate nohighlight">\(\mu_0 = 1000\)</span>g?</strong> More precisely, <strong>what is the probability of observing a difference this large (or larger) just by chance?</strong></p>
+<p>We now ask: <strong>how much does our sample mean</strong> <span class="math notranslate nohighlight">\(\overline{x} = 1000.1g\)</span> <strong>deviate from the assumed mean</strong> <span class="math notranslate nohighlight">\(\mu_0 = 1000g\)</span>? More precisely, <strong>what is the probability of observing a difference this large (or larger) just by chance?</strong></p>
 <p>To answer this, we compute the <strong>test statistic</strong> using the t-distribution:</p>
 <div class="math notranslate nohighlight">
 \[
-t = \frac{\overline{x} - \mu_0}{s_{n-1}/\sqrt{n}} = \frac{1000.0005 - 1000}{0.01 / \sqrt{1000}} = 1.58\n
+t = \frac{\overline{x} - \mu_0}{s_{n-1}/\sqrt{n}} = \frac{1000.0005 - 1000}{0.01 / \sqrt{1000}} = 1.58
 \]</div>
 <p>This tells us how many standard errors our estimate is away from the hypothesized mean.</p>
 <p>We now ask: <strong>what is the probability of observing a value this extreme or more extreme, assuming <span class="math notranslate nohighlight">\(H_0\)</span> is true?</strong> This is the <strong>p-value</strong>, defined as:</p>
@@ -2830,6 +2884,8 @@ Sample does not look Gaussian (reject H0)
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confidence-intervals-for-proportion">Confidence Intervals for Proportion</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bootstrapping-inference-through-resampling">Bootstrapping: Inference Through Resampling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-bootstrap-confidence-interval-for-mean-height">Example: Bootstrap Confidence Interval for Mean Height</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-and-variance-of-estimators">Bias and Variance of Estimators</a><ul class="nav section-nav flex-column">

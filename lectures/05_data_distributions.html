@@ -475,12 +475,14 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-distribution">Gaussian Distribution</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central Limit Theorem</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-gaussian">Multivariate Gaussian</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-sigma">Effect of <span class="math notranslate nohighlight">\(\Sigma\)</span></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-of-the-parameters-of-a-gaussian-distribution">Estimation of the Parameters of a Gaussian Distribution</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central Limit Theorem</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-data-distributions">Describing Data Distributions</a><ul class="nav section-nav flex-column">
@@ -772,29 +774,25 @@ generally are) much more complicated than that.</p>
 </section>
 <section id="approximating-a-pdf-with-density-histograms-and-density-estimates">
 <h4>Approximating a PDF with Density Histograms and Density Estimates<a class="headerlink" href="#approximating-a-pdf-with-density-histograms-and-density-estimates" title="Permalink to this heading">#</a></h4>
-<p>Imagine we are working with the Titanic dataset. While a standard frequency histogram can show us the <em>number</em> of passengers in each age group, it doesn’t directly answer a question like:</p>
-<blockquote>
-<div><p>What is the probability that a randomly selected passenger’s age is between 30 and 40?</p>
-</div></blockquote>
-<p>If we knew the true Probability Density Function (PDF), ( f(x) ), for the age of the entire population from which the passengers were drawn, we could find this exact probability by calculating the integral:</p>
+<p>When working with real data, we can try to approximate the PDF of a continuous variable with histograms.</p>
+<p>Let the height and width of bin <span class="math notranslate nohighlight">\(b_j\)</span> be <span class="math notranslate nohighlight">\(h_j\)</span> and <span class="math notranslate nohighlight">\(w_j\)</span> respectively. In a <strong>normalized histogram</strong>, we define the height of bin <span class="math notranslate nohighlight">\(b_j\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
-\[
-P(30 \le \text{Age} \le 40) = \int_{30}^{40} f(x) \, dx
-\]</div>
-<p>Since we only have a sample of passengers, we can’t know the true PDF. Instead, we can approximate it using a <strong>density histogram</strong>. This type of histogram is normalized so that the <strong>total area of all its bars equals 1</strong>, making it an empirical counterpart to a theoretical PDF.</p>
-<p>The key idea is that the area of each bar approximates the integral of the PDF over that bar’s interval. The area for a single bin ( j ), with height ( h_j ) and width ( w_j ), is:</p>
+\[h_j=\frac{c_j}{n}\]</div>
+<p>where <span class="math notranslate nohighlight">\(c_j\)</span> is the number of observations that fall in bin <span class="math notranslate nohighlight">\(b_j\)</span>.</p>
+<p>Note that, while <strong>normalized histograms</strong> are such that each bar height is comprised between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, they do not satisfy the properties of PDFs.</p>
+<p>Let the area of bin <span class="math notranslate nohighlight">\(b_j\)</span> be:</p>
 <div class="math notranslate nohighlight">
-\[
-\text{Area}_j = h_j \cdot w_j \approx \int_{\text{bin } j} f(x) \, dx
-\]</div>
-<p>By constructing the histogram this way, the sum of the areas of all bars is equal to 1, mirroring the fundamental property of a PDF:</p>
+\[A_j = w_j \cdot h_j\]</div>
+<p>The integral over histogram <span class="math notranslate nohighlight">\(H\)</span> (i.e., the area under the histogram) will be:</p>
 <div class="math notranslate nohighlight">
-\[
-\sum_{j} h_j \cdot w_j \approx \int_{-\infty}^{\infty} f(x) \, dx = 1
-\]</div>
-<p>In our Titanic example, the area of the bar corresponding to the 30–40 age range would give us an empirical estimate of the probability we are looking for. The resulting plot is visually similar to a frequency histogram, but the scale of the y-axis changes from a simple count to <strong>density</strong>, a scale that ensures the bar’s area correctly represents probability.</p>
-<p>To draw a density histogram in Python, we just pass the argument <code class="docutils literal notranslate"><span class="pre">density=True</span></code> to the <code class="docutils literal notranslate"><span class="pre">hist</span></code> function of matplotlib or pandas.</p>
-<p>The example below compares a normalized histogram to a density histogram:</p>
+\[\int_{-\infty}^{\infty} H(x) dx = \sum_j A_j = \sum_j w_j \frac{c_j}{n} = \frac{1}{n}\sum_j w_j \cdot c_j = \sum w_j \neq 1\]</div>
+<p>To ensure that this property is satisfied, we define a new kind of histogram, the <strong>density histogram</strong>, where bin heights are defined as:</p>
+<div class="math notranslate nohighlight">
+\[h_j = \frac{c_j}{w_j \cdot n}\]</div>
+<p>In this case:</p>
+<div class="math notranslate nohighlight">
+\[\sum_j A_j = \sum_j w_j \frac{c_j}{w_j \cdot n} = \frac{1}{n}\sum_j \frac{w_j}{w_j} \cdot c_j = 1\]</div>
+<p>To create a density histogram in Python, simply pass <code class="docutils literal notranslate"><span class="pre">density=True</span></code> to the <code class="docutils literal notranslate"><span class="pre">hist</span></code> function in matplotlib or pandas.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -988,13 +986,22 @@ obtain a valid probability distribution.</p></li>
 </ul>
 <p>This distribution is the <strong>generalization of the Bernoulli distribution
 to the case of multiple states</strong>.</p>
-<p><strong>Example:</strong></p>
-<p>Rolling a fair die. In this case, <span class="math notranslate nohighlight">\(k = 6\)</span> and
-<span class="math notranslate nohighlight">\(p_{i} = \frac{1}{k}\ ,\ i = 0,\ldots,k \ \)</span>.</p>
-<p>The diagram below shows an example:</p>
+<p><strong>Example: Rolling a Biased Die</strong></p>
+<p>Consider a single roll of a biased six-sided die. The outcomes are discrete and finite: <span class="math notranslate nohighlight">\(X \in \{1, 2, 3, 4, 5, 6\}\)</span>.</p>
+<p>If the die is biased such that the probabilities are:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(X=1) = 0.10\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X=2) = 0.15\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X=3) = 0.20\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X=4) = 0.20\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X=5) = 0.10\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X=6) = 0.25\)</span></p></li>
+</ul>
+<p>Then the outcome follows a <strong>Categorical distribution</strong> with <span class="math notranslate nohighlight">\(k = 6\)</span> and the specified probabilities <span class="math notranslate nohighlight">\(\{p_1, p_2, \dots, p_6\} = \{0.1,0.15,0.2,0.2,0.1,0.25\}\)</span>.</p>
+<p>The figure below shows an example:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/2a096eb037b3684a7b6a1f8e5891fc760bbd5a422597a15f80dfcf73550fde1e.png" src="../_images/2a096eb037b3684a7b6a1f8e5891fc760bbd5a422597a15f80dfcf73550fde1e.png" />
+<img alt="../_images/6e78a69bca3a1f5a0aa193f5f2ab997e900b23bdf09c830d4f3404a636566184.png" src="../_images/6e78a69bca3a1f5a0aa193f5f2ab997e900b23bdf09c830d4f3404a636566184.png" />
 </div>
 </div>
 </section>
@@ -1097,17 +1104,67 @@ to interpret the meaning of its parameters:</p>
 <span class="math notranslate nohighlight">\(\lbrack - 3\sigma,3\sigma\rbrack\)</span>.</p></li>
 </ul>
 </section>
+</section>
+<section id="central-limit-theorem">
+<h3>Central Limit Theorem<a class="headerlink" href="#central-limit-theorem" title="Permalink to this heading">#</a></h3>
+<p>The <strong>Central Limit Theorem (CLT)</strong> is a fundamental statistical principle stating that the distribution of the sum (or average) of a large number of independent and identically distributed (i.i.d.) random variables <span class="math notranslate nohighlight">\(\{X_i\}_{i=1}^n\)</span> tends toward a normal (Gaussian) distribution as <span class="math notranslate nohighlight">\(n \to \infty\)</span>, regardless of the original distribution of each <span class="math notranslate nohighlight">\(X_i\)</span>.</p>
+<p>This result is crucial because it explains why the Gaussian distribution is so commonly observed in data analysis and natural phenomena, even when the underlying data are not normally distributed.</p>
+<p><strong>Key points:</strong></p>
+<ul class="simple">
+<li><p>The CLT applies to sums or averages of i.i.d. random variables.</p></li>
+<li><p>The convergence to the normal distribution becomes more accurate as the number of variables <span class="math notranslate nohighlight">\(n\)</span> increases.</p></li>
+<li><p>The original distribution of the variables can be arbitrary (e.g., uniform, binomial, etc.).</p></li>
+</ul>
+<p><strong>Illustration:</strong><br />
+The plot below shows the distributions of the average outcome when rolling different numbers of dice. Each die represents an independent random variable. As the number of dice increases, the distribution of the average outcome becomes increasingly similar to a Gaussian curve.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>  <span class="c1"># Import seaborn for KDE</span>
+
+<span class="c1"># Simulate rolling a fair six-sided die</span>
+<span class="n">num_rolls</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">sample_sizes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">5000</span><span class="p">]</span>
+
+<span class="c1"># List to store the means of each sample</span>
+<span class="n">sample_means</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">sample_size</span> <span class="ow">in</span> <span class="n">sample_sizes</span><span class="p">:</span>
+    <span class="n">means</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="n">sample_size</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_rolls</span><span class="p">)]</span>
+    <span class="n">sample_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">means</span><span class="p">)</span>
+
+<span class="c1"># Plot the sample means for different sample sizes with KDE</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sample_size</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sample_sizes</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">sample_means</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;KDE&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Sample Size </span><span class="si">{</span><span class="n">sample_size</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Sample Mean&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Density&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Distribution of Sample Means with KDE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/165936268f08ece39a8abec1c8fbee36176c5547f20acc333db309f9afaf2c00.png" src="../_images/165936268f08ece39a8abec1c8fbee36176c5547f20acc333db309f9afaf2c00.png" />
+</div>
+</div>
 <section id="multivariate-gaussian">
 <h4>Multivariate Gaussian<a class="headerlink" href="#multivariate-gaussian" title="Permalink to this heading">#</a></h4>
 <p>The formulation of the Gaussian distribution generalizes to the
-multivariate case, i.e., the case in which <span class="math notranslate nohighlight">\(X\)</span> is n-dimensional.</p>
-<p>In that case, the distribution is parametrized by a <strong>n-dimensional
+multivariate case, i.e., the case in which <span class="math notranslate nohighlight">\(X\)</span> is d-dimensional.</p>
+<p>In that case, the distribution is parametrized by a <strong>d-dimensional
 vector</strong> <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> and a
-<span class="math notranslate nohighlight">\(\mathbf{n}\mathbf{\times}\mathbf{n}\mathbf{\ }\)</span><strong>positive definite
+<span class="math notranslate nohighlight">\(\mathbf{d}\mathbf{\times}\mathbf{d}\mathbf{\ }\)</span><strong>positive definite
 symmetric matrix</strong> <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>. The formulation of the
 multi-variate Gaussian is:</p>
 <div class="math notranslate nohighlight">
-\[N\left( \mathbf{x;\mu,}\mathbf{\Sigma} \right) = \sqrt{\frac{1}{(2\pi)^{n}\det(\Sigma)}}e^{( - \frac{1}{2}\left( \mathbf{x} - \mathbf{\mu} \right)^{T}\Sigma^{- 1}\left( \mathbf{x} - \mathbf{\mu} \right))}\]</div>
+\[N\left( \mathbf{x;\mu,}\mathbf{\Sigma} \right) = \sqrt{\frac{1}{(2\pi)^{d}\det(\Sigma)}}e^{( - \frac{1}{2}\left( \mathbf{x} - \mathbf{\mu} \right)^{T}\Sigma^{- 1}\left( \mathbf{x} - \mathbf{\mu} \right))}\]</div>
 <p>In the 2D case, <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> is a 2D
 point representing the center of the Gaussian (the position of the
 mode), whereas the matrix <span class="math notranslate nohighlight">\(\Sigma\)</span> influences the “shape” of the
@@ -1160,7 +1217,7 @@ data with a <strong>maximum likelihood</strong> estimation.</p>
 following formula (in the univariate case):</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mu = \frac{1}{n}\sum_{j}^{}x_{j}\)</span></p></li>
-<li><p><span class="math notranslate nohighlight">\(\sigma^{2} = \frac{1}{n}\sum_{j}^{}\left( x_{j} - \mu \right)^{2}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\sigma^{2} = \frac{1}{n-1}\sum_{j}^{}\left( x_{j} - \mu \right)^{2}\)</span></p></li>
 </ul>
 <p>Where <span class="math notranslate nohighlight">\(x_{j}\)</span> represent the different data points.</p>
 <p>In the multi-variate case, the computation of the multi-dimensional
@@ -1178,24 +1235,6 @@ following formula (in the univariate case):</p>
 </div>
 </div>
 </section>
-</section>
-<section id="central-limit-theorem">
-<h3>Central Limit Theorem<a class="headerlink" href="#central-limit-theorem" title="Permalink to this heading">#</a></h3>
-<p>The <strong>Central Limit Theorem (CLT)</strong> is a fundamental statistical principle stating that the distribution of the sum (or average) of a large number of independent and identically distributed (i.i.d.) random variables <span class="math notranslate nohighlight">\(\{X_i\}_{i=1}^n\)</span> tends toward a normal (Gaussian) distribution as <span class="math notranslate nohighlight">\(n \to \infty\)</span>, regardless of the original distribution of each <span class="math notranslate nohighlight">\(X_i\)</span>.</p>
-<p>This result is crucial because it explains why the Gaussian distribution is so commonly observed in data analysis and natural phenomena, even when the underlying data are not normally distributed.</p>
-<p><strong>Key points:</strong></p>
-<ul class="simple">
-<li><p>The CLT applies to sums or averages of i.i.d. random variables.</p></li>
-<li><p>The convergence to the normal distribution becomes more accurate as the number of variables <span class="math notranslate nohighlight">\(n\)</span> increases.</p></li>
-<li><p>The original distribution of the variables can be arbitrary (e.g., uniform, binomial, etc.).</p></li>
-</ul>
-<p><strong>Illustration:</strong><br />
-The plot below shows the distributions of the average outcome when rolling different numbers of dice. Each die represents an independent random variable. As the number of dice increases, the distribution of the average outcome becomes increasingly similar to a Gaussian curve.</p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<img alt="../_images/165936268f08ece39a8abec1c8fbee36176c5547f20acc333db309f9afaf2c00.png" src="../_images/165936268f08ece39a8abec1c8fbee36176c5547f20acc333db309f9afaf2c00.png" />
-</div>
-</div>
 </section>
 </section>
 <section id="describing-data-distributions">
@@ -1234,11 +1273,11 @@ an integral:</p>
 variable <span class="math notranslate nohighlight">\(X\)</span> around its mean <span class="math notranslate nohighlight">\(E\lbrack X\rbrack\)</span>.</p>
 <p>Similarly to the concept of variance as a descriptive measure, we can define the variance in this context as follows:</p>
 <div class="math notranslate nohighlight">
-\[var\lbrack X\rbrack = E\lbrack\left( X - E\lbrack X\rbrack \right)^{2}\rbrack\]</div>
+\[Var_{X \sim P}[X] = E_{X \sim P}[(X-E_{X \sim P}[X])^2]\]</div>
 <p>As seen with data description, to make the measure of spread more interpretable, we often use the <strong>standard deviation</strong>, which is simply the square root of the variance:</p>
 <div class="math notranslate nohighlight">
 \[
-\sigma_X = \sqrt{\text{Var}[X]}
+Std_{X \sim P}[X]=\sqrt{Var_{X \sim P}[X]}
 \]</div>
 <p>Standard deviation tells us, on average, how far values tend to deviate from the mean, using the same units as the original variable.</p>
 <p>The diagram below shows an example:</p>
@@ -1254,10 +1293,10 @@ variable <span class="math notranslate nohighlight">\(X\)</span> around its mean
 to each other. It allows to <strong>measure to what extent the increase of one
 of the variables corresponds to an increase of the value of the other
 one</strong>.</p>
-<p>Given two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, the covariance is defined as
+<p>Given two random variables <span class="math notranslate nohighlight">\(X \sim P_X\)</span> and <span class="math notranslate nohighlight">\(Y \sim P_Y\)</span>, the covariance is defined as
 follows:</p>
 <div class="math notranslate nohighlight">
-\[Cov(X,Y) = E\lbrack\left( X - E\lbrack X\rbrack \right)\left( Y - E\lbrack Y\rbrack \right)\rbrack\]</div>
+\[Cov_{X \sim P_X, Y \sim P_Y}(X,Y) = E_{X \sim P_X, Y \sim P_Y}\lbrack\left( X - E_{X \sim P_X}\lbrack X\rbrack \right)\left( Y - E_{Y \sim P_Y}\lbrack Y\rbrack \right)\rbrack\]</div>
 <p>We can distinguish the following terms:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(E\lbrack X\rbrack\)</span> and <span class="math notranslate nohighlight">\(E\lbrack Y\rbrack\)</span> are the expectations of
@@ -1325,7 +1364,7 @@ h(X) = -\int_{x \in \Omega} f(x) \log_2 f(x) dx
 </ul>
 <p>Entropy is highest when the distribution is uniform (maximum uncertainty) and lowest when the distribution is concentrated on a few values (minimum uncertainty).</p>
 <blockquote>
-<div><p><strong>Note:</strong> Entropy is measured in bits if the logarithm base 2 is used.</p>
+<div><p><strong>Note:</strong> Entropy is measured in bits if the logarithm base 2 is used and nats if we use a natural logarithm (base <span class="math notranslate nohighlight">\(e\)</span>).</p>
 </div></blockquote>
 </section>
 <section id="id5">
@@ -1577,12 +1616,14 @@ learning</em>. MIT press, 2016. <a class="reference external" href="https://www.
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-distribution">Gaussian Distribution</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central Limit Theorem</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#multivariate-gaussian">Multivariate Gaussian</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#effect-of-sigma">Effect of <span class="math notranslate nohighlight">\(\Sigma\)</span></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimation-of-the-parameters-of-a-gaussian-distribution">Estimation of the Parameters of a Gaussian Distribution</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#central-limit-theorem">Central Limit Theorem</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#describing-data-distributions">Describing Data Distributions</a><ul class="nav section-nav flex-column">
