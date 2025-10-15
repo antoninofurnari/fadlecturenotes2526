@@ -258,7 +258,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes2526/lectures/06_statistical_inference.ipynb" target="_blank"
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/06_statistical_inference.ipynb" target="_blank"
    class="btn btn-sm dropdown-item"
    title="Launch onColab"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -468,10 +468,7 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-decisions">Summary of Decisions</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-error-trade-off">The Error Trade-Off</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-vs-tow-tailed-tests">One-tailed vs Tow-tailed Tests</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses-tests-in-general">Hypotheses Tests in General</a></li>
@@ -1500,7 +1497,7 @@ SciPy Bootstrap 95% Confidence Interval for the Mean: [169.59, 170.19]
 <p>Let <span class="math notranslate nohighlight">\(X\)</span> be a random variable and let <span class="math notranslate nohighlight">\(x = (x_1, x_2, \ldots, x_n)\)</span> be a sample from the population. Let <span class="math notranslate nohighlight">\(T(X)\)</span> be an estimator of a population quantity <span class="math notranslate nohighlight">\(\phi\)</span> (for instance, the mean weight). Then:</p>
 <div class="math notranslate nohighlight">
 \[
-T(x) = \frac{1}{n} \sum_{i=1}^{n} x_i
+T(X) = \frac{1}{n} \sum_{i=1}^{n} x_i
 \]</div>
 <p>is our estimator for <span class="math notranslate nohighlight">\(\phi\)</span>. Since the sample changes, <span class="math notranslate nohighlight">\(T(X)\)</span> is a <strong>random variable</strong>.</p>
 <p>The <strong>bias</strong> of the estimator is defined as:</p>
@@ -1521,7 +1518,7 @@ E[T(X)] = \phi
 <p>To estimate the variance of cookie weights, we may compute:</p>
 <div class="math notranslate nohighlight">
 \[
-s_n^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})^2
+t
 \]</div>
 <p>This formula is <strong>biased</strong>—it tends to underestimate the true variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Specifically:</p>
 <div class="math notranslate nohighlight">
@@ -1596,6 +1593,7 @@ Var(T(X)) = E[(T(X) - E[T(X)])^2]
 <li><p><strong>Null hypothesis</strong> (<span class="math notranslate nohighlight">\(H_0\)</span>): the population mean is <span class="math notranslate nohighlight">\(\mu_0 = 1000\)</span>g</p></li>
 <li><p><strong>Alternative hypothesis</strong> (<span class="math notranslate nohighlight">\(H_a\)</span>): the population mean is different from 1000g</p></li>
 </ul>
+<p>The null hypothesis is the hypothesis we are trying to reject (what we are trying to prove). If we do so, then we embrace the alternative hypothesis.</p>
 <p>Before proceeding, we ask what margin of error is acceptable. The manager says she can tolerate a <strong>5% chance of wrongly rejecting <span class="math notranslate nohighlight">\(H_0\)</span></strong>. This defines our <strong>significance level</strong>:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1673,18 +1671,11 @@ P(|z| &gt; |t|)
 <section id="type-i-error-false-positive">
 <h5>Type I Error (False Positive)<a class="headerlink" href="#type-i-error-false-positive" title="Permalink to this heading">#</a></h5>
 <p>A <strong>Type I Error</strong> occurs when we <strong>incorrectly reject a true null hypothesis</strong>. In other words, we conclude there is an effect or a difference when, in reality, there isn’t one.</p>
-<ul class="simple">
-<li><p><strong>Analogy (Spam Filter):</strong> A Type I error is like a legitimate email being incorrectly classified as spam and sent to the junk folder. The null hypothesis is “the email is not spam,” and we mistakenly reject it.</p></li>
-</ul>
 <p>The probability of committing a Type I error the <strong>significance level</strong> <strong>alpha (<span class="math notranslate nohighlight">\(\alpha\)</span>)</strong>. When we set a significance level of <span class="math notranslate nohighlight">\(\alpha = 0.05\)</span>, we are accepting a 5% risk of making a Type I error.</p>
 </section>
 <section id="type-ii-error-false-negative">
 <h5>Type II Error (False Negative)<a class="headerlink" href="#type-ii-error-false-negative" title="Permalink to this heading">#</a></h5>
 <p>A <strong>Type II Error</strong> occurs when we <strong>fail to reject a false null hypothesis</strong>. This means we miss a real effect or difference that actually exists.</p>
-<ul class="simple">
-<li><p><strong>Analogy (Spam Filter):</strong> A Type II error is like a spam email being incorrectly allowed into your main inbox. The null hypothesis is “the email is not spam,” and even though it’s false (it <em>is</em> spam), we fail to reject it.</p></li>
-</ul>
-<p>The probability of committing a Type II error is denoted by the Greek letter <strong>beta (<span class="math notranslate nohighlight">\(\beta\)</span>)</strong>. The complement of this probability, <span class="math notranslate nohighlight">\(1 - \beta\)</span>, is known as the <strong>power</strong> of a statistical test—the probability of correctly detecting a real effect.</p>
 </section>
 <section id="summary-of-decisions">
 <h5>Summary of Decisions<a class="headerlink" href="#summary-of-decisions" title="Permalink to this heading">#</a></h5>
@@ -1709,13 +1700,8 @@ P(|z| &gt; |t|)
 </table>
 </section>
 </section>
-</section>
-<section id="the-error-trade-off">
-<h3>The Error Trade-Off<a class="headerlink" href="#the-error-trade-off" title="Permalink to this heading">#</a></h3>
-<p>In practice, there is an inverse relationship between Type I and Type II errors. Decreasing the probability of one type of error often increases the probability of the other. For example, making your spam filter extremely strict (to reduce false negatives) will inevitably cause it to flag more legitimate emails as spam (increasing false positives).</p>
-<p>Choosing the right significance level (<span class="math notranslate nohighlight">\(\alpha\)</span>) depends on the context and the consequences of each error, a critical judgment you must make in any data analysis problem.</p>
-<section id="one-tailed-tests">
-<h4>One-tailed Tests<a class="headerlink" href="#one-tailed-tests" title="Permalink to this heading">#</a></h4>
+<section id="one-tailed-vs-tow-tailed-tests">
+<h4>One-tailed vs Tow-tailed Tests<a class="headerlink" href="#one-tailed-vs-tow-tailed-tests" title="Permalink to this heading">#</a></h4>
 <p>The tests seen above is a “two-tailed test” in which we summed the areas in the two tails of the distribution. Depending on the form of the alternative hypothesis, in particular:</p>
 <ul class="simple">
 <li><p>If the alternative hypothesis has the form <span class="math notranslate nohighlight">\(\mu \neq \mu_0\)</span>, then we want to check when the deviation from the assumed mean is larger than the observed one: <span class="math notranslate nohighlight">\(P(|x| &gt; |z|)\)</span>;</p></li>
@@ -2667,7 +2653,7 @@ Kurtosis of weight: -0.06
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/952bf42c3d5a6cc4e64caf08086064c8720009b14aea6122911fe64ff73e03f4.png" src="../_images/952bf42c3d5a6cc4e64caf08086064c8720009b14aea6122911fe64ff73e03f4.png" />
+<img alt="../_images/b3a2a12f5a37e20d44f804db819c8af6561acc77731a2ec3593667bd5a756571.png" src="../_images/b3a2a12f5a37e20d44f804db819c8af6561acc77731a2ec3593667bd5a756571.png" />
 </div>
 </div>
 <p>The plot relates the “theoretical” quantiles with those of the sample. The fact that the points on the plot do not lie on the diagonal indicates that there is a discrepancy between the empirical data distribution and the Gaussian distribution.</p>
@@ -2895,10 +2881,7 @@ Sample does not look Gaussian (reject H0)
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-of-decisions">Summary of Decisions</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-error-trade-off">The Error Trade-Off</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-tests">One-tailed Tests</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#one-tailed-vs-tow-tailed-tests">One-tailed vs Tow-tailed Tests</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hypotheses-tests-in-general">Hypotheses Tests in General</a></li>
