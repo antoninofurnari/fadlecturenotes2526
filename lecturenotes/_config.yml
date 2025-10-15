@@ -24,7 +24,7 @@ notebook_interface            : "notebook"
 # Launch button settings
 repository:
   url                         : https://github.com/antoninofurnari/fadlecturenotes2526/
-  path_to_book                : "lecturenotes2526/"
+  path_to_book                : "lecturenotes/"
   branch                      : "master"
 
 launch_buttons:
