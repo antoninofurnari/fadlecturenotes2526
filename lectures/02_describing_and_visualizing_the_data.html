@@ -1607,11 +1607,11 @@ memory usage: 13.9 KB
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \tilde x_{0.5} = \begin{cases}
-x_{(n+1)/2} &amp; \text{if } n \textit{ is odd}\\
-    \frac{1}{2}(x_{n/2}+x_{n/2+1}) &amp; \text{otherwise.}
+x^{(n+1)/2} &amp; \text{if } n \textit{ is odd}\\
+    \frac{1}{2}(x^{(n/2)}+x^{(n/2+1)}) &amp; \text{otherwise.}
 \end{cases}
 \end{split}\]</div>
-<p>To be convinced of the above formulation, we can see tw toy examples:</p>
+<p>To be convinced of the above formulation, we can see two toy examples:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">odd_sample</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">100</span><span class="p">])</span>
@@ -2004,10 +2004,10 @@ The interquartile range of sample 2 is: 2.0
 <h3>Variance and Standard Deviation<a class="headerlink" href="#variance-and-standard-deviation" title="Permalink to this heading">#</a></h3>
 <p><strong>Variance</strong> (also known as <strong>mean squared deviation</strong>) provides an estimate of how much the observed data deviates from the mean. Variance calculates the mean of the squares of the deviations of the values from the mean, penalizing large deviations from the mean value (due to outliers) more heavily than small deviations:</p>
 <div class="math notranslate nohighlight">
-\[s^2 = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n}\]</div>
+\[s^2_{n} = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n}\]</div>
 <p>It can be shown that, when computing variance from smaller samples, it can lead to <strong>biased estimates</strong>. Hence, it is very common to use the <strong>Sample variance</strong> with <span class="math notranslate nohighlight">\(n-1\)</span> in the denominator:</p>
 <div class="math notranslate nohighlight">
-\[s^2 = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n-1}\]</div>
+\[s^2_{n-1} = \frac{\sum_{i=1}^n(x_i-\overline x)^2}{n-1}\]</div>
 <p>We will see it better later in the course, but for now consider that:</p>
 <ul class="simple">
 <li><p>The variance formula can be used when we have access to the whole population;</p></li>
@@ -2105,7 +2105,7 @@ Std: 12.495398210982415
 <p>This normalization scales the data so that the minimum and maximum values are exactly equal to <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[
-x_{norm} = (x-x_{min})/(x_{max}-x_{min})
+x_i^{norm} = (x_i-x_{min})/(x_{max}-x_{min})
 \]</div>
 <p>In the case of weights:</p>
 <div class="cell docutils container">
@@ -2138,7 +2138,7 @@ Name: weight, Length: 4231, dtype: float64
 <p>In this case, the data are rescaled so that the new minimum and maximum are <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, using the following formula:</p>
 <div class="math notranslate nohighlight">
 \[
-x_{norm} = (x_{max}+x_{min}-2\cdot x)/(x_{max}-x_{min})
+x_i^{norm} = (x_{max}+x_{min}-2\cdot x_i)/(x_{max}-x_{min})
 \]</div>
 <p>We can perform this transformation in Pandas as follows:</p>
 <div class="cell docutils container">
@@ -2334,14 +2334,16 @@ IQR (Interquartile Range): 17.88
 <img alt="../_images/26a77388474ba0156e4819db69b96bfc81bf809cf59906e8cbb2a0889e6abf1b.png" src="../_images/26a77388474ba0156e4819db69b96bfc81bf809cf59906e8cbb2a0889e6abf1b.png" />
 </div>
 </div>
-<p>The boxplot is shown as a “box” with “whiskers” where:</p>
+<p>A <strong>boxplot</strong> is a graphical summary of a dataset that displays its distribution using a rectangular “box” and two “whiskers.” Specifically:</p>
 <ul class="simple">
-<li><p>the bottom edge of the box indicates the first quartile;</p></li>
-<li><p>the top edge of the box indicates the third quartile;</p></li>
-<li><p>the horizontal line in the middle of the box represents the median value of the sample;</p></li>
-<li><p>the lower whisker represents the first value in the sample that is greater than or equal to the first quartile minus one and a half times the distance between the third and the first quartile;</p></li>
-<li><p>the upper whisker represents the first value in the sample that is less than or equal to the third quartile plus one and a half times the distance between the third and the first quartile;</p></li>
-<li><p>the dots represent the “out-of-bounds” values that fall outside the interval marked by the whiskers. They are generally considered as “outliers”.</p></li>
+<li><p><strong>Bottom edge of the box</strong>: marks the first quartile (Q1), the 25th percentile of the data.</p></li>
+<li><p><strong>Top edge of the box</strong>: marks the third quartile (Q3), the 75th percentile.</p></li>
+<li><p><strong>Horizontal line inside the box</strong>: represents the median (Q2), the 50th percentile.</p></li>
+<li><p><strong>Lower whisker</strong>: extends to the smallest data point that is greater than or equal to<br />
+( Q1 - 1.5 \cdot (Q3 - Q1) ).</p></li>
+<li><p><strong>Upper whisker</strong>: extends to the largest data point that is less than or equal to<br />
+( Q3 + 1.5 \cdot (Q3 - Q1) ).</p></li>
+<li><p><strong>Individual points beyond the whiskers</strong>: represent outliers—values that fall outside the range defined by the whiskers.</p></li>
 </ul>
 <p>To illustrate the usefulness of boxplots, we will consider the dataset of weights and heights seen previously:</p>
 <div class="cell docutils container">
