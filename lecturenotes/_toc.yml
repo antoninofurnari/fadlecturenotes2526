@@ -33,6 +33,9 @@ parts:
 - caption: Lecture 8
   chapters:
   - file: lectures/07_storytelling_with_data
+- caption: Lecture 9
+  chapters:
+  - file: lectures/08_predictive_modeling
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
