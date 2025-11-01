@@ -68,6 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Linear Regression" href="09_linear_regression.html" />
     <link rel="prev" title="Storytelling with Data" href="07_storytelling_with_data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -207,6 +208,10 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
 </ul>
 
     </div>
@@ -465,18 +470,6 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The Problem Landscape</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. Regression (Predicting a Number)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. Classification (Predicting a Label)</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. Clustering (Finding Groups)</a></li>
 </ul>
 </li>
 </ul>
@@ -892,129 +885,12 @@ Percentage within 1 std dev: 67.77%
 <p>Supervised learning is primarily divided into two types of problems: Regression and Classification.</p>
 <section id="regression-predicting-a-number">
 <h4>1. Regression (Predicting a Number)<a class="headerlink" href="#regression-predicting-a-number" title="Permalink to this heading">#</a></h4>
-<p>In a <strong>regression</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>continuous numerical value</strong>.</p>
-<ul class="simple">
-<li><p><strong>Key Question:</strong> “How much?” or “How many?”</p></li>
-<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Market</span> <span class="pre">Risk</span></code> or Stock Price Prediction.</strong> Given a company’s historical data (<span class="math notranslate nohighlight">\(X\)</span>), what will its stock price (<span class="math notranslate nohighlight">\(y\)</span>) be tomorrow? The output is a number (e.g., $150.25).</p></li>
-<li><p><strong>Example: Predicting a Student’s Score.</strong> Given a student’s study hours, past grades, and attendance (<span class="math notranslate nohighlight">\(X\)</span>), what will their final exam score (<span class="math notranslate nohighlight">\(y\)</span>) be? The output is a number (e.g., 87.5).</p></li>
-</ul>
-</section>
-<section id="classification-predicting-a-label">
-<h4>2. Classification (Predicting a Label)<a class="headerlink" href="#classification-predicting-a-label" title="Permalink to this heading">#</a></h4>
-<p>In a <strong>classification</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>discrete category or label</strong>.</p>
-<ul class="simple">
-<li><p><strong>Key Question:</strong> “Which one?” or “Is this A or B?”</p></li>
-<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Spam</span> <span class="pre">Filter</span></code> (Binary Classification).</strong> Given an email’s content (<span class="math notranslate nohighlight">\(X\)</span>), is it <code class="docutils literal notranslate"><span class="pre">spam</span></code> or <code class="docutils literal notranslate"><span class="pre">not-spam</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of two labels.</p></li>
-<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Medical</span> <span class="pre">Diagnosis</span></code> (Binary Classification).</strong> Given a patient’s symptoms and test results (<span class="math notranslate nohighlight">\(X\)</span>), do they have the <code class="docutils literal notranslate"><span class="pre">disease</span></code> or <code class="docutils literal notranslate"><span class="pre">no-disease</span></code>?</p></li>
-<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Customer</span> <span class="pre">Churn</span></code> (Binary Classification).</strong> Given a customer’s usage and support history (<span class="math notranslate nohighlight">\(X\)</span>), will they <code class="docutils literal notranslate"><span class="pre">churn</span></code> (leave) or <code class="docutils literal notranslate"><span class="pre">stay</span></code> next month?</p></li>
-<li><p><strong>Example: Image Recognition (Multiclass Classification).</strong> Given an image (<span class="math notranslate nohighlight">\(X\)</span>), is it a <code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">dog</span></code>, or <code class="docutils literal notranslate"><span class="pre">bird</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of several labels.</p></li>
-</ul>
-</section>
-</section>
-<section id="unsupervised-learning-learning-without-an-answer-key">
-<h3>Unsupervised Learning: Learning without an Answer Key<a class="headerlink" href="#unsupervised-learning-learning-without-an-answer-key" title="Permalink to this heading">#</a></h3>
-<p>In <strong>unsupervised learning</strong>, our dataset only contains the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong>. We do <em>not</em> have a correct answer <span class="math notranslate nohighlight">\(y\)</span> to learn from. The goal is not to predict an outcome, but to find <strong>hidden structure, patterns, or groupings</strong> within the data itself.</p>
-<section id="clustering-finding-groups">
-<h4>1. Clustering (Finding Groups)<a class="headerlink" href="#clustering-finding-groups" title="Permalink to this heading">#</a></h4>
-<p><strong>Clustering</strong> is the most common unsupervised task. The goal is to automatically group similar data points together into “clusters” based on their features.</p>
-<ul class="simple">
-<li><p><strong>Key Question:</strong> “What are the natural groups in my data?”</p></li>
-<li><p><strong>Example: Customer Segmentation.</strong> A marketing company has data on 10,000 customers (age, spending, location, etc.) but no pre-defined “groups.” A clustering algorithm can automatically segment them into distinct groups (e.g., “high-spending young professionals,” “budget-conscious families”) so the company can create targeted marketing campaigns.</p></li>
-</ul>
-</section>
-</section>
-</section>
-<section id="id2">
-<h2>The Problem Landscape<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
-<p>Now that we have established the <em>goals</em> of modeling (Understanding vs. Predicting), let’s map out the <em>types</em> of problems we can solve. The most fundamental distinction in machine learning is between <strong>Supervised</strong> and <strong>Unsupervised</strong> learning.</p>
-<section id="id3">
-<h3>Supervised Learning: Learning with an Answer Key<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
-<p>In <strong>supervised learning</strong>, our dataset contains both the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong> and the <strong>correct answer (<span class="math notranslate nohighlight">\(y\)</span>)</strong>.</p>
-<p>We are “supervising” the model by showing it thousands of examples and their corresponding outcomes. The goal is to learn a mapping function, <span class="math notranslate nohighlight">\(h\)</span>, such that</p>
-<div class="math notranslate nohighlight">
-\[\hat{y} = h(X)\]</div>
-<p>is a good predictor of <span class="math notranslate nohighlight">\(y\)</span>.</p>
-<p>We often use <span class="math notranslate nohighlight">\(\hat{y}\)</span> since we are predicting a value for <span class="math notranslate nohighlight">\(y\)</span> and to distinguish it from the correct value <span class="math notranslate nohighlight">\(y\)</span>. We will also call the correct value <span class="math notranslate nohighlight">\(y\)</span> <strong>ground truth</strong> value.</p>
-<p>Supervised learning is primarily divided into two types of problems: Regression and Classification.</p>
-<section id="id4">
-<h4>1. Regression (Predicting a Number)<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
 <p>In a <strong>regression</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>continuous numerical value</strong>. Visually, the goal of regression is to find a function (like a line or a curve) that best fits the continuous data points.</p>
 <blockquote>
 <div><p><strong>Key Question:</strong> “How much?” or “How many?”</p>
 </div></blockquote>
 <p>For example, consider the problem of predicting the price of houses from the size in square meters:</p>
-<div class="cell tag_remove_input docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-
-<span class="c1"># 1. Generate synthetic data that roughly matches the image</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># for reproducibility</span>
-
-<span class="c1"># Feature: Size in mq (x1^(i))</span>
-<span class="n">X_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">450</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1100</span><span class="p">,</span> <span class="mi">1300</span><span class="p">,</span> <span class="mi">1500</span><span class="p">,</span> <span class="mi">1700</span><span class="p">,</span> <span class="mi">1900</span><span class="p">,</span> <span class="mi">2100</span><span class="p">])</span>
-
-<span class="c1"># Target: Price ($ in 1000&#39;s) (y^(i))</span>
-<span class="c1"># We create a base curve (e.g., a quadratic or cubic-like curve) and add noise</span>
-<span class="c1"># This function aims to match the upward curve that flattens out</span>
-<span class="n">y_price_base</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.0001</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_size</span> <span class="o">-</span> <span class="mi">1300</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">320</span>  <span class="c1"># Inverted parabola for the main shape</span>
-<span class="n">y_price_base</span><span class="p">[</span><span class="n">X_size</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0005</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_size</span><span class="p">[</span><span class="n">X_size</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">]</span> <span class="o">-</span> <span class="mi">400</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span> <span class="c1"># Adjust start</span>
-<span class="n">y_price</span> <span class="o">=</span> <span class="n">y_price_base</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_size</span><span class="p">))</span> <span class="o">*</span> <span class="mi">20</span> <span class="c1"># Add some random noise</span>
-
-<span class="c1"># 2. --- THIS IS THE CORRECTED STEP ---</span>
-<span class="c1"># Instead of hand-tuning, we &quot;fit&quot; a model using numpy.polyfit.</span>
-<span class="c1"># We will find the best 3rd-degree (cubic) polynomial.</span>
-<span class="c1"># This is what a real model would do.</span>
-<span class="n">model_coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">X_size</span><span class="p">,</span> <span class="n">y_price</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
-<span class="n">model_function</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">model_coefficients</span><span class="p">)</span>
-
-<span class="c1"># Create the x-axis for the smooth curve</span>
-<span class="n">X_fit_curve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X_size</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X_size</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">500</span><span class="p">)</span>
-
-<span class="c1"># Get the y-values from our &quot;fitted&quot; model function</span>
-<span class="n">y_fit_curve</span> <span class="o">=</span> <span class="n">model_function</span><span class="p">(</span><span class="n">X_fit_curve</span><span class="p">)</span>
-<span class="c1"># --- End of correction ---</span>
-
-
-<span class="c1"># 3. Plot the results</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
-
-<span class="c1"># Plot data points as red &#39;x&#39; marks</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_size</span><span class="p">,</span> <span class="n">y_price</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="c1"># Plot the fitted curve as a green line (using our new curve)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_fit_curve</span><span class="p">,</span> <span class="n">y_fit_curve</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-
-<span class="c1"># 4. Style the plot to match the example image</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># No title needed for this style</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Size in square meters&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Price ($)</span><span class="se">\n</span><span class="s1">in 1000</span><span class="se">\&#39;</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
-
-<span class="c1"># Customizing ticks and limits</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2500</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2501</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
-
-<span class="c1"># Customizing tick labels</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># Removing default spines and adding custom axes for a cleaner look</span>
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
-
-<span class="c1"># Add x1^(i) and y^(i) labels at the end of the axes manually</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.02</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$x_1^{(i)}$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.03</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$y^{(i)}$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
+<div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/a324532acb7d089fc73e331daaf45e21eeefed8ee47b878a0c9de3f813834fbb.png" src="../_images/a324532acb7d089fc73e331daaf45e21eeefed8ee47b878a0c9de3f813834fbb.png" />
 </div>
@@ -1025,8 +901,8 @@ Percentage within 1 std dev: 67.77%
 <li><p><strong>Predicting a Student’s Score.</strong> Given a student’s study hours, past grades, and attendance (<span class="math notranslate nohighlight">\(X\)</span>), what will their final exam score (<span class="math notranslate nohighlight">\(y\)</span>) be? The output is a number (e.g., 87.5).</p></li>
 </ul>
 </section>
-<section id="id5">
-<h4>2. Classification (Predicting a Label)<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<section id="classification-predicting-a-label">
+<h4>2. Classification (Predicting a Label)<a class="headerlink" href="#classification-predicting-a-label" title="Permalink to this heading">#</a></h4>
 <p>In a <strong>classification</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>discrete category or label</strong>. Visually, the goal of classification is to find a “boundary” that best separates the different labeled groups.</p>
 <blockquote>
 <div><p><strong>Key Question:</strong> “Which one?” or “Is this A or B?”</p>
@@ -1046,11 +922,11 @@ Percentage within 1 std dev: 67.77%
 </ul>
 </section>
 </section>
-<section id="id6">
-<h3>Unsupervised Learning: Learning without an Answer Key<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<section id="unsupervised-learning-learning-without-an-answer-key">
+<h3>Unsupervised Learning: Learning without an Answer Key<a class="headerlink" href="#unsupervised-learning-learning-without-an-answer-key" title="Permalink to this heading">#</a></h3>
 <p>In <strong>unsupervised learning</strong>, our dataset only contains the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong>. We do <em>not</em> have a correct answer <span class="math notranslate nohighlight">\(y\)</span> to learn from. The goal is not to predict an outcome, but to find <strong>hidden structure, patterns, or groupings</strong> within the data itself.</p>
-<section id="id7">
-<h4>1. Clustering (Finding Groups)<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
+<section id="clustering-finding-groups">
+<h4>1. Clustering (Finding Groups)<a class="headerlink" href="#clustering-finding-groups" title="Permalink to this heading">#</a></h4>
 <p><strong>Clustering</strong> is the most common unsupervised task. The goal is to automatically group similar data points together into “clusters” based on their features. Visually, the goal of clustering is to discover these “hidden” groups in data that does not have any pre-existing labels.</p>
 <blockquote>
 <div><p><strong>Key Question:</strong> “What are the natural groups in my data?”</p>
@@ -1488,6 +1364,15 @@ Percentage within 1 std dev: 67.77%
         <p class="prev-next-title">Storytelling with Data</p>
       </div>
     </a>
+    <a class="right-next"
+       href="09_linear_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Linear Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -1535,18 +1420,6 @@ Percentage within 1 std dev: 67.77%
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The Problem Landscape</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. Regression (Predicting a Number)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. Classification (Predicting a Label)</a></li>
-</ul>
-</li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. Clustering (Finding Groups)</a></li>
 </ul>
 </li>
 </ul>

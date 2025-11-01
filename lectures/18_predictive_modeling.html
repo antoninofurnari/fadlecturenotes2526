@@ -207,6 +207,10 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -500,14 +504,14 @@ document.write(`
 \[h : \mathcal{X} \to \mathcal{Y}\]</div>
 <p>which outputs an object <span class="math notranslate nohighlight">\(y \in \mathcal{Y}\)</span>, given an object <span class="math notranslate nohighlight">\(x \in \mathcal{X}\)</span>. We often use the symbol <span class="math notranslate nohighlight">\(y\)</span> to refer to the <strong>true value of <span class="math notranslate nohighlight">\(Y=y\)</span> associated to the observation <span class="math notranslate nohighlight">\(X=x\)</span></strong>, while <strong><span class="math notranslate nohighlight">\(\hat y\)</span> will represent the prediction obtained using function <span class="math notranslate nohighlight">\(h\)</span></strong>:</p>
 <div class="math notranslate nohighlight">
-\[\hat y = h(x)\]</div>
+\[\hat{y} = h(x)\]</div>
 <p>The true value <span class="math notranslate nohighlight">\(y\)</span> is often called <strong>ground truth</strong>. The function <span class="math notranslate nohighlight">\(h\)</span> is usually a <strong>data model</strong> and often referred to as <strong>an hypothesis</strong>.</p>
 <section id="example-1">
 <h3>Example 1<a class="headerlink" href="#example-1" title="Permalink to this heading">#</a></h3>
 <p>As a simple example, we can imagine <span class="math notranslate nohighlight">\(\mathcal{X}=\Re^m\)</span> and <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0,1\}\)</span>, with <span class="math notranslate nohighlight">\(\mathbf{x} \in \Re^m\)</span> being a numerical vector representing the results of different blood tests made on a given subject, while <span class="math notranslate nohighlight">\(y \in \{0,1\}\)</span> being a response variable indicating whether the given subject has (<span class="math notranslate nohighlight">\(1\)</span>) or does not have (<span class="math notranslate nohighlight">\(0\)</span>) a given disease.</p>
 <p>Finding an appropriate function <span class="math notranslate nohighlight">\(h\)</span> will allow us to predict if a given subject has a given disease from the blood test <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[\hat y = h(\mathbf{x})\]</div>
+\[\hat{y} = h(\mathbf{x})\]</div>
 <p>If we obtain <span class="math notranslate nohighlight">\(\hat y = 1\)</span>, then we will assume that the given person has the disease. While this example is very abstract, we will later see algorithms which assign a specific form to <span class="math notranslate nohighlight">\(h\)</span>.</p>
 </section>
 <section id="example-2">
@@ -532,10 +536,10 @@ document.write(`
 \[(x,y) \sim P(X,Y)\]</div>
 <p>The i.i.d. hypothesis is reasonable and, as we will see later, very useful. Moreover, the assumption that the data follows the joint probability, <strong>allows us to reason in probabilistic terms, modeling the uncertainty in predictions</strong>. Hence, the predicted values will be realization of a random variable following the <strong>conditional distribution</strong> P(y|x):</p>
 <div class="math notranslate nohighlight">
-\[\hat y = h(x) \text{, with } \hat y \sim P(y|x)\]</div>
+\[\hat{y} = h(x) \text{, with } \hat y \sim P(y|x)\]</div>
 <p>To find the appropriate function <span class="math notranslate nohighlight">\(h\)</span>, we will define (depending on the problem) a <strong>real-valued loss (or cost) function</strong></p>
 <div class="math notranslate nohighlight">
-\[L(\hat y, y)\]</div>
+\[L(\hat{y}, y)\]</div>
 <p>which measures <strong>the loss, or cost</strong> of predicting <span class="math notranslate nohighlight">\(\hat y\)</span> when the true value is <span class="math notranslate nohighlight">\(y\)</span>. If the prediction <span class="math notranslate nohighlight">\(\hat{y}\)</span> is very similar to the real value <span class="math notranslate nohighlight">\(y\)</span>, then we will obtain a small cost (or loss value) for <span class="math notranslate nohighlight">\(L(\hat y, y)\)</span>. In practice, the form of <span class="math notranslate nohighlight">\(L\)</span> will vary depending on the problem and model at hand.</p>
 <p>We will define <strong>the risk <span class="math notranslate nohighlight">\(R(h)\)</span> of a given hypothesis function <span class="math notranslate nohighlight">\(h\)</span></strong> as the <strong>expected loss value under the joint probability distribution</strong>:</p>
 <div class="math notranslate nohighlight">
