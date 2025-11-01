@@ -1,0 +1,1652 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Predictive Analysis &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/08_predictive_modeling';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Storytelling with Data" href="07_storytelling_with_data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to Predictive Analysis</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/08_predictive_modeling.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/08_predictive_modeling.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/08_predictive_modeling.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Predictive Analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-model">What is a Model?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-model-wrong">Why is this model “wrong”?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-model-useful">Why is this model “useful”?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-models">Predictive Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-main-goal-understanding-vs-predicting">The Main Goal: Understanding vs. Predicting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-inference">Understanding (Inference)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-prediction">Predicting (Prediction)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-best-of-both-worlds-where-goals-overlap">The Best of Both Worlds: Where Goals Overlap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-approaches-statistics-vs-machine-learning">The Two Approaches: Statistics vs. Machine Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-statistical-approach-the-glass-box">The Statistical Approach (The “Glass Box”)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-machine-learning-approach-the-black-box">The Machine Learning Approach (The “Black Box”)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-complexity-interpretability-trade-off">The Model Complexity - Interpretability Trade-off</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-landscape">The Problem Landscape</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-learning-with-an-answer-key">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-predicting-a-number">1. Regression (Predicting a Number)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-predicting-a-label">2. Classification (Predicting a Label)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The Problem Landscape</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. Regression (Predicting a Number)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. Classification (Predicting a Label)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. Clustering (Finding Groups)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric-models">Parametric vs. Non-Parametric Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-models-the-fixed-approach">Parametric Models: The “Fixed” Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-models-the-flexible-approach">Non-Parametric Models: The “Flexible” Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-matters-the-bias-variance-connection">Why This Matters: The Bias-Variance Connection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-learning-principle">The “Learning” Principle</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-problem-formulation">Formal Problem Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-medical-diagnosis">Example 1: Medical Diagnosis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-simple-spam-filter">Example 2: Simple Spam Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-what-the-model-learns">Parameters: What the Model Learns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-learning-process-statistical-learning-and-risk">The Learning Process: Statistical Learning and Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-risk-minimization-erm-the-practical-method">Empirical Risk Minimization (ERM): The Practical Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-capacity">Model Capacity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assessing-model-accuracy">Assessing Model Accuracy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-the-quality-of-fit">Measuring the quality of fit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">Overfitting and Underfitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting">Overfitting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting">Underfitting</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-tradeoff">The Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-tradeoff">The Tradeoff</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-vs-hyperparameters">Parameters vs. Hyperparameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-find-the-best-model-model-selection">How Do We Find the Best Model? (Model Selection)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach-1-statistical-selection-for-understanding">Approach 1: Statistical Selection (for Understanding)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach-2-predictive-selection-for-predicting">Approach 2: Predictive Selection (for Predicting)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#holdout-validation-or-single-split">Holdout Validation or Single Split</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-fold-cross-validation">K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation">Leave-One-Out Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection-and-hyperparameter-optimization">Model Selection and Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-predictive-analysis">
+<h1>Introduction to Predictive Analysis<a class="headerlink" href="#introduction-to-predictive-analysis" title="Permalink to this heading">#</a></h1>
+<p>The algorithms and techniques seen so far have been focusing on <strong>understanding the data</strong> in different ways. We have seen methods to <strong>summarize the data</strong> (like mean, median, and variance) and to <strong>study the relationship between variables</strong> (like covariance and correlation), and check whether <strong>our conclusions could be generalized to the population</strong> (statistical inference).</p>
+<p>However, so far, we have been focusing on <strong>describing the data and its relationships</strong> in a somewhat <strong>passive way</strong>: we <strong>observed</strong> variables or pairs of variables, <strong>computed scores</strong> and <strong>performed tests</strong>.</p>
+<p>We will now look at data analysis from a new perspective: that of <strong>predictive modeling</strong>. This is a broad field of data analysis, which is very overlapped with <strong>machine learning</strong>, with two main goals:</p>
+<ul class="simple">
+<li><p><strong>understanding relationships between variables</strong> (inference)</p></li>
+<li><p><strong>building models which can be used to make predictions on unseen data</strong> (prediction)</p></li>
+</ul>
+<p>In both cases, the first step is to create a <strong>predictive model of the data</strong>. In this lesson, we will formally define what we mean by a “model” and analyze the fundamental principles that guide the construction of effective predictive systems.</p>
+<p>Before to begin, let’s see a practical example. We will consider the <code class="docutils literal notranslate"><span class="pre">Diabetes</span></code> dataset. Let’s load and visualize it:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Load the dataset from a URL (UCI repository or other sources)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv&quot;</span>
+<span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;Pregnancies&quot;</span><span class="p">,</span> <span class="s2">&quot;Glucose&quot;</span><span class="p">,</span> <span class="s2">&quot;BloodPressure&quot;</span><span class="p">,</span> <span class="s2">&quot;SkinThickness&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Insulin&quot;</span><span class="p">,</span> <span class="s2">&quot;BMI&quot;</span><span class="p">,</span> <span class="s2">&quot;DiabetesPedigreeFunction&quot;</span><span class="p">,</span> <span class="s2">&quot;Age&quot;</span><span class="p">,</span> <span class="s2">&quot;Outcome&quot;</span>
+<span class="p">]</span>
+
+<span class="c1"># Read the dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">column_names</span><span class="p">)</span>
+
+<span class="c1"># Display the first few rows</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Pregnancies</th>
+      <th>Glucose</th>
+      <th>BloodPressure</th>
+      <th>SkinThickness</th>
+      <th>Insulin</th>
+      <th>BMI</th>
+      <th>DiabetesPedigreeFunction</th>
+      <th>Age</th>
+      <th>Outcome</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>6</td>
+      <td>148</td>
+      <td>72</td>
+      <td>35</td>
+      <td>0</td>
+      <td>33.6</td>
+      <td>0.627</td>
+      <td>50</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>85</td>
+      <td>66</td>
+      <td>29</td>
+      <td>0</td>
+      <td>26.6</td>
+      <td>0.351</td>
+      <td>31</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>8</td>
+      <td>183</td>
+      <td>64</td>
+      <td>0</td>
+      <td>0</td>
+      <td>23.3</td>
+      <td>0.672</td>
+      <td>32</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>89</td>
+      <td>66</td>
+      <td>23</td>
+      <td>94</td>
+      <td>28.1</td>
+      <td>0.167</td>
+      <td>21</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0</td>
+      <td>137</td>
+      <td>40</td>
+      <td>35</td>
+      <td>168</td>
+      <td>43.1</td>
+      <td>2.288</td>
+      <td>33</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>The dataset records data about female patients of Pima Indian heritage, aged 21 and older, who were tested for diabetes. It includes the following variables:</p>
+<ul class="simple">
+<li><p><strong>Pregnancies</strong>: Number of times the patient has been pregnant</p></li>
+<li><p><strong>Glucose</strong>: Plasma glucose concentration after a 2-hour oral glucose tolerance test</p></li>
+<li><p><strong>BloodPressure</strong>: Diastolic blood pressure (mm Hg)</p></li>
+<li><p><strong>SkinThickness</strong>: Triceps skin fold thickness (mm)</p></li>
+<li><p><strong>Insulin</strong>: 2-hour serum insulin (mu U/ml)</p></li>
+<li><p><strong>BMI</strong>: Body mass index (weight in kg/(height in m)^2)</p></li>
+<li><p><strong>DiabetesPedigreeFunction</strong>: A function that scores the likelihood of diabetes based on family history</p></li>
+<li><p><strong>Age</strong>: Age of the patient (in years)</p></li>
+<li><p><strong>Outcome</strong>: Binary indicator of diabetes status (0 = No diabetes, 1 = Diabetes)</p></li>
+</ul>
+<section id="what-is-a-model">
+<h2>What is a Model?<a class="headerlink" href="#what-is-a-model" title="Permalink to this heading">#</a></h2>
+<p>Before we go further, let’s define what we mean by a “model”.</p>
+<p>In the context of data analysis, a <strong>model is a simplified representation of reality</strong>. It is not reality itself, but a formal abstraction of a real-world process, designed to serve a specific purpose.</p>
+<p>A classic analogy is a <strong>geographical map</strong>:</p>
+<ul class="simple">
+<li><p>A map is a <strong>simplification</strong>: it is flat, while the Earth is round. It omits countless details—trees, rocks, buildings.</p></li>
+<li><p>In that sense, a map is technically “wrong”.</p></li>
+</ul>
+<p>This leads us to a famous aphorism from statistician George Box:</p>
+<blockquote>
+<div><p><strong>“All models are wrong, but some are useful.”</strong></p>
+</div></blockquote>
+<p>This is one of the most important ideas in modeling. A <strong>data model</strong>—whether statistical or machine learning—is like a map:</p>
+<ul class="simple">
+<li><p>It is a <strong>simplification</strong> of a complex real-world process (e.g., the relationship between blood test results and diabetes).</p></li>
+<li><p>It is “wrong” because it cannot capture every nuance of that process.</p></li>
+<li><p>But it becomes <strong>useful</strong> if it helps us achieve our goal—whether that goal is to <strong>understand</strong> the process or to <strong>predict</strong> its outcomes.</p></li>
+</ul>
+<p>The “right” model is not the most complex one, but the simplest one that is most useful for our goal.</p>
+<section id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<p>Let’s consider a concrete example using the <strong>Pima Indians Diabetes Dataset</strong>.</p>
+<p>Suppose we want to understand the distribution of <strong>BMI (Body Mass Index)</strong> among patients. We can summarize this data by fitting a <strong>Gaussian (Normal) distribution</strong> to the BMI values.</p>
+<p>This Gaussian distribution <em>is a model</em>. It’s a mathematical function defined by two parameters: the mean (<span class="math notranslate nohighlight">\(\mu\)</span>) and the standard deviation (<span class="math notranslate nohighlight">\(\sigma\)</span>).</p>
+<section id="why-is-this-model-wrong">
+<h4>Why is this model “wrong”?<a class="headerlink" href="#why-is-this-model-wrong" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p>The actual data consists of a finite set of BMI measurements from real patients. Our model is a smooth, continuous curve that approximates this distribution.</p></li>
+<li><p>The Gaussian model extends from negative infinity to positive infinity. This implies a non-zero probability of a patient having a negative BMI or an extremely high BMI, which are physiologically implausible.</p></li>
+<li><p>The real-world data will never perfectly match the idealized bell curve. There may be skewness, outliers, or multiple peaks that the Gaussian model cannot capture.</p></li>
+</ol>
+</section>
+<section id="why-is-this-model-useful">
+<h4>Why is this model “useful”?<a class="headerlink" href="#why-is-this-model-useful" title="Permalink to this heading">#</a></h4>
+<ol class="arabic simple">
+<li><p><strong>It’s a powerful proxy for the data.</strong> Instead of analyzing hundreds of individual BMI values, we can summarize the entire distribution with just two numbers: <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>.</p></li>
+<li><p><strong>It helps us understand the data.</strong> We gain insight into the “typical” BMI and how much variation exists across the population.</p></li>
+<li><p><strong>It allows us to make reasonable inferences.</strong> For example, we can estimate that approximately 95% of patients have a BMI between <span class="math notranslate nohighlight">\(\mu - 2\sigma\)</span> and <span class="math notranslate nohighlight">\(\mu + 2\sigma\)</span>, which helps in identifying outliers or high-risk individuals.</p></li>
+</ol>
+<p>This simple model, while imperfect, is incredibly useful for understanding the structure of our data.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/bfbfeab365214413c7b8980e5c8bd791ff2a30facfade0a1134265c3c64c102f.png" src="../_images/bfbfeab365214413c7b8980e5c8bd791ff2a30facfade0a1134265c3c64c102f.png" />
+</div>
+</div>
+<p>We can also verify this claim numerically:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean BMI: 32.46
+Standard Deviation: 6.92
+Patients within 1 std dev: 513 out of 757
+Percentage within 1 std dev: 67.77%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="predictive-models">
+<h3>Predictive Models<a class="headerlink" href="#predictive-models" title="Permalink to this heading">#</a></h3>
+<p>Beyond the Guassian example above, when we perform predictive analysis, we assume in general to observe:</p>
+<ul class="simple">
+<li><p>A variable <span class="math notranslate nohighlight">\(Y\)</span>, which we usually call the <strong>dependent variable</strong> or <strong>response variable</strong> - this is the variable we want to predict;</p></li>
+<li><p>A set of variables <span class="math notranslate nohighlight">\(X = (X_1,X_2,\ldots,X_n)\)</span>, which we usually call our <strong>predictors</strong> - this are variables we want to use to predict <span class="math notranslate nohighlight">\(Y\)</span>.</p></li>
+</ul>
+<p>We can express a predictive model with this general form:</p>
+<div class="math notranslate nohighlight">
+\[Y = f(X) + \epsilon\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f\)</span> is our predictive model - we want to <strong>find this function</strong> (more on this later);</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> is the <strong>error term</strong> - since it’s very hard to have perfect predictions (e.g., due to randomness in the data), we introduce this term to capture the errors that the model will make.</p></li>
+</ul>
+<section id="id1">
+<h4>Example<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h4>
+<p>In our example, we may be interested in predicting insulin from glucose. If we look at the data, we may imagine an <span class="math notranslate nohighlight">\(f\)</span> function like the one drawn in red in the example below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/e4398af4d755a2357d8eefaaf2b58bdb499d6aadc8e079ed0b96d0d9cd46e2b2.png" src="../_images/e4398af4d755a2357d8eefaaf2b58bdb499d6aadc8e079ed0b96d0d9cd46e2b2.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="the-main-goal-understanding-vs-predicting">
+<h2>The Main Goal: Understanding vs. Predicting<a class="headerlink" href="#the-main-goal-understanding-vs-predicting" title="Permalink to this heading">#</a></h2>
+<p>Now that we have a definition of a model, we must address the primary reason for building one. The “usefulness” of a model, as George Box famously said, depends entirely on our goal. In data analysis, we typically pursue two main—sometimes competing—objectives: <strong>Understanding</strong> and <strong>Predicting</strong>.</p>
+<p><img alt="" src="../_images/why_what.jpeg" /></p>
+<section id="understanding-inference">
+<h3>Understanding (Inference)<a class="headerlink" href="#understanding-inference" title="Permalink to this heading">#</a></h3>
+<p>The first objective is <strong>Explanation</strong>, or <strong>Statistical Inference</strong>. The central question is <strong>“Why?”</strong></p>
+<p>When our goal is understanding, we use models to open up the “black box” of a real-world process. We aim to quantify relationships between variables and interpret their effects.</p>
+<ul class="simple">
+<li><p><strong>Primary Goal:</strong> To interpret the model’s parameters (e.g., coefficients, p-values) to gain insights.</p></li>
+<li><p><strong>Key Question:</strong> “What is the relationship between variable <code class="docutils literal notranslate"><span class="pre">X</span></code> and variable <code class="docutils literal notranslate"><span class="pre">Y</span></code>?” or “How much does <code class="docutils literal notranslate"><span class="pre">Y</span></code> change if I change <code class="docutils literal notranslate"><span class="pre">X</span></code>?”</p></li>
+</ul>
+<p><strong>Example (from the Pima Indians Diabetes Dataset):</strong></p>
+<p>Suppose we want to understand how <code class="docutils literal notranslate"><span class="pre">BMI</span></code> and <code class="docutils literal notranslate"><span class="pre">Glucose</span></code> levels influence diabetes. We may build a model which predicts the values of <code class="docutils literal notranslate"><span class="pre">Outcome</span></code> from <code class="docutils literal notranslate"><span class="pre">BMI</span></code> and <code class="docutils literal notranslate"><span class="pre">Glucose</span></code>. Interpreting the model, we may find that:</p>
+<ul class="simple">
+<li><p>A one-unit increase in <code class="docutils literal notranslate"><span class="pre">BMI</span></code> is associated with a 6% increase in the odds of having diabetes.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">BMI</span></code> and <code class="docutils literal notranslate"><span class="pre">Glucose</span></code> can explain the values of <code class="docutils literal notranslate"><span class="pre">Outcome</span></code> only in a limited way (e.g., they explain only a limited amount of variance).</p></li>
+</ul>
+<p>Here, our goal is not to predict whether a specific patient has diabetes, but to <strong>interpret</strong> the relationships and assess which factors are most influential.</p>
+</section>
+<section id="predicting-prediction">
+<h3>Predicting (Prediction)<a class="headerlink" href="#predicting-prediction" title="Permalink to this heading">#</a></h3>
+<p>The second objective is <strong>Prediction</strong>. The central question is <strong>“What will happen next?”</strong></p>
+<p>When our goal is prediction, we care less about <em>why</em> the model works and more about <em>how well</em> it performs. The model’s value lies in its ability to accurately forecast outcomes for new or unseen data.</p>
+<ul class="simple">
+<li><p><strong>Primary Goal:</strong> To generate the most accurate predictions possible on new data.</p></li>
+<li><p><strong>Key Question:</strong> “Given a new observation <code class="docutils literal notranslate"><span class="pre">X</span></code>, what is the most likely value of <code class="docutils literal notranslate"><span class="pre">Y</span></code>?”</p></li>
+</ul>
+<p><strong>Example (from the Pima Indians Diabetes Dataset):</strong></p>
+<p>Imagine we’re building a clinical decision support tool. A new patient arrives with known values for <code class="docutils literal notranslate"><span class="pre">Glucose</span></code>, <code class="docutils literal notranslate"><span class="pre">BMI</span></code>, <code class="docutils literal notranslate"><span class="pre">Age</span></code>, and other features. Our model predicts a 78% probability that the patient has diabetes.</p>
+<p>In this case, we’re not focused on interpreting coefficients—we’re focused on <strong>accuracy</strong> and <strong>reliability</strong> of the prediction to inform medical decisions.</p>
+</section>
+<section id="the-best-of-both-worlds-where-goals-overlap">
+<h3>The Best of Both Worlds: Where Goals Overlap<a class="headerlink" href="#the-best-of-both-worlds-where-goals-overlap" title="Permalink to this heading">#</a></h3>
+<p>These two goals are not mutually exclusive. The most powerful models often support both inference and prediction.</p>
+<p><strong>Example: Diabetes Risk Management</strong></p>
+<p>A healthcare provider may ask:</p>
+<ol class="arabic simple">
+<li><p><strong>Prediction:</strong> Which patients are most likely to develop diabetes in the next year? (We need a high-performing model to flag at-risk individuals.)</p></li>
+<li><p><strong>Understanding:</strong> What are the key drivers of diabetes risk in our population? (We need an interpretable model to guide public health interventions—e.g., targeting obesity or glucose control.)</p></li>
+</ol>
+<p><strong>Example: Feature Importance in Diagnosis</strong></p>
+<p>A machine learning model might predict diabetes with high accuracy, but clinicians also want to know:</p>
+<ul class="simple">
+<li><p>Which features (e.g., <code class="docutils literal notranslate"><span class="pre">Glucose</span></code>, <code class="docutils literal notranslate"><span class="pre">BMI</span></code>, <code class="docutils literal notranslate"><span class="pre">Age</span></code>) are most influential?</p></li>
+<li><p>Can we explain the model’s decisions to patients and other stakeholders?</p></li>
+</ul>
+<p>As we’ll see, some techniques are designed for <strong>Understanding</strong> (e.g., <code class="docutils literal notranslate"><span class="pre">linear</span> <span class="pre">regression</span></code>, <code class="docutils literal notranslate"><span class="pre">logistic</span> <span class="pre">regression</span></code>), while others excel at <strong>Prediction</strong> (e.g., <code class="docutils literal notranslate"><span class="pre">naive</span> <span class="pre">Bayes</span></code>, <code class="docutils literal notranslate"><span class="pre">K-Nearest</span> <span class="pre">Neighbor</span></code>). Many models, like <code class="docutils literal notranslate"><span class="pre">regularized</span> <span class="pre">regression</span></code>, can serve both purposes if used thoughtfully.</p>
+<p>Ultimately, our job as data scientists is to be clear about which goal we’re pursuing and to choose tools that best support that goal.</p>
+</section>
+</section>
+<section id="the-two-approaches-statistics-vs-machine-learning">
+<h2>The Two Approaches: Statistics vs. Machine Learning<a class="headerlink" href="#the-two-approaches-statistics-vs-machine-learning" title="Permalink to this heading">#</a></h2>
+<p><img alt="" src="../_images/glass_vs_black.jpeg" /></p>
+<p>The two goals we just discussed—Understanding and Predicting—have led to the development of two major approaches, or “cultures,” in data modeling. While they share many of the same mathematical tools (like regression), their end-goals and methods for success are very different.</p>
+<section id="the-statistical-approach-the-glass-box">
+<h3>The Statistical Approach (The “Glass Box”)<a class="headerlink" href="#the-statistical-approach-the-glass-box" title="Permalink to this heading">#</a></h3>
+<p>This approach is primarily focused on <strong>Understanding</strong> and <strong>Inference</strong>. It treats the model as a “glass box,” where our primary goal is to look inside and understand its mechanisms.</p>
+<ul class="simple">
+<li><p><strong>Primary Goal:</strong> To <strong>understand</strong> the relationship between variables and draw conclusions about the real-world process.</p></li>
+<li><p><strong>Key Question:</strong> “Is the relationship I see in my sample data <em>real</em> (statistically significant), or is it just due to random chance?”</p></li>
+<li><p><strong>Methodology:</strong></p>
+<ul>
+<li><p>Relies heavily on <strong>assumptions</strong> about the data (e.g., variables are normally distributed, observations are independent).</p></li>
+<li><p>Focuses on <strong>hypothesis testing</strong>, <strong>p-values</strong>, and <strong>confidence intervals</strong>.</p></li>
+<li><p>The entire dataset is typically used to fit the model and test its significance.</p></li>
+<li><p><strong>Interpretability is a requirement.</strong> A model that cannot be explained is not considered useful.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="the-machine-learning-approach-the-black-box">
+<h3>The Machine Learning Approach (The “Black Box”)<a class="headerlink" href="#the-machine-learning-approach-the-black-box" title="Permalink to this heading">#</a></h3>
+<p>This approach is primarily focused on <strong>Prediction</strong> and <strong>Accuracy</strong>. It often treats the model as a “black box”: if it produces the right answer, we don’t always need to know <em>how</em> it got there.</p>
+<ul class="simple">
+<li><p><strong>Primary Goal:</strong> To build a model that makes the most <strong>accurate</strong> predictions possible on new, unseen data.</p></li>
+<li><p><strong>Key Question:</strong> “When I feed new data into my model, how often does it give the correct answer?”</p></li>
+<li><p><strong>Methodology:</strong></p>
+<ul>
+<li><p>Is <strong>results-driven</strong> and makes fewer assumptions about the underlying data.</p></li>
+<li><p>Relies on <strong>splitting the data</strong> into training, validation, and test sets to simulate a “future” scenario.</p></li>
+<li><p>The model’s success is not measured by p-values, but by its <strong>performance on the test set</strong> (e.g., accuracy, error rate).</p></li>
+<li><p><strong>Interpretability is a bonus, not a requirement.</strong> A very complex but highly accurate model is often preferred over a simple but less accurate one.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Example: The PIMA Diabetes Dataset</strong></p>
+<p>The PIMA dataset is a perfect example of where <em>both</em> approaches are valuable.</p>
+<ul class="simple">
+<li><p><strong>A Statistical (Glass Box) Goal:</strong> A medical researcher wants to <strong>understand the risk factors</strong> for diabetes in this population. They would build an interpretable model (like Logistic Regression) using the <em>entire dataset</em>. Their goal is not to predict for a new patient, but to publish a paper stating, “We found that Glucose and BMI are the most significant risk factors, with p-values &lt; 0.01.” They care about the <strong>coefficients</strong> and <strong>p-values</strong>.</p></li>
+<li><p><strong>An ML (Black Box) Goal:</strong> A health tech company wants to build a mobile app that <strong>predicts a user’s diabetes risk</strong>. They don’t care about p-values; they just want the highest <strong>accuracy</strong>. They will use a <em>train/test split</em> and try many complex models. If a “black box” neural network gets 80% accuracy on the test set, while the simple logistic regression only gets 75%, they will use the neural network for their app.</p></li>
+</ul>
+</section>
+<section id="the-model-complexity-interpretability-trade-off">
+<h3>The Model Complexity - Interpretability Trade-off<a class="headerlink" href="#the-model-complexity-interpretability-trade-off" title="Permalink to this heading">#</a></h3>
+<p><img alt="" src="../_images/tradeoff.png" /></p>
+<p>The contrast between these two approaches highlights one of the most important practical challenges in data modeling: the <strong>Model Complexity - Interpretability Trade-off</strong>.</p>
+<p>Generally, as the <strong>complexity</strong> of a model (its capacity, or the “number of knobs” it can turn) <strong>increases</strong>, its <strong>interpretability</strong> (our ability to understand <em>why</em> it makes a certain decision) <strong>decreases</strong>.</p>
+<ul class="simple">
+<li><p><strong>Simple Models (Low Complexity):</strong></p>
+<ul>
+<li><p><strong>Examples:</strong> Simple Linear Regression, <strong>Logistic Regression</strong>.</p></li>
+<li><p>These models are on the <strong>low-complexity, high-interpretability</strong> end of the spectrum. When applied to the PIMA dataset, a Logistic Regression model gives you a clean formula. We can easily look at the coefficients to say, “A one-unit increase in Glucose concentration increases the log-odds of diabetes by X.”</p></li>
+<li><p>They are “glass boxes,” perfect for the <strong>Statistical (Understanding)</strong> goal. The risk is that they may be “too simple” (high bias) and fail to capture the complex, non-linear interactions between variables like ‘Insulin’ and ‘BMI’, leading to lower predictive accuracy.</p></li>
+</ul>
+</li>
+<li><p><strong>Complex Models (High Complexity):</strong></p>
+<ul>
+<li><p><strong>Examples:</strong> Naive Bayes, K-Nearest Neighbor, other advanced models (e.g., Neural Networks, Decision Trees, etc.)</p></li>
+<li><p>These models are on the <strong>high-complexity, low-interpretability</strong> end. When applied to the PIMA dataset, a Deep Neural Network might learn from millions of parameters interacting in ways that are not human-readable.</p></li>
+<li><p>Their high capacity makes them excellent for the <strong>Machine Learning (Prediction)</strong> goal, as they can capture those subtle patterns (low bias) and may achieve higher accuracy. The risk is that they are “black boxes”; they can’t easily explain to a patient <em>why</em> they were flagged as high-risk.</p></li>
+</ul>
+</li>
+</ul>
+<p>Choosing a model, therefore, is not just about finding the most accurate one. It’s about <strong>making a conscious decision about this trade-off</strong> based on your primary goal.</p>
+</section>
+</section>
+<section id="the-problem-landscape">
+<h2>The Problem Landscape<a class="headerlink" href="#the-problem-landscape" title="Permalink to this heading">#</a></h2>
+<p>Now that we have established the <em>goals</em> of modeling (Understanding vs. Predicting), let’s map out the <em>types</em> of problems we can solve. The most fundamental distinction in machine learning is between <strong>Supervised</strong> and <strong>Unsupervised</strong> learning.</p>
+<section id="supervised-learning-learning-with-an-answer-key">
+<h3>Supervised Learning: Learning with an Answer Key<a class="headerlink" href="#supervised-learning-learning-with-an-answer-key" title="Permalink to this heading">#</a></h3>
+<p>In <strong>supervised learning</strong>, our dataset contains both the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong> and the <strong>correct answer (<span class="math notranslate nohighlight">\(y\)</span>)</strong>.</p>
+<p>We are “supervising” the model by showing it thousands of examples and their corresponding outcomes. The goal is to learn a mapping function, <span class="math notranslate nohighlight">\(h\)</span>, such that</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = h(X)\]</div>
+<p>is a good predictor of <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>We often use <span class="math notranslate nohighlight">\(\hat{y}\)</span> since we are predicting a value for <span class="math notranslate nohighlight">\(y\)</span> and to distinguish it from the correct value <span class="math notranslate nohighlight">\(y\)</span>. We will also call the correct value <span class="math notranslate nohighlight">\(y\)</span> <strong>ground truth</strong> value.</p>
+<p>Supervised learning is primarily divided into two types of problems: Regression and Classification.</p>
+<section id="regression-predicting-a-number">
+<h4>1. Regression (Predicting a Number)<a class="headerlink" href="#regression-predicting-a-number" title="Permalink to this heading">#</a></h4>
+<p>In a <strong>regression</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>continuous numerical value</strong>.</p>
+<ul class="simple">
+<li><p><strong>Key Question:</strong> “How much?” or “How many?”</p></li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Market</span> <span class="pre">Risk</span></code> or Stock Price Prediction.</strong> Given a company’s historical data (<span class="math notranslate nohighlight">\(X\)</span>), what will its stock price (<span class="math notranslate nohighlight">\(y\)</span>) be tomorrow? The output is a number (e.g., $150.25).</p></li>
+<li><p><strong>Example: Predicting a Student’s Score.</strong> Given a student’s study hours, past grades, and attendance (<span class="math notranslate nohighlight">\(X\)</span>), what will their final exam score (<span class="math notranslate nohighlight">\(y\)</span>) be? The output is a number (e.g., 87.5).</p></li>
+</ul>
+</section>
+<section id="classification-predicting-a-label">
+<h4>2. Classification (Predicting a Label)<a class="headerlink" href="#classification-predicting-a-label" title="Permalink to this heading">#</a></h4>
+<p>In a <strong>classification</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>discrete category or label</strong>.</p>
+<ul class="simple">
+<li><p><strong>Key Question:</strong> “Which one?” or “Is this A or B?”</p></li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Spam</span> <span class="pre">Filter</span></code> (Binary Classification).</strong> Given an email’s content (<span class="math notranslate nohighlight">\(X\)</span>), is it <code class="docutils literal notranslate"><span class="pre">spam</span></code> or <code class="docutils literal notranslate"><span class="pre">not-spam</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of two labels.</p></li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Medical</span> <span class="pre">Diagnosis</span></code> (Binary Classification).</strong> Given a patient’s symptoms and test results (<span class="math notranslate nohighlight">\(X\)</span>), do they have the <code class="docutils literal notranslate"><span class="pre">disease</span></code> or <code class="docutils literal notranslate"><span class="pre">no-disease</span></code>?</p></li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Customer</span> <span class="pre">Churn</span></code> (Binary Classification).</strong> Given a customer’s usage and support history (<span class="math notranslate nohighlight">\(X\)</span>), will they <code class="docutils literal notranslate"><span class="pre">churn</span></code> (leave) or <code class="docutils literal notranslate"><span class="pre">stay</span></code> next month?</p></li>
+<li><p><strong>Example: Image Recognition (Multiclass Classification).</strong> Given an image (<span class="math notranslate nohighlight">\(X\)</span>), is it a <code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">dog</span></code>, or <code class="docutils literal notranslate"><span class="pre">bird</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of several labels.</p></li>
+</ul>
+</section>
+</section>
+<section id="unsupervised-learning-learning-without-an-answer-key">
+<h3>Unsupervised Learning: Learning without an Answer Key<a class="headerlink" href="#unsupervised-learning-learning-without-an-answer-key" title="Permalink to this heading">#</a></h3>
+<p>In <strong>unsupervised learning</strong>, our dataset only contains the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong>. We do <em>not</em> have a correct answer <span class="math notranslate nohighlight">\(y\)</span> to learn from. The goal is not to predict an outcome, but to find <strong>hidden structure, patterns, or groupings</strong> within the data itself.</p>
+<section id="clustering-finding-groups">
+<h4>1. Clustering (Finding Groups)<a class="headerlink" href="#clustering-finding-groups" title="Permalink to this heading">#</a></h4>
+<p><strong>Clustering</strong> is the most common unsupervised task. The goal is to automatically group similar data points together into “clusters” based on their features.</p>
+<ul class="simple">
+<li><p><strong>Key Question:</strong> “What are the natural groups in my data?”</p></li>
+<li><p><strong>Example: Customer Segmentation.</strong> A marketing company has data on 10,000 customers (age, spending, location, etc.) but no pre-defined “groups.” A clustering algorithm can automatically segment them into distinct groups (e.g., “high-spending young professionals,” “budget-conscious families”) so the company can create targeted marketing campaigns.</p></li>
+</ul>
+</section>
+</section>
+</section>
+<section id="id2">
+<h2>The Problem Landscape<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<p>Now that we have established the <em>goals</em> of modeling (Understanding vs. Predicting), let’s map out the <em>types</em> of problems we can solve. The most fundamental distinction in machine learning is between <strong>Supervised</strong> and <strong>Unsupervised</strong> learning.</p>
+<section id="id3">
+<h3>Supervised Learning: Learning with an Answer Key<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>In <strong>supervised learning</strong>, our dataset contains both the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong> and the <strong>correct answer (<span class="math notranslate nohighlight">\(y\)</span>)</strong>.</p>
+<p>We are “supervising” the model by showing it thousands of examples and their corresponding outcomes. The goal is to learn a mapping function, <span class="math notranslate nohighlight">\(h\)</span>, such that</p>
+<div class="math notranslate nohighlight">
+\[\hat{y} = h(X)\]</div>
+<p>is a good predictor of <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>We often use <span class="math notranslate nohighlight">\(\hat{y}\)</span> since we are predicting a value for <span class="math notranslate nohighlight">\(y\)</span> and to distinguish it from the correct value <span class="math notranslate nohighlight">\(y\)</span>. We will also call the correct value <span class="math notranslate nohighlight">\(y\)</span> <strong>ground truth</strong> value.</p>
+<p>Supervised learning is primarily divided into two types of problems: Regression and Classification.</p>
+<section id="id4">
+<h4>1. Regression (Predicting a Number)<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h4>
+<p>In a <strong>regression</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>continuous numerical value</strong>. Visually, the goal of regression is to find a function (like a line or a curve) that best fits the continuous data points.</p>
+<blockquote>
+<div><p><strong>Key Question:</strong> “How much?” or “How many?”</p>
+</div></blockquote>
+<p>For example, consider the problem of predicting the price of houses from the size in square meters:</p>
+<div class="cell tag_remove_input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># 1. Generate synthetic data that roughly matches the image</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span> <span class="c1"># for reproducibility</span>
+
+<span class="c1"># Feature: Size in mq (x1^(i))</span>
+<span class="n">X_size</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">450</span><span class="p">,</span> <span class="mi">600</span><span class="p">,</span> <span class="mi">750</span><span class="p">,</span> <span class="mi">900</span><span class="p">,</span> <span class="mi">1100</span><span class="p">,</span> <span class="mi">1300</span><span class="p">,</span> <span class="mi">1500</span><span class="p">,</span> <span class="mi">1700</span><span class="p">,</span> <span class="mi">1900</span><span class="p">,</span> <span class="mi">2100</span><span class="p">])</span>
+
+<span class="c1"># Target: Price ($ in 1000&#39;s) (y^(i))</span>
+<span class="c1"># We create a base curve (e.g., a quadratic or cubic-like curve) and add noise</span>
+<span class="c1"># This function aims to match the upward curve that flattens out</span>
+<span class="n">y_price_base</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.0001</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_size</span> <span class="o">-</span> <span class="mi">1300</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">320</span>  <span class="c1"># Inverted parabola for the main shape</span>
+<span class="n">y_price_base</span><span class="p">[</span><span class="n">X_size</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0005</span> <span class="o">*</span> <span class="p">(</span><span class="n">X_size</span><span class="p">[</span><span class="n">X_size</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">]</span> <span class="o">-</span> <span class="mi">400</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">100</span> <span class="c1"># Adjust start</span>
+<span class="n">y_price</span> <span class="o">=</span> <span class="n">y_price_base</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_size</span><span class="p">))</span> <span class="o">*</span> <span class="mi">20</span> <span class="c1"># Add some random noise</span>
+
+<span class="c1"># 2. --- THIS IS THE CORRECTED STEP ---</span>
+<span class="c1"># Instead of hand-tuning, we &quot;fit&quot; a model using numpy.polyfit.</span>
+<span class="c1"># We will find the best 3rd-degree (cubic) polynomial.</span>
+<span class="c1"># This is what a real model would do.</span>
+<span class="n">model_coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">polyfit</span><span class="p">(</span><span class="n">X_size</span><span class="p">,</span> <span class="n">y_price</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">model_function</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">model_coefficients</span><span class="p">)</span>
+
+<span class="c1"># Create the x-axis for the smooth curve</span>
+<span class="n">X_fit_curve</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X_size</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X_size</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Get the y-values from our &quot;fitted&quot; model function</span>
+<span class="n">y_fit_curve</span> <span class="o">=</span> <span class="n">model_function</span><span class="p">(</span><span class="n">X_fit_curve</span><span class="p">)</span>
+<span class="c1"># --- End of correction ---</span>
+
+
+<span class="c1"># 3. Plot the results</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot data points as red &#39;x&#39; marks</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_size</span><span class="p">,</span> <span class="n">y_price</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Plot the fitted curve as a green line (using our new curve)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_fit_curve</span><span class="p">,</span> <span class="n">y_fit_curve</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># 4. Style the plot to match the example image</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="c1"># No title needed for this style</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Size in square meters&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Price ($)</span><span class="se">\n</span><span class="s1">in 1000</span><span class="se">\&#39;</span><span class="s1">s&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;top&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Customizing ticks and limits</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2500</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2501</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">401</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+<span class="c1"># Customizing tick labels</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Removing default spines and adding custom axes for a cleaner look</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;top&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;right&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;bottom&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+
+<span class="c1"># Add x1^(i) and y^(i) labels at the end of the axes manually</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.02</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$x_1^{(i)}$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.03</span><span class="p">,</span> <span class="sa">r</span><span class="s1">&#39;$y^{(i)}$&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;bottom&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a324532acb7d089fc73e331daaf45e21eeefed8ee47b878a0c9de3f813834fbb.png" src="../_images/a324532acb7d089fc73e331daaf45e21eeefed8ee47b878a0c9de3f813834fbb.png" />
+</div>
+</div>
+<p>Other Examples:</p>
+<ul class="simple">
+<li><p><strong>Market Risk or Stock Price Prediction.</strong> Given a company’s historical data (<span class="math notranslate nohighlight">\(X\)</span>), what will its stock price (<span class="math notranslate nohighlight">\(y\)</span>) be tomorrow? The output is a number (e.g., $150.25).</p></li>
+<li><p><strong>Predicting a Student’s Score.</strong> Given a student’s study hours, past grades, and attendance (<span class="math notranslate nohighlight">\(X\)</span>), what will their final exam score (<span class="math notranslate nohighlight">\(y\)</span>) be? The output is a number (e.g., 87.5).</p></li>
+</ul>
+</section>
+<section id="id5">
+<h4>2. Classification (Predicting a Label)<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h4>
+<p>In a <strong>classification</strong> problem, the output variable <span class="math notranslate nohighlight">\(y\)</span> that we want to predict is a <strong>discrete category or label</strong>. Visually, the goal of classification is to find a “boundary” that best separates the different labeled groups.</p>
+<blockquote>
+<div><p><strong>Key Question:</strong> “Which one?” or “Is this A or B?”</p>
+</div></blockquote>
+<p>For example, the plot below illustrates how a classifier learns a “boundary” to separate two different groups of patients, one with a disease (Class 1) and one without (Class 0), based on their age and the result of a blood test.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/e56dcca99997e2d7111767e382595535cfdb92fd2e58cb4b9a9dbaea2670c914.png" src="../_images/e56dcca99997e2d7111767e382595535cfdb92fd2e58cb4b9a9dbaea2670c914.png" />
+</div>
+</div>
+<p>Other examples:</p>
+<ul class="simple">
+<li><p><strong>Spam Filter (Binary Classification).</strong> Given an email’s content (<span class="math notranslate nohighlight">\(X\)</span>), is it <code class="docutils literal notranslate"><span class="pre">spam</span></code> or <code class="docutils literal notranslate"><span class="pre">not-spam</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of two labels.</p></li>
+<li><p><strong>Medical Diagnosis (Binary Classification).</strong> Given a patient’s symptoms and test results (<span class="math notranslate nohighlight">\(X\)</span>), do they have the <code class="docutils literal notranslate"><span class="pre">disease</span></code> or <code class="docutils literal notranslate"><span class="pre">no-disease</span></code>?</p></li>
+<li><p><strong>Customer Churn (Binary Classification).</strong> Given a customer’s usage and support history (<span class="math notranslate nohighlight">\(X\)</span>), will they <code class="docutils literal notranslate"><span class="pre">churn</span></code> (leave) or <code class="docutils literal notranslate"><span class="pre">stay</span></code> next month?</p></li>
+<li><p><strong>Image Recognition (Multiclass Classification).</strong> Given an image (<span class="math notranslate nohighlight">\(X\)</span>), is it a <code class="docutils literal notranslate"><span class="pre">cat</span></code>, <code class="docutils literal notranslate"><span class="pre">dog</span></code>, or <code class="docutils literal notranslate"><span class="pre">bird</span></code>? The output <span class="math notranslate nohighlight">\(y\)</span> is one of several labels.</p></li>
+</ul>
+</section>
+</section>
+<section id="id6">
+<h3>Unsupervised Learning: Learning without an Answer Key<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>In <strong>unsupervised learning</strong>, our dataset only contains the <strong>input features (<span class="math notranslate nohighlight">\(X\)</span>)</strong>. We do <em>not</em> have a correct answer <span class="math notranslate nohighlight">\(y\)</span> to learn from. The goal is not to predict an outcome, but to find <strong>hidden structure, patterns, or groupings</strong> within the data itself.</p>
+<section id="id7">
+<h4>1. Clustering (Finding Groups)<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h4>
+<p><strong>Clustering</strong> is the most common unsupervised task. The goal is to automatically group similar data points together into “clusters” based on their features. Visually, the goal of clustering is to discover these “hidden” groups in data that does not have any pre-existing labels.</p>
+<blockquote>
+<div><p><strong>Key Question:</strong> “What are the natural groups in my data?”</p>
+</div></blockquote>
+<p>For example, let’s look at the “Customer Segmentation” problem. A company might have data on its customers, such as their <code class="docutils literal notranslate"><span class="pre">Age</span></code> and their <code class="docutils literal notranslate"><span class="pre">Spending</span> <span class="pre">Score</span></code>, but no pre-existing “groups” or labels. The data is <strong>unsupervised</strong>. A clustering algorithm’s job is to analyze this unlabeled data and discover the hidden structure. As the plot below illustrates, the algorithm might automatically find three distinct clusters, which a business analyst could then identify as, for instance, <strong>“Young Savers”, “Prime Spenders”, and “Older Savers”</strong>. The company can then create targeted marketing campaigns for each discovered group.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/281fa75298f67f8177b2a634ddaebd6ab1dab52ea29b467ccd19f92c5200944f.png" src="../_images/281fa75298f67f8177b2a634ddaebd6ab1dab52ea29b467ccd19f92c5200944f.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="parametric-vs-non-parametric-models">
+<h2>Parametric vs. Non-Parametric Models<a class="headerlink" href="#parametric-vs-non-parametric-models" title="Permalink to this heading">#</a></h2>
+<p>There are different types of models. A fundamental way to categorize these models is by how they handle their own complexity—specifically, whether their number of parameters is fixed or flexible.</p>
+<section id="parametric-models-the-fixed-approach">
+<h3>Parametric Models: The “Fixed” Approach<a class="headerlink" href="#parametric-models-the-fixed-approach" title="Permalink to this heading">#</a></h3>
+<p>A <strong>parametric model</strong> is one that makes strong assumptions about the form of the function <span class="math notranslate nohighlight">\(f(X)\)</span>. It “locks in” its structure <em>before</em> it even sees the data.</p>
+<p>The defining feature of a parametric model is that it has a <strong>fixed number of parameters</strong>, regardless of the size of the training dataset.</p>
+<ul class="simple">
+<li><p><strong>How it works:</strong> The model “learns” by finding the best values for its finite set of parameters (e.g., by minimizing empirical risk).</p></li>
+<li><p><strong>Examples:</strong></p>
+<ul>
+<li><p><strong>Linear Regression:</strong> The model is pre-defined by the equation <span class="math notranslate nohighlight">\(h(x) = \beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n\)</span>. The <em>only</em> things it can learn are the coefficients (<span class="math notranslate nohighlight">\(\beta_0, \ldots, \beta_n\)</span>). No matter if you have 100 or 100 million data points, the model is still just this set of <span class="math notranslate nohighlight">\(\beta\)</span> parameters.</p></li>
+<li><p><strong>Logistic Regression:</strong> Same as linear, but squashes the output with a logistic function. It still only learns a fixed set of <span class="math notranslate nohighlight">\(\beta\)</span> parameters.</p></li>
+<li><p><strong>Naive Bayes:</strong> Learns a fixed set of probabilities for each feature.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>The Trade-off:</strong></p>
+<ul class="simple">
+<li><p><strong>Pros:</strong></p>
+<ul>
+<li><p><strong>Simpler:</strong> They are easier to understand and interpret (“glass box”).</p></li>
+<li><p><strong>Faster:</strong> They are fast to train.</p></li>
+<li><p><strong>Less Data:</strong> They don’t require as much training data.</p></li>
+</ul>
+</li>
+<li><p><strong>Cons:</strong></p>
+<ul>
+<li><p><strong>Constrained:</strong> They are “biased” by their initial assumption (e.g., that the data is linear). If the true relationship is highly complex, a parametric model will fail to capture it.</p></li>
+<li><p><strong>Risk:</strong> They are prone to <strong>underfitting</strong>.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="non-parametric-models-the-flexible-approach">
+<h3>Non-Parametric Models: The “Flexible” Approach<a class="headerlink" href="#non-parametric-models-the-flexible-approach" title="Permalink to this heading">#</a></h3>
+<p>A <strong>non-parametric model</strong> is one that makes very few or no assumptions about the form of the true function <span class="math notranslate nohighlight">\(f(X)\)</span>. It lets the data “speak for itself.”</p>
+<p>The defining feature of a non-parametric model is that the number of parameters is <strong>not fixed</strong>. The model’s structure and complexity <strong>grow as the amount of training data increases</strong>.</p>
+<ul class="simple">
+<li><p><strong>How it works:</strong> The model “learns” by essentially fitting itself to the training data. The model <em>is</em> the data.</p></li>
+<li><p><strong>Examples:</strong></p>
+<ul>
+<li><p><strong>k-Nearest Neighbors (KNN):</strong> To make a prediction for a new point, the model <em>literally</em> has to look at the “k” closest points from the <em>entire</em> training set. If your training set doubles, the “model” (the stored data it refers to) doubles.</p></li>
+<li><p><strong>Decision Trees:</strong> A tree can grow “deeper” and create more “splits” to perfectly fit the training data. The more data you have, the more complex the tree can become.</p></li>
+<li><p><strong>Support Vector Machines (SVMs)</strong> and <strong>Neural Networks</strong> are also often considered non-parametric (or at least highly flexible) as their capacity can grow to fit highly complex patterns.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>The Trade-off:</strong></p>
+<ul class="simple">
+<li><p><strong>Pros:</strong></p>
+<ul>
+<li><p><strong>Flexible:</strong> They can fit a much wider range of functional forms.</p></li>
+<li><p><strong>Less Bias:</strong> They are not limited by a wrong assumption and can capture the true, complex pattern in the data.</p></li>
+</ul>
+</li>
+<li><p><strong>Cons:</strong></p>
+<ul>
+<li><p><strong>More Data:</strong> They require <em>a lot</em> more data to learn effectively.</p></li>
+<li><p><strong>Slower:</strong> They are often much slower to train.</p></li>
+<li><p><strong>Less Interpretable:</strong> They are often “black boxes.”</p></li>
+<li><p><strong>Risk:</strong> They are highly prone to <strong>overfitting</strong> (memorizing the noise in the data).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="why-this-matters-the-bias-variance-connection">
+<h3>Why This Matters: The Bias-Variance Connection<a class="headerlink" href="#why-this-matters-the-bias-variance-connection" title="Permalink to this heading">#</a></h3>
+<p>This choice is the practical embodiment of the <strong>Bias-Variance Tradeoff</strong> that we will discuss next.</p>
+<ul class="simple">
+<li><p>When you choose a <strong>Parametric Model</strong>, you are placing a big bet on your initial assumption (e.g., “the data is linear”). You are deliberately choosing a <strong>high-bias, low-variance</strong> approach.</p></li>
+<li><p>When you choose a <strong>Non-Parametric Model</strong>, you are assuming you have enough data for the true pattern to reveal itself. You are choosing a <strong>low-bias, high-variance</strong> approach.</p></li>
+</ul>
+<p>The next challenge, which we will cover, is how to <em>control</em> the complexity of these models to find the perfect “sweet spot” between underfitting and overfitting.</p>
+</section>
+</section>
+<section id="the-learning-principle">
+<h2>The “Learning” Principle<a class="headerlink" href="#the-learning-principle" title="Permalink to this heading">#</a></h2>
+<p>Now that we have distinguished between Supervised (learning with an answer key) and Unsupervised (learning without one) problems, let’s build a formal framework.</p>
+<p>For the rest of this discussion, we will focus <strong>exclusively on the Supervised Learning problem</strong>, as the concepts of “learning” and “prediction error” are most formally defined there.</p>
+<section id="formal-problem-formulation">
+<h3>Formal Problem Formulation<a class="headerlink" href="#formal-problem-formulation" title="Permalink to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> and <span class="math notranslate nohighlight">\(\mathcal{Y}\)</span> be two spaces of objects. We can see them as the sample spaces of two random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>, with <span class="math notranslate nohighlight">\(x \in \mathcal{X}\)</span> and <span class="math notranslate nohighlight">\(y \in \mathcal{Y}\)</span> being two realizations of the random variables: <span class="math notranslate nohighlight">\(X=x\)</span> and <span class="math notranslate nohighlight">\(Y=y\)</span>.</p>
+<p>As defined in the previous section, the goal of predictive modeling is to find a function (or <strong>hypothesis</strong>) <span class="math notranslate nohighlight">\(h\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[h : \mathcal{X} \to \mathcal{Y}\]</div>
+<p>which outputs an object <span class="math notranslate nohighlight">\(\hat{y} \in \mathcal{Y}\)</span>, given an object <span class="math notranslate nohighlight">\(x \in \mathcal{X}\)</span>. We use the symbol <span class="math notranslate nohighlight">\(y\)</span> to refer to the <strong>true value</strong> (or <strong>ground truth</strong>) associated with <span class="math notranslate nohighlight">\(x\)</span>, while <strong><span class="math notranslate nohighlight">\(\hat y\)</span> will represent the prediction</strong> obtained using our function <span class="math notranslate nohighlight">\(h\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\hat y = h(x)\]</div>
+<section id="example-1-medical-diagnosis">
+<h4>Example 1: Medical Diagnosis<a class="headerlink" href="#example-1-medical-diagnosis" title="Permalink to this heading">#</a></h4>
+<p>We can imagine <span class="math notranslate nohighlight">\(\mathcal{X}=\Re^m\)</span> and <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0,1\}\)</span>, with <span class="math notranslate nohighlight">\(\mathbf{x} \in \Re^m\)</span> being a numerical vector representing the results of different blood tests, while <span class="math notranslate nohighlight">\(y \in \{0,1\}\)</span> is a response variable indicating whether the subject has (<span class="math notranslate nohighlight">\(1\)</span>) or does not have (<span class="math notranslate nohighlight">\(0\)</span>) a given disease. Finding an appropriate <span class="math notranslate nohighlight">\(h\)</span> will allow us to predict <span class="math notranslate nohighlight">\(\hat y = h(\mathbf{x})\)</span>.</p>
+</section>
+<section id="example-2-simple-spam-filter">
+<h4>Example 2: Simple Spam Filter<a class="headerlink" href="#example-2-simple-spam-filter" title="Permalink to this heading">#</a></h4>
+<p>We want to build a <strong>spam filter</strong> where <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> is the set of all possible emails and <span class="math notranslate nohighlight">\(\mathcal{Y}=\{0,1\}\)</span>. Let <span class="math notranslate nohighlight">\(f(x)\)</span> be a function that counts the number of orthographical mistakes in an email <span class="math notranslate nohighlight">\(x\)</span>. We can define our hypothesis <span class="math notranslate nohighlight">\(h\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}h(x) = \begin{cases} 1 &amp; \text{ if } f(x)&gt;\theta \\ 0 &amp; \text{otherwise} \end{cases}\end{split}\]</div>
+</section>
+</section>
+<section id="parameters-what-the-model-learns">
+<h3>Parameters: What the Model Learns<a class="headerlink" href="#parameters-what-the-model-learns" title="Permalink to this heading">#</a></h3>
+<p>The function <span class="math notranslate nohighlight">\(h\)</span> is rarely defined explicitly. Instead, it is a <strong>parametric model</strong>, and the “learning” process consists of finding the best values for its <strong>parameters</strong>.</p>
+<p>The threshold <span class="math notranslate nohighlight">\(\theta\)</span> in Example 2 is a perfect, simple example of a <strong>parameter</strong>. It is a “knob” that the learning algorithm must tune. A different value for <span class="math notranslate nohighlight">\(\theta\)</span> creates a different hypothesis function <span class="math notranslate nohighlight">\(h\)</span>.</p>
+<p>A more complex model, like a linear regressor (which we will see soon), will have different parameters (e.g., coefficients <span class="math notranslate nohighlight">\(\beta_0, \beta_1, \ldots, \beta_n\)</span>). The set of all possible functions <span class="math notranslate nohighlight">\(h\)</span> that we can create by changing the parameters is called the <strong>class of functions (or hypothesis space) <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></strong>.</p>
+<p>The question is: how do we find the <em>best</em> parameters?</p>
+</section>
+<section id="the-learning-process-statistical-learning-and-risk">
+<h3>The Learning Process: Statistical Learning and Risk<a class="headerlink" href="#the-learning-process-statistical-learning-and-risk" title="Permalink to this heading">#</a></h3>
+<p>To find the “best” <span class="math notranslate nohighlight">\(h\)</span> from our hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, we need a way to measure how “good” it is. We do this by defining a <strong>loss (or cost) function</strong>, <span class="math notranslate nohighlight">\(L(\hat y, y)\)</span>, which measures the penalty for making a prediction <span class="math notranslate nohighlight">\(\hat y\)</span> when the true value is <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[L(\hat y, y)\]</div>
+<p>Ideally, we want to find the function <span class="math notranslate nohighlight">\(h^*\)</span> that has the lowest possible loss <em>on average</em> over <em>all possible data</em>, not just the data we have. This “true” average loss is called the <strong>Risk <span class="math notranslate nohighlight">\(R(h)\)</span></strong>, defined as the <strong>expected loss</strong> under the true (but unknown) joint probability distribution <span class="math notranslate nohighlight">\(P(X,Y)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[R(h) = E_{(x,y) \sim P(X,Y)}[L(h(x),y)]\]</div>
+<p>The goal of <strong>statistical learning</strong> is to solve this optimization problem:</p>
+<div class="math notranslate nohighlight">
+\[h^* = \underset{h \in \mathcal{H}}{\mathrm{arg\ min}}\ R(h)\]</div>
+</section>
+<section id="empirical-risk-minimization-erm-the-practical-method">
+<h3>Empirical Risk Minimization (ERM): The Practical Method<a class="headerlink" href="#empirical-risk-minimization-erm-the-practical-method" title="Permalink to this heading">#</a></h3>
+<p>There is a major problem: we can almost never compute the true Risk <span class="math notranslate nohighlight">\(R(h)\)</span> because we do not know the true distribution <span class="math notranslate nohighlight">\(P(X,Y)\)</span>.</p>
+<p>However, we <em>do</em> have a dataset, often called a <strong>Training Set (TR)</strong>, of <span class="math notranslate nohighlight">\(N\)</span> examples, which we assume is a representative sample from <span class="math notranslate nohighlight">\(P(X,Y)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\text{TR}=\{(x_i,y_i)\}_{i=1}^N\]</div>
+<p>By the <strong>law of large numbers</strong>, we can get a good <em>estimate</em> of the true Risk by simply calculating the <em>average</em> loss over our training set. This is called the <strong>Empirical Risk <span class="math notranslate nohighlight">\(R_{emp}(h)\)</span></strong>:</p>
+<div class="math notranslate nohighlight">
+\[R_{emp}(h) = \frac{1}{N}\sum_{i=1}^N L(h(x_i),y_i)\]</div>
+<p>This leads to the central “learning” principle of machine learning: the <strong>Empirical Risk Minimization (ERM)</strong> principle. It states that since we cannot find the <span class="math notranslate nohighlight">\(h\)</span> that minimizes the <em>true</em> Risk, the best we can do is choose the hypothesis <span class="math notranslate nohighlight">\(\hat h\)</span> that minimizes the <em>empirical</em> risk:</p>
+<div class="math notranslate nohighlight">
+\[\hat h = \underset{h \in \mathcal{H}}{\mathrm{arg\ min}}\ R_{emp}(h)\]</div>
+<p>A <strong>learning algorithm</strong> is simply an optimization algorithm that solves this problem: it takes the training set TR and finds the parameters for <span class="math notranslate nohighlight">\(\hat h\)</span> that minimize the empirical risk.</p>
+</section>
+<section id="model-capacity">
+<h3>Model Capacity<a class="headerlink" href="#model-capacity" title="Permalink to this heading">#</a></h3>
+<p>Before moving on, we need to define the crucial concept of model capacity. In simple terms, a model’s capacity is its <strong>flexibility</strong> or <strong>complexity</strong>.</p>
+<p>Formally, capacity is related to the <strong>size and richness of the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span></strong> that the model can choose from.</p>
+<ul class="simple">
+<li><p><strong>Low Capacity Model:</strong></p>
+<ul>
+<li><p>Has a <strong>small, constrained</strong> hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p></li>
+<li><p>It can only represent a limited set of simple functions.</p></li>
+<li><p><strong>Example:</strong> Modeling our hypothesis function with a simple line. It can <em>only</em> learn linear functions (<span class="math notranslate nohighlight">\(h(x) = \beta_0 + \beta_1 x\)</span>), no matter what the data looks like. It is “biased” toward simplicity.</p></li>
+<li><p><strong>Risk:</strong> This model may be too simple to capture the true underlying pattern.</p></li>
+</ul>
+</li>
+<li><p><strong>High Capacity Model:</strong></p>
+<ul>
+<li><p>Has a <strong>large, rich</strong> hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p></li>
+<li><p>It can represent a huge set of very complex functions.</p></li>
+<li><p><strong>Example:</strong> A 10th-degree polynomial. It can learn extremely “wiggly” functions that can fit almost any set of points perfectly.</p></li>
+<li><p><strong>Risk:</strong> This model is so flexible that it can easily fit the random <em>noise</em> in the training data, not just the signal. It might be very accurate for the data it has been trained on, but not for the general distribution of the data.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="assessing-model-accuracy">
+<h2>Assessing Model Accuracy<a class="headerlink" href="#assessing-model-accuracy" title="Permalink to this heading">#</a></h2>
+<p>Once we have used Empirical Risk Minimization (ERM) to “learn” a model <span class="math notranslate nohighlight">\(\hat{h}\)</span>, we need to know how good it is. A model that perfectly fits our training data (i.e., has a low <span class="math notranslate nohighlight">\(R_{emp}\)</span>) is not necessarily a good model. Our ultimate goal is a model that <strong>generalizes</strong> well—that is, one that makes accurate predictions on new, unseen data.</p>
+<p>To do this, we must first define <em>how</em> to measure performance.</p>
+<section id="measuring-the-quality-of-fit">
+<h3>Measuring the quality of fit<a class="headerlink" href="#measuring-the-quality-of-fit" title="Permalink to this heading">#</a></h3>
+<p>To measure the “quality of fit” or performance of a model, we need a concrete <strong>evaluation metric</strong>. This metric is sometimes the same as the <strong>loss function</strong> <span class="math notranslate nohighlight">\(L(\hat y, y)\)</span> we used in the ERM principle. It quantifies the cost or error of our predictions. The specific metric we choose depends on the problem (e.g., regression vs. classification).</p>
+<p>For <strong>regression problems</strong>, the most common metric is the <strong>Mean Squared Error (MSE)</strong>.</p>
+<p>If we choose our loss function <span class="math notranslate nohighlight">\(L(y, \hat{y}) = (y - \hat{y})^2\)</span>, then the <strong>Mean Squared Error (MSE)</strong> is precisely the <strong>Empirical Risk</strong> we are trying to minimize:</p>
+<div class="math notranslate nohighlight">
+\[R_{emp}(h) = \frac{1}{N}\sum_{i=1}^N (y_i - h(x_i))^2 = \text{MSE}\]</div>
+<p>This leads to a critical question: is a model with a very low MSE on our <em>training data</em> a good model? Not necessarily.</p>
+</section>
+<section id="overfitting-and-underfitting">
+<h3>Overfitting and Underfitting<a class="headerlink" href="#overfitting-and-underfitting" title="Permalink to this heading">#</a></h3>
+<p>This brings us to the central challenge of predictive modeling. The ERM principle tells us to find the model <span class="math notranslate nohighlight">\(\hat h\)</span> that <em>best</em> fits the training data. But what is the risk of doing this?</p>
+<section id="overfitting">
+<h4>Overfitting<a class="headerlink" href="#overfitting" title="Permalink to this heading">#</a></h4>
+<p>This is the single biggest “pitfall” in machine learning. It happens when a model becomes <em>too</em> complex and becomes <em>too good</em> at minimizing the empirical risk. It ends up “memorizing” the training data, including its random noise and quirks.</p>
+<p>As an example, consider the following model:</p>
+<div class="math notranslate nohighlight">
+\[\hat h(x) = y \text{ s.t. } (x,y) \in \text{TR}\]</div>
+<p>The hypothesis <span class="math notranslate nohighlight">\(\hat h\)</span> defined above will lead to an empirical risk equal to <span class="math notranslate nohighlight">\(0\)</span> as long as the loss function is defined in such a way that <span class="math notranslate nohighlight">\(L(y,y)=0\)</span>. Indeed:</p>
+<div class="math notranslate nohighlight">
+\[R_{emp}(\hat{h}(x)) = \frac{1}{N}\sum_{i=1}^N L(y,y) = 0\]</div>
+<p>However, the function above will not be defined for any value:</p>
+<div class="math notranslate nohighlight">
+\[x' \in \mathcal{X} \text{ s.t. } (x',y) \notin \text{ TR } \forall y \in \mathcal{Y}\]</div>
+<p>Since <strong>we expect the training set to be a sample from the distribution <span class="math notranslate nohighlight">\(P(X,Y)\)</span>, we expect such values <span class="math notranslate nohighlight">\(x'\)</span> to exist</strong> (otherwise the training <em>is</em> the population, which is in general not true).</p>
+</section>
+<section id="underfitting">
+<h4>Underfitting<a class="headerlink" href="#underfitting" title="Permalink to this heading">#</a></h4>
+<p>The phenomenon of overfitting is often related to the <strong>capacity of the model</strong>. A model with a <strong>large capacity</strong> can represent very complex functions <span class="math notranslate nohighlight">\(h\)</span> and result in overfitting, while a model with a <strong>small capacity</strong> can represent relatively simple functions <span class="math notranslate nohighlight">\(h\)</span>, making overfitting harder, but possibly resulting in an <strong>underfitting model</strong>, i.e., a model which is too simple, and as a result cannot reach a low empirical risk.</p>
+<p>This is best seen with the example below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2bedabca34166638e3ec9619b8ab2ffda32849081534633614aeab7581b33964.png" src="../_images/2bedabca34166638e3ec9619b8ab2ffda32849081534633614aeab7581b33964.png" />
+</div>
+</div>
+<p>The example shows the fit of three functions to the data. As can be noted:</p>
+<ul class="simple">
+<li><p>A line will lead to <strong>underfitting</strong>. In this case, the model is too simple to model the data well, so the empirical risk will be large;</p></li>
+<li><p>A polynomial of high degree <span class="math notranslate nohighlight">\(5\)</span> (right) will minimize the empirical risk but find a complex model which will not describe well data which has not been seen at training time. This is a case of <strong>overfitting</strong>. The model is trying to model the idiosyncrasies of the training set (which can be noisy) finding a solution which will work only on the data at hand;</p></li>
+<li><p>An appropriate degree (center) will lead to a model with an appropriate capacity. The empirical risk is minimized and the solution also works with unseen data.</p></li>
+</ul>
+<blockquote>
+<div><p>Note that this is another instance of the <strong>bias-variance</strong> tradeoff. Complex models (right) have a large variance and a large bias: small variations of the training set are modeled and can lead to wrong solutions. Models that are too simple  (left) have a low variance, but can still have a large bias (the model is too simple and the solution is not good). Choosing an appropriate capacity (in this case by choosing an appropriate polynomial degree) leads to a good trade-off between variance and bias.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="the-bias-variance-tradeoff">
+<h3>The Bias-Variance Tradeoff<a class="headerlink" href="#the-bias-variance-tradeoff" title="Permalink to this heading">#</a></h3>
+<p>This choice of capacity of a model introduces one of the most important theoretical concepts in machine learning: the <strong>Bias-Variance Tradeoff</strong>.</p>
+<p>To understand this, let’s recall our goal. We are trying to build a model, <span class="math notranslate nohighlight">\(\hat{f}\)</span>, that best estimates the true (but unknown) function <span class="math notranslate nohighlight">\(f\)</span> from our general formula, <span class="math notranslate nohighlight">\(Y = f(X) + \epsilon\)</span>.</p>
+<p>We just defined our metric for success in regression: the <strong>Mean Squared Error (MSE)</strong>. We want to find a model <span class="math notranslate nohighlight">\(\hat{f}\)</span> that has the lowest possible MSE, <em>especially on new, unseen test data</em>.</p>
+<p>It can be mathematically proven that the <strong>expected test MSE</strong> at a given point <span class="math notranslate nohighlight">\(x_0\)</span> can be decomposed into three fundamental quantities:</p>
+<div class="math notranslate nohighlight">
+\[E[(y_0 - \hat{f}(x_0))^2] = [\text{Bias}(\hat{f}(x_0))]^2 + \text{Var}(\hat{f}(x_0)) + \text{Var}(\epsilon)\]</div>
+<p>This formula is the key to understanding model performance. It tells us that the total expected error of our model is the sum of three parts:</p>
+<ol class="arabic simple">
+<li><p><strong>The Squared Bias (<span class="math notranslate nohighlight">\([\text{Bias}(\hat{f}(x_0))]^2\)</span>)</strong></p>
+<ul class="simple">
+<li><p>This is the error from <strong>“Underfitting”</strong>.</p></li>
+<li><p><strong>Formally</strong>, Bias is the error introduced by approximating a real-life, complex function <span class="math notranslate nohighlight">\(f\)</span> with a much simpler model <span class="math notranslate nohighlight">\(\hat{f}\)</span>. It’s the difference between our model’s <em>average</em> prediction and the <em>true</em> value.</p></li>
+<li><p><strong>Conceptually</strong>, a high-bias model is “stubborn” and “stuck” in its simple assumptions. <strong>Low-capacity</strong> models (like simple linear regression) have <strong>High Bias</strong>. They miss the true pattern and have a high error on <em>both</em> the training and test sets.</p></li>
+</ul>
+</li>
+<li><p><strong>The Variance (<span class="math notranslate nohighlight">\(\text{Var}(\hat{f}(x_0))\)</span>)</strong></p>
+<ul class="simple">
+<li><p>This is the error from <strong>“Overfitting”</strong>.</p></li>
+<li><p><strong>Formally</strong>, Variance refers to the amount by which our model <span class="math notranslate nohighlight">\(\hat{f}\)</span> would change if we estimated it using a <em>different</em> training dataset.</p></li>
+<li><p><strong>Conceptually</strong>, a high-variance model is “nervous” or “unstable.” It is <em>too</em> sensitive to the specific training data it saw. <strong>High-capacity</strong> models (like a high-degree polynomial) have <strong>High Variance</strong>. They fit the training data’s noise perfectly (low training error) but fail to generalize to the test set (high test error).</p></li>
+</ul>
+</li>
+<li><p><strong>The Irreducible Error (<span class="math notranslate nohighlight">\(\text{Var}(\epsilon)\)</span>)</strong></p>
+<ul class="simple">
+<li><p>This is the variance of the error term <span class="math notranslate nohighlight">\(\epsilon\)</span> from our original formula <span class="math notranslate nohighlight">\(Y = f(X) + \epsilon\)</span>.</p></li>
+<li><p><strong>Conceptually</strong>, this is the noise that exists in the real-world data itself. It’s the part of the error that cannot be reduced by <em>any</em> model, no matter how good it is. It represents the upper limit on our model’s accuracy.</p></li>
+</ul>
+</li>
+</ol>
+<section id="the-tradeoff">
+<h4>The Tradeoff<a class="headerlink" href="#the-tradeoff" title="Permalink to this heading">#</a></h4>
+<p>This decomposition shows the fundamental tradeoff:</p>
+<ul class="simple">
+<li><p>As we <strong>increase</strong> model capacity (e.g., add more polynomial terms):</p>
+<ul>
+<li><p>The model becomes more flexible, so <strong>Bias decreases</strong> (good!).</p></li>
+<li><p>The model becomes more sensitive to the training data, so <strong>Variance increases</strong> (bad!).</p></li>
+</ul>
+</li>
+<li><p>As we <strong>decrease</strong> model capacity (e.g., simplify the model):</p>
+<ul>
+<li><p>The model’s assumptions become too strong, so <strong>Bias increases</strong> (bad!).</p></li>
+<li><p>The model becomes more stable and less sensitive to noise, so <strong>Variance decreases</strong> (good!).</p></li>
+</ul>
+</li>
+</ul>
+<p>Our goal as data scientists is not to minimize bias or variance alone, but to find the <strong>“sweet spot”</strong>—the optimal model capacity that minimizes the <strong>total error</strong>.</p>
+<p>This leads to the next logical question: How do we <em>find</em> this sweet spot? In practice, there are different ways to find this trade-off. In the example above, the degree of the polynomial can be used to reduce the capacity of the model. Another approach is to use <strong>regularization techniques</strong>, which we will see later in the course.</p>
+<p>This is shown in the figure below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/ee2dd16c43fe4957c8df2d1fe6c437861bdeb60c25340ead39ca6c19b1f1f901.png" src="../_images/ee2dd16c43fe4957c8df2d1fe6c437861bdeb60c25340ead39ca6c19b1f1f901.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="parameters-vs-hyperparameters">
+<h3>Parameters vs. Hyperparameters<a class="headerlink" href="#parameters-vs-hyperparameters" title="Permalink to this heading">#</a></h3>
+<p>To control model capacity and prevent overfitting, we must distinguish between two types of parameters:</p>
+<ol class="arabic simple">
+<li><p><strong>Model Parameters:</strong> These are the values the model <em>learns</em> from the data during the training process (i.e., through Empirical Risk Minimization). They are <em>internal</em> to the model and are the direct output of the learning algorithm.</p>
+<ul class="simple">
+<li><p><strong>Examples:</strong> The coefficients <span class="math notranslate nohighlight">\(\beta_0, \beta_1, \ldots\)</span> in a linear regression; the weights in a neural network.</p></li>
+</ul>
+</li>
+<li><p><strong>Hyperparameters:</strong> These are the configuration settings for the learning algorithm itself. They are <em>external</em> to the model and must be set <em>before</em> the training process begins. They act as “knobs” that we use to control the model’s capacity and the learning process.</p>
+<ul class="simple">
+<li><p><strong>Examples:</strong> The degree <code class="docutils literal notranslate"><span class="pre">k</span></code> in a polynomial regression (which directly controls capacity); the <span class="math notranslate nohighlight">\(\lambda\)</span> regularization parameter in Ridge or Lasso regression (which we will see later); the number of clusters <code class="docutils literal notranslate"><span class="pre">k</span></code> in K-Means clustering.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>The central challenge of model selection is this:</strong> The learning algorithm (ERM) can find the best <em>model parameters</em> for a <em>given</em> set of hyperparameters, but it cannot choose the best <em>hyperparameters</em> for you.</p>
+<p>For example, ERM can find the best 10th-degree polynomial, and it can find the best 2nd-degree polynomial. But it cannot tell you whether the 10th-degree or the 2nd-degree polynomial is the better <em>choice</em>. Choosing this <code class="docutils literal notranslate"><span class="pre">k</span></code> (the hyperparameter) is our job, and it’s how we find the sweet spot in the bias-variance tradeoff.</p>
+</section>
+</section>
+<section id="how-do-we-find-the-best-model-model-selection">
+<h2>How Do We Find the Best Model? (Model Selection)<a class="headerlink" href="#how-do-we-find-the-best-model-model-selection" title="Permalink to this heading">#</a></h2>
+<p>We have established that our central challenge is the bias-variance tradeoff. We must find a model with the “sweet spot” of capacity to avoid both underfitting (high bias) and overfitting (high variance).</p>
+<p>The process of finding this optimal model is called <strong>model selection</strong>. The method we use depends directly on our primary goal: <strong>Understanding</strong> or <strong>Predicting</strong>.</p>
+<section id="approach-1-statistical-selection-for-understanding">
+<h3>Approach 1: Statistical Selection (for Understanding)<a class="headerlink" href="#approach-1-statistical-selection-for-understanding" title="Permalink to this heading">#</a></h3>
+<p>When our main goal is <strong>inference</strong> (the “glass box” approach), we select a model based on its ability to best explain the data we have, often favoring simplicity.</p>
+<p>This approach typically uses the <strong>entire dataset</strong> at once. We are not trying to predict the “future,” but to find the most trustworthy explanation for the data we’ve observed.</p>
+<p>We use statistical measures that balance model fit with model complexity:</p>
+<ul class="simple">
+<li><p><strong>p-values:</strong> We test the significance of each variable and may remove those with high p-values (i.e., those that are likely just noise).</p></li>
+<li><p><strong>Adjusted R²:</strong> This metric measures goodness-of-fit but penalizes the model for having extra variables that don’t add real explanatory power.</p></li>
+</ul>
+</section>
+<section id="approach-2-predictive-selection-for-predicting">
+<h3>Approach 2: Predictive Selection (for Predicting)<a class="headerlink" href="#approach-2-predictive-selection-for-predicting" title="Permalink to this heading">#</a></h3>
+<p>When our main goal is <strong>prediction</strong> (the “black box” approach), our selection criteria change entirely. We no longer care about p-values. We only care about one thing: performance on unseen data.</p>
+<blockquote>
+<div><p><strong>The Golden Rule of Predictive Modeling:</strong> The performance of a model on the data it was trained on is <em>irrelevant</em>. The <em>only</em> measure that matters is its performance on new, unseen data.</p>
+</div></blockquote>
+<p>We must find a way to <em>measure</em> a model’s performance on data it has never seen. Since we don’t have a time machine, we simulate the future by splitting our existing data.</p>
+<p>This is often needed when models are so complex that it is hard to even compute p-values or perform statistical tests.</p>
+<p>There are a series of empirical approaches in this category, which we explore in the next sections.</p>
+<p>However, before to proceed, we should point out that, while we could evaluate the performance of a model with the <strong>empirical risk</strong>, in practice, it is common to use <strong>performance measures</strong> (the higher the better) or <strong>error measures</strong> (the lower the better) which may be different from the <strong>loss function chosen to train the algorithm</strong>. This is due to the fact that loss functions often need to have some properties to facilitate learning, so they can represent an <strong>approximation of or a deviation from our true objective measure of performance</strong>. We will see more in details the main performance measures later, but for the moment we will note that we will evaluate models using a given performance measure:</p>
+<div class="math notranslate nohighlight">
+\[p: \mathcal{Y}^N \times \mathcal{Y}^N \to \Re\]</div>
+<p>where <span class="math notranslate nohighlight">\(Y=\{y_i | (x_i,y_i) \in S \}_{i=1}^N\)</span> is a set of ground truth values from a set of data <span class="math notranslate nohighlight">\(S\)</span> and <span class="math notranslate nohighlight">\(\hat Y = \{h(x_i) | (x_i,y_i) \in S \}_{i=1}^N\)</span> is the set of corresponding predictions. Note that, given the definition above, the empirical risk can be seen as a performance measure, but we need not restrict to the empirical risk to evaluate predictive models.</p>
+<section id="holdout-validation-or-single-split">
+<h4>Holdout Validation or Single Split<a class="headerlink" href="#holdout-validation-or-single-split" title="Permalink to this heading">#</a></h4>
+<p>The simplest form of cross-validation is the holdout test. In this case, the initial set of data is split into two different sets: a training set, which will be used to optimize the model (e.g., with empirical risk minimization) and a test set, which is used to evaluate the performance of the model. The act of optimizing the model on the training set is often called <strong>training</strong>, while the act of evaluating the performance of the model on the test set is called <strong>testing</strong>. This approach <strong>pretends that the test data is not available at training time and only uses it to evaluate performance</strong>.</p>
+<p>The <strong>rule number one</strong> when using this technique is <strong>to avoid in any way to choose any characteristic of the model based on the training data</strong>. Indeed, if we did so, we could end up in some form of unmeasurable overfitting. To make sure that both the training and test set are i.i.d., before the split, the data is <strong>randomly shuffled</strong>.</p>
+<p>Also, since training data is usually precious and datasets are often not large enough, it is common to split the data asymmetrically, choosing <span class="math notranslate nohighlight">\(70-80\%\)</span> of the data for training and <span class="math notranslate nohighlight">\(20-30\%\)</span> of the data for testing.</p>
+<p>The figure below illustrates the splitting process:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/8637e523a9333e0d0998c261b01f57d962aff845d4ef98dbc7f7ca4a57ca7586.png" src="../_images/8637e523a9333e0d0998c261b01f57d962aff845d4ef98dbc7f7ca4a57ca7586.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="k-fold-cross-validation">
+<h3>K-Fold Cross-Validation<a class="headerlink" href="#k-fold-cross-validation" title="Permalink to this heading">#</a></h3>
+<p>When the dataset is very small, we may not want to sacrifice a part of it for testing only as this may lead to a biased model. Also, we should note that a small test set could lead to a biased estimation of the model performance. In these cases, rather than randomly splitting the data into two parts, we randomly split it into <span class="math notranslate nohighlight">\(K\)</span> different parts, which will be called <strong>folds</strong>.</p>
+<p>We then perform training and testing <span class="math notranslate nohighlight">\(K\)</span> times, each time using fold <span class="math notranslate nohighlight">\(i\)</span> as the test set, and the remaining folds as the training set. The final model performance is obtained by averaging the performance scores computed in each iteration. Note that the obtained performance is unbiased, as each number in the final average is computed on data which has not been seen during training.</p>
+<p>The figure below illustrates the case of a 4-fold cross-validation.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4340330438b23a758ae51cce7aa5bac4a20019bcb7115f23bce48e1ac3c58b71.png" src="../_images/4340330438b23a758ae51cce7aa5bac4a20019bcb7115f23bce48e1ac3c58b71.png" />
+</div>
+</div>
+<p>The K-Fold cross validation has the advantage of allowing to validate the model without throwing away a significant part of the data, but it is practically feasible only when the training procedure is not too computationally expensive. Indeed, if training a model takes one week, a K-Fold validation will typically require four weeks.</p>
+</section>
+<section id="leave-one-out-cross-validation">
+<h3>Leave-One-Out Cross-Validation<a class="headerlink" href="#leave-one-out-cross-validation" title="Permalink to this heading">#</a></h3>
+<p>In leave-one-out cross-validation, the validation stage is performed in <span class="math notranslate nohighlight">\(N\)</span> iterations, where <span class="math notranslate nohighlight">\(N\)</span> is the number of elements in the dataset. At the <span class="math notranslate nohighlight">\(i^{th}\)</span> iteration, the model is trained on all data points except <span class="math notranslate nohighlight">\((x_i,y_i)\)</span> and tested on <span class="math notranslate nohighlight">\((x_i,y_i)\)</span>. The final performance is obtained by averaging the performance scores obtained at each iterations. Note that this is the same as K-Fold cross-validation with <span class="math notranslate nohighlight">\(K=N\)</span>. The figure below illustrates the process:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/2365ac6838e5e65d03eb2f9df18e1b7728b0bb54d9ade121c92426ccfad5a2d0.png" src="../_images/2365ac6838e5e65d03eb2f9df18e1b7728b0bb54d9ade121c92426ccfad5a2d0.png" />
+</div>
+</div>
+<p>This approach is useful when the dataset is extremely small, but, similarly to K-Fold cross-validation, it can increase the computation time by a large margin.</p>
+</section>
+<section id="model-selection-and-hyperparameter-optimization">
+<h3>Model Selection and Hyperparameter Optimization<a class="headerlink" href="#model-selection-and-hyperparameter-optimization" title="Permalink to this heading">#</a></h3>
+<p>Many algorithms have some parameters which are not explicitly part of the final model <span class="math notranslate nohighlight">\(h\)</span>, but they need to be set in order to solve the optimization problem. <strong>For example, in a ridge or lasso regressor, the parameter <span class="math notranslate nohighlight">\(\lambda\)</span> is used to control the amount of regularization during the learning process, however, the final parameter is not part of the model and is not automatically found during the optimization process</strong>.</p>
+<p>Hyperparameters are usually found using grid searches: we train models using different values of the hyperparameters and choose the model which performs best. However, <strong>caution should be taken when hyperparameters are selected with grid search</strong>.</p>
+<p>Recall that <strong>we are not allowed to make any choice on the final model using the test set</strong>. Indeed, if we did so, we may incur in a form of overfitting which we would not be able to measure. For instance, we can choose a given parameter which works well only for that specific test set. How can we be sure that performance will be good when new data is analyzed?</p>
+<p>To avoid this problem, we should work with three different sets of data: a <strong>training set</strong>, a <strong>validation set</strong>, and a <strong>test set</strong>. We will use the training set to train the model, the validation set to choose the hyperparameters and the test set to test the final performance. This is done by training different models on the test set, choosing the hyperparameter values leading to best values on the validation set, and then re-training the model on the training set (or on the union of training and validation set) to final test on the test set.</p>
+<p>The most common scheme is to use a fixed split with a <span class="math notranslate nohighlight">\(60:20:20\)</span> ratio, as shown in the following:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/3904df86407cac19ceec8e3d1cf4797c4e408fb82c8dc577af05ad92e7f41a98.png" src="../_images/3904df86407cac19ceec8e3d1cf4797c4e408fb82c8dc577af05ad92e7f41a98.png" />
+</div>
+</div>
+<p>However, other combinations are possible. An approach which often used when the dataset is small is a follows:</p>
+<ul class="simple">
+<li><p>The dataset is split into a training and test set;</p></li>
+<li><p>Hyperparameters are optimized using cross-validation on the training set - this consists in executing different cross-validations with different hyperparameter values - then the parameters achieving the best performance are chosen;</p></li>
+<li><p>Once the best hyperparameters are found, the model is re-trained on the full training set and tested on the test set.</p></li>
+</ul>
+<p>This is illustrated in the following figure:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/dd2343429f94491f3b81e2ca0decaec0e180d64fa56f1d22c24e1a0ce9a54ad2.png" src="../_images/dd2343429f94491f3b81e2ca0decaec0e180d64fa56f1d22c24e1a0ce9a54ad2.png" />
+</div>
+</div>
+<p>Again, if the dataset is large enough and the training procedure is computationally expensive, it is common to use a fixed split as illustrated above.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library allows to easily perform hyperparameter search using cross-validation for different algorithms.</p>
+<p>More in general, these techniques can be used to compare different models and select the best performing one.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chapter 2 of James, Gareth Gareth Michael. An introduction to statistical learning: with applications in Python, 2023. <a class="reference external" href="https://www.statlearning.com">https://www.statlearning.com</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Empirical_risk_minimization">https://en.wikipedia.org/wiki/Empirical_risk_minimization</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/cross_validation.html">https://scikit-learn.org/stable/modules/cross_validation.html</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="07_storytelling_with_data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Storytelling with Data</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-model">What is a Model?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-model-wrong">Why is this model “wrong”?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#why-is-this-model-useful">Why is this model “useful”?</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-models">Predictive Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-main-goal-understanding-vs-predicting">The Main Goal: Understanding vs. Predicting</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-inference">Understanding (Inference)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-prediction">Predicting (Prediction)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-best-of-both-worlds-where-goals-overlap">The Best of Both Worlds: Where Goals Overlap</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-two-approaches-statistics-vs-machine-learning">The Two Approaches: Statistics vs. Machine Learning</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-statistical-approach-the-glass-box">The Statistical Approach (The “Glass Box”)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-machine-learning-approach-the-black-box">The Machine Learning Approach (The “Black Box”)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-model-complexity-interpretability-trade-off">The Model Complexity - Interpretability Trade-off</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-landscape">The Problem Landscape</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-learning-with-an-answer-key">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-predicting-a-number">1. Regression (Predicting a Number)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-predicting-a-label">2. Classification (Predicting a Label)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">The Problem Landscape</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Supervised Learning: Learning with an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1. Regression (Predicting a Number)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">2. Classification (Predicting a Label)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">1. Clustering (Finding Groups)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-vs-non-parametric-models">Parametric vs. Non-Parametric Models</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-models-the-fixed-approach">Parametric Models: The “Fixed” Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-models-the-flexible-approach">Non-Parametric Models: The “Flexible” Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-this-matters-the-bias-variance-connection">Why This Matters: The Bias-Variance Connection</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-learning-principle">The “Learning” Principle</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formal-problem-formulation">Formal Problem Formulation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-1-medical-diagnosis">Example 1: Medical Diagnosis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#example-2-simple-spam-filter">Example 2: Simple Spam Filter</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-what-the-model-learns">Parameters: What the Model Learns</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-learning-process-statistical-learning-and-risk">The Learning Process: Statistical Learning and Risk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#empirical-risk-minimization-erm-the-practical-method">Empirical Risk Minimization (ERM): The Practical Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-capacity">Model Capacity</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#assessing-model-accuracy">Assessing Model Accuracy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-the-quality-of-fit">Measuring the quality of fit</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">Overfitting and Underfitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting">Overfitting</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#underfitting">Underfitting</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-tradeoff">The Bias-Variance Tradeoff</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-tradeoff">The Tradeoff</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-vs-hyperparameters">Parameters vs. Hyperparameters</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#how-do-we-find-the-best-model-model-selection">How Do We Find the Best Model? (Model Selection)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach-1-statistical-selection-for-understanding">Approach 1: Statistical Selection (for Understanding)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach-2-predictive-selection-for-predicting">Approach 2: Predictive Selection (for Predicting)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#holdout-validation-or-single-split">Holdout Validation or Single Split</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-fold-cross-validation">K-Fold Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#leave-one-out-cross-validation">Leave-One-Out Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-selection-and-hyperparameter-optimization">Model Selection and Hyperparameter Optimization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
