@@ -68,6 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Beyond Linear Regression" href="10_beyond_linear_regression.html" />
     <link rel="prev" title="Introduction to Predictive Analysis" href="08_predictive_modeling.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -211,6 +212,10 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
 </ul>
 
     </div>
@@ -459,12 +464,6 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-r-2-statistic">2. The <span class="math notranslate nohighlight">\(R^2\)</span> Statistic</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-prediction-test-set-error">Metrics for Prediction (Test Set Error)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">1. Mean Squared Error (MSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">2. Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">3. Mean Absolute Error (MAE)</a></li>
-</ul>
-</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-examples">Visual Examples</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-checking-model-validity">Diagnostic Plots: Checking Model Validity</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-residuals-vs-fitted-plot">1. The Residuals vs. Fitted Plot</a></li>
@@ -488,24 +487,31 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictors-with-more-than-two-levels">Predictors with More than Two Levels</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-python">Linear Regression in Python</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Linear Regression</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-top-table-model-metadata">Part 1: The Top Table (Model Metadata)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-the-coefficients-table-the-core">Part 2: The Coefficients Table (The Core)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-coefficients">Interpreting the Coefficients</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-significance-p-value">Interpreting the Significance (p-value)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-the-bottom-table-residual-diagnostics">Part 3: The Bottom Table (Residual Diagnostics)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-diagnostics">Residual Diagnostics</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-diagnostic-plots">Interpreting the Diagnostic Plots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-slr-summary">Interpreting the SLR Summary</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#slr-diagnostic-analysis">SLR Diagnostic Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Multiple Linear Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-summary-table-mlr">Interpreting the Summary Table (MLR)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-selection">Variable Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-linear-regression-the-full-model">Multiple Linear Regression - The “Full” Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-categorical-variables-c-origin">Handling Categorical Variables: <code class="docutils literal notranslate"><span class="pre">C(origin)</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-full-model">Interpreting the Full Model</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-elimination">Backward Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-model-interpretation">Final Model Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-diagnostic-check">Final Diagnostic Check</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -1007,47 +1013,12 @@ $<span class="math notranslate nohighlight">\(TSS = \sum_{i=1}^n(y_i-\overline y
 <p>For simple linear regression (one <span class="math notranslate nohighlight">\(X\)</span>), <span class="math notranslate nohighlight">\(R^2\)</span> is also equal to the square of the Pearson correlation coefficient: <span class="math notranslate nohighlight">\(R^2 = \rho^2\)</span>.</p>
 </section>
 </section>
-<section id="metrics-for-prediction-test-set-error">
-<h3>Metrics for Prediction (Test Set Error)<a class="headerlink" href="#metrics-for-prediction-test-set-error" title="Permalink to this heading">#</a></h3>
-<p>When our goal is <strong>prediction</strong> (the ML approach), we do not care about <span class="math notranslate nohighlight">\(R^2\)</span> or RSE on the training data. We <em>only</em> care about the model’s performance on <strong>new, unseen data</strong> (the <strong>Test Set</strong>).</p>
-<p>The following metrics are used to evaluate the model on the test set. (We will use <span class="math notranslate nohighlight">\(m\)</span> to denote the number of samples in the test set).</p>
-<section id="mean-squared-error-mse">
-<h4>1. Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h4>
-<p>The MSE is the average of the squared errors on the test set. It is the “predictive” version of the <span class="math notranslate nohighlight">\(R_{emp}\)</span> (Empirical Risk) we saw earlier.</p>
-<div class="math notranslate nohighlight">
-\[MSE_{test} = \frac{1}{m}\sum_{j=1}^{m} (y_j - \hat{y}_j)^2\]</div>
-<ul class="simple">
-<li><p><strong>Interpretation:</strong> This is an <strong>error measure</strong>, so a good model has a <strong>small MSE</strong>.</p></li>
-<li><p><strong>Problem:</strong> The units are <strong>squared</strong> (e.g., if <span class="math notranslate nohighlight">\(y\)</span> is in meters, MSE is in square-meters). This is not intuitive.</p></li>
-</ul>
-</section>
-<section id="root-mean-squared-error-rmse">
-<h4>2. Root Mean Squared Error (RMSE)<a class="headerlink" href="#root-mean-squared-error-rmse" title="Permalink to this heading">#</a></h4>
-<p>The RMSE is the fix for the MSE’s unit problem and is the most common metric for predictive regression. It is simply the square root of the MSE.</p>
-<div class="math notranslate nohighlight">
-\[RMSE_{test} = \sqrt{MSE_{test}} = \sqrt{\frac{1}{m}\sum_{j=1}^{m} (y_j - \hat{y}_j)^2}\]</div>
-<ul class="simple">
-<li><p><strong>Interpretation:</strong> RMSE is in the <strong>same units as <span class="math notranslate nohighlight">\(Y\)</span></strong> (e.g., meters). It can be read as “On average, our model’s predictions on the test set are wrong by about [RMSE value].”</p></li>
-<li><p><strong>Key Property:</strong> Because it squares errors before averaging, the RMSE <strong>penalizes large errors</strong> (outliers) more heavily than small errors.</p></li>
-</ul>
-</section>
-<section id="mean-absolute-error-mae">
-<h4>3. Mean Absolute Error (MAE)<a class="headerlink" href="#mean-absolute-error-mae" title="Permalink to this heading">#</a></h4>
-<p>The MAE is an alternative to RMSE that is also highly interpretable.</p>
-<div class="math notranslate nohighlight">
-\[MAE_{test} = \frac{1}{m}\sum_{j=1}^{m} |y_j - \hat{y}_j|\]</div>
-<ul class="simple">
-<li><p><strong>Interpretation:</strong> MAE is also in the <strong>same units as <span class="math notranslate nohighlight">\(Y\)</span></strong>. It measures the “average absolute error” of the predictions.</p></li>
-<li><p><strong>Key Property:</strong> Unlike RMSE, MAE does <em>not</em> disproportionately penalize large errors. It is <strong>more robust to outliers</strong>.</p></li>
-</ul>
-</section>
-</section>
 <section id="visual-examples">
 <h3>Visual Examples<a class="headerlink" href="#visual-examples" title="Permalink to this heading">#</a></h3>
 <p>The plot below shows examples of linear regression fits with the different evaluation measures that we saw:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/6f6c3e5e0e732354712b7b5c96d64a51e934ce283389c5430447a75cb4737518.png" src="../_images/6f6c3e5e0e732354712b7b5c96d64a51e934ce283389c5430447a75cb4737518.png" />
+<img alt="../_images/47e984e34f0bf8ee3b42a6b036ab500198e03aa6a7d354387b3988d0c8dd9240.png" src="../_images/47e984e34f0bf8ee3b42a6b036ab500198e03aa6a7d354387b3988d0c8dd9240.png" />
 </div>
 </div>
 </section>
@@ -1724,15 +1695,17 @@ fueltype: [&#39;gas&#39; &#39;diesel&#39;]
 <p>As we can see, we have added different correlation coefficients in order to deal with the different levels. Not all predictors have a low p-value, so we can remove those with backward elimination. We will see some more examples in the laboratory.</p>
 </section>
 </section>
-<section id="linear-regression-in-practice">
-<h2>Linear Regression in Practice<a class="headerlink" href="#linear-regression-in-practice" title="Permalink to this heading">#</a></h2>
-<p>We will now see an example of how to compute linear regression in Python. We will again consider the MPG dataset.</p>
-<p>We’ll load the “mpg” dataset from Seaborn. As in the previous example, the <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> column has missing values (marked as <code class="docutils literal notranslate"><span class="pre">?</span></code> in the original file, which <code class="docutils literal notranslate"><span class="pre">pandas</span></code> reads as <code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">NaN</span></code> after coercion) and is read as an <code class="docutils literal notranslate"><span class="pre">object</span></code> type.</p>
-<p>We will perform the same cleaning steps:</p>
+<section id="linear-regression-in-python">
+<h2>Linear Regression in Python<a class="headerlink" href="#linear-regression-in-python" title="Permalink to this heading">#</a></h2>
+<p>In this notebook, we will perform a complete statistical linear regression analysis. Our goal is <strong>understanding</strong> and <strong>inference</strong>. We want to find a model that is not only accurate but also <strong>parsimonious</strong> (simple) and <strong>statistically valid</strong>.</p>
+<p>We will use the “Auto MPG” dataset and the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> library.</p>
+<p>Our process will be:</p>
 <ol class="arabic simple">
-<li><p>Drop the <code class="docutils literal notranslate"><span class="pre">name</span></code> column (a unique identifier).</p></li>
-<li><p>Convert <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> to a numeric type (errors will become <code class="docutils literal notranslate"><span class="pre">NaN</span></code>).</p></li>
-<li><p>Drop the rows with <code class="docutils literal notranslate"><span class="pre">NaN</span></code> values.</p></li>
+<li><p><strong>Simple Linear Regression (SLR):</strong> Fit a simple model and diagnose its problems.</p></li>
+<li><p><strong>Multiple Linear Regression (MLR):</strong> Fit a “full” model with all potential predictors.</p></li>
+<li><p><strong>Variable Selection:</strong> Use <strong>Backward Elimination</strong> based on p-values to simplify the model.</p></li>
+<li><p><strong>Final Model Interpretation:</strong> Interpret the coefficients of our final, parsimonious model.</p></li>
+<li><p><strong>Diagnostic Plots:</strong> Check the final model’s assumptions to ensure our conclusions are reliable.</p></li>
 </ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1741,24 +1714,25 @@ fueltype: [&#39;gas&#39; &#39;diesel&#39;]
 <span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="c1"># Import statsmodels.</span>
+<span class="c1"># Import statsmodels</span>
 <span class="c1"># smf allows us to use the &quot;formula API&quot; (e.g., &#39;y ~ x&#39;)</span>
 <span class="c1"># sm gives us access to more functions, like diagnostic plots</span>
 <span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
 <span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
 
-<span class="c1"># Load the dataset</span>
+
+<span class="c1"># Load and Clean the Data</span>
 <span class="n">mpg</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;mpg&#39;</span><span class="p">)</span>
 
 <span class="c1"># Clean the data</span>
 <span class="n">mpg</span> <span class="o">=</span> <span class="n">mpg</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">mpg</span><span class="p">[</span><span class="s1">&#39;horsepower&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span><span class="n">mpg</span><span class="p">[</span><span class="s1">&#39;horsepower&#39;</span><span class="p">],</span> <span class="n">errors</span><span class="o">=</span><span class="s1">&#39;coerce&#39;</span><span class="p">)</span>
 
-<span class="c1"># Drop rows with missing values</span>
-<span class="n">mpg</span> <span class="o">=</span> <span class="n">mpg</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="c1"># Drop rows with missing values for this exercise</span>
+<span class="n">mpg_clean</span> <span class="o">=</span> <span class="n">mpg</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of cleaned dataset: </span><span class="si">{</span><span class="n">mpg</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">mpg</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of cleaned dataset: </span><span class="si">{</span><span class="n">mpg_clean</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">mpg_clean</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -1856,14 +1830,13 @@ fueltype: [&#39;gas&#39; &#39;diesel&#39;]
 </div>
 <section id="id1">
 <h3>Simple Linear Regression<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
-<p>Let’s start with our first question: <strong>“Is there a statistically significant relationship between <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code>?”</strong></p>
-<p>We use the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> formula API (<code class="docutils literal notranslate"><span class="pre">smf.ols</span></code>) to create a model. The formula <code class="docutils literal notranslate"><span class="pre">&quot;mpg</span> <span class="pre">~</span> <span class="pre">horsepower&quot;</span></code> is read as “<code class="docutils literal notranslate"><span class="pre">mpg</span></code> <em>as a function of</em> <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>.” <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> automatically adds an intercept (<span class="math notranslate nohighlight">\(\beta_0\)</span>) for us.</p>
-<p>Unlike <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>, we <strong>do not</strong> create a <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> here because our goal is not a test set score, but the interpretation of parameters calculated on the entire data sample.</p>
+<p>Let’s start with the simplest model: <strong>“Can <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> predict <code class="docutils literal notranslate"><span class="pre">mpg</span></code>?”</strong></p>
+<p>We use the formula <code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">horsepower</span></code>. <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> automatically adds the intercept (<span class="math notranslate nohighlight">\(\beta_0\)</span>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit the SLR model</span>
 <span class="c1"># OLS stands for &quot;Ordinary Least Squares&quot;</span>
-<span class="n">model_slr</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;mpg ~ horsepower&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">model_slr</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="s1">&#39;mpg ~ horsepower&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg_clean</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
 <span class="c1"># Print the full summary table</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">model_slr</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
@@ -1877,7 +1850,7 @@ Dep. Variable:                    mpg   R-squared:                       0.606
 Model:                            OLS   Adj. R-squared:                  0.605
 Method:                 Least Squares   F-statistic:                     599.7
 Date:                Sat, 01 Nov 2025   Prob (F-statistic):           7.03e-81
-Time:                        10:53:18   Log-Likelihood:                -1178.7
+Time:                        14:43:16   Log-Likelihood:                -1178.7
 No. Observations:                 392   AIC:                             2361.
 Df Residuals:                     390   BIC:                             2369.
 Df Model:                           1                                         
@@ -1963,7 +1936,9 @@ Notes:
 </tr>
 </tbody>
 </table>
-<p><strong>Interpreting the Coefficients:</strong></p>
+</section>
+<section id="interpreting-the-coefficients">
+<h4>Interpreting the Coefficients<a class="headerlink" href="#interpreting-the-coefficients" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">Intercept</span> <span class="pre">(coef)</span></code>:</strong> 39.93. This is our <span class="math notranslate nohighlight">\(\beta_0\)</span>. Theoretically, it’s the predicted value of <code class="docutils literal notranslate"><span class="pre">mpg</span></code> when <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> is 0. (In this context, it has no real practical interpretation, but it’s mathematically necessary).</p></li>
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">horsepower</span> <span class="pre">(coef)</span></code>:</strong> -0.1578. This is our <span class="math notranslate nohighlight">\(\beta_1\)</span>, the slope. It’s the most important part.</p>
@@ -1972,7 +1947,9 @@ Notes:
 </ul>
 </li>
 </ul>
-<p><strong>Interpreting the Significance (p-value):</strong></p>
+</section>
+<section id="interpreting-the-significance-p-value">
+<h4>Interpreting the Significance (p-value)<a class="headerlink" href="#interpreting-the-significance-p-value" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">horsepower</span> <span class="pre">(P&gt;|t|)</span></code>:</strong> This is <code class="docutils literal notranslate"><span class="pre">&lt;</span> <span class="pre">0.001</span></code>. This is the p-value for the null hypothesis <span class="math notranslate nohighlight">\(H_0: \beta_1 = 0\)</span>.</p>
 <ul>
@@ -2003,25 +1980,35 @@ Notes:
 <li><p><strong>Normality:</strong> The residuals should follow a normal distribution.</p></li>
 </ol>
 <p>We use diagnostic plots to check these.</p>
+<section id="interpreting-the-slr-summary">
+<h4>Interpreting the SLR Summary<a class="headerlink" href="#interpreting-the-slr-summary" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Adj.</span> <span class="pre">R-squared</span></code>:</strong> 0.605. <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> alone explains about 60.5% of the variance in <code class="docutils literal notranslate"><span class="pre">mpg</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Prob</span> <span class="pre">(F-statistic)</span></code>:</strong> 7.03e-81. This is nearly zero, so the model is statistically significant (better than just guessing the mean).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horsepower</span> <span class="pre">coef</span></code> (<span class="math notranslate nohighlight">\(\beta_1\)</span>):</strong> -0.1578.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">horsepower</span> <span class="pre">P&gt;|t|</span></code>:</strong> &lt; 0.001. The p-value is tiny, so we are confident there is a real, statistically significant relationship between <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code>.</p></li>
+</ul>
+<p>This looks good, but is the model <em>valid</em>? Let’s check the diagnostic plots.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the &quot;fitted&quot; (predicted) values and the residuals</span>
-<span class="n">fitted_values</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">fittedvalues</span>
-<span class="n">residuals</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">resid</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- SLR Diagnostic Plots ---</span>
+<span class="n">fitted_values_slr</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">fittedvalues</span>
+<span class="n">residuals_slr</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">resid</span>
 
-<span class="c1"># 1. Residuals vs. Fitted Plot (for Linearity and Homoscedasticity)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fitted_values</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuals vs. Fitted Values&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values (Predicted MPG)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
 
-<span class="c1"># 2. Q-Q Plot (for Normality)</span>
-<span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">residuals</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span> <span class="c1"># &#39;s&#39; stands for &#39;standardized&#39; line</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot of Residuals&#39;</span><span class="p">)</span>
+<span class="c1"># 1. Residuals vs. Fitted Plot</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fitted_values_slr</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals_slr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Residuals vs. Fitted (SLR)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values (Predicted MPG)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+
+<span class="c1"># 2. Q-Q Plot</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">residuals_slr</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span> <span class="c1"># &#39;s&#39; = standardized line</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot of Residuals (SLR)&#39;</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -2029,224 +2016,365 @@ Notes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/59081e09f114e326e73e03dd9511ca47b39386554ca7f2b28a246cb9a246f957.png" src="../_images/59081e09f114e326e73e03dd9511ca47b39386554ca7f2b28a246cb9a246f957.png" />
+<img alt="../_images/0e5e9c2189309074f91c0e57be7c6bbf0e8e9eb7d4b38784443ec6d73c0a9968.png" src="../_images/0e5e9c2189309074f91c0e57be7c6bbf0e8e9eb7d4b38784443ec6d73c0a9968.png" />
 </div>
 </div>
-<section id="interpreting-the-diagnostic-plots">
-<h4>Interpreting the Diagnostic Plots<a class="headerlink" href="#interpreting-the-diagnostic-plots" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="slr-diagnostic-analysis">
+<h4>SLR Diagnostic Analysis<a class="headerlink" href="#slr-diagnostic-analysis" title="Permalink to this heading">#</a></h4>
 <ol class="arabic simple">
-<li><p><strong>Residuals vs. Fitted (Left Plot):</strong></p>
+<li><p><strong>Residuals vs. Fitted (Left):</strong> This is a <strong>problem</strong>. The plot shows a clear <strong>“U-shape”</strong> (a non-linear pattern). This means our assumption of a <em>linear</em> relationship is wrong. Our model is <strong>underfitting</strong>.</p></li>
+<li><p><strong>Q-Q Plot (Right):</strong> The residuals also peel away from the line at the tails, suggesting the errors are not perfectly normally distributed.</p></li>
+</ol>
+<p><strong>Conclusion:</strong> The SLR model is simple and significant, but it’s <strong>fundamentally flawed</strong> because it fails the linearity assumption. We need a more complex model.</p>
+</section>
+</section>
+<section id="multiple-linear-regression-the-full-model">
+<h3>Multiple Linear Regression - The “Full” Model<a class="headerlink" href="#multiple-linear-regression-the-full-model" title="Permalink to this heading">#</a></h3>
+<p>Let’s build a “full” model that includes all potential predictors. This will be our starting point for backward elimination.</p>
+<p>Our formula will be:
+<code class="docutils literal notranslate"><span class="pre">mpg</span> <span class="pre">~</span> <span class="pre">cylinders</span> <span class="pre">+</span> <span class="pre">displacement</span> <span class="pre">+</span> <span class="pre">horsepower</span> <span class="pre">+</span> <span class="pre">weight</span> <span class="pre">+</span> <span class="pre">acceleration</span> <span class="pre">+</span> <span class="pre">model_year</span> <span class="pre">+</span> <span class="pre">C(origin)</span></code></p>
+<section id="handling-categorical-variables-c-origin">
+<h4>Handling Categorical Variables: <code class="docutils literal notranslate"><span class="pre">C(origin)</span></code><a class="headerlink" href="#handling-categorical-variables-c-origin" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">origin</span></code> column is categorical (USA, Europe, Japan). If we just add <code class="docutils literal notranslate"><span class="pre">origin</span></code> to the model, <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> will treat it as a number, which is wrong.</p>
+<p>By wrapping it in <code class="docutils literal notranslate"><span class="pre">C()</span></code>, we tell <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to treat it as a <strong>C</strong>ategorical variable. It will automatically:</p>
+<ol class="arabic simple">
+<li><p>Choose a “reference” level (by default, the lowest one, which in our case is Europe).</p></li>
+<li><p>Create “dummy variables” for the other levels.</p></li>
+</ol>
+<p>The output will show coefficients for <code class="docutils literal notranslate"><span class="pre">C(origin)[T.japan]</span></code> and <code class="docutils literal notranslate"><span class="pre">C(origin)[T.usa]</span></code>. These coefficients represent the <em>difference in mpg</em> compared to the Europe, holding all other variables constant.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit the &quot;Full&quot; MLR model</span>
+<span class="n">all_features</span> <span class="o">=</span> <span class="s1">&#39;mpg ~ cylinders + displacement + horsepower + weight + acceleration + model_year + C(origin)&#39;</span>
+<span class="n">model_full</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">all_features</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg_clean</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print the full summary table</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_full</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.824
+Model:                            OLS   Adj. R-squared:                  0.821
+Method:                 Least Squares   F-statistic:                     224.5
+Date:                Sat, 01 Nov 2025   Prob (F-statistic):          1.79e-139
+Time:                        14:51:20   Log-Likelihood:                -1020.5
+No. Observations:                 392   AIC:                             2059.
+Df Residuals:                     383   BIC:                             2095.
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+======================================================================================
+                         coef    std err          t      P&gt;|t|      [0.025      0.975]
+--------------------------------------------------------------------------------------
+Intercept            -15.3246      4.602     -3.330      0.001     -24.374      -6.276
+C(origin)[T.japan]     0.2232      0.566      0.394      0.694      -0.890       1.336
+C(origin)[T.usa]      -2.6300      0.566     -4.643      0.000      -3.744      -1.516
+cylinders             -0.4897      0.321     -1.524      0.128      -1.121       0.142
+displacement           0.0240      0.008      3.133      0.002       0.009       0.039
+horsepower            -0.0182      0.014     -1.326      0.185      -0.045       0.009
+weight                -0.0067      0.001    -10.243      0.000      -0.008      -0.005
+acceleration           0.0791      0.098      0.805      0.421      -0.114       0.272
+model_year             0.7770      0.052     15.005      0.000       0.675       0.879
+==============================================================================
+Omnibus:                       23.395   Durbin-Watson:                   1.291
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               34.452
+Skew:                           0.444   Prob(JB):                     3.30e-08
+Kurtosis:                       4.150   Cond. No.                     8.56e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 8.56e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="interpreting-the-full-model">
+<h4>Interpreting the Full Model<a class="headerlink" href="#interpreting-the-full-model" title="Permalink to this heading">#</a></h4>
 <ul class="simple">
-<li><p><strong>There is a problem!</strong> The points are not randomly scattered. They form a sort of <strong>“U-shape”</strong> (a parabola).</p></li>
-<li><p><strong>Diagnosis:</strong> This indicates the <strong>Linearity</strong> assumption is violated. The true relationship between <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> and <code class="docutils literal notranslate"><span class="pre">mpg</span></code> is <em>not</em> a straight line (it’s curvilinear).</p></li>
-<li><p><strong>Consequence:</strong> Our SLR model is too simple (it is <em>underfit</em>). Our coefficient estimates and p-values, while technically significant, are from a model we know is wrong.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Adj.</span> <span class="pre">R-squared</span></code>:</strong> 0.818. A massive improvement! Our model now explains 81.8% of the variance.</p></li>
+<li><p><strong>Multicollinearity Warning:</strong> <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> warns us: <code class="docutils literal notranslate"><span class="pre">The</span> <span class="pre">condition</span> <span class="pre">number</span> <span class="pre">is</span> <span class="pre">large...</span> <span class="pre">This</span> <span class="pre">might</span> <span class="pre">indicate</span> <span class="pre">that</span> <span class="pre">there</span> <span class="pre">is</span> <span class="pre">strong</span> <span class="pre">multicollinearity</span></code>.</p></li>
+<li><p><strong>P-Values:</strong> Look at the <code class="docutils literal notranslate"><span class="pre">P&gt;|t|</span></code> column. We see several variables with high p-values (&gt;<span class="math notranslate nohighlight">\(0.05\)</span>):</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">C(origin)[T.japan]</span></code> (p=0.694)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cylinders</span></code> (p=0.128)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horsepower</span></code> (p=0.185)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acceleration</span></code> (p=0.421)</p></li>
 </ul>
 </li>
-<li><p><strong>Q-Q Plot (Right Plot):</strong></p>
-<ul class="simple">
-<li><p>The points peel away from the red line at the ends (the tails). This suggests our residuals have “heavy tails” (more outliers) than a perfect normal distribution.</p></li>
 </ul>
-</li>
+<p>These variables are not statistically significant <em>in this specific model</em>. This is due to <strong>multicollinearity</strong>. <code class="docutils literal notranslate"><span class="pre">cylinders</span></code>, <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>, and <code class="docutils literal notranslate"><span class="pre">acceleration</span></code> are all measuring the same thing (engine power) and are redundant.</p>
+</section>
+</section>
+<section id="backward-elimination">
+<h3>Backward Elimination<a class="headerlink" href="#backward-elimination" title="Permalink to this heading">#</a></h3>
+<p>Our full model is bloated and unreliable. We will use <strong>Backward Elimination</strong> to simplify it, creating a “parsimonious” model that is both accurate and interpretable.</p>
+<p><strong>The Process:</strong></p>
+<ol class="arabic simple">
+<li><p>Fit the full model.</p></li>
+<li><p>Find the predictor with the <strong>highest p-value</strong> &gt; <span class="math notranslate nohighlight">\(0.05\)</span>.</p></li>
+<li><p>Remove that predictor.</p></li>
+<li><p>Refit the model and go back to step 2.</p></li>
+<li><p>Stop when all remaining predictors have <span class="math notranslate nohighlight">\(p &lt; 0.05\)</span>.</p></li>
+</ol>
+<p>As a first step, we should remove <code class="docutils literal notranslate"><span class="pre">C(origin)[T.japan]</span></code> (p=0.694). However, this is one of the levels of <code class="docutils literal notranslate"><span class="pre">origin</span></code>, so we cannot just remove it. Instead, we can specify a different reference level than the default one to see if this improves things:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit the &quot;Full&quot; MLR model</span>
+<span class="n">all_features</span> <span class="o">=</span> <span class="s1">&#39;mpg ~ cylinders + displacement + horsepower + weight + acceleration + model_year + C(origin, Treatment(reference=&quot;usa&quot;))&#39;</span>
+<span class="n">model_full</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">all_features</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg_clean</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print the full summary table</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_full</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.824
+Model:                            OLS   Adj. R-squared:                  0.821
+Method:                 Least Squares   F-statistic:                     224.5
+Date:                Sat, 01 Nov 2025   Prob (F-statistic):          1.79e-139
+Time:                        14:52:50   Log-Likelihood:                -1020.5
+No. Observations:                 392   AIC:                             2059.
+Df Residuals:                     383   BIC:                             2095.
+Df Model:                           8                                         
+Covariance Type:            nonrobust                                         
+===================================================================================================================
+                                                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------------------------------
+Intercept                                         -17.9546      4.677     -3.839      0.000     -27.150      -8.759
+C(origin, Treatment(reference=&quot;usa&quot;))[T.europe]     2.6300      0.566      4.643      0.000       1.516       3.744
+C(origin, Treatment(reference=&quot;usa&quot;))[T.japan]      2.8532      0.553      5.162      0.000       1.766       3.940
+cylinders                                          -0.4897      0.321     -1.524      0.128      -1.121       0.142
+displacement                                        0.0240      0.008      3.133      0.002       0.009       0.039
+horsepower                                         -0.0182      0.014     -1.326      0.185      -0.045       0.009
+weight                                             -0.0067      0.001    -10.243      0.000      -0.008      -0.005
+acceleration                                        0.0791      0.098      0.805      0.421      -0.114       0.272
+model_year                                          0.7770      0.052     15.005      0.000       0.675       0.879
+==============================================================================
+Omnibus:                       23.395   Durbin-Watson:                   1.291
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               34.452
+Skew:                           0.444   Prob(JB):                     3.30e-08
+Kurtosis:                       4.150   Cond. No.                     8.70e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 8.7e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Great, this solved the problem for <code class="docutils literal notranslate"><span class="pre">origin</span></code>! We note that we have the same adjusted R-squared value, so we did not harm or improve the regressor.</p>
+<p>We now have the following high p-values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylinders</span></code> (p=0.128)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">horsepower</span></code> (p=0.185)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">acceleration</span></code> (p=0.421)</p></li>
+</ul>
+<p>Let’s remove <code class="docutils literal notranslate"><span class="pre">acceleration</span></code> next:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit the &quot;Full&quot; MLR model</span>
+<span class="n">all_features</span> <span class="o">=</span> <span class="s1">&#39;mpg ~ cylinders + displacement + horsepower + weight + model_year + C(origin, Treatment(reference=&quot;usa&quot;))&#39;</span>
+<span class="n">model_full</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">all_features</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg_clean</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print the full summary table</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_full</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.824
+Model:                            OLS   Adj. R-squared:                  0.821
+Method:                 Least Squares   F-statistic:                     256.7
+Date:                Sat, 01 Nov 2025   Prob (F-statistic):          1.49e-140
+Time:                        14:54:35   Log-Likelihood:                -1020.8
+No. Observations:                 392   AIC:                             2058.
+Df Residuals:                     384   BIC:                             2089.
+Df Model:                           7                                         
+Covariance Type:            nonrobust                                         
+===================================================================================================================
+                                                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------------------------------
+Intercept                                         -16.3323      4.219     -3.871      0.000     -24.628      -8.037
+C(origin, Treatment(reference=&quot;usa&quot;))[T.europe]     2.6345      0.566      4.654      0.000       1.521       3.748
+C(origin, Treatment(reference=&quot;usa&quot;))[T.japan]      2.8574      0.552      5.172      0.000       1.771       3.944
+cylinders                                          -0.5028      0.321     -1.568      0.118      -1.133       0.128
+displacement                                        0.0234      0.008      3.070      0.002       0.008       0.038
+horsepower                                         -0.0250      0.011     -2.320      0.021      -0.046      -0.004
+weight                                             -0.0065      0.001    -11.209      0.000      -0.008      -0.005
+model_year                                          0.7739      0.052     14.994      0.000       0.672       0.875
+==============================================================================
+Omnibus:                       25.943   Durbin-Watson:                   1.290
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               39.879
+Skew:                           0.468   Prob(JB):                     2.19e-09
+Kurtosis:                       4.251   Cond. No.                     7.86e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 7.86e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The adjusted R-squared is the same, but we now have the following high p-values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cylinders</span></code> (p=0.118)</p></li>
+</ul>
+<p>Let’s remove <code class="docutils literal notranslate"><span class="pre">cylinders</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and fit the &quot;Full&quot; MLR model</span>
+<span class="n">all_features</span> <span class="o">=</span> <span class="s1">&#39;mpg ~  displacement + horsepower + weight + model_year + C(origin, Treatment(reference=&quot;usa&quot;))&#39;</span>
+<span class="n">model_full</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">all_features</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg_clean</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Print the full summary table</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">model_full</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                    mpg   R-squared:                       0.823
+Model:                            OLS   Adj. R-squared:                  0.820
+Method:                 Least Squares   F-statistic:                     297.9
+Date:                Sat, 01 Nov 2025   Prob (F-statistic):          2.80e-141
+Time:                        14:55:29   Log-Likelihood:                -1022.0
+No. Observations:                 392   AIC:                             2058.
+Df Residuals:                     385   BIC:                             2086.
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+===================================================================================================================
+                                                      coef    std err          t      P&gt;|t|      [0.025      0.975]
+-------------------------------------------------------------------------------------------------------------------
+Intercept                                         -17.5036      4.160     -4.207      0.000     -25.683      -9.324
+C(origin, Treatment(reference=&quot;usa&quot;))[T.europe]     2.5958      0.567      4.581      0.000       1.482       3.710
+C(origin, Treatment(reference=&quot;usa&quot;))[T.japan]      2.7722      0.551      5.033      0.000       1.689       3.855
+displacement                                        0.0155      0.006      2.699      0.007       0.004       0.027
+horsepower                                         -0.0230      0.011     -2.149      0.032      -0.044      -0.002
+weight                                             -0.0066      0.001    -11.449      0.000      -0.008      -0.005
+model_year                                          0.7749      0.052     14.986      0.000       0.673       0.877
+==============================================================================
+Omnibus:                       24.729   Durbin-Watson:                   1.275
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):               37.452
+Skew:                           0.455   Prob(JB):                     7.37e-09
+Kurtosis:                       4.211   Cond. No.                     7.73e+04
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 7.73e+04. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The adjusted R-squared is a bit lower, but all p-values are below the threshold now!</p>
+</section>
+<section id="final-model-interpretation">
+<h3>Final Model Interpretation<a class="headerlink" href="#final-model-interpretation" title="Permalink to this heading">#</a></h3>
+<p>Now we have a <strong>final, parsimonious model</strong>.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Adj.</span> <span class="pre">R-squared</span></code>:</strong> 0.820. We removed two variables and our model’s explanatory power is <em>still</em> just as high.</p></li>
+<li><p><strong>All p-values are &lt; 0.05</strong>. We can confidently interpret every coefficient.</p></li>
+</ul>
+<p><strong>Final Coefficient Analysis:</strong></p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">weight</span></code>:</strong> -0.0066. “For every 1lb increase in <code class="docutils literal notranslate"><span class="pre">weight</span></code>, <code class="docutils literal notranslate"><span class="pre">mpg</span></code> decreases by 0.0066, holding all other variables constant. (This is the net effect of increasing weight).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">model_year</span></code>:</strong> 0.7749. “For each newer <code class="docutils literal notranslate"><span class="pre">model_year</span></code>, <code class="docutils literal notranslate"><span class="pre">mpg</span></code> increases by 0.78, holding all other variables constant. (Cars get more efficient over time).</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">C(origin)[T.europe]</span></code>:</strong> 2.5958. “A car from <code class="docutils literal notranslate"><span class="pre">Europe</span></code> gets <strong>2.6 more mpg</strong> than a car from the <code class="docutils literal notranslate"><span class="pre">USA</span></code>, holding all other variables constant”.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">C(origin)[T.japan]</span></code>:</strong> 2.7722. “A car from <code class="docutils literal notranslate"><span class="pre">Japan</span></code> gets <strong>2.77 more mpg</strong> than a car from the <code class="docutils literal notranslate"><span class="pre">USA</span></code>, holding all other variables constant”.</p></li>
+</ul>
+</section>
+<section id="final-diagnostic-check">
+<h3>Final Diagnostic Check<a class="headerlink" href="#final-diagnostic-check" title="Permalink to this heading">#</a></h3>
+<p>Our p-values and coefficients are only reliable if this <em>final</em> model is valid. Let’s check the residuals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- SLR Diagnostic Plots ---</span>
+<span class="n">fitted_values_slr</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">fittedvalues</span>
+<span class="n">residuals_slr</span> <span class="o">=</span> <span class="n">model_slr</span><span class="o">.</span><span class="n">resid</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># 1. Residuals vs. Fitted Plot</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fitted_values_slr</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals_slr</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Residuals vs. Fitted (Simple Linear Regression)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values (Predicted MPG)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># 2. Q-Q Plot</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">residuals_slr</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span> <span class="c1"># &#39;s&#39; = standardized line</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot of Residuals (Simple Linear Regression)&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># --- Final Model Diagnostic Plots ---</span>
+<span class="n">fitted_values_final</span> <span class="o">=</span> <span class="n">model_full</span><span class="o">.</span><span class="n">fittedvalues</span>
+<span class="n">residuals_final</span> <span class="o">=</span> <span class="n">model_full</span><span class="o">.</span><span class="n">resid</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># 1. Residuals vs. Fitted Plot</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fitted_values_final</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals_final</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Residuals vs. Fitted (Final Model)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values (Predicted MPG)&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># 2. Q-Q Plot</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">residuals_final</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot of Residuals (Final Model)&#39;</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/49fd48fda30d5787abe55ff28b7633fbefcbd1fdaad196a371a4409e963df126.png" src="../_images/49fd48fda30d5787abe55ff28b7633fbefcbd1fdaad196a371a4409e963df126.png" />
+<img alt="../_images/b607b891cd6de3de063b302ed7e52430cb81a94e55eecb8e13c5668888919877.png" src="../_images/b607b891cd6de3de063b302ed7e52430cb81a94e55eecb8e13c5668888919877.png" />
+</div>
+</div>
+<ol class="arabic simple">
+<li><p><strong>Residuals vs. Fitted (Left):</strong> This is a bit better. The problematic “U-shape” is still there but less pronounced.</p></li>
+<li><p><strong>Q-Q Plot (Right):</strong> This also looks a bit improved, with the points falling closer to the normal-distribution line in the left part of the plot.</p></li>
 </ol>
 </section>
 </section>
-<section id="id2">
-<h3>Multiple Linear Regression<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<p>Given our SLR model was flawed, let’s try to build a better, more complete model. We will use Multiple Linear Regression (MLR) to predict <code class="docutils literal notranslate"><span class="pre">mpg</span></code> using more variables.</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">horsepower</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">weight</span></code> (which is highly correlated with <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">model_year</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">origin</span></code> (this is a categorical variable!)</p></li>
-</ul>
-<p>Using the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> formula API, we can simply add (<code class="docutils literal notranslate"><span class="pre">+</span></code>) variables. For categorical variables like <code class="docutils literal notranslate"><span class="pre">origin</span></code>, we wrap them in <code class="docutils literal notranslate"><span class="pre">C()</span></code> to tell <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to treat them as such (it will automatically create the <em>dummy variables</em> / one-hot encoding).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and &quot;fit&quot; (train) the MLR model</span>
-<span class="n">formula_mlr</span> <span class="o">=</span> <span class="s1">&#39;mpg ~ horsepower + weight + model_year + C(origin)&#39;</span>
-<span class="n">model_mlr</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_mlr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="c1"># Print the full summary table</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model_mlr</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                    mpg   R-squared:                       0.819
-Model:                            OLS   Adj. R-squared:                  0.817
-Method:                 Least Squares   F-statistic:                     350.3
-Date:                Sat, 01 Nov 2025   Prob (F-statistic):          5.21e-141
-Time:                        10:57:15   Log-Likelihood:                -1025.7
-No. Observations:                 392   AIC:                             2063.
-Df Residuals:                     386   BIC:                             2087.
-Df Model:                           5                                         
-Covariance Type:            nonrobust                                         
-======================================================================================
-                         coef    std err          t      P&gt;|t|      [0.025      0.975]
---------------------------------------------------------------------------------------
-Intercept            -15.2661      4.099     -3.724      0.000     -23.326      -7.206
-C(origin)[T.japan]     0.3279      0.568      0.577      0.564      -0.789       1.444
-C(origin)[T.usa]      -1.9546      0.519     -3.769      0.000      -2.974      -0.935
-horsepower            -0.0085      0.009     -0.908      0.365      -0.027       0.010
-weight                -0.0056      0.000    -12.622      0.000      -0.006      -0.005
-model_year             0.7544      0.052     14.631      0.000       0.653       0.856
-==============================================================================
-Omnibus:                       32.098   Durbin-Watson:                   1.250
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               55.453
-Skew:                           0.519   Prob(JB):                     9.09e-13
-Kurtosis:                       4.523   Cond. No.                     7.54e+04
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 7.54e+04. This might indicate that there are
-strong multicollinearity or other numerical problems.
-</pre></div>
-</div>
-</div>
-</div>
-<section id="interpreting-the-summary-table-mlr">
-<h4>Interpreting the Summary Table (MLR)<a class="headerlink" href="#interpreting-the-summary-table-mlr" title="Permalink to this heading">#</a></h4>
-<p><strong>Overall Model Comparison (SLR vs MLR)</strong></p>
-<ul class="simple">
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">R-squared</span></code>:</strong> Jumped from 0.606 to <strong>0.821</strong>!</p></li>
-<li><p><strong><code class="docutils literal notranslate"><span class="pre">Adj.</span> <span class="pre">R-squared</span></code>:</strong> Jumped from 0.605 to <strong>0.819</strong>.</p>
-<ul>
-<li><p><strong>Why look at Adj. R-squared?</strong> The regular <span class="math notranslate nohighlight">\(R^2\)</span> will <em>always</em> increase when you add a new variable, even if it’s useless. The <em>Adjusted</em> <span class="math notranslate nohighlight">\(R^2\)</span> corrects for this. It’s the correct metric to use when comparing models with different numbers of predictors.</p></li>
-<li><p><strong>Conclusion:</strong> Our MLR model explains 81.9% of the variance in <code class="docutils literal notranslate"><span class="pre">mpg</span></code>, a massive improvement over the SLR model’s 60.5%.</p></li>
-</ul>
-</li>
-</ul>
-<p><strong>Coefficient Analysis (MLR)</strong></p>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>Field</p></th>
-<th class="head"><p><code class="docutils literal notranslate"><span class="pre">coef</span></code></p></th>
-<th class="head"><p><code class="docutils literal notranslate"><span class="pre">P&gt;|t|</span></code></p></th>
-<th class="head"><p>Interpretation</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">Intercept</span></code></strong></p></td>
-<td><p>-17.2184</p></td>
-<td><p>&lt; 0.001</p></td>
-<td><p>…</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">C(origin)[T.2]</span></code></strong></p></td>
-<td><p>2.5670</p></td>
-<td><p>&lt; 0.001</p></td>
-<td><p>Being from origin “2” (European) vs “1” (USA) is associated with an <strong>increase of 2.57 mpg</strong>, holding <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>, <code class="docutils literal notranslate"><span class="pre">weight</span></code>, and <code class="docutils literal notranslate"><span class="pre">year</span></code> constant.</p></td>
-</tr>
-<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">C(origin)[T.3]</span></code></strong></p></td>
-<td><p>2.5562</p></td>
-<td><p>&lt; 0.001</p></td>
-<td><p>Being from origin “3” (Japanese) vs “1” (USA) is associated with an <strong>increase of 2.56 mpg</strong>, holding all else constant.</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">horsepower</span></code></strong></p></td>
-<td><p>-0.0044</p></td>
-<td><p>0.601</p></td>
-<td><p><strong>NOT SIGNIFICANT!</strong></p></td>
-</tr>
-<tr class="row-even"><td><p><strong><code class="docutils literal notranslate"><span class="pre">weight</span></code></strong></p></td>
-<td><p>-0.0065</p></td>
-<td><p>&lt; 0.001</p></td>
-<td><p>For every 1-unit increase in <code class="docutils literal notranslate"><span class="pre">weight</span></code> (lb), we expect a <strong>decrease of 0.0065 mpg</strong>, holding all else constant.</p></td>
-</tr>
-<tr class="row-odd"><td><p><strong><code class="docutils literal notranslate"><span class="pre">model_year</span></code></strong></p></td>
-<td><p>0.7508</p></td>
-<td><p>&lt; 0.001</p></td>
-<td><p>For every 1 <code class="docutils literal notranslate"><span class="pre">model_year</span></code> (e.g., from 76 to 77), we expect an <strong>increase of 0.75 mpg</strong>, holding all else constant. (Cars are getting more efficient).</p></td>
-</tr>
-</tbody>
-</table>
-<p><strong>Collinearity</strong></p>
-<p>Why did <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> become not significant (<span class="math notranslate nohighlight">\(p = 0.601\)</span>)?</p>
-<p>In the SLR model, <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> was a “proxy” for many things: engine size, car weight, etc. But now, <code class="docutils literal notranslate"><span class="pre">weight</span></code> is in the model! <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> and <code class="docutils literal notranslate"><span class="pre">weight</span></code> are highly correlated (a phenomenon called <strong>multicollinearity</strong>). If you look closely, we even received a warning about this.</p>
-<p>The MLR model has discovered that <code class="docutils literal notranslate"><span class="pre">weight</span></code> is the <em>better</em> predictor, and once the influence of weight is accounted for, <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> does not provide (in this model) any significant <em>additional</em> information.</p>
-<p><strong>This is the power of MLR:</strong> it allows us to isolate the unique impact of one variable <em>while controlling for</em> the impact of others.</p>
-</section>
-<section id="variable-selection">
-<h4>Variable Selection<a class="headerlink" href="#variable-selection" title="Permalink to this heading">#</a></h4>
-<p>Let’s now refine our regressor by removing variables which are not significant. We would remove <code class="docutils literal notranslate"><span class="pre">C(origin)[T.japan]</span></code> which has the largest p-value, but this is linked to <code class="docutils literal notranslate"><span class="pre">C(origin)[T.usa]</span></code>, so we will instead remove the <code class="docutils literal notranslate"><span class="pre">horsepower</span></code>, which has the second-largest p-value:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define and &quot;fit&quot; (train) the MLR model</span>
-<span class="n">formula_mlr</span> <span class="o">=</span> <span class="s1">&#39;mpg ~  weight + model_year + C(origin)&#39;</span>
-<span class="n">model_mlr</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">ols</span><span class="p">(</span><span class="n">formula_mlr</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">mpg</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
-
-<span class="c1"># Print the full summary table</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">model_mlr</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
-==============================================================================
-Dep. Variable:                    mpg   R-squared:                       0.819
-Model:                            OLS   Adj. R-squared:                  0.817
-Method:                 Least Squares   F-statistic:                     437.9
-Date:                Sat, 01 Nov 2025   Prob (F-statistic):          3.53e-142
-Time:                        11:08:07   Log-Likelihood:                -1026.1
-No. Observations:                 392   AIC:                             2062.
-Df Residuals:                     387   BIC:                             2082.
-Df Model:                           4                                         
-Covariance Type:            nonrobust                                         
-======================================================================================
-                         coef    std err          t      P&gt;|t|      [0.025      0.975]
---------------------------------------------------------------------------------------
-Intercept            -16.3306      3.927     -4.158      0.000     -24.052      -8.610
-C(origin)[T.japan]     0.2382      0.559      0.426      0.670      -0.861       1.337
-C(origin)[T.usa]      -1.9763      0.518     -3.815      0.000      -2.995      -0.958
-weight                -0.0059      0.000    -22.647      0.000      -0.006      -0.005
-model_year             0.7698      0.049     15.818      0.000       0.674       0.866
-==============================================================================
-Omnibus:                       32.293   Durbin-Watson:                   1.251
-Prob(Omnibus):                  0.000   Jarque-Bera (JB):               58.234
-Skew:                           0.507   Prob(JB):                     2.26e-13
-Kurtosis:                       4.593   Cond. No.                     7.22e+04
-==============================================================================
-
-Notes:
-[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-[2] The condition number is large, 7.22e+04. This might indicate that there are
-strong multicollinearity or other numerical problems.
-</pre></div>
-</div>
-</div>
-</div>
-<p>We still have a large p-value for one of the levels of origin, but we have to stop here since we cannot just remove one of the levels, and at least another level has shown significance.</p>
-<p>We can now check the diagnostic plot for the new model:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fitted_values_mlr</span> <span class="o">=</span> <span class="n">model_mlr</span><span class="o">.</span><span class="n">fittedvalues</span>
-<span class="n">residuals_mlr</span> <span class="o">=</span> <span class="n">model_mlr</span><span class="o">.</span><span class="n">resid</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">fitted_values_mlr</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">residuals_mlr</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuals vs. Fitted (MLR)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fitted Values (Predicted MPG)&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
-
-<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
-<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">residuals_mlr</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Q-Q Plot of Residuals (MLR)&#39;</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/447413b46cd6155b5041d387da3adf2a63361982f09cd1c7b3a533682c42b974.png" src="../_images/447413b46cd6155b5041d387da3adf2a63361982f09cd1c7b3a533682c42b974.png" />
-</div>
-</div>
-<p>As we can see, there have been some improvements in the left part of the Q-Q plot, but the model is still not perfect. We will have to go beyond a linear model (next lecture) to solve the issue.</p>
-</section>
-</section>
+<section id="exercises">
+<h2>Exercises<a class="headerlink" href="#exercises" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p>Exercise 1</p>
+<p>Consider the Titanic dataset. Calculate a linear regressor that predicts <code class="docutils literal notranslate"><span class="pre">Fare</span></code> values from <code class="docutils literal notranslate"><span class="pre">Survived</span></code>, <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>, <code class="docutils literal notranslate"><span class="pre">Sex</span></code>, and <code class="docutils literal notranslate"><span class="pre">Age</span></code> values. Insert dummy variables where appropriate. Is the obtained regressor a good regressor? Which variables contribute significantly to the regression? Are there irrelevant variables? Eliminate these variables using the backward elimination technique. Discuss the meaning of the identified coefficients.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Exercise 2</p>
+<p>Consider the Titanic dataset. Calculate a linear regressor that predicts <code class="docutils literal notranslate"><span class="pre">Age</span></code> values from <code class="docutils literal notranslate"><span class="pre">Survived</span></code>, <code class="docutils literal notranslate"><span class="pre">Pclass</span></code>, <code class="docutils literal notranslate"><span class="pre">Sex</span></code>, and <code class="docutils literal notranslate"><span class="pre">Fare</span></code> values. Insert dummy variables where appropriate. Is the obtained regressor a good regressor? Is it a better or worse regressor than the one calculated in the previous exercise? Which variables contribute significantly to the regression? Are there irrelevant variables? Eliminate such variables using the backward elimination technique. Discuss the meaning of the identified coefficients.</p>
+</div></blockquote>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
@@ -2298,6 +2426,15 @@ strong multicollinearity or other numerical problems.
         <p class="prev-next-title">Introduction to Predictive Analysis</p>
       </div>
     </a>
+    <a class="right-next"
+       href="10_beyond_linear_regression.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Beyond Linear Regression</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -2335,12 +2472,6 @@ strong multicollinearity or other numerical problems.
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-r-2-statistic">2. The <span class="math notranslate nohighlight">\(R^2\)</span> Statistic</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-prediction-test-set-error">Metrics for Prediction (Test Set Error)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">1. Mean Squared Error (MSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">2. Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">3. Mean Absolute Error (MAE)</a></li>
-</ul>
-</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visual-examples">Visual Examples</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#diagnostic-plots-checking-model-validity">Diagnostic Plots: Checking Model Validity</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-residuals-vs-fitted-plot">1. The Residuals vs. Fitted Plot</a></li>
@@ -2364,24 +2495,31 @@ strong multicollinearity or other numerical problems.
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictors-with-more-than-two-levels">Predictors with More than Two Levels</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-practice">Linear Regression in Practice</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-regression-in-python">Linear Regression in Python</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Simple Linear Regression</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-top-table-model-metadata">Part 1: The Top Table (Model Metadata)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-the-coefficients-table-the-core">Part 2: The Coefficients Table (The Core)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-coefficients">Interpreting the Coefficients</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-significance-p-value">Interpreting the Significance (p-value)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-the-bottom-table-residual-diagnostics">Part 3: The Bottom Table (Residual Diagnostics)</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#residual-diagnostics">Residual Diagnostics</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-diagnostic-plots">Interpreting the Diagnostic Plots</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-slr-summary">Interpreting the SLR Summary</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#slr-diagnostic-analysis">SLR Diagnostic Analysis</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Multiple Linear Regression</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-summary-table-mlr">Interpreting the Summary Table (MLR)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#variable-selection">Variable Selection</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multiple-linear-regression-the-full-model">Multiple Linear Regression - The “Full” Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#handling-categorical-variables-c-origin">Handling Categorical Variables: <code class="docutils literal notranslate"><span class="pre">C(origin)</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-full-model">Interpreting the Full Model</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#backward-elimination">Backward Elimination</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-model-interpretation">Final Model Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-diagnostic-check">Final Diagnostic Check</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercises">Exercises</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>
