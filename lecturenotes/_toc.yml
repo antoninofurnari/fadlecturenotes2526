@@ -39,6 +39,9 @@ parts:
 - caption: Lecture 10
   chapters:
   - file: lectures/09_linear_regression
+- caption: Lecture 11
+  chapters:
+  - file: lectures/10_beyond_linear_regression
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
