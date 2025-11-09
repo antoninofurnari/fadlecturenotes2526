@@ -217,6 +217,10 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
 
     </div>
 </nav></div>
@@ -474,6 +478,8 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction">2. Dimensionality Reduction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#anomaly-detection">3. Anomaly Detection</a></li>
 </ul>
 </li>
 </ul>
@@ -942,6 +948,30 @@ Percentage within 1 std dev: 67.77%
 </div>
 </div>
 </section>
+<section id="dimensionality-reduction">
+<h4>2. Dimensionality Reduction<a class="headerlink" href="#dimensionality-reduction" title="Permalink to this heading">#</a></h4>
+<p><strong>Dimensionality Reduction</strong> is the process of reducing the number of features (dimensions) in a dataset, while trying to retain as much of the original information as possible.</p>
+<p>Instead of 100 features, we might find 2 or 3 “summary” features (called principal components) that capture most of the original data’s variance.</p>
+<ul class="simple">
+<li><p><strong>Key Question:</strong> “Can I represent my data with fewer features without losing its essential structure?”</p></li>
+<li><p><strong>Why it’s useful:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Visualization:</strong> It allows us to plot complex, high-dimensional data (e.g., 50 features) on a 2D or 3D graph.</p></li>
+<li><p><strong>Efficiency:</strong> It makes other machine learning models (like regression or classification) faster and more stable by removing redundant, noisy features.</p></li>
+</ol>
+</li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Principal</span> <span class="pre">Component</span> <span class="pre">Analysis</span> <span class="pre">(PCA)</span></code></strong>.</p></li>
+</ul>
+</section>
+<section id="anomaly-detection">
+<h4>3. Anomaly Detection<a class="headerlink" href="#anomaly-detection" title="Permalink to this heading">#</a></h4>
+<p><strong>Anomaly Detection</strong> (or Outlier Detection) is the task of identifying data points that are rare and significantly different from the majority of the data.</p>
+<p>This is an unsupervised task because we don’t have a pre-labeled list of “anomalies.” We just have a large set of mostly “normal” data, and our goal is to find the “odd ones out.”</p>
+<ul class="simple">
+<li><p><strong>Key Question:</strong> “Does this new data point look ‘normal’ compared to everything else?”</p></li>
+<li><p><strong>Example: <code class="docutils literal notranslate"><span class="pre">Fraud</span> <span class="pre">Detection</span></code></strong>. Given 1,000,000 normal credit card transactions, can we identify the 5 transactions that are fraudulent? Other examples include monitoring for a failing server in a data center or finding defective products on an assembly line.</p></li>
+</ul>
+</section>
 </section>
 </section>
 <section id="parametric-vs-non-parametric-models">
@@ -987,8 +1017,6 @@ Percentage within 1 std dev: 67.77%
 <li><p><strong>Examples:</strong></p>
 <ul>
 <li><p><strong>k-Nearest Neighbors (KNN):</strong> To make a prediction for a new point, the model <em>literally</em> has to look at the “k” closest points from the <em>entire</em> training set. If your training set doubles, the “model” (the stored data it refers to) doubles.</p></li>
-<li><p><strong>Decision Trees:</strong> A tree can grow “deeper” and create more “splits” to perfectly fit the training data. The more data you have, the more complex the tree can become.</p></li>
-<li><p><strong>Support Vector Machines (SVMs)</strong> and <strong>Neural Networks</strong> are also often considered non-parametric (or at least highly flexible) as their capacity can grow to fit highly complex patterns.</p></li>
 </ul>
 </li>
 </ul>
@@ -1424,6 +1452,8 @@ Percentage within 1 std dev: 67.77%
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupervised-learning-learning-without-an-answer-key">Unsupervised Learning: Learning without an Answer Key</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clustering-finding-groups">1. Clustering (Finding Groups)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensionality-reduction">2. Dimensionality Reduction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#anomaly-detection">3. Anomaly Detection</a></li>
 </ul>
 </li>
 </ul>
