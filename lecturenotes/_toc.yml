@@ -42,6 +42,9 @@ parts:
 - caption: Lecture 11
   chapters:
   - file: lectures/10_beyond_linear_regression
+- caption: Lecture 12
+  chapters:
+  - file: lectures/11_classification_knn
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
