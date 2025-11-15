@@ -45,6 +45,15 @@ parts:
 - caption: Lecture 12
   chapters:
   - file: lectures/11_classification_knn
+- caption: Lecture 13
+  chapters:
+  - file: lectures/12_logistic_regression
+- caption: Lecture 14
+  chapters:
+  - file: lectures/13_multiclass_logistic_regression
+- caption: Lecture 15
+  chapters:
+  - file: lectures/14_map_naive_bayes
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
