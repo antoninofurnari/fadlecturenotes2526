@@ -1,0 +1,1517 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Generative Models for Classification &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/xx_map_naive_bayes';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="13_multiclass_logistic_regression.html">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Naive Bayes</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/xx_map_naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/xx_map_naive_bayes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/xx_map_naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Generative Models for Classification</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability-map-classification">Joint Probability MAP Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-prior-probabilities">Step 1: Prior Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-contingency-tables">Step 2: Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-normalize-counts-to-obtain-joint-probabilities">Step 3: Normalize Counts to Obtain Joint Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-inference-for-a-new-email-observation">Step 4: Inference for a New Email Observation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quadratic-discriminant-analysis-for-continuous-features">Quadratic Discriminant Analysis for Continuous Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qda-learns-estimating-the-parameters">How QDA “Learns”: Estimating the Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qda-classifies">How QDA Classifies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mahalanobis-distance-classification">Mahalanobis Distance Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-intuition-for-mahalanobis-distance">An Intuition for Mahalanobis Distance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mahalanobis-distance-in-1d-the-z-score">Mahalanobis Distance in 1D (The “Z-Score”)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-to-multiple-dimensions-d-1">Extending to Multiple Dimensions (D &gt; 1)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-qda">Limitations of QDA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-lda-assumption">The LDA Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-lda-learns-estimating-the-parameters">How LDA “Learns”: Estimating the Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-lda-classifies-the-linear-in-lda">How LDA Classifies: The “Linear” in LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lda-example-in-python-iris-dataset">LDA Example in Python: Iris Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-and-limitations-of-lda">Interpretation and Limitations of LDA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-final-simplification">Naive Bayes: The Final Simplification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-computational-complexity">A note on computational complexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-a-family-of-assumptions">Summary: A Family of Assumptions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavor-2-multinomial-naive-bayes-mnb">Flavor 2: Multinomial Naive Bayes (MNB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bag-of-words-intuition">The “Bag of Words” Intuition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-word-probabilities-p-ki">Estimating the Word Probabilities (<span class="math notranslate nohighlight">\(p_{ki}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-critical-flaw-the-zero-probability-problem">A Critical Flaw: The Zero-Probability Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-laplace-add-one-smoothing">The Solution: Laplace (Add-One) Smoothing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-final-classification-rule">The Final Classification Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-practical-way-log-probabilities">The Practical Way: Log-Probabilities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="generative-models-for-classification">
+<h1>Generative Models for Classification<a class="headerlink" href="#generative-models-for-classification" title="Permalink to this heading">#</a></h1>
+<p>In previous lectures, we have seen <strong>discriminative models</strong> (like Logistic Regression). These models have one goal: learn the <em>decision boundary</em> between classes. They directly model the conditional probability <span class="math notranslate nohighlight">\(P(Y=k | X=\mathbf{x})\)</span>.</p>
+<p>Recall that in this stage <span class="math notranslate nohighlight">\(Y\)</span> is discrete and finite (our classes), while <span class="math notranslate nohighlight">\(X\)</span> can be either continuous or discrete, scalar or multidimensional.</p>
+<p>In this lecture, we will learn about a completely different family of classifiers: <strong>generative models</strong>.</p>
+<p>Generative models do not care about the decision boundary. Instead, their goal is to <strong>learn the “story” or “profile” of each class independently</strong>. They aim to build a full probabilistic model of what each class <em>looks like</em>.</p>
+<p>Technically, this means they model the <strong>joint probability distribution</strong> <span class="math notranslate nohighlight">\(P(X,Y)\)</span>. Recalling that <span class="math notranslate nohighlight">\(P(X,Y)=P(X|Y)P(X)\)</span>, they do this by modeling two separate pieces:</p>
+<ol class="arabic simple">
+<li><p><strong>The Likelihood <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span>:</strong> “What does a typical <span class="math notranslate nohighlight">\(X\)</span> look like <em>for this class</em>?”</p></li>
+<li><p><strong>The Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span>:</strong> “How common is <em>this class</em> in general?”</p></li>
+</ol>
+<p>Once the model has learned these two things, it can be used for classification.</p>
+<section id="the-core-principle-maximum-a-posteriori-map">
+<h2>The Core Principle: Maximum A Posteriori (MAP)<a class="headerlink" href="#the-core-principle-maximum-a-posteriori-map" title="Permalink to this heading">#</a></h2>
+<p>Generative classifiers are built on the <strong>Maximum A Posteriori (MAP)</strong> principle. We want to find the class <span class="math notranslate nohighlight">\(k\)</span> that is <em>most probable</em> after we observe the data <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[h(\mathbf{x}) = \arg \max_{k} P(Y=k | X=\mathbf{x})\]</div>
+<p>Using Bayes’ theorem, we can “flip” this equation to use the <em>generative</em> pieces we’ve learned:</p>
+<div class="math notranslate nohighlight">
+\[h(\mathbf{x}) = \arg \max_{k} \frac{P(X=\mathbf{x} | Y=k) P(Y=k)}{P(X=\mathbf{x})}\]</div>
+<p>We note that, if we are not interested in computing the actual probabilities <span class="math notranslate nohighlight">\(P(Y=k|\mathbf{x})\)</span>, but we only want to assign <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the most likely class, we can drop the evidence <span class="math notranslate nohighlight">\(P(X=\mathbf{x})\)</span>, which is independent of class <span class="math notranslate nohighlight">\(k\)</span>. Indeed we note that:</p>
+<div class="math notranslate nohighlight">
+\[P( Y=k | \mathbf{x} ) \propto P( X | Y=k )P(Y=k)\]</div>
+<p>Which leads to the final MAP classification rule:</p>
+<div class="math notranslate nohighlight">
+\[h\left( \mathbf{x} \right) = \arg \max_{k} \underbrace{P( X | Y=k )}_{\text{Likelihood}} \underbrace{P(Y=k)}_{\text{Prior}}\]</div>
+<p>This approach is known as Maximum A Posteriori (MAP) classification as we aim to maximize the posterior probability.</p>
+<p>In order to implement this principle, we need to compute the following two quantities:</p>
+<ul class="simple">
+<li><p>The likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span>;</p></li>
+<li><p>The prior <span class="math notranslate nohighlight">\(P(Y)\)</span>;</p></li>
+</ul>
+<p>We will now see how to compute each of these quantities.</p>
+<section id="the-prior-p-y">
+<h3>The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span><a class="headerlink" href="#the-prior-p-y" title="Permalink to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(P(Y)\)</span>: this is the <strong>prior probability of a given class</strong>. If observing
+a class <span class="math notranslate nohighlight">\(Y=k\)</span> is not very common, then <span class="math notranslate nohighlight">\(P(Y=k)\)</span> will be small. We can use
+different approaches to estimate <span class="math notranslate nohighlight">\(P(Y=k)\)</span>:</p>
+<ul class="simple">
+<li><p>We can estimate <span class="math notranslate nohighlight">\(P(Y=k)\)</span> by <strong>considering the number of examples in
+the dataset</strong>. For instance, if our dataset contains <span class="math notranslate nohighlight">\(800\)</span> non-spam
+e-mails and <span class="math notranslate nohighlight">\(200\)</span> spam e-mails and we set <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">Spam</span></code> and <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">Non</span> <span class="pre">Spam</span></code>,
+we can assume that <span class="math notranslate nohighlight">\(P(Y=0) = 0.2\)</span> and <span class="math notranslate nohighlight">\(P(Y=1) = 0.8\)</span>.</p></li>
+<li><p>Alternatively, we could <strong><em>study</em> what is the proportion of examples
+in each class in the real world</strong>. In the case of spam detection, we
+could ask a large sample of people how many e-mails they receive in
+average and how many spam e-mails they receive. These numbers can be
+used to define the prior probability.</p></li>
+<li><p>Another common choice, when we don’t have enough information on the
+phenomenon is to <strong>assume that all classes are equally probable</strong>,
+in which case <span class="math notranslate nohighlight">\(P(Y=k) = \frac{1}{m}\)</span><em>,</em> where <span class="math notranslate nohighlight">\(m\)</span> is the number of
+classes.</p></li>
+</ul>
+<p>There are many ways to define the prior probability. However, it should
+be considered that this quantity should be interpreted in Bayesian
+terms. This means that, by specifying a prior probability, we are
+introducing our <strong>degree of belief</strong> on what classes are more or less
+likely in the system.</p>
+</section>
+<section id="the-likelihood-p-x-y">
+<h3>The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span><a class="headerlink" href="#the-likelihood-p-x-y" title="Permalink to this heading">#</a></h3>
+<p>While estimating the prior is easy and estimating the evidence is not necessary for classification purposes (it would be indeed necessary if we were to compute probabilities), computing the likelihood term is less straightforward.</p>
+<p>If we have <span class="math notranslate nohighlight">\(M\)</span> different classes, a general approach to estimate the likelihood consists in group all observations belonging to a given class <span class="math notranslate nohighlight">\(Y=k\)</span> (let’s call <span class="math notranslate nohighlight">\(X_{k}\)</span> the random variable of the examples
+belonging to this group) and estimate the probability <span class="math notranslate nohighlight">\(P\left( X_{k} \right)\)</span>.</p>
+<p>If we repeat this process for every possible value of <span class="math notranslate nohighlight">\(C\)</span>, we have
+concretely estimated <span class="math notranslate nohighlight">\(P(X|Y=k)\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x \middle| Y = k \right) = P(X_{k})\]</div>
+<p>To estimate <span class="math notranslate nohighlight">\(P(X_{k})\)</span> we will generally need to make a few assumptions. Depending on such assumptions, we obtain different generative models.</p>
+</section>
+</section>
+<section id="joint-probability-map-classification">
+<h2>Joint Probability MAP Classification<a class="headerlink" href="#joint-probability-map-classification" title="Permalink to this heading">#</a></h2>
+<p>We will now see a simple application of the MAP principle which makes use of the direct estimation of the probability <span class="math notranslate nohighlight">\(P(X|Y)\)</span> in the case of discrete features. In particular, we will consider an example with two discrete features, so that we have to estimate <span class="math notranslate nohighlight">\(P(X_1,X_2|Y)\)</span>.</p>
+<p>Let’s say we want to classify emails as <strong>Spam</strong> or <strong>Ham (Not Spam)</strong> based on the presence of the following words:</p>
+<ul class="simple">
+<li><p><strong>Offer (F1):</strong> Yes/No</p></li>
+<li><p><strong>Free (F2):</strong> Yes/No</p></li>
+</ul>
+<p>Each of these can be considered a binary feature which can either be present or not. Hence both Offer and Free have two possible values “Yes” and “No”.</p>
+<section id="step-1-prior-probabilities">
+<h3>Step 1: Prior Probabilities<a class="headerlink" href="#step-1-prior-probabilities" title="Permalink to this heading">#</a></h3>
+<p>Let’s start by computing prior probabilities. Counting the number of e-mails in the database, we find the following picture.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Class</p></th>
+<th class="head"><p>Prior Probability ( P(Y) )</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Spam</p></td>
+<td><p><span class="math notranslate nohighlight">\( P(Y=\text{Spam}) = 0.6 \)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Ham</p></td>
+<td><p><span class="math notranslate nohighlight">\( P(Y=\text{Ham}) = 0.4 \)</span></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-2-contingency-tables">
+<h3>Step 2: Contingency Tables<a class="headerlink" href="#step-2-contingency-tables" title="Permalink to this heading">#</a></h3>
+<p>We now want to estimate the probabilities <span class="math notranslate nohighlight">\(P(X_1,X_2|Y)\)</span>. One way to do it is to estimate the two following joint probabilities:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(Offer,Free|Spam)\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(Offer,Free|Ham)\)</span></p></li>
+</ul>
+<p>We will estimate each of them with a contingency table.</p>
+<p><strong>Spam Class Contingency Table</strong></p>
+<p>Let’s say we obtain the following “spam” contingency table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>Free (F2)</strong> = Yes</p></th>
+<th class="head"><p><strong>Free (F2)</strong> = No</p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Offer (F1)</strong> = Yes</p></td>
+<td><p>30</p></td>
+<td><p>10</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Offer (F1)</strong> = No</p></td>
+<td><p>20</p></td>
+<td><p>10</p></td>
+<td><p>30</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p>50</p></td>
+<td><p>20</p></td>
+<td><p>70</p></td>
+</tr>
+</tbody>
+</table>
+<p>This is obtained by looking at co-occurrences of features for elements in the “spam class”.</p>
+<p><strong>Ham Class Contingency Table</strong></p>
+<p>Similarly, we obtain the “ham” contingency table:</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>Free (F2)</strong> = Yes</p></th>
+<th class="head"><p><strong>Free (F2)</strong> = No</p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Offer (F1)</strong> = Yes</p></td>
+<td><p>5</p></td>
+<td><p>15</p></td>
+<td><p>20</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Offer (F1)</strong> = No</p></td>
+<td><p>10</p></td>
+<td><p>30</p></td>
+<td><p>40</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p>15</p></td>
+<td><p>45</p></td>
+<td><p>60</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="step-3-normalize-counts-to-obtain-joint-probabilities">
+<h3>Step 3: Normalize Counts to Obtain Joint Probabilities<a class="headerlink" href="#step-3-normalize-counts-to-obtain-joint-probabilities" title="Permalink to this heading">#</a></h3>
+<p>We can now normalize counts to obtain joint probabilities:</p>
+<p><strong>Normalized Probabilities for Spam Class</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>Free (F2)</strong> = Yes</p></th>
+<th class="head"><p><strong>Free (F2)</strong> = No</p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Offer (F1)</strong> = Yes</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{30}{70} = 0.429 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{10}{70} = 0.143 \)</span></p></td>
+<td><p>0.571</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Offer (F1)</strong> = No</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{20}{70} = 0.286 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{10}{70} = 0.143 \)</span></p></td>
+<td><p>0.429</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p>0.714</p></td>
+<td><p>0.286</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Normalized Probabilities for Ham Class</strong></p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p></p></th>
+<th class="head"><p><strong>Free (F2)</strong> = Yes</p></th>
+<th class="head"><p><strong>Free (F2)</strong> = No</p></th>
+<th class="head"><p>Total</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>Offer (F1)</strong> = Yes</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{5}{60} = 0.083 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{15}{60} = 0.250 \)</span></p></td>
+<td><p>0.333</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Offer (F1)</strong> = No</p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{10}{60} = 0.167 \)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\( \frac{30}{60} = 0.500 \)</span></p></td>
+<td><p>0.667</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Total</strong></p></td>
+<td><p>0.250</p></td>
+<td><p>0.750</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+<p>We now have all we need to implement an MAP classifier.</p>
+</section>
+<section id="step-4-inference-for-a-new-email-observation">
+<h3>Step 4: Inference for a New Email Observation<a class="headerlink" href="#step-4-inference-for-a-new-email-observation" title="Permalink to this heading">#</a></h3>
+<p>Let’s see how to classify an email with the following characteristics:</p>
+<ul class="simple">
+<li><p><strong>Offer = Yes</strong></p></li>
+<li><p><strong>Free = Yes</strong></p></li>
+</ul>
+<p>Applying the MAP rule, we obtain:</p>
+<p><strong>For Spam:</strong></p>
+<div class="math notranslate nohighlight">
+\[P(\text{Spam} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) \propto P(\text{Spam}) \times P(\text{Yes, Yes} \mid \text{Spam})\]</div>
+<div class="math notranslate nohighlight">
+\[P(\text{Spam} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) \propto 0.6 \times 0.429 = 0.257\]</div>
+<p><strong>For Ham:</strong></p>
+<div class="math notranslate nohighlight">
+\[P(\text{Ham} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) \propto P(\text{Ham}) \times P(\text{Yes, Yes} \mid \text{Ham})\]</div>
+<div class="math notranslate nohighlight">
+\[P(\text{Ham} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) \propto 0.4 \times 0.083 = 0.033\]</div>
+<p>We note that:</p>
+<div class="math notranslate nohighlight">
+\[P(\text{Spam}) P(\text{Yes, Yes} \mid \text{Spam}) &gt; P(\text{Ham}) P(\text{Yes, Yes} \mid \text{Ham})\]</div>
+<p>Hence, we can classify the example as <strong>Spam</strong>.</p>
+<p>While this is not required in MAP classification, in this case, it is also easy to compute the actual probabilities:</p>
+<div class="math notranslate nohighlight">
+\[
+P(\text{Spam} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) = \frac{0.257}{0.257 + 0.033} = \frac{0.257}{0.29} \approx 0.886
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+P(\text{Ham} \mid \text{Offer} = \text{Yes}, \text{Free} = \text{Yes}) = \frac{0.033}{0.257 + 0.033} = \frac{0.033}{0.29} \approx 0.114
+\]</div>
+</section>
+</section>
+<section id="quadratic-discriminant-analysis-for-continuous-features">
+<h2>Quadratic Discriminant Analysis for Continuous Features<a class="headerlink" href="#quadratic-discriminant-analysis-for-continuous-features" title="Permalink to this heading">#</a></h2>
+<p>If our features are continuous (e.g., <code class="docutils literal notranslate"><span class="pre">height</span></code>, <code class="docutils literal notranslate"><span class="pre">weight</span></code>), we can’t build a table.</p>
+<p>One possibility is to model <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span> as a <strong>Multivariate Gaussian (Normal) Distribution</strong>. This is a distribution defined by a mean vector (its center) and a covariance matrix (its shape and orientation).</p>
+<div class="math notranslate nohighlight">
+\[P(\mathbf{x} | Y=k) = N(\mathbf{x}; \mathbf{\mu}_k, \mathbf{\Sigma}_k)\]</div>
+<p>This approach leads to <strong>Quadratic Discriminant Analysis (QDA)</strong>. It makes the flexible assumption that each class <span class="math notranslate nohighlight">\(k\)</span> has its <strong>own, unique mean vector <span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span></strong> and its <strong>own, unique covariance matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span></strong>.</p>
+<section id="how-qda-learns-estimating-the-parameters">
+<h3>How QDA “Learns”: Estimating the Parameters<a class="headerlink" href="#how-qda-learns-estimating-the-parameters" title="Permalink to this heading">#</a></h3>
+<p>To “fit” a QDA model, we just need to find the parameters of these distributions from our training data. We find these parameters using <strong>Maximum Likelihood Estimation (MLE)</strong>, which in this case are simply the familiar statistics (mean, covariance, etc.) calculated on <em>subsets</em> of our data.</p>
+<p>The “training” process involves 3 steps:</p>
+<p><strong>1. Estimate the Priors (<span class="math notranslate nohighlight">\(\hat{\pi}_k\)</span>):</strong>
+First, we estimate the prior probability <span class="math notranslate nohighlight">\(P(Y=k)\)</span> for each class, which we’ll call <span class="math notranslate nohighlight">\(\hat{\pi}_k\)</span>. This is often simply the proportion of training samples that belong to that class.</p>
+<ul class="simple">
+<li><p>Let <span class="math notranslate nohighlight">\(N\)</span> be the total number of training samples.</p></li>
+<li><p>Let <span class="math notranslate nohighlight">\(N_k\)</span> be the number of samples belonging to class <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\hat{\pi}_k = \frac{N_k}{N}
+\]</div>
+<p><strong>2. Estimate the Class Means (<span class="math notranslate nohighlight">\(\hat{\mathbf{\mu}}_k\)</span>):</strong>
+Next, we “subset” our data. For each class <span class="math notranslate nohighlight">\(k\)</span>, we look <em>only</em> at the training examples <span class="math notranslate nohighlight">\((\mathbf{x}_i, y_i)\)</span> where <span class="math notranslate nohighlight">\(y_i = k\)</span>. We then compute the average vector, or <strong>sample mean</strong>, for just that subset.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{\mu}}_k = \frac{1}{N_k} \sum_{i: y_i=k} \mathbf{x}_i
+\]</div>
+<p><strong>3. Estimate the Class Covariance Matrices (<span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}_k\)</span>):</strong>
+This is the most critical and computationally expensive step. Using that same subset for class <span class="math notranslate nohighlight">\(k\)</span>, we compute its <strong>sample covariance matrix</strong>. This <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}_k\)</span> matrix captures the unique shape, spread, and all the internal feature correlations (like <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> vs. <code class="docutils literal notranslate"><span class="pre">weight</span></code>) <em>for that specific class</em>.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{\Sigma}}_k = \frac{1}{N_k - 1} \sum_{i: y_i=k} (\mathbf{x}_i - \hat{\mathbf{\mu}}_k)(\mathbf{x}_i - \hat{\mathbf{\mu}}_k)^T
+\]</div>
+</section>
+<section id="how-qda-classifies">
+<h3>How QDA Classifies<a class="headerlink" href="#how-qda-classifies" title="Permalink to this heading">#</a></h3>
+<p>Once we have these three sets of parameters (<span class="math notranslate nohighlight">\(\hat{\pi}_k, \hat{\mathbf{\mu}}_k, \hat{\mathbf{\Sigma}}_k\)</span> for every class <span class="math notranslate nohighlight">\(k\)</span>), our model is fully “trained.” To make a prediction for a new point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, we just plug these estimated parameters into the MAP formula and find the <span class="math notranslate nohighlight">\(k\)</span> that gives the highest probability:</p>
+<div class="math notranslate nohighlight">
+\[
+h(\mathbf{x}) = \arg \max_{k} \left[ P(\mathbf{x} | Y=k)P(Y=k) \right]
+\]</div>
+<p>Given the monotonicity of the logarithm, we can alternatively write:</p>
+<div class="math notranslate nohighlight">
+\[
+h(\mathbf{x}) = \arg \max_{k} \left[ \log(P(\mathbf{x} | Y=k)) + \log(P(Y=k)) \right]
+\]</div>
+<p>Recall that:</p>
+<div class="math notranslate nohighlight">
+\[N\left( \mathbf{x;\mu,}\mathbf{\Sigma} \right) = \sqrt{\frac{1}{(2\pi)^{D}\det(\Sigma)}}e^{( - \frac{1}{2}\left( \mathbf{x} - \mathbf{\mu} \right)^{T}\Sigma^{- 1}\left( \mathbf{x} - \mathbf{\mu} \right))}\]</div>
+<p>Substituting our estimated Gaussian parameters, we get the following expressions:</p>
+<div class="math notranslate nohighlight">
+\[
+h(\mathbf{x}) = \arg \max_{k} \delta_k(\mathbf{x})
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+\delta_k(\mathbf{x}) = -\frac{1}{2}\log(|\hat{\mathbf{\Sigma}}_k|) - \frac{1}{2}(\mathbf{x} - \hat{\mathbf{\mu}}_k)^T \hat{\mathbf{\Sigma}}_k^{-1} (\mathbf{x} - \hat{\mathbf{\mu}}_k) + \log(\hat{\pi}_k)
+\]</div>
+<p>Where we call <span class="math notranslate nohighlight">\(\delta_k(\mathbf{x})\)</span> the <strong>QDA discriminant function</strong>. In practice, given an input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, we compute a score for each class using the discriminant <span class="math notranslate nohighlight">\(\delta_k(\mathbf{x})\)</span> and assign <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the class associated to the highest score.</p>
+</section>
+<section id="mahalanobis-distance-classification">
+<h3>Mahalanobis Distance Classification<a class="headerlink" href="#mahalanobis-distance-classification" title="Permalink to this heading">#</a></h3>
+<p>Let’s look more closely at the discriminant function. We can see it as follows:</p>
+<div class="math notranslate nohighlight">
+\[\delta_k(\mathbf{x}) = \underbrace{-\frac{1}{2}\log(|\hat{\mathbf{\Sigma}}_k|)}_{\text{Log-Determinant (Volume)}} - \frac{1}{2}\underbrace{(\mathbf{x} - \hat{\mathbf{\mu}}_k)^T \hat{\mathbf{\Sigma}}_k^{-1} (\mathbf{x} - \hat{\mathbf{\mu}}_k)}_{\text{Squared Mahalanobis Distance}} + \underbrace{\log(\hat{\pi}_k)}_{\text{Log Prior}}\]</div>
+<p>The first and third terms do not depend on <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and are used as normalization factors which take into account properties of the class such as its dispersion and numerosity.</p>
+<p>The second term is the squared Mahalanobis distance. The Mahalanobis distance is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[D_M(\mathbf{x}) = \sqrt{(\mathbf{x}-\mathbf{\mu})^T \Sigma^{-1}(\mathbf{x}-\mathbf{\mu})}\]</div>
+<p>We have seen this term in the exponential of the multivariate Gaussian distribution.</p>
+<p>The Mahalanobis distance estimates <strong>the distance between a multidimensional point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and a multivariate Gaussian distribution</strong>. To do so, we need to take into account the covariance matrix of each distribution, which defines how the data vary along the different directions.</p>
+</section>
+<section id="an-intuition-for-mahalanobis-distance">
+<h3>An Intuition for Mahalanobis Distance<a class="headerlink" href="#an-intuition-for-mahalanobis-distance" title="Permalink to this heading">#</a></h3>
+<p>Why use this complex formula instead of simple <strong>Euclidean Distance</strong>?</p>
+<ul class="simple">
+<li><p><strong>Euclidean distance</strong> (is <span class="math notranslate nohighlight">\(\sqrt{(\mathbf{x}-\mathbf{\mu})^T(\mathbf{x}-\mathbf{\mu})}\)</span>. It assumes the data is a “round” cloud (identity covariance) and that all features have the same scale. We obtain this distance setting the covariance matrix to the identity.</p></li>
+<li><p><strong>The Problem:</strong> Real-world data is not “round.” It’s “squashed” and “rotated” (features are correlated, like <code class="docutils literal notranslate"><span class="pre">height</span></code> and <code class="docutils literal notranslate"><span class="pre">weight</span></code>) and features have different scales (like <code class="docutils literal notranslate"><span class="pre">age</span></code> vs. <code class="docutils literal notranslate"><span class="pre">salary</span></code>).</p></li>
+</ul>
+<section id="mahalanobis-distance-in-1d-the-z-score">
+<h4>Mahalanobis Distance in 1D (The “Z-Score”)<a class="headerlink" href="#mahalanobis-distance-in-1d-the-z-score" title="Permalink to this heading">#</a></h4>
+<p>In 1D, a Gaussian distribution is just <span class="math notranslate nohighlight">\(N(\mu, \sigma^2)\)</span>. The Mahalanobis distance formula
+$<span class="math notranslate nohighlight">\(D_M(\mathbf{x}) = \sqrt{(\mathbf{x}-\mathbf{\mu})^T \Sigma^{-1}(\mathbf{x}-\mathbf{\mu})}\)</span>$
+simplifies to:</p>
+<div class="math notranslate nohighlight">
+\[D_M(x) = \sqrt{(x-\mu) (\sigma^2)^{-1} (x-\mu)} = \sqrt{\frac{(x-\mu)^2}{\sigma^2}} = \left| \frac{x-\mu}{\sigma} \right|\]</div>
+<p>This is simply the <strong>absolute value of the Z-score</strong>!</p>
+<p>It’s not a “dumb” distance (like meters), but a “smart” probabilistic distance measured in <strong>units of standard deviations</strong>. A point <code class="docutils literal notranslate"><span class="pre">x=5</span></code> might be <em>visually</em> closer to <code class="docutils literal notranslate"><span class="pre">mu=6</span></code> (<span class="math notranslate nohighlight">\(\sigma=0.5\)</span>) than to <code class="docutils literal notranslate"><span class="pre">mu=10</span></code> (<span class="math notranslate nohighlight">\(\sigma=5\)</span>), but its Z-score (and thus its Mahalanobis distance) will be much larger for the first population.</p>
+<p>Let’s visualize this:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/9835b1bd8724df48c54bc761791ab625154804dc9b5b339daaaa027a9dab957b.png" src="../_images/9835b1bd8724df48c54bc761791ab625154804dc9b5b339daaaa027a9dab957b.png" />
+</div>
+</div>
+<p>As we can see, even though the red point at <span class="math notranslate nohighlight">\(x=0.1\)</span> is <em>visually</em> closer to the mean of Population 2 (<span class="math notranslate nohighlight">\(\mu_2=3\)</span>), it is <strong>probabilistically closer</strong> to Population 1.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D_M\)</span> for Population 1 = 1.70 (The point is 1.7 standard deviations from the mean)</p></li>
+<li><p><span class="math notranslate nohighlight">\(D_M\)</span> for Population 2 = 2.90 (The point is 2.9 standard deviations from the mean)</p></li>
+</ul>
+<p>This is coherent with the fact that the probability of the point under the blue curve (Pop 1) is higher than under the orange curve (Pop 2). When priors are equal, QDA will assign the point to the class with the <strong>smallest Mahalanobis distance</strong>.</p>
+</section>
+<section id="extending-to-multiple-dimensions-d-1">
+<h4>Extending to Multiple Dimensions (D &gt; 1)<a class="headerlink" href="#extending-to-multiple-dimensions-d-1" title="Permalink to this heading">#</a></h4>
+<p>Now we can understand the multivariate formula. It’s the exact same idea, but in <span class="math notranslate nohighlight">\(d\)</span>-dimensions.</p>
+<ul class="simple">
+<li><p>In 1D, we “normalized” by variance: <span class="math notranslate nohighlight">\((x-\mu) \cdot (\sigma^2)^{-1} \cdot (x-\mu)\)</span></p></li>
+<li><p>In <span class="math notranslate nohighlight">\(d\)</span>-D, we “normalize” by the <strong>Covariance Matrix <span class="math notranslate nohighlight">\(\Sigma\)</span></strong>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[D_M^2(\mathbf{x}) = (\mathbf{x}-\mathbf{\mu})^T \mathbf{\Sigma}^{-1} (\mathbf{x}-\mathbf{\mu})\]</div>
+<p>This formula does what the 1D version did, but it <em>also</em> accounts for the <strong>correlation</strong> (rotation) and <strong>scale</strong> of all features simultaneously. It measures the “statistical distance” from a point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the center of a multivariate Gaussian <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span>, relative to its shape <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p>
+<p>The 2D plot below shows the same concept..</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/063fe89bde732cdbc0c82069ad897642d909a6152be7979f6cc4e3d04b397a2c.png" src="../_images/063fe89bde732cdbc0c82069ad897642d909a6152be7979f6cc4e3d04b397a2c.png" />
+</div>
+</div>
+<p>Again, the red point is <em>visually</em> closer to Population 2, but its Mahalanobis distance (<span class="math notranslate nohighlight">\(D_M\)</span>) is smaller for Population 1 because it “fits” better with that population’s wider, rotated shape.</p>
+<p>So, once parameters are fitted, QDA assigns each example to the nearest class in terms of this “smart” Mahalanobis distance, adjusted by the class prior (<span class="math notranslate nohighlight">\(\hat{\pi}_k\)</span>) and volume (<span class="math notranslate nohighlight">\(|\hat{\mathbf{\Sigma}}_k|\)</span>). This results in a flexible, quadratic decision boundary, as seen in this example on the Iris dataset below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" src="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="limitations-of-qda">
+<h3>Limitations of QDA<a class="headerlink" href="#limitations-of-qda" title="Permalink to this heading">#</a></h3>
+<p>A quick look at how QDA computes its parameters reveals that QDA is <strong>very computationally expensive</strong>.</p>
+<p>If we have <span class="math notranslate nohighlight">\(d\)</span> features, each <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}_k\)</span> matrix has <span class="math notranslate nohighlight">\(\frac{d(d+1)}{2}\)</span> unique parameters to estimate. For <span class="math notranslate nohighlight">\(d=100\)</span> features, this is over 5,000 parameters, and we must do this <em>for every single class</em>.</p>
+<p>This is highly prone to overfitting, which limits the practical applicability of QDA.</p>
+</section>
+</section>
+<section id="linear-discriminant-analysis-lda">
+<h2>Linear Discriminant Analysis (LDA)<a class="headerlink" href="#linear-discriminant-analysis-lda" title="Permalink to this heading">#</a></h2>
+<p><strong>Linear Discriminant Analysis (LDA)</strong> introduces a first simplification in QDA which allows to make it much more stable, reducing the number of parameters that need to be computed in order to fit the model.</p>
+<section id="the-lda-assumption">
+<h3>The LDA Assumption<a class="headerlink" href="#the-lda-assumption" title="Permalink to this heading">#</a></h3>
+<p>LDA makes one key compromise: it assumes that while the class means <span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span> are different, <strong>all classes share the <em>same</em> covariance matrix</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{\Sigma}_1 = \mathbf{\Sigma}_2 = \ldots = \mathbf{\Sigma}_k = \mathbf{\Sigma}
+\]</div>
+<p>This simplifies the model, but it also makes it less flexible.</p>
+</section>
+<section id="how-lda-learns-estimating-the-parameters">
+<h3>How LDA “Learns”: Estimating the Parameters<a class="headerlink" href="#how-lda-learns-estimating-the-parameters" title="Permalink to this heading">#</a></h3>
+<p>The “training” process is similar to QDA, but with one crucial difference in Step 3:</p>
+<p><strong>1. Estimate the Priors (<span class="math notranslate nohighlight">\(\hat{\pi}_k\)</span>):</strong>
+This is identical to QDA.
+$<span class="math notranslate nohighlight">\(
+\hat{\pi}_k = \frac{N_k}{N}
+\)</span>$</p>
+<p><strong>2. Estimate the Class Means (<span class="math notranslate nohighlight">\(\hat{\mathbf{\mu}}_k\)</span>):</strong>
+This is also identical to QDA.
+$<span class="math notranslate nohighlight">\(
+\hat{\mathbf{\mu}}_k = \frac{1}{N_k} \sum_{i: y_i=k} \mathbf{x}_i
+\)</span>$</p>
+<p><strong>3. Estimate the <em>Pooled</em> Covariance Matrix (<span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span>):</strong>
+This is the key difference. Instead of <span class="math notranslate nohighlight">\(k\)</span> separate matrices, we compute a <em>single</em>, <strong>pooled covariance matrix</strong> <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span>. This is a weighted average of the individual sample covariance matrices for each class.</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{\Sigma}} = \frac{1}{N - K} \sum_{k=1}^K (N_k - 1) \hat{\mathbf{\Sigma}}_k
+\]</div>
+<p>(where <span class="math notranslate nohighlight">\(K\)</span> is the number of classes and <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}_k\)</span> is the sample covariance for class <span class="math notranslate nohighlight">\(k\)</span>, as defined in the QDA section).</p>
+<p>If we plug definition of <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}_k\)</span> in the previous expression, we obtain:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathbf{\Sigma}} = \frac{1}{N - K} \sum_{k=1}^K \sum_{i: y_i=k} (\mathbf{x}_i - \hat{\mathbf{\mu}}_k)(\mathbf{x}_i - \hat{\mathbf{\mu}}_k)^T
+\]</div>
+<p>which allows to estiamte the matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span> directly from data. Note that we are now computing a single matrix which many more data points than before (all data points rather than the subset related to a given class). This makes the process much more stable and less prone to overfitting.</p>
+</section>
+<section id="how-lda-classifies-the-linear-in-lda">
+<h3>How LDA Classifies: The “Linear” in LDA<a class="headerlink" href="#how-lda-classifies-the-linear-in-lda" title="Permalink to this heading">#</a></h3>
+<p>Now, when we plug this <em>single</em> <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span> into our discriminant function <span class="math notranslate nohighlight">\(\delta_k(\mathbf{x})\)</span>, the math changes.</p>
+<p>The original QDA function was:
+$<span class="math notranslate nohighlight">\(
+\delta_k(\mathbf{x}) = -\frac{1}{2}\log(|\hat{\mathbf{\Sigma}}_k|) - \frac{1}{2}(\mathbf{x} - \hat{\mathbf{\mu}}_k)^T \hat{\mathbf{\Sigma}}_k^{-1} (\mathbf{x} - \hat{\mathbf{\mu}}_k) + \log(\hat{\pi}_k)
+\)</span>$</p>
+<p>In LDA, the terms <span class="math notranslate nohighlight">\(-\frac{1}{2}\log(|\hat{\mathbf{\Sigma}}|)\)</span> and the quadratic part <span class="math notranslate nohighlight">\(\mathbf{x}^T \hat{\mathbf{\Sigma}}^{-1} \mathbf{x}\)</span> are now <em>the same for all classes <span class="math notranslate nohighlight">\(k\)</span></em>. Since they are constant with respect to <span class="math notranslate nohighlight">\(k\)</span>, they drop out of the <span class="math notranslate nohighlight">\(\arg \max\)</span> comparison.</p>
+<p>The discriminant function simplifies to a <strong>linear discriminant function</strong>:</p>
+<div class="math notranslate nohighlight">
+\[
+\delta_k(\mathbf{x}) = \mathbf{w}_k^T \mathbf{x} + w_{k0}
+\]</div>
+<p>where:
+$<span class="math notranslate nohighlight">\(
+\mathbf{w}_k = \hat{\mathbf{\Sigma}}^{-1}\hat{\mathbf{\mu}}_k
+\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(
+w_{k0} = -\frac{1}{2} \hat{\mathbf{\mu}}_k^T \hat{\mathbf{\Sigma}}^{-1} \hat{\mathbf{\mu}}_k + \log(\hat{\pi}_k)
+\)</span>$</p>
+<p>Because the final decision function <span class="math notranslate nohighlight">\(\delta_k(\mathbf{x})\)</span> is a linear function of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, the decision boundaries between any two classes will always be a <strong>straight line (or hyperplane)</strong>.</p>
+</section>
+<section id="lda-example-in-python-iris-dataset">
+<h3>LDA Example in Python: Iris Dataset<a class="headerlink" href="#lda-example-in-python-iris-dataset" title="Permalink to this heading">#</a></h3>
+<p>Let’s compare LDA directly to QDA on our Iris dataset. We expect to see straight-line boundaries instead of the curved ones from QDA.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/336a172574063924d103b8caedfb229af2ba80bad0c6cf426999f98b537473c9.png" src="../_images/336a172574063924d103b8caedfb229af2ba80bad0c6cf426999f98b537473c9.png" />
+</div>
+</div>
+</section>
+<section id="interpretation-and-limitations-of-lda">
+<h3>Interpretation and Limitations of LDA<a class="headerlink" href="#interpretation-and-limitations-of-lda" title="Permalink to this heading">#</a></h3>
+<p>The comparison is clear:</p>
+<ul class="simple">
+<li><p><strong>QDA (Left)</strong> learns flexible, curved boundaries that try to wrap around the unique shape of each class.</p></li>
+<li><p><strong>LDA (Right)</strong> is constrained to using straight lines. It cannot curve to fit the <code class="docutils literal notranslate"><span class="pre">versicolor</span></code> and <code class="docutils literal notranslate"><span class="pre">virginica</span></code> classes as tightly.</p></li>
+</ul>
+<p>This is the <strong>Bias-Variance Tradeoff</strong> in action:</p>
+<ul class="simple">
+<li><p><strong>QDA</strong> has <strong>low bias</strong> (it’s flexible) but <strong>high variance</strong> (it’s prone to overfitting, especially with many features).</p></li>
+<li><p><strong>LDA</strong> has <strong>higher bias</strong> (it’s “biased” to linear boundaries) but <strong>lower variance</strong> (it’s more stable, less likely to overfit, and requires less data).</p></li>
+</ul>
+<p>LDA is a good compromise, but for <em>very</em> high-dimensional data (like <span class="math notranslate nohighlight">\(d=10,000\)</span> features for text), estimating even <em>one</em> full covariance matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span> is still impossible. This leads us to our final and most extreme simplification: Naive Bayes.</p>
+</section>
+</section>
+<section id="naive-bayes-the-final-simplification">
+<h2>Naive Bayes: The Final Simplification<a class="headerlink" href="#naive-bayes-the-final-simplification" title="Permalink to this heading">#</a></h2>
+<p>While LDA makes it easier to fit the model to the data, it can still be very computationally demanding.</p>
+<p>Indeed, for <strong>very high-dimensional data</strong> (<span class="math notranslate nohighlight">\(d=10,000\)</span> features, like in text classification), estimating even <em>one</em> full covariance matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span> can be computationally and statistically challenging. This is an aspect of the <strong>Curse of Dimensionality</strong>.</p>
+<p>This leads us to our final and most extreme simplification: <strong>Naive Bayes</strong>.</p>
+<section id="the-naive-assumption">
+<h3>The “Naive” Assumption<a class="headerlink" href="#the-naive-assumption" title="Permalink to this heading">#</a></h3>
+<p>Recall that our problem is estimating</p>
+<div class="math notranslate nohighlight">
+\[P\left( X \middle| Y \right)\]</div>
+<p>Considering a multidimensional <span class="math notranslate nohighlight">\(X=(X_1,X_2,\ldots,X_n)\)</span>, we may factorize the expression above as follows:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X \middle| Y \right) = P\left( X_{1},\ldots,X_{n} \middle| Y \right) = P\left( X_{1} \middle| Y \right)P\left( X_{2} \middle| X_{1},Y \right)P\left( X_{3} \middle| X_{2},X_{1},Y \right)\ldots P(X_{n}|X_{1},\ldots,X_{n - 1},Y)\]</div>
+<p>However, this is not a very helpful factorization as the terms
+<span class="math notranslate nohighlight">\(P(X_{i}|X_{1},\ldots,X_{i - 1},C)\)</span> are conditioned also on other
+features, which makes them not easy to model.</p>
+<p>The Naive Bayes classifier makes one, very strong (“naive”) assumption:</p>
+<blockquote>
+<div><p>It assumes that all features <span class="math notranslate nohighlight">\(X_i\)</span> are <strong>conditionally independent</strong> given the class <span class="math notranslate nohighlight">\(Y=k\)</span>.</p>
+</div></blockquote>
+<p>This can be written as follows:</p>
+<div class="math notranslate nohighlight">
+\[X_{i}\bot X_{j}\ |\ Y,\ \forall i \neq j\]</div>
+<blockquote>
+<div><p><strong>Spam Classification Example</strong>
+Let’s assume a spam classification example and imagine that features <span class="math notranslate nohighlight">\(X_{i}\)</span> and <span class="math notranslate nohighlight">\(X_{j}\)</span> are related to the
+number of appearance of specific words in the current email represented by <span class="math notranslate nohighlight">\(X\)</span>.
+If <span class="math notranslate nohighlight">\(X_{i}\)</span> and <span class="math notranslate nohighlight">\(X_{j}\)</span> are <strong>word counts</strong>, then we are saying that if I
+take all non-spam e-mails, then the number of occurrences of a given
+word <strong>does not influence</strong> the number of occurrences of <strong>another
+word</strong>. This is <strong>obviously not true in general!</strong> For instance, there
+can be legitimate e-mails of different topics. If the e-mail is about a
+vacation, the words ‘trip’, ‘flight’, ‘luggage’ will appear often.
+Instead, if the e-mail is about work, the words ‘meeting’, ‘report’,
+‘time’, will appear more often. This means that, within the same
+category (non-spam e-mails), the number of occurrences of a word (e.g.,
+‘trip’) may be related to the number of occurrences of another words
+(e.g., ‘flight’), which breaks the assumption of <strong>conditional
+independence</strong>. This is why this assumption is called <strong>naïve
+assumption</strong>. With this in mind, it should be considered that, despite
+such naïve assumption, the Naïve Bayes Classifier works surprisingly
+well in many contexts.</p>
+</div></blockquote>
+<p>We know that:</p>
+<div class="math notranslate nohighlight">
+\[X\bot Y|Z \Leftrightarrow P\left( X,Y|Z \right) = P\left( X|Z \right)P\left( Y|Z \right)\]</div>
+<p>Hence, we discover that, under the assumption of conditional
+independence:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X_{1},\ldots,X_{n} \middle| Y \right) = P\left( X_{1} \middle| Y \right)P\left( X_{2} \middle| Y \right)\ldots P(X_{n}|Y)\]</div>
+<p>So, we can re-write the MAP classification rule as:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \arg_{k}max\ P\left( \mathbf{x}_{1} \middle| Y=k \right)\left( \mathbf{x}_{2} \middle| Y=k \right)\ldots P\left( \mathbf{x}_{n} \middle| Y=k \right)P(Y=k)\]</div>
+</section>
+<section id="flavors-of-naive-bayes">
+<h3>Flavors of Naive Bayes<a class="headerlink" href="#flavors-of-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>The single <span class="math notranslate nohighlight">\(P(X_{1}|Y=k)\)</span> terms are now easy to model, since <span class="math notranslate nohighlight">\(X_{1}\)</span> is
+mono-dimensional. In practice, depending on the considered problem, we
+can model these terms in different ways. Two common approaches,
+depending on the kind of data we have, are to use a <strong>Gaussian distribution</strong> or a
+<strong>Multinomial distribution</strong>.</p>
+<p>When we use Gaussian distributions to model the <span class="math notranslate nohighlight">\(P(X_{i}|Y)\)</span> terms, the
+classification method is called “<strong>Gaussian Naïve Bayes</strong>”. Similarly, if we
+consider a multinomial distribution, the classification method is called
+“<strong>Multinomial Naïve Bayes</strong>”.</p>
+</section>
+<section id="a-note-on-computational-complexity">
+<h3>A note on computational complexity<a class="headerlink" href="#a-note-on-computational-complexity" title="Permalink to this heading">#</a></h3>
+<p>Note that Naive Bayes “solves” the computational complexity problem of QDA and LDA. Indeed:</p>
+<ul class="simple">
+<li><p><strong>QDA</strong> had to estimate <span class="math notranslate nohighlight">\(\sim k \times d^2/2\)</span> parameters.</p></li>
+<li><p><strong>LDA</strong> had to estimate <span class="math notranslate nohighlight">\(\sim d^2/2\)</span> parameters.</p></li>
+<li><p><strong>Naive Bayes</strong> only has to estimate <span class="math notranslate nohighlight">\(\sim k \times d\)</span> parameters.</p></li>
+</ul>
+<p>Instead of one giant, complex <span class="math notranslate nohighlight">\(d\)</span>-dimensional problem, we now have <span class="math notranslate nohighlight">\(d\)</span> tiny, 1-dimensional problems.</p>
+</section>
+<section id="gaussian-naive-bayes">
+<h3>Gaussian Naïve Bayes<a class="headerlink" href="#gaussian-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>Let us consider again our sex classification example based on height and
+weight. We will consider <span class="math notranslate nohighlight">\(X = \lbrack H,W\rbrack\)</span>, which are random
+variables representing heights and weights of subjects. If we assume
+that the data is approximately Gaussian, the probabilities <span class="math notranslate nohighlight">\(P(H|C)\)</span> and
+<span class="math notranslate nohighlight">\(P(W|C)\)</span> can be modeled with univariate (1D) Gaussian distributions.
+This is done by first obtaining four samples:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_{1}\)</span>: the heights of subjects when <span class="math notranslate nohighlight">\(C = 1\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_{1}\)</span>: the weights of subjects when <span class="math notranslate nohighlight">\(C = 1;\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_{0}\)</span>: the heights of subjects when <span class="math notranslate nohighlight">\(C = 0\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_{0}\)</span>: the weights of subjects when <span class="math notranslate nohighlight">\(C = 0.\)</span></p></li>
+</ul>
+<blockquote>
+<div><p>We hence model each sample as a 1D Gaussian distribution by computing
+a mean and a variance value from each of these samples to obtain four
+Gaussian distributions:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P\left( H = h \middle| C = 0 \right) = N(x;\mu_{1},\sigma_{1})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( W = w \middle| C = 0 \right) = N(x;\mu_{2},\sigma_{2})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( H = h \middle| C = 1 \right) = N(x;\mu_{3},\sigma_{3})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( W = w \middle| C = 1 \right) = N(x;\mu_{4},\sigma_{4})\)</span>;</p></li>
+</ul>
+<p>After this, we can apply the classification rule:</p>
+<ul class="simple">
+<li><p>The example <span class="math notranslate nohighlight">\((h,w)\)</span> is classified as class 1 if</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(P\left( h \middle| C = 1 \right)P\left( w \middle| C = 1 \right)P(C = 1) &gt; P\left( h \middle| C = 0 \right)P\left( w \middle| C = 0 \right)P(C = 0)\)</span>;</p>
+<ul class="simple">
+<li><p>The example <span class="math notranslate nohighlight">\((h,w)\)</span> is classified as class 0 otherwise.</p></li>
+</ul>
+<p>We can exemplify this process as follows:</p>
+<p><img alt="" src="../_images/map_weight3.png" /></p>
+</section>
+<section id="gaussian-naive-bayes-and-qda">
+<h3>Gaussian Naive Bayes and QDA<a class="headerlink" href="#gaussian-naive-bayes-and-qda" title="Permalink to this heading">#</a></h3>
+<p>We will not see it in details, but it can be shown that a <strong>Gaussian Naive Bayes classifier is equivalent to a Quadratic Discriminant Analysis classifier with diagonal covariance matrices</strong>. By forcing the covariance matrices to have zeros on all off-diagonal elements, we are assuming that variables are <strong>conditionally independent with respect to classes</strong> (hence independent within each class).</p>
+<p>The figure below compares a Quadratic Discriminant Analysis classifier with a Gaussian Naive Bayes on the same data:</p>
+<p>As we can see, in both cases, decision boundaries are non-linear. This happens because we did not constrain all covariance matrices to be the equal.</p>
+<p>Differently from QDA, in Gaussian Naive Bayes, the fitted Gaussians are <strong>aligned to the axes</strong>, which is due to the naive assumption. This brings some differences in the decision boundary as shown below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" src="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" />
+</div>
+</div>
+<p>This figure perfectly summarizes the three models:</p>
+<ul class="simple">
+<li><p><strong>QDA (Left):</strong> Most flexible. It learns a separate, <em>rotated</em> ellipse (full <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>) for each class. Its boundaries are quadratic.</p></li>
+<li><p><strong>LDA (Middle):</strong> The compromise. It learns <em>one</em> pooled, <em>rotated</em> ellipse (full <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>) and uses it for all classes. Its boundaries are linear.</p></li>
+<li><p><strong>GNB (Right):</strong> Most simple. It learns a separate, <em>axis-aligned</em> ellipse (diagonal <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>) for each class. Its boundaries are quadratic but can’t capture any feature correlation (tilt).</p></li>
+</ul>
+</section>
+<section id="summary-a-family-of-assumptions">
+<h3>Summary: A Family of Assumptions<a class="headerlink" href="#summary-a-family-of-assumptions" title="Permalink to this heading">#</a></h3>
+<p>These three generative models are a “family” of classifiers based on different assumptions about the class covariance matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>.</p>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Model</p></th>
+<th class="head text-left"><p>Assumption about <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span></p></th>
+<th class="head text-left"><p>Resulting Boundary</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><strong>QDA</strong></p></td>
+<td class="text-left"><p>Each class has its <strong>own, full</strong> <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>.</p></td>
+<td class="text-left"><p>Quadratic</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><strong>LDA</strong></p></td>
+<td class="text-left"><p>All classes <strong>share one, full</strong> <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>.</p></td>
+<td class="text-left"><p>Linear</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><strong>GNB</strong></p></td>
+<td class="text-left"><p>Each class has its <strong>own, diagonal</strong> <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>.</p></td>
+<td class="text-left"><p>Quadratic (Axis-Aligned)</p></td>
+</tr>
+</tbody>
+</table>
+<p>We trade flexibility (QDA) for stability and computational efficiency (LDA, GNB) by making progressively “stronger” or “more naive” assumptions.</p>
+</section>
+<section id="multinomial-naive-bayes">
+<h3>Multinomial Naïve Bayes<a class="headerlink" href="#multinomial-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>In the previous examples, we have considered cases in which the input
+features are continuous. In these cases, indeed, it can make sense to
+<strong>estimate likelihoods using continuous probability distributions</strong>
+(PDF) such as the Gaussian distribution. When the input features are
+discrete instead, it makes sense to <strong>approximate them as probability
+mass functions (PFM)</strong>.</p>
+<p>Let us consider for instance the case of <strong>text classification</strong>. If we
+represent text using word counts (bag of words representation), the
+input features will be <strong>discrete</strong>. In particular, given a vocabulary
+<span class="math notranslate nohighlight">\(V\)</span> of size <span class="math notranslate nohighlight">\(n\)</span>, the input features will be tuples of <span class="math notranslate nohighlight">\(n\)</span> natural
+numbers:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} = (x_{1},x_{2},x_{3},\ldots,x_{n})\]</div>
+<p>with <span class="math notranslate nohighlight">\(x_{i} \in N\)</span> being the number of times [the term]{.ul} <span class="math notranslate nohighlight">\(i\)</span>
+[appears in document]{.ul} <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>[.]{.ul}</p>
+<p>Hence, the probability of a given document <strong>x</strong>, given its class (the
+likelihood) can be modeled as</p>
+<div class="math notranslate nohighlight">
+\[P(x_{1},\ldots,x_{n}|c)\]</div>
+<p>If we assume the <strong>naïve hypothesis</strong>, then we are saying that, [given
+documents of a fixed class]{.ul}, the number of times that word <span class="math notranslate nohighlight">\(i\)</span>
+appears in the text is independent of the number of times that word <span class="math notranslate nohighlight">\(j\)</span>
+appears in the text.</p>
+<p>[If we imagine the process of writing a document as the one of picking
+words from the vocabulary]{.ul} <span class="math notranslate nohighlight">\(V\)</span>[, then, chosen a class]{.ul}
+<span class="math notranslate nohighlight">\(C = c\)</span>[, we can model the probability]{.ul}
+<span class="math notranslate nohighlight">\(P(x_{1},\ldots,x_{n}|C = c)\)</span> [with a <strong>multinomial distribution</strong>.
+Recall that we need to estimate a different multinomial distribution for
+each possible value of]{.ul} <span class="math notranslate nohighlight">\(C\)</span>[.]{.ul}</p>
+<p>Remember that <strong>the multinomial distribution models the probability of
+obtaining exactly</strong>
+<span class="math notranslate nohighlight">\(\mathbf{(}\mathbf{n}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{n}_{\mathbf{k}}\mathbf{)}\)</span>
+<strong>occurrences with</strong>
+<span class="math notranslate nohighlight">\(\mathbf{n}\mathbf{=}\sum_{\mathbf{i}}^{}\mathbf{n}_{\mathbf{i}}\)</span> <strong>for
+each of</strong> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> <strong>possible outcomes in a sequence of</strong>
+<span class="math notranslate nohighlight">\(\mathbf{n}\)</span> <strong>independent experiments which follow categorical
+distributions with probabilities</strong>
+<span class="math notranslate nohighlight">\(\mathbf{p}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{p}_{\mathbf{k}}\)</span>.</p>
+<p>In our case, the individual “experiments” consist in the process of
+generating a word. We can assume that this process follows a categorical
+distribution with some words being more common than others. These
+experiments are <em>independent</em> because of the naïve assumption.</p>
+<p>To characterize our multinomial distribution, we need to fix/estimate
+some parameters:</p>
+<ul class="simple">
+<li><p><strong>Number of experiments</strong>: the number of words in the document. This
+will be the sum of the features <span class="math notranslate nohighlight">\(\sum_{i}^{}x_{i}\)</span>.</p></li>
+<li><p><strong>Number of possible outcomes</strong>: the number of words in the
+vocabulary.</p></li>
+<li><p><strong>Probability of each outcome</strong>[: the probability of generating a
+word, given the class]{.ul}. We will call this probability
+<span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span>. The most common way to evaluate this term is by
+<strong>counting the number of times that each word appears in all
+documents of a given class</strong>.</p></li>
+</ul>
+<p>Hence, we can solve text classification with MAP using the expression:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( x_{1},x_{2},\ldots,c_{n} \middle| c \right)P\left( c \right)\]</div>
+<p>Using the analytical form of the multinomial distribution:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
+<p>We can note that, similarly to the evidence <span class="math notranslate nohighlight">\(P(X)\)</span>, the term
+<span class="math notranslate nohighlight">\(\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}\)</span> is independent from
+<span class="math notranslate nohighlight">\(c\)</span> and hence we can safely ignore it if our aim is not to compute
+probability values:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
+<section id="estimating-the-terms-p-text-ci-and-p-c">
+<h4>Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span><a class="headerlink" href="#estimating-the-terms-p-text-ci-and-p-c" title="Permalink to this heading">#</a></h4>
+<p>We can model the terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> in a frequentist way as follows:</p>
+<div class="math notranslate nohighlight">
+\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)}}}{\sum_{j}^{}{\sum_{k}^{}{\lbrack y^{(j)} = c\rbrack x_{k}^{(j)}}}}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\left\lbrack \cdot \right\rbrack\)</span> denotes the Iverson bracket,
+which is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\lbrack x \right\rbrack = \left\{ \begin{matrix}
+1\ \text{if}\ x\ \text{is}\ \text{true} \\
+0\ \text{ot}h\text{erwise} \\
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Hence, in the expression above:</p>
+<ul class="simple">
+<li><p>The numerator counts the number of times word <span class="math notranslate nohighlight">\(i\)</span> appears in
+documents of class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
+<li><p>The denominator counts all the words appearing in all documents of
+class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
+<li><p>Hence, the expression is <strong>the fraction of times word i appears
+among all words in documents of class c</strong>;</p></li>
+</ul>
+<p>In practice, since some words can have zero occurrences, we perform
+‘Laplacian smoothing’ by adding a “1” to each term as follows:</p>
+<div class="math notranslate nohighlight">
+\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)} + 1}}{\sum_{j}^{}{(\sum_{i}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{\left( j \right)} + 1)}}}\]</div>
+<p>This allows to make sure that we do not divide by zero.</p>
+<p>We can estimate the prior probability as:</p>
+<div class="math notranslate nohighlight">
+\[p\left( c \right) = \frac{\sum_{j}^{}{\lbrack y^{\left( j \right)} = c\rbrack}}{N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of documents. Alternatively, we can assume
+uniform priors and set:</p>
+<div class="math notranslate nohighlight">
+\[P\left( c \right) = \frac{1}{M}\]</div>
+</section>
+</section>
+<section id="flavor-2-multinomial-naive-bayes-mnb">
+<h3>Flavor 2: Multinomial Naive Bayes (MNB)<a class="headerlink" href="#flavor-2-multinomial-naive-bayes-mnb" title="Permalink to this heading">#</a></h3>
+<p>In the previous section, we used <strong>Gaussian Naive Bayes (GNB)</strong>, which is ideal for <strong>continuous features</strong> (like <code class="docutils literal notranslate"><span class="pre">petal_length</span></code>) that we can model with a Gaussian (bell curve).</p>
+<p>But what about <strong>discrete count data</strong>? The most common example is <strong>text classification</strong> (e.g., spam filtering).</p>
+<p>If we represent text using a “Bag of Words” (BoW), our features <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> are a vector of word counts:
+$<span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, x_2, \ldots, x_d)\)</span><span class="math notranslate nohighlight">\(
+where \)</span>x_i<span class="math notranslate nohighlight">\( is the number of times word \)</span>i$ from our vocabulary appears in the document.</p>
+<p>We can’t model this with a Gaussian. We need a different model for the likelihood <span class="math notranslate nohighlight">\(P(X_i | Y=k)\)</span>. For count data, we use a <strong>Multinomial Distribution</strong>.</p>
+<p>This leads to <strong>Multinomial Naive Bayes (MNB)</strong>.</p>
+</section>
+<section id="the-bag-of-words-intuition">
+<h3>The “Bag of Words” Intuition<a class="headerlink" href="#the-bag-of-words-intuition" title="Permalink to this heading">#</a></h3>
+<p>The “naive” assumption here is that <em>given the class</em>, the appearance of one word is independent of the appearance of another.</p>
+<blockquote>
+<div><p>“If we know an email is ‘Spam’, the probability of seeing the word ‘free’ has no effect on the probability of seeing the word ‘offer’.”</p>
+</div></blockquote>
+<p>This is obviously false (those words are highly correlated!), but the model is surprisingly effective.</p>
+<p>Under this assumption, a generative model for text is incredibly simple. To “learn,” the model just builds a separate probability table for each class.</p>
+<p>A “trained” Multinomial Naive Bayes model for <code class="docutils literal notranslate"><span class="pre">Class='Spam'</span></code> is just a big lookup table:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='viagra' | \text{Class='Spam'}) = 0.05\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='offer' | \text{Class='Spam'}) = 0.02\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='meeting' | \text{Class='Spam'}) = 0.0001\)</span></p></li>
+</ul>
+<p>And it builds a <em>different</em> table for <code class="docutils literal notranslate"><span class="pre">Class='Ham'</span></code>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='viagra' | \text{Class='Ham'}) = 0.0001\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='offer' | \text{Class='Ham'}) = 0.001\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(P(\text{word}='meeting' | \text{Class='Ham'}) = 0.03\)</span></p></li>
+</ul>
+</section>
+<section id="estimating-the-word-probabilities-p-ki">
+<h3>Estimating the Word Probabilities (<span class="math notranslate nohighlight">\(p_{ki}\)</span>)<a class="headerlink" href="#estimating-the-word-probabilities-p-ki" title="Permalink to this heading">#</a></h3>
+<p>How do we build those tables? We just count words.</p>
+<p>We’ll call the probability of word <span class="math notranslate nohighlight">\(i\)</span> for class <span class="math notranslate nohighlight">\(k\)</span> as <span class="math notranslate nohighlight">\(p_{ki}\)</span>. The Maximum Likelihood Estimate (MLE) is:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{ki} = \frac{\text{Total count of word } i \text{ in all documents of class } k}{\text{Total count of *all words* in all documents of class } k}
+\]</div>
+<p>In formula terms (where <span class="math notranslate nohighlight">\(x_i^{(j)}\)</span> is the count of word <span class="math notranslate nohighlight">\(i\)</span> in document <span class="math notranslate nohighlight">\(j\)</span>):
+$<span class="math notranslate nohighlight">\(
+p_{ki} = \frac{\sum_{j \text{ in class } k} x_i^{(j)}}{\sum_{l=1}^d \left( \sum_{j \text{ in class } k} x_l^{(j)} \right)}
+\)</span>$</p>
+</section>
+<section id="a-critical-flaw-the-zero-probability-problem">
+<h3>A Critical Flaw: The Zero-Probability Problem<a class="headerlink" href="#a-critical-flaw-the-zero-probability-problem" title="Permalink to this heading">#</a></h3>
+<p>What happens if we get a new email that contains the word “crypto”?</p>
+<p>If our training data for <code class="docutils literal notranslate"><span class="pre">Class='Spam'</span></code> <em>never</em> contained the word “crypto,” then our estimated probability is:
+<span class="math notranslate nohighlight">\(P(\text{word}='crypto' | \text{Class='Spam'}) = 0\)</span></p>
+<p>When we try to classify this email using the MAP rule, we have to multiply all the probabilities:
+$<span class="math notranslate nohighlight">\(P(\text{Spam} | \mathbf{x}) \propto P(\text{Spam}) \times P('crypto' | \text{Spam}) \times P(\text{'offer'} | \text{Spam}) \times \ldots\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(P(\text{Spam} | \mathbf{x}) \propto P(\text{Spam}) \times 0 \times 0.02 \times \ldots = 0\)</span>$</p>
+<p>Because of this one <strong>zero</strong>, the entire score for the “Spam” class becomes zero, even if all other words (like “viagra” and “offer”) are strong indicators. The model breaks.</p>
+</section>
+<section id="the-solution-laplace-add-one-smoothing">
+<h3>The Solution: Laplace (Add-One) Smoothing<a class="headerlink" href="#the-solution-laplace-add-one-smoothing" title="Permalink to this heading">#</a></h3>
+<p>The fix is simple: we pretend we’ve seen every word in our vocabulary <em>at least one time</em> before we start. This is called <strong>Laplace Smoothing</strong> or “Add-One” smoothing.</p>
+<p>Our new formula for <span class="math notranslate nohighlight">\(p_{ki}\)</span> becomes:</p>
+<div class="math notranslate nohighlight">
+\[
+p_{ki} = \frac{\text{Count(word } i \text{ in class } k) + 1}{(\text{Total words in class } k) + |V|}
+\]</div>
+<p>Where <strong><span class="math notranslate nohighlight">\(|V|\)</span></strong> is the size of our entire vocabulary (e.g., 20,000). We add 1 to the numerator (for word <span class="math notranslate nohighlight">\(i\)</span>) and we add <span class="math notranslate nohighlight">\(|V|\)</span> to the denominator (one for <em>each</em> unique word we’re pretending to have seen).</p>
+<p>This ensures that no probability is ever zero, and our model is robust to new words.</p>
+</section>
+<section id="the-final-classification-rule">
+<h3>The Final Classification Rule<a class="headerlink" href="#the-final-classification-rule" title="Permalink to this heading">#</a></h3>
+<p>Now we can use our MAP classifier. To classify a new document <span class="math notranslate nohighlight">\(\mathbf{x} = (x_1, \ldots, x_d)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[h(\mathbf{x}) = \arg \max_{k} P(Y=k) \prod_{i=1}^d P(X_i = x_i | Y=k)\]</div>
+<p>Given that <span class="math notranslate nohighlight">\(P(X_i = x_i | Y=k)\)</span> is the probability of <em>our</em> word <span class="math notranslate nohighlight">\(p_{ki}\)</span> raised to the power of <em>how many times we saw it</em> (<span class="math notranslate nohighlight">\(x_i\)</span>), the final formula is:</p>
+<div class="math notranslate nohighlight">
+\[
+h(\mathbf{x}) = \arg \max_{k} \underbrace{P(Y=k)}_{\text{Prior}} \cdot \underbrace{p_{k1}^{x_1} \cdot p_{k2}^{x_2} \cdot \ldots \cdot p_{kd}^{x_d}}_{\text{Likelihood Product}}
+\]</div>
+</section>
+<section id="the-practical-way-log-probabilities">
+<h3>The Practical Way: Log-Probabilities<a class="headerlink" href="#the-practical-way-log-probabilities" title="Permalink to this heading">#</a></h3>
+<p>One last problem: that formula is <strong>computationally unstable</strong>.</p>
+<p>You are multiplying thousands of tiny probabilities together (e.g., <span class="math notranslate nohighlight">\(0.001 \times 0.0004 \times \ldots\)</span>). This number gets so small that it causes <strong>arithmetic underflow</strong>, and the computer rounds it to 0.</p>
+<p><strong>The Solution:</strong> Use logarithms.
+Since <span class="math notranslate nohighlight">\(\log(a \cdot b) = \log(a) + \log(b)\)</span>, and the <span class="math notranslate nohighlight">\(\log\)</span> function is monotonic (it doesn’t change the <code class="docutils literal notranslate"><span class="pre">arg</span> <span class="pre">max</span></code>), we can maximize the <em>log-probability</em> instead:</p>
+<div class="math notranslate nohighlight">
+\[
+\log(P(Y=k) \cdot p_{k1}^{x_1} \cdot \ldots \cdot p_{kd}^{x_d}) = \log P(Y=k) + x_1 \log p_{k1} + \ldots + x_d \log p_{kd}
+\]</div>
+<p>The <strong>final classification rule</strong> that computers <em>actually</em> use is a simple, fast sum:</p>
+<div class="math notranslate nohighlight">
+\[
+h(\mathbf{x}) = \arg \max_{k} \left( \log P(Y=k) + \sum_{i=1}^d x_i \cdot \log p_{ki} \right)
+\]</div>
+<p>This is much more stable and is the foundation of Multinomial Naive Bayes for text.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Naïve Bayes Classifier: <a class="reference external" href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">https://en.wikipedia.org/wiki/Naive_Bayes_classifier</a>;</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/lda_qda.html#lda-qda">https://scikit-learn.org/stable/modules/lda_qda.html#lda-qda</a></p></li>
+<li><p>Section 4.4 of [1]</p></li>
+</ul>
+<p>[1] James, Gareth Gareth Michael. An introduction to statistical learning: with applications in Python, 2023.<a class="reference external" href="https://www.statlearning.com">https://www.statlearning.com</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#joint-probability-map-classification">Joint Probability MAP Classification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-prior-probabilities">Step 1: Prior Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-contingency-tables">Step 2: Contingency Tables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-normalize-counts-to-obtain-joint-probabilities">Step 3: Normalize Counts to Obtain Joint Probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-inference-for-a-new-email-observation">Step 4: Inference for a New Email Observation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quadratic-discriminant-analysis-for-continuous-features">Quadratic Discriminant Analysis for Continuous Features</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qda-learns-estimating-the-parameters">How QDA “Learns”: Estimating the Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-qda-classifies">How QDA Classifies</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mahalanobis-distance-classification">Mahalanobis Distance Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#an-intuition-for-mahalanobis-distance">An Intuition for Mahalanobis Distance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mahalanobis-distance-in-1d-the-z-score">Mahalanobis Distance in 1D (The “Z-Score”)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-to-multiple-dimensions-d-1">Extending to Multiple Dimensions (D &gt; 1)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#limitations-of-qda">Limitations of QDA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis-lda">Linear Discriminant Analysis (LDA)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-lda-assumption">The LDA Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-lda-learns-estimating-the-parameters">How LDA “Learns”: Estimating the Parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-lda-classifies-the-linear-in-lda">How LDA Classifies: The “Linear” in LDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lda-example-in-python-iris-dataset">LDA Example in Python: Iris Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-and-limitations-of-lda">Interpretation and Limitations of LDA</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-final-simplification">Naive Bayes: The Final Simplification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-note-on-computational-complexity">A note on computational complexity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-a-family-of-assumptions">Summary: A Family of Assumptions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavor-2-multinomial-naive-bayes-mnb">Flavor 2: Multinomial Naive Bayes (MNB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bag-of-words-intuition">The “Bag of Words” Intuition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-word-probabilities-p-ki">Estimating the Word Probabilities (<span class="math notranslate nohighlight">\(p_{ki}\)</span>)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-critical-flaw-the-zero-probability-problem">A Critical Flaw: The Zero-Probability Problem</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-laplace-add-one-smoothing">The Solution: Laplace (Add-One) Smoothing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-final-classification-rule">The Final Classification Rule</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-practical-way-log-probabilities">The Practical Way: Log-Probabilities</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

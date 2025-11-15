@@ -1,0 +1,1302 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Naive Bayes &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/14_map_naive_bayes';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Multiclass Logistic Regression and Predictive View" href="13_multiclass_logistic_regression.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="13_multiclass_logistic_regression.html">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Naive Bayes</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/14_map_naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/14_map_naive_bayes.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/14_map_naive_bayes.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Naive Bayes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Naive Bayes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-problem-from-ideal-to-practical">The “Likelihood” Problem: From Ideal to Practical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-discrete-data-and-its-limitations">The “Ideal” Model for Discrete Data (and its Limitations)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-continuous-data-qda">The “Ideal” Model for Continuous Data: QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-simplification-linear-discriminant-analysis-lda">The First Simplification: Linear Discriminant Analysis (LDA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-pragmatic-solution">Naive Bayes: The Pragmatic Solution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="naive-bayes">
+<h1>Naive Bayes<a class="headerlink" href="#naive-bayes" title="Permalink to this heading">#</a></h1>
+<p>In previous lectures, we have seen <strong>discriminative models</strong> (like Logistic Regression). These models have one goal: learn the <em>decision boundary</em> between classes. They directly model the conditional probability <span class="math notranslate nohighlight">\(P(Y=k | X=\mathbf{x})\)</span>.</p>
+<p>Recall that in this stage <span class="math notranslate nohighlight">\(Y\)</span> is discrete and finite (our classes), while <span class="math notranslate nohighlight">\(X\)</span> can be either continuous or discrete, scalar or multidimensional.</p>
+<p>In this lecture, we will learn about a completely different family of classifiers: <strong>generative models</strong>, and in particular, we will see the <strong>Naive Bayes</strong> model.</p>
+<p>Generative models do not explicitly model the decision boundary. Instead, their goal is to <strong>learn the “story” or “profile” of each class independently</strong>. They aim to build a full probabilistic model of what each class <em>looks like</em>.</p>
+<p>Technically, this means they model the <strong>joint probability distribution</strong> <span class="math notranslate nohighlight">\(P(X,Y)\)</span>. Recalling that <span class="math notranslate nohighlight">\(P(X,Y)=P(X|Y)P(X)\)</span>, they do this by modeling two separate pieces:</p>
+<ol class="arabic simple">
+<li><p><strong>The Likelihood <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span>:</strong> “What does a typical <span class="math notranslate nohighlight">\(X\)</span> look like <em>for this class</em>?”</p></li>
+<li><p><strong>The Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span>:</strong> “How common is <em>this class</em> in general?”</p></li>
+</ol>
+<p>Once the model has learned these two things, it can be used for classification.</p>
+<section id="the-core-principle-maximum-a-posteriori-map">
+<h2>The Core Principle: Maximum A Posteriori (MAP)<a class="headerlink" href="#the-core-principle-maximum-a-posteriori-map" title="Permalink to this heading">#</a></h2>
+<p>Generative classifiers are built on the <strong>Maximum A Posteriori (MAP)</strong> principle. We want to find the class <span class="math notranslate nohighlight">\(k\)</span> that is <em>most probable</em> after we observe the data <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[h(\mathbf{x}) = \arg \max_{k} P(Y=k | X=\mathbf{x})\]</div>
+<p>Using Bayes’ theorem, we can “flip” this equation to use the <em>generative</em> pieces we’ve learned:</p>
+<div class="math notranslate nohighlight">
+\[h(\mathbf{x}) = \arg \max_{k} \frac{P(X=\mathbf{x} | Y=k) P(Y=k)}{P(X=\mathbf{x})}\]</div>
+<p>We note that, if we are not interested in computing the actual probabilities <span class="math notranslate nohighlight">\(P(Y=k|\mathbf{x})\)</span>, but we only want to assign <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the most likely class, we can drop the evidence <span class="math notranslate nohighlight">\(P(X=\mathbf{x})\)</span>, which is independent of class <span class="math notranslate nohighlight">\(k\)</span>. Indeed we note that:</p>
+<div class="math notranslate nohighlight">
+\[P( Y=k | \mathbf{x} ) \propto P( X | Y=k )P(Y=k)\]</div>
+<p>Which leads to the final MAP classification rule:</p>
+<div class="math notranslate nohighlight">
+\[h\left( \mathbf{x} \right) = \arg \max_{k} \underbrace{P( X | Y=k )}_{\text{Likelihood}} \underbrace{P(Y=k)}_{\text{Prior}}\]</div>
+<p>This approach is known as Maximum A Posteriori (MAP) classification as we aim to maximize the posterior probability.</p>
+<p>In order to implement this principle, we need to compute the following two quantities:</p>
+<ul class="simple">
+<li><p>The likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span>;</p></li>
+<li><p>The prior <span class="math notranslate nohighlight">\(P(Y)\)</span>;</p></li>
+</ul>
+<p>We will now see how to compute each of these quantities.</p>
+<section id="the-prior-p-y">
+<h3>The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span><a class="headerlink" href="#the-prior-p-y" title="Permalink to this heading">#</a></h3>
+<p><span class="math notranslate nohighlight">\(P(Y)\)</span>: this is the <strong>prior probability of a given class</strong>. If observing
+a class <span class="math notranslate nohighlight">\(Y=k\)</span> is not very common, then <span class="math notranslate nohighlight">\(P(Y=k)\)</span> will be small. We can use
+different approaches to estimate <span class="math notranslate nohighlight">\(P(Y=k)\)</span>:</p>
+<ul class="simple">
+<li><p>We can estimate <span class="math notranslate nohighlight">\(P(Y=k)\)</span> by <strong>considering the number of examples in
+the dataset</strong>. For instance, if our dataset contains <span class="math notranslate nohighlight">\(800\)</span> non-spam
+e-mails and <span class="math notranslate nohighlight">\(200\)</span> spam e-mails and we set <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">0</span> <span class="pre">=</span> <span class="pre">Spam</span></code> and <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">1</span> <span class="pre">=</span> <span class="pre">Non</span> <span class="pre">Spam</span></code>,
+we can assume that <span class="math notranslate nohighlight">\(P(Y=0) = 0.2\)</span> and <span class="math notranslate nohighlight">\(P(Y=1) = 0.8\)</span>.</p></li>
+<li><p>Alternatively, we could <strong><em>study</em> what is the proportion of examples
+in each class in the real world</strong>. In the case of spam detection, we
+could ask a large sample of people how many e-mails they receive in
+average and how many spam e-mails they receive. These numbers can be
+used to define the prior probability.</p></li>
+<li><p>Another common choice, when we don’t have enough information on the
+phenomenon is to <strong>assume that all classes are equally probable</strong>,
+in which case <span class="math notranslate nohighlight">\(P(Y=k) = \frac{1}{m}\)</span><em>,</em> where <span class="math notranslate nohighlight">\(m\)</span> is the number of
+classes.</p></li>
+</ul>
+<p>There are many ways to define the prior probability. However, it should
+be considered that this quantity should be interpreted in Bayesian
+terms. This means that, by specifying a prior probability, we are
+introducing our <strong>degree of belief</strong> on what classes are more or less
+likely in the system.</p>
+</section>
+<section id="the-likelihood-p-x-y">
+<h3>The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span><a class="headerlink" href="#the-likelihood-p-x-y" title="Permalink to this heading">#</a></h3>
+<p>While estimating the prior is easy and estimating the evidence is not necessary for classification purposes (it would be indeed necessary if we were to compute probabilities), computing the likelihood term is less straightforward.</p>
+<p>If we have <span class="math notranslate nohighlight">\(M\)</span> different classes, a general approach to estimate the likelihood consists in group all observations belonging to a given class <span class="math notranslate nohighlight">\(Y=k\)</span> (let’s call <span class="math notranslate nohighlight">\(X_{k}\)</span> the random variable of the examples
+belonging to this group) and estimate the probability <span class="math notranslate nohighlight">\(P\left( X_{k} \right)\)</span>.</p>
+<p>If we repeat this process for every possible value of <span class="math notranslate nohighlight">\(C\)</span>, we have
+concretely estimated <span class="math notranslate nohighlight">\(P(X|Y=k)\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X = x \middle| Y = k \right) = P(X_{k})\]</div>
+<p>To estimate <span class="math notranslate nohighlight">\(P(X_{k})\)</span> we will generally need to make a few assumptions. Depending on such assumptions, we obtain different generative models.</p>
+</section>
+</section>
+<section id="the-likelihood-problem-from-ideal-to-practical">
+<h2>The “Likelihood” Problem: From Ideal to Practical<a class="headerlink" href="#the-likelihood-problem-from-ideal-to-practical" title="Permalink to this heading">#</a></h2>
+<p>The MAP rule is simple: <span class="math notranslate nohighlight">\(h(\mathbf{x}) = \arg \max_{k} P(X=\mathbf{x} | Y=k) P(Y=k)\)</span>.</p>
+<p>The prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span> is easy to estimate (we just count). The <em>entire</em> challenge of generative modeling lies in estimating the <strong>Likelihood, <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span></strong>.</p>
+<p>How we do this depends on our features, and this is where we run into the <strong>Curse of Dimensionality</strong>.</p>
+<section id="the-ideal-model-for-discrete-data-and-its-limitations">
+<h3>The “Ideal” Model for Discrete Data (and its Limitations)<a class="headerlink" href="#the-ideal-model-for-discrete-data-and-its-limitations" title="Permalink to this heading">#</a></h3>
+<p>If our features are discrete (e.g., <code class="docutils literal notranslate"><span class="pre">Offer=Yes</span></code>, <code class="docutils literal notranslate"><span class="pre">Free=No</span></code>), we could try to model <span class="math notranslate nohighlight">\(P(X|Y)\)</span> by building a giant contingency table for every single combination of features.</p>
+<ul class="simple">
+<li><p><strong>The Problem:</strong> If we have 10,000 words (features) in our vocabulary, we would need to estimate the probability for <span class="math notranslate nohighlight">\(2^{10,000}\)</span> possible combinations. This is computationally and statistically impossible.</p></li>
+</ul>
+</section>
+<section id="the-ideal-model-for-continuous-data-qda">
+<h3>The “Ideal” Model for Continuous Data: QDA<a class="headerlink" href="#the-ideal-model-for-continuous-data-qda" title="Permalink to this heading">#</a></h3>
+<p>If our features are continuous (like the Iris dataset), we can’t build a table. The “ideal” approach is to model <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span> as a <strong>Multivariate Gaussian (Normal) Distribution</strong>, <span class="math notranslate nohighlight">\(N(\mathbf{\mu}_k, \mathbf{\Sigma}_k)\)</span>.</p>
+<p>This is <strong>Quadratic Discriminant Analysis (QDA)</strong>. It’s the most flexible Gaussian model.</p>
+<ul class="simple">
+<li><p><strong>Assumption:</strong> Each class <span class="math notranslate nohighlight">\(k\)</span> has its <em>own</em> mean vector <span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span> and its <em>own, full</em> covariance matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>.</p></li>
+<li><p><strong>The “Nightmare”:</strong> This is computationally a nightmare. To estimate a full covariance matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span> for <span class="math notranslate nohighlight">\(d\)</span> features, we must estimate <span class="math notranslate nohighlight">\(\sim \frac{d^2}{2}\)</span> parameters. For 100 features, that’s <span class="math notranslate nohighlight">\(\approx 5,000\)</span> parameters, <em>per class</em>. This requires massive amounts of data and overfits easily.</p></li>
+<li><p><strong>The Result:</strong> A powerful, <em>curved (quadratic)</em> decision boundary.</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" src="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" />
+</div>
+</div>
+</section>
+<section id="the-first-simplification-linear-discriminant-analysis-lda">
+<h3>The First Simplification: Linear Discriminant Analysis (LDA)<a class="headerlink" href="#the-first-simplification-linear-discriminant-analysis-lda" title="Permalink to this heading">#</a></h3>
+<p>The “nightmare” of QDA leads to our first compromise: <strong>Linear Discriminant Analysis (LDA)</strong>.</p>
+<ul class="simple">
+<li><p><strong>Assumption:</strong> We simplify the problem by assuming all classes <em>share</em> the <strong>same covariance matrix</strong> (<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k = \mathbf{\Sigma}\)</span> for all <span class="math notranslate nohighlight">\(k\)</span>).</p></li>
+<li><p><strong>The Benefit:</strong> This is much more stable. We only have to estimate <em>one</em> full <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> matrix, not <span class="math notranslate nohighlight">\(k\)</span> of them.</p></li>
+<li><p><strong>The “Nightmare” (Still):</strong> We <em>still</em> have to estimate one full <span class="math notranslate nohighlight">\(\frac{d^2}{2}\)</span> matrix. For text data with <span class="math notranslate nohighlight">\(d=10,000\)</span>, this is still impossible.</p></li>
+<li><p><strong>The Result:</strong> This assumption forces the math to simplify, and the decision boundary is always <em>linear</em>.</p></li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/04036e2da91e301dcd8e8c1f3758b92dcd61cf193242d8a5a72b81100fcc6cce.png" src="../_images/04036e2da91e301dcd8e8c1f3758b92dcd61cf193242d8a5a72b81100fcc6cce.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="naive-bayes-the-pragmatic-solution">
+<h2>Naive Bayes: The Pragmatic Solution<a class="headerlink" href="#naive-bayes-the-pragmatic-solution" title="Permalink to this heading">#</a></h2>
+<p>While LDA makes it easier to fit the model to the data, it can still be very computationally demanding.</p>
+<p>Indeed, for <strong>very high-dimensional data</strong> (<span class="math notranslate nohighlight">\(d=10,000\)</span> features, like in text classification), estimating even <em>one</em> full covariance matrix <span class="math notranslate nohighlight">\(\hat{\mathbf{\Sigma}}\)</span> can be computationally and statistically challenging. This is an aspect of the <strong>Curse of Dimensionality</strong>.</p>
+<p>This leads us to our final and most extreme simplification: <strong>Naive Bayes</strong>.</p>
+<section id="the-naive-assumption">
+<h3>The “Naive” Assumption<a class="headerlink" href="#the-naive-assumption" title="Permalink to this heading">#</a></h3>
+<p>Recall that our problem is estimating</p>
+<div class="math notranslate nohighlight">
+\[P\left( X \middle| Y \right)\]</div>
+<p>Considering a multidimensional <span class="math notranslate nohighlight">\(X=(X_1,X_2,\ldots,X_n)\)</span>, we may factorize the expression above as follows:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X \middle| Y \right) = P\left( X_{1},\ldots,X_{n} \middle| Y \right) = P\left( X_{1} \middle| Y \right)P\left( X_{2} \middle| X_{1},Y \right)P\left( X_{3} \middle| X_{2},X_{1},Y \right)\ldots P(X_{n}|X_{1},\ldots,X_{n - 1},Y)\]</div>
+<p>However, this is not a very helpful factorization as the terms
+<span class="math notranslate nohighlight">\(P(X_{i}|X_{1},\ldots,X_{i - 1},C)\)</span> are conditioned also on other
+features, which makes them not easy to model.</p>
+<p>The Naive Bayes classifier makes one, very strong (“naive”) assumption:</p>
+<blockquote>
+<div><p>It assumes that all features <span class="math notranslate nohighlight">\(X_i\)</span> are <strong>conditionally independent</strong> given the class <span class="math notranslate nohighlight">\(Y=k\)</span>.</p>
+</div></blockquote>
+<p>This can be written as follows:</p>
+<div class="math notranslate nohighlight">
+\[X_{i}\bot X_{j}\ |\ Y,\ \forall i \neq j\]</div>
+<blockquote>
+<div><p><strong>Spam Classification Example</strong>
+Let’s assume a spam classification example and imagine that features <span class="math notranslate nohighlight">\(X_{i}\)</span> and <span class="math notranslate nohighlight">\(X_{j}\)</span> are related to the
+number of appearance of specific words in the current email represented by <span class="math notranslate nohighlight">\(X\)</span>.
+If <span class="math notranslate nohighlight">\(X_{i}\)</span> and <span class="math notranslate nohighlight">\(X_{j}\)</span> are <strong>word counts</strong>, then we are saying that if I
+take all non-spam e-mails, then the number of occurrences of a given
+word <strong>does not influence</strong> the number of occurrences of <strong>another
+word</strong>. This is <strong>obviously not true in general!</strong> For instance, there
+can be legitimate e-mails of different topics. If the e-mail is about a
+vacation, the words ‘trip’, ‘flight’, ‘luggage’ will appear often.
+Instead, if the e-mail is about work, the words ‘meeting’, ‘report’,
+‘time’, will appear more often. This means that, within the same
+category (non-spam e-mails), the number of occurrences of a word (e.g.,
+‘trip’) may be related to the number of occurrences of another words
+(e.g., ‘flight’), which breaks the assumption of <strong>conditional
+independence</strong>. This is why this assumption is called <strong>naïve
+assumption</strong>. With this in mind, it should be considered that, despite
+such naïve assumption, the Naïve Bayes Classifier works surprisingly
+well in many contexts.</p>
+</div></blockquote>
+<p>We know that:</p>
+<div class="math notranslate nohighlight">
+\[X\bot Y|Z \Leftrightarrow P\left( X,Y|Z \right) = P\left( X|Z \right)P\left( Y|Z \right)\]</div>
+<p>Hence, we discover that, under the assumption of conditional
+independence:</p>
+<div class="math notranslate nohighlight">
+\[P\left( X_{1},\ldots,X_{n} \middle| Y \right) = P\left( X_{1} \middle| Y \right)P\left( X_{2} \middle| Y \right)\ldots P(X_{n}|Y)\]</div>
+<p>So, we can re-write the MAP classification rule as:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \arg_{k}max\ P\left( \mathbf{x}_{1} \middle| Y=k \right)\left( \mathbf{x}_{2} \middle| Y=k \right)\ldots P\left( \mathbf{x}_{n} \middle| Y=k \right)P(Y=k)\]</div>
+</section>
+<section id="flavors-of-naive-bayes">
+<h3>Flavors of Naive Bayes<a class="headerlink" href="#flavors-of-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>The single <span class="math notranslate nohighlight">\(P(X_{1}|Y=k)\)</span> terms are now easy to model, since <span class="math notranslate nohighlight">\(X_{1}\)</span> is
+mono-dimensional. In practice, depending on the considered problem, we
+can model these terms in different ways. Two common approaches,
+depending on the kind of data we have, are to use a <strong>Gaussian distribution</strong> or a
+<strong>Multinomial distribution</strong>.</p>
+<p>When we use Gaussian distributions to model the <span class="math notranslate nohighlight">\(P(X_{i}|Y)\)</span> terms, the
+classification method is called “<strong>Gaussian Naïve Bayes</strong>”. Similarly, if we
+consider a multinomial distribution, the classification method is called
+“<strong>Multinomial Naïve Bayes</strong>”.</p>
+</section>
+<section id="gaussian-naive-bayes">
+<h3>Gaussian Naïve Bayes<a class="headerlink" href="#gaussian-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>Let us consider again our sex classification example based on height and
+weight. We will consider <span class="math notranslate nohighlight">\(X = \lbrack H,W\rbrack\)</span>, which are random
+variables representing heights and weights of subjects. If we assume
+that the data is approximately Gaussian, the probabilities <span class="math notranslate nohighlight">\(P(H|C)\)</span> and
+<span class="math notranslate nohighlight">\(P(W|C)\)</span> can be modeled with univariate (1D) Gaussian distributions.
+This is done by first obtaining four samples:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(H_{1}\)</span>: the heights of subjects when <span class="math notranslate nohighlight">\(C = 1\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_{1}\)</span>: the weights of subjects when <span class="math notranslate nohighlight">\(C = 1;\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(H_{0}\)</span>: the heights of subjects when <span class="math notranslate nohighlight">\(C = 0\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_{0}\)</span>: the weights of subjects when <span class="math notranslate nohighlight">\(C = 0.\)</span></p></li>
+</ul>
+<blockquote>
+<div><p>We hence model each sample as a 1D Gaussian distribution by computing
+a mean and a variance value from each of these samples to obtain four
+Gaussian distributions:</p>
+</div></blockquote>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P\left( H = h \middle| C = 0 \right) = N(x;\mu_{1},\sigma_{1})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( W = w \middle| C = 0 \right) = N(x;\mu_{2},\sigma_{2})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( H = h \middle| C = 1 \right) = N(x;\mu_{3},\sigma_{3})\)</span>;</p></li>
+<li><p><span class="math notranslate nohighlight">\(P\left( W = w \middle| C = 1 \right) = N(x;\mu_{4},\sigma_{4})\)</span>;</p></li>
+</ul>
+<p>After this, we can apply the classification rule:</p>
+<ul class="simple">
+<li><p>The example <span class="math notranslate nohighlight">\((h,w)\)</span> is classified as class 1 if</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(P\left( h \middle| C = 1 \right)P\left( w \middle| C = 1 \right)P(C = 1) &gt; P\left( h \middle| C = 0 \right)P\left( w \middle| C = 0 \right)P(C = 0)\)</span>;</p>
+<ul class="simple">
+<li><p>The example <span class="math notranslate nohighlight">\((h,w)\)</span> is classified as class 0 otherwise.</p></li>
+</ul>
+<p>We can exemplify this process as follows:</p>
+<p><img alt="" src="../_images/map_weight3.png" /></p>
+<section id="gaussian-naive-bayes-and-qda">
+<h4>Gaussian Naive Bayes and QDA<a class="headerlink" href="#gaussian-naive-bayes-and-qda" title="Permalink to this heading">#</a></h4>
+<p>Let’s compare the decision boundaries of the three classifiers:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" src="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" />
+</div>
+</div>
+<p>This figure perfectly summarizes the three models:</p>
+<ul class="simple">
+<li><p><strong>QDA (Left):</strong> Most flexible. It learns a separate, <em>rotated</em> ellipse (full <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>) for each class. Its boundaries are quadratic.</p></li>
+<li><p><strong>LDA (Middle):</strong> The compromise. It learns <em>one</em> pooled, <em>rotated</em> ellipse (full <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>) and uses it for all classes. Its boundaries are linear.</p></li>
+<li><p><strong>GNB (Right):</strong> Most simple. It learns a separate, <em>axis-aligned</em> ellipse (diagonal <span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span>) for each class. Its boundaries are quadratic but can’t capture any feature correlation (tilt).</p></li>
+</ul>
+</section>
+</section>
+<section id="multinomial-naive-bayes">
+<h3>Multinomial Naïve Bayes<a class="headerlink" href="#multinomial-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>In the previous examples, we have considered cases in which the input
+features are continuous. In these cases, indeed, it can make sense to
+<strong>estimate likelihoods using continuous probability distributions</strong>
+(PDF) such as the Gaussian distribution. When the input features are
+discrete instead, it makes sense to <strong>approximate them as probability
+mass functions (PFM)</strong>.</p>
+<p>Let us consider for instance the case of <strong>text classification</strong>. If we
+represent text using word counts (bag of words representation), the
+input features will be <strong>discrete</strong>. In particular, given a vocabulary
+<span class="math notranslate nohighlight">\(V\)</span> of size <span class="math notranslate nohighlight">\(n\)</span>, the input features will be tuples of <span class="math notranslate nohighlight">\(n\)</span> natural
+numbers:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{x} = (x_{1},x_{2},x_{3},\ldots,x_{n})\]</div>
+<p>with <span class="math notranslate nohighlight">\(x_{i} \in N\)</span> being the number of times the term <span class="math notranslate nohighlight">\(i\)</span>
+appears in document <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>Hence, the probability of a given document <strong>x</strong>, given its class (the
+likelihood) can be modeled as</p>
+<div class="math notranslate nohighlight">
+\[P(x_{1},\ldots,x_{n}|c)\]</div>
+<p>If we assume the <strong>naïve hypothesis</strong>, then we are saying that, given
+documents of a fixed class, the number of times that word <span class="math notranslate nohighlight">\(i\)</span>
+appears in the text is independent of the number of times that word <span class="math notranslate nohighlight">\(j\)</span>
+appears in the text.</p>
+<p>If we imagine the process of writing a document as the one of picking
+words from the vocabulary <span class="math notranslate nohighlight">\(V\)</span>, then, chosen a class
+<span class="math notranslate nohighlight">\(C = c\)</span>, we can model the probability
+<span class="math notranslate nohighlight">\(P(x_{1},\ldots,x_{n}|C = c)\)</span> with a <strong>multinomial distribution</strong>.
+Recall that we need to estimate a different multinomial distribution for
+each possible value of <span class="math notranslate nohighlight">\(C\)</span>.</p>
+<p>Remember that <strong>the multinomial distribution models the probability of
+obtaining exactly</strong>
+<span class="math notranslate nohighlight">\(\mathbf{(}\mathbf{n}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{n}_{\mathbf{k}}\mathbf{)}\)</span>
+<strong>occurrences with</strong>
+<span class="math notranslate nohighlight">\(\mathbf{n}\mathbf{=}\sum_{\mathbf{i}}^{}\mathbf{n}_{\mathbf{i}}\)</span> <strong>for
+each of</strong> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> <strong>possible outcomes in a sequence of</strong>
+<span class="math notranslate nohighlight">\(\mathbf{n}\)</span> <strong>independent experiments which follow categorical
+distributions with probabilities</strong>
+<span class="math notranslate nohighlight">\(\mathbf{p}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{p}_{\mathbf{k}}\)</span>.</p>
+<p>In our case, the individual “experiments” consist in the process of
+generating a word. We can assume that this process follows a categorical
+distribution with some words being more common than others. These
+experiments are <em>independent</em> because of the naïve assumption.</p>
+<p>To characterize our multinomial distribution, we need to fix/estimate
+some parameters:</p>
+<ul class="simple">
+<li><p><strong>Number of experiments</strong>: the number of words in the document. This
+will be the sum of the features <span class="math notranslate nohighlight">\(\sum_{i}^{}x_{i}\)</span>.</p></li>
+<li><p><strong>Number of possible outcomes</strong>: the number of words in the
+vocabulary.</p></li>
+<li><p><strong>Probability of each outcome</strong>: the probability of generating a
+word, given the class. We will call this probability
+<span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span>. The most common way to evaluate this term is by
+<strong>counting the number of times that each word appears in all
+documents of a given class</strong>.</p></li>
+</ul>
+<p>Hence, we can solve text classification with MAP using the expression:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( x_{1},x_{2},\ldots,c_{n} \middle| c \right)P\left( c \right)\]</div>
+<p>Using the analytical form of the multinomial distribution:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
+<p>We can note that, similarly to the evidence <span class="math notranslate nohighlight">\(P(X)\)</span>, the term
+<span class="math notranslate nohighlight">\(\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}\)</span> is independent from
+<span class="math notranslate nohighlight">\(c\)</span> and hence we can safely ignore it if our aim is not to compute
+probability values:</p>
+<div class="math notranslate nohighlight">
+\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
+<section id="estimating-the-terms-p-text-ci-and-p-c">
+<h4>Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span><a class="headerlink" href="#estimating-the-terms-p-text-ci-and-p-c" title="Permalink to this heading">#</a></h4>
+<p>We can model the terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> in a frequentist way as follows:</p>
+<div class="math notranslate nohighlight">
+\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)}}}{\sum_{j}^{}{\sum_{k}^{}{\lbrack y^{(j)} = c\rbrack x_{k}^{(j)}}}}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\left\lbrack \cdot \right\rbrack\)</span> denotes the Iverson bracket,
+which is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\lbrack x \right\rbrack = \left\{ \begin{matrix}
+1\ \text{if}\ x\ \text{is}\ \text{true} \\
+0\ \text{ot}h\text{erwise} \\
+\end{matrix} \right.\ \end{split}\]</div>
+<p>Hence, in the expression above:</p>
+<ul class="simple">
+<li><p>The numerator counts the number of times word <span class="math notranslate nohighlight">\(i\)</span> appears in
+documents of class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
+<li><p>The denominator counts all the words appearing in all documents of
+class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
+<li><p>Hence, the expression is <strong>the fraction of times word i appears
+among all words in documents of class c</strong>;</p></li>
+</ul>
+<p>In practice, since some words can have zero occurrences, we perform
+‘Laplacian smoothing’ by adding a “1” to each term as follows:</p>
+<div class="math notranslate nohighlight">
+\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)} + 1}}{\sum_{j}^{}{(\sum_{i}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{\left( j \right)} + 1)}}}\]</div>
+<p>This allows to make sure that we do not divide by zero.</p>
+<p>We can estimate the prior probability as:</p>
+<div class="math notranslate nohighlight">
+\[p\left( c \right) = \frac{\sum_{j}^{}{\lbrack y^{\left( j \right)} = c\rbrack}}{N}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of documents. Alternatively, we can assume
+uniform priors and set:</p>
+<div class="math notranslate nohighlight">
+\[P\left( c \right) = \frac{1}{M}\]</div>
+</section>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">
+<h1>Lab Bake-Off: The Right vs. The Wrong Tool for the Job<a class="headerlink" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job" title="Permalink to this heading">#</a></h1>
+<p>We’ve now seen a “family” of generative models (QDA, LDA, GNB) and know about discriminative models like KNN and Logistic Regression.</p>
+<p>Let’s run a “bake-off” to see what happens when we apply these models to a <strong>high-dimensional text classification</strong> problem (spam filtering). This will clearly demonstrate <em>why</em> <code class="docutils literal notranslate"><span class="pre">Multinomial</span> <span class="pre">Naive</span> <span class="pre">Bayes</span> <span class="pre">(MNB)</span></code> is a standard tool for this task, and why the other models we’ve learned are the <strong>wrong tool for the job</strong>.</p>
+<section id="the-competitors">
+<h2>The Competitors:<a class="headerlink" href="#the-competitors" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Text-Native Models:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> (Generative, for counts)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> (Discriminative, works well with high-d text)</p></li>
+</ul>
+</li>
+<li><p><strong>The “Wrong” Models:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> (Distance-based, suffers from Curse of Dimensionality)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code> (Generative, assumes features are Gaussian, not counts)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">LinearDiscriminantAnalysis</span></code> (Generative, needs a full covariance matrix)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">QuadraticDiscriminantAnalysis</span></code> (Generative, needs <em>multiple</em> full covariance matrices)</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="the-workflow">
+<h2>The Workflow:<a class="headerlink" href="#the-workflow" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Load and clean the SMS Spam dataset.</p></li>
+<li><p>Create a single <strong>Train/Test Split</strong>.</p></li>
+<li><p>Build a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> for each model. This is crucial:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">MNB</span></code> will use <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> (raw counts).</p></li>
+<li><p>All other models will use <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> (normalized features).</p></li>
+<li><p>The Gaussian models (GNB, LDA, QDA) <em>cannot</em> work with the default “sparse” matrix from a vectorizer, so we must build a custom “hack” to make them dense, which will highlight their inefficiency.</p></li>
+</ul>
+</li>
+<li><p>Fit all models, capture their accuracy and training time, and catch the errors for the models that will (and should) fail.</p></li>
+<li><p>Compare all results in a final table and plot.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. All Imports ---</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="c1"># For data loading</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="c1"># Sklearn Workflow Tools</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Sklearn Feature Engineering</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span><span class="p">,</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span> <span class="c1"># For our custom transformer</span>
+
+<span class="c1"># Sklearn Models (The Competitors)</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span><span class="p">,</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.discriminant_analysis</span> <span class="kn">import</span> <span class="n">LinearDiscriminantAnalysis</span><span class="p">,</span> <span class="n">QuadraticDiscriminantAnalysis</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1-load-and-split-the-data">
+<h2>Step 1: Load and Split the Data<a class="headerlink" href="#step-1-load-and-split-the-data" title="Permalink to this heading">#</a></h2>
+<p>First, we load the data from the UCI zip file, map the labels, and create our single, “locked-away” test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Load the dataset</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip&quot;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="n">zip_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># 2. Unzip the file in memory</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">zip_data</span><span class="p">))</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+        <span class="c1"># 3. Read the specific file from the zip archive into pandas</span>
+        <span class="k">with</span> <span class="n">z</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;SMSSpamCollection&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> 
+                             <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> 
+                             <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                             <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">],</span>
+                             <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 4. Map labels to 0 (ham) and 1 (spam)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;ham&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Data Head ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+    <span class="c1"># 5. Define X and y</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span> <span class="c1"># The raw text</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>   <span class="c1"># The 0 or 1</span>
+
+    <span class="c1"># 6. Create the Train/Test Split</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Training samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2">, Test samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading or processing data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Data Head ---
+   label                                            message
+0      0  Go until jurong point, crazy.. Available only ...
+1      0                      Ok lar... Joking wif u oni...
+2      1  Free entry in 2 a wkly comp to win FA Cup fina...
+3      0  U dun say so early hor... U c already then say...
+4      0  Nah I don&#39;t think he goes to usf, he lives aro...
+
+Training samples: 3900, Test samples: 1672
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-define-pipelines-and-custom-transformer">
+<h2>Step 2: Define Pipelines and Custom Transformer<a class="headerlink" href="#step-2-define-pipelines-and-custom-transformer" title="Permalink to this heading">#</a></h2>
+<p>We need a custom transformer to convert the sparse output of <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> into a dense <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array, which GNB, LDA, and QDA require. This is intentionally inefficient and will highlight the “nightmare” of using these models on high-dimensional data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Custom Transformer to convert sparse matrix to dense</span>
+<span class="k">class</span> <span class="nc">DenseTransformer</span><span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+<span class="c1"># --- 1. Define the models we want to test ---</span>
+<span class="n">models_to_test</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Multinomial NB (Text-Native)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">())</span>
+    <span class="p">]),</span>
+    
+    <span class="s2">&quot;Logistic Regression (Discriminative)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">))</span>
+    <span class="p">]),</span>
+    
+    <span class="s2">&quot;K-Neighbors (Distance-Based)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">]),</span>
+    
+    <span class="s2">&quot;Gaussian NB (Wrong Assumption)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;to_dense&#39;</span><span class="p">,</span> <span class="n">DenseTransformer</span><span class="p">()),</span> <span class="c1"># Must be dense for GNB</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">GaussianNB</span><span class="p">())</span>
+    <span class="p">]),</span>
+    
+    <span class="s2">&quot;Linear Discriminant (LDA)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;to_dense&#39;</span><span class="p">,</span> <span class="n">DenseTransformer</span><span class="p">()),</span> <span class="c1"># Must be dense for LDA</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">LinearDiscriminantAnalysis</span><span class="p">())</span>
+    <span class="p">]),</span>
+    
+    <span class="s2">&quot;Quadratic Discriminant (QDA)&quot;</span><span class="p">:</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s1">&#39;to_dense&#39;</span><span class="p">,</span> <span class="n">DenseTransformer</span><span class="p">()),</span> <span class="c1"># Must be dense for QDA</span>
+        <span class="p">(</span><span class="s1">&#39;classifier&#39;</span><span class="p">,</span> <span class="n">QuadraticDiscriminantAnalysis</span><span class="p">())</span>
+    <span class="p">])</span>
+<span class="p">}</span>
+
+<span class="c1"># --- 2. Store the results ---</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-run-the-bake-off">
+<h2>Step 3: Run the Bake-Off<a class="headerlink" href="#step-3-run-the-bake-off" title="Permalink to this heading">#</a></h2>
+<p>Now we loop, fit, and time each model. Watch what happens when we try to run the models that aren’t designed for this kind of data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">pipeline</span> <span class="ow">in</span> <span class="n">models_to_test</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Testing: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> ---&quot;</span><span class="p">)</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># 1. Fit the pipeline</span>
+        <span class="n">pipeline</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+        
+        <span class="c1"># 2. Make predictions on the TEST set</span>
+        <span class="n">y_pred</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+        
+        <span class="c1"># 3. Get the accuracy</span>
+        <span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+        
+        <span class="c1"># 4. Store results</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">:</span> <span class="n">accuracy</span><span class="p">,</span> <span class="s1">&#39;Time (sec)&#39;</span><span class="p">:</span> <span class="n">elapsed</span><span class="p">,</span> <span class="s1">&#39;Error&#39;</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Success! Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%, Time: </span><span class="si">{</span><span class="n">elapsed</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># Catch models that fail to train</span>
+        <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;Time (sec)&#39;</span><span class="p">:</span> <span class="n">elapsed</span><span class="p">,</span> <span class="s1">&#39;Error&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)}</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  FAILED! Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Testing: Multinomial NB (Text-Native) ---
+  Success! Accuracy: 98.74%, Time: 0.18s
+--- Testing: Logistic Regression (Discriminative) ---
+  Success! Accuracy: 96.23%, Time: 0.06s
+--- Testing: K-Neighbors (Distance-Based) ---
+  Success! Accuracy: 90.79%, Time: 0.17s
+--- Testing: Gaussian NB (Wrong Assumption) ---
+  Success! Accuracy: 87.50%, Time: 0.38s
+--- Testing: Linear Discriminant (LDA) ---
+  Success! Accuracy: 97.49%, Time: 45.11s
+--- Testing: Quadratic Discriminant (QDA) ---
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/homebrew/anaconda3/lib/python3.13/site-packages/sklearn/discriminant_analysis.py:1024: LinAlgWarning: The covariance matrix of class 0 is not full rank. Increasing the value of parameter `reg_param` might help reducing the collinearity.
+  warnings.warn(
+/opt/homebrew/anaconda3/lib/python3.13/site-packages/sklearn/discriminant_analysis.py:1024: LinAlgWarning: The covariance matrix of class 1 is not full rank. Increasing the value of parameter `reg_param` might help reducing the collinearity.
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Success! Accuracy: 48.33%, Time: 25.36s
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-show-the-final-results">
+<h2>Step 4: Show the Final Results<a class="headerlink" href="#step-4-show-the-final-results" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert results to a pandas DataFrame for a &quot;nice chart&quot;</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- FINAL BAKE-OFF RANKING (Spam Filter) ---&quot;</span><span class="p">)</span>
+<span class="c1"># We&#39;ll also show Time and Error to tell the full story</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_colwidth&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># Show more of the error message</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_df</span><span class="p">)</span>
+
+<span class="c1"># Plot the accuracy</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="c1"># We create a new column for plotting, setting failed models&#39; accuracy to 0</span>
+<span class="n">plot_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">plot_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">plot_df</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">plot_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Set Accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Final Model Comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- FINAL BAKE-OFF RANKING (Spam Filter) ---
+                                      Test Accuracy  Time (sec) Error
+Multinomial NB (Text-Native)               0.987440    0.179027  None
+Linear Discriminant (LDA)                  0.974880   45.111081  None
+Logistic Regression (Discriminative)       0.962321    0.060569  None
+K-Neighbors (Distance-Based)               0.907895    0.167808  None
+Gaussian NB (Wrong Assumption)             0.875000    0.377862  None
+Quadratic Discriminant (QDA)               0.483254   25.357229  None
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_69318/2981998238.py:13: FutureWarning: Downcasting object dtype arrays on .fillna, .ffill, .bfill is deprecated and will change in a future version. Call result.infer_objects(copy=False) instead. To opt-in to the future behavior, set `pd.set_option(&#39;future.no_silent_downcasting&#39;, True)`
+  plot_df = results_df.fillna(0)
+</pre></div>
+</div>
+<img alt="../_images/c888592459adf339cfa2c4a8f9c60ef359cf5a751152eb92f1605343e16105eb.png" src="../_images/c888592459adf339cfa2c4a8f9c60ef359cf5a751152eb92f1605343e16105eb.png" />
+</div>
+</div>
+</section>
+<section id="conclusion-the-right-tool-for-the-job">
+<h2>Conclusion: The Right Tool for the Job<a class="headerlink" href="#conclusion-the-right-tool-for-the-job" title="Permalink to this heading">#</a></h2>
+<p>This bake-off tells a very clear story:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">Regression</span></code> and <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></strong> were the <strong>winners</strong>. They are designed to handle high-dimensional, sparse text data and performed excellently.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">GaussianNB</span></code></strong> performed poorly, but at least it ran. This is because our data is <em>counts</em> (mostly zeros), which does not follow a <em>Gaussian</em> (bell curve) distribution at all. This is a classic “Wrong Assumption” failure.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code></strong> was also very inaccurate. This is a perfect demonstration of the <strong>Curse of Dimensionality</strong>. With over 7,000 features, the “distance” between any two messages becomes meaningless, so the “nearest neighbor” is no longer a reliable predictor.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">LDA</span></code> and <code class="docutils literal notranslate"><span class="pre">QDA</span></code></strong> <strong>took a long time to run and gave warnings</strong>.</p></li>
+</ol>
+<p><strong>The final lesson is clear:</strong> You must choose a model that matches the assumptions and dimensionality of your data. For high-dimensional, sparse count data like text, <strong>Multinomial Naive Bayes</strong> and <strong>Logistic Regression</strong> are the correct, industry-standard tools.</p>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Naïve Bayes Classifier: <a class="reference external" href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">https://en.wikipedia.org/wiki/Naive_Bayes_classifier</a>;</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/lda_qda.html#lda-qda">https://scikit-learn.org/stable/modules/lda_qda.html#lda-qda</a></p></li>
+<li><p>Section 4.4 of [1]</p></li>
+</ul>
+<p>[1] James, Gareth Gareth Michael. An introduction to statistical learning: with applications in Python, 2023.<a class="reference external" href="https://www.statlearning.com">https://www.statlearning.com</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="13_multiclass_logistic_regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multiclass Logistic Regression and Predictive View</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Naive Bayes</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-problem-from-ideal-to-practical">The “Likelihood” Problem: From Ideal to Practical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-discrete-data-and-its-limitations">The “Ideal” Model for Discrete Data (and its Limitations)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-continuous-data-qda">The “Ideal” Model for Continuous Data: QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-simplification-linear-discriminant-analysis-lda">The First Simplification: Linear Discriminant Analysis (LDA)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-pragmatic-solution">Naive Bayes: The Pragmatic Solution</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -221,6 +221,19 @@ const thebe_selector_output = ".output, .cell_output"
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="13_multiclass_logistic_regression.html">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Naive Bayes</a></li>
+
+</ul>
 
     </div>
 </nav></div>
@@ -446,8 +459,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-statistical-fixes-extending-the-linear-model">The “Statistical” Fixes: Extending the Linear Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-terms">Interaction Terms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-linear-model-with-interaction-terms">Extending the Linear Model with Interaction Terms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-interaction">Interpreting the Interaction</a></li>
 </ul>
 </li>
@@ -457,9 +469,9 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-understanding-to-prediction-the-machine-learning-perspective">From Understanding to Prediction: The Machine Learning Perspective</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-prediction-test-set-error">Metrics for Prediction (Test Set Error)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">1. Mean Squared Error (MSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">2. Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">3. Mean Absolute Error (MAE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
 </ul>
 </li>
 </ul>
@@ -521,11 +533,8 @@ document.write(`
 <li><p><strong>Multicollinearity:</strong> When we used multiple predictors (like <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> and <code class="docutils literal notranslate"><span class="pre">weight</span></code>), we saw that their high correlation made their p-values unstable, confusing our interpretation.</p></li>
 </ol>
 <p>Today, we will fix these problems by extending the linear model. In doing so, we will see that we start to lose simple interpretability. This loss will be our pivot to a new perspective: the <strong>Machine Learning</strong> approach, where our primary goal shifts from <em>understanding</em> to <strong>predictive accuracy</strong>.</p>
-<section id="the-statistical-fixes-extending-the-linear-model">
-<h2>The “Statistical” Fixes: Extending the Linear Model<a class="headerlink" href="#the-statistical-fixes-extending-the-linear-model" title="Permalink to this heading">#</a></h2>
-<p>Let’s first try to fix our model while still staying in the <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> (statistical) world.</p>
-<section id="interaction-terms">
-<h3>Interaction Terms<a class="headerlink" href="#interaction-terms" title="Permalink to this heading">#</a></h3>
+<section id="extending-the-linear-model-with-interaction-terms">
+<h2>Extending the Linear Model with Interaction Terms<a class="headerlink" href="#extending-the-linear-model-with-interaction-terms" title="Permalink to this heading">#</a></h2>
 <p>A simple linear model assumes the effect of each predictor on <span class="math notranslate nohighlight">\(Y\)</span> is <strong>additive</strong>. The formula</p>
 <div class="math notranslate nohighlight">
 \[mpg = \beta_0 + \beta_1 \text{horsepower} + \beta_2 \text{weight}\]</div>
@@ -585,7 +594,6 @@ horsepower:weight  5.355e-05   6.65e-06      8.054      0.000    4.05e-05    6.6
 </div>
 </div>
 </div>
-</section>
 <section id="interpreting-the-interaction">
 <h3>Interpreting the Interaction<a class="headerlink" href="#interpreting-the-interaction" title="Permalink to this heading">#</a></h3>
 <p>Notice two things:</p>
@@ -598,7 +606,8 @@ We can rewrite the formula:</p>
 <div class="math notranslate nohighlight">
 \[mpg = \beta_0 + (\beta_1 + \beta_3 \times \text{weight}) \times \text{horsepower} + \beta_2 \text{weight}\]</div>
 <p>The “effect” of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> is no longer a single number, <span class="math notranslate nohighlight">\(\beta_1\)</span>. It is now <span class="math notranslate nohighlight">\((\beta_1 + \beta_3 \times \text{weight})\)</span>. This means the effect of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> <em>depends on</em> the <code class="docutils literal notranslate"><span class="pre">weight</span></code> of the car.</p>
-<p>We have gained accuracy, but at the cost of simple, at-a-glance interpretability. This is the first “crack” in our “glass box” model.</p>
+<p>In practice, <strong>when we increase <code class="docutils literal notranslate"><span class="pre">weight</span></code> by one unit, we increase the effect of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> on <code class="docutils literal notranslate"><span class="pre">mpg</span></code> by <span class="math notranslate nohighlight">\(\beta_3\)</span> units</strong>. This means that for heavier cars, <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> has a less negative effect on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>.</p>
+<p>This makes sense mechanically: in a very heavy car, horsepower is needed just to move it, so the efficiency penalty is smaller compared to a light car where extra horsepower is “overkill.</p>
 <p>Let’s diagnose our residuals to see if we gained something:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -712,9 +721,7 @@ We can rewrite the formula:</p>
 <blockquote>
 <div><p><strong>We have lost all simple interpretability.</strong></p>
 </div></blockquote>
-<p>What is the “effect” of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>? It’s not <span class="math notranslate nohighlight">\(\beta_1\)</span>. From calculus, the effect of a 1-unit change in <span class="math notranslate nohighlight">\(X\)</span> on <span class="math notranslate nohighlight">\(Y\)</span> is the derivative:
-<span class="math notranslate nohighlight">\(\frac{d(mpg)}{d(horsepower)} = \beta_1 + 2\beta_2 \times \text{horsepower}\)</span></p>
-<p>The effect is not a single number. It <em>depends on the value of horsepower</em>. We can’t just look at the table and give a simple explanation.</p>
+<p>What is the “effect” of <code class="docutils literal notranslate"><span class="pre">horsepower</span></code> on <code class="docutils literal notranslate"><span class="pre">mpg</span></code>? It’s not <span class="math notranslate nohighlight">\(\beta_1\)</span>. It <em>depends on the value of horsepower</em>. We can’t just look at the table and give a simple explanation.</p>
 <p><strong>This is the pivot.</strong> If we are willing to sacrifice simple, at-a-glance interpretability in exchange for a model that <em>fits better</em>… why stop here?</p>
 <p>If our main goal is no longer <em>understanding</em> (p-values) but <strong>predictive accuracy</strong>, we should embrace this. We have just crossed the line from statistical inference into the realm of <strong>Machine Learning</strong>.</p>
 <section id="metrics-for-prediction-test-set-error">
@@ -722,7 +729,7 @@ We can rewrite the formula:</p>
 <p>When our goal is <strong>prediction</strong> (the ML approach), we do not care about <span class="math notranslate nohighlight">\(R^2\)</span> or RSE on the training data. We <em>only</em> care about the model’s performance on <strong>new, unseen data</strong> (the <strong>Test Set</strong>).</p>
 <p>The following metrics are used to evaluate the model on the test set. (We will use <span class="math notranslate nohighlight">\(m\)</span> to denote the number of samples in the test set).</p>
 <section id="mean-squared-error-mse">
-<h4>1. Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h4>
+<h4>Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h4>
 <p>The MSE is the average of the squared errors on the test set. It is the “predictive” version of the <span class="math notranslate nohighlight">\(R_{emp}\)</span> (Empirical Risk) we saw earlier.</p>
 <div class="math notranslate nohighlight">
 \[MSE_{test} = \frac{1}{m}\sum_{j=1}^{m} (y_j - \hat{y}_j)^2\]</div>
@@ -732,7 +739,7 @@ We can rewrite the formula:</p>
 </ul>
 </section>
 <section id="root-mean-squared-error-rmse">
-<h4>2. Root Mean Squared Error (RMSE)<a class="headerlink" href="#root-mean-squared-error-rmse" title="Permalink to this heading">#</a></h4>
+<h4>Root Mean Squared Error (RMSE)<a class="headerlink" href="#root-mean-squared-error-rmse" title="Permalink to this heading">#</a></h4>
 <p>The RMSE is the fix for the MSE’s unit problem and is the most common metric for predictive regression. It is simply the square root of the MSE.</p>
 <div class="math notranslate nohighlight">
 \[RMSE_{test} = \sqrt{MSE_{test}} = \sqrt{\frac{1}{m}\sum_{j=1}^{m} (y_j - \hat{y}_j)^2}\]</div>
@@ -742,7 +749,7 @@ We can rewrite the formula:</p>
 </ul>
 </section>
 <section id="mean-absolute-error-mae">
-<h4>3. Mean Absolute Error (MAE)<a class="headerlink" href="#mean-absolute-error-mae" title="Permalink to this heading">#</a></h4>
+<h4>Mean Absolute Error (MAE)<a class="headerlink" href="#mean-absolute-error-mae" title="Permalink to this heading">#</a></h4>
 <p>The MAE is an alternative to RMSE that is also highly interpretable.</p>
 <div class="math notranslate nohighlight">
 \[MAE_{test} = \frac{1}{m}\sum_{j=1}^{m} |y_j - \hat{y}_j|\]</div>
@@ -795,8 +802,9 @@ We can rewrite the formula:</p>
 <section id="ridge-regression-l2-penalty">
 <h3>Ridge Regression (L2 Penalty)<a class="headerlink" href="#ridge-regression-l2-penalty" title="Permalink to this heading">#</a></h3>
 <p>Ridge Regression is the most common type of regularization. It adds a penalty proportional to the <strong>sum of the squares of the coefficients</strong>. This is also called the <strong><span class="math notranslate nohighlight">\(L_2\)</span> norm</strong>.</p>
-<p>The cost function becomes:
-$<span class="math notranslate nohighlight">\(RSS_{L2} = \sum_{i=1}^m (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^n \beta_j^2\)</span>$</p>
+<p>The cost function becomes:</p>
+<div class="math notranslate nohighlight">
+\[RSS_{L2} = \sum_{i=1}^m (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^n \beta_j^2\]</div>
 <ul class="simple">
 <li><p>The <span class="math notranslate nohighlight">\(RSS\)</span> term pushes the model to <strong>fit the data</strong> (reducing bias).</p></li>
 <li><p>The <span class="math notranslate nohighlight">\(\lambda \sum \beta_j^2\)</span> term pushes the coefficients to be <strong>small</strong> (reducing variance).</p></li>
@@ -808,6 +816,12 @@ $<span class="math notranslate nohighlight">\(RSS_{L2} = \sum_{i=1}^m (y_i - \ha
 </ul>
 <p><strong>Key Property:</strong> Ridge Regression <em>shrinks</em> coefficients close to zero, but <strong>it will not set them <em>exactly</em> to zero</strong>.</p>
 <p><strong>Crucial Step:</strong> Because the penalty <span class="math notranslate nohighlight">\(\sum \beta_j^2\)</span> is based on the <em>size</em> of the coefficients, it is critical that we <strong>standardize (z-score)</strong> all our features first. Otherwise, a feature measured in kilometers will be penalized differently than one measured in millimeters.</p>
+<p>Note that the problem above is solved with OLS as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\beta}_{Ridge} = (X^TX + \lambda I)^{-1}X^Ty
+\]</div>
+<p>where the <span class="math notranslate nohighlight">\(\lambda I \)</span> term improves conditioning (invertibility) of the matrix even in the presence of multicollinearity.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
 <img alt="../_images/694110f73c411c8963d5e8668dd58cb2608a346f98bfa6fcd02b940d84a64fef.png" src="../_images/694110f73c411c8963d5e8668dd58cb2608a346f98bfa6fcd02b940d84a64fef.png" />
@@ -3383,8 +3397,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-statistical-fixes-extending-the-linear-model">The “Statistical” Fixes: Extending the Linear Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-terms">Interaction Terms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-linear-model-with-interaction-terms">Extending the Linear Model with Interaction Terms</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-interaction">Interpreting the Interaction</a></li>
 </ul>
 </li>
@@ -3394,9 +3407,9 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-understanding-to-prediction-the-machine-learning-perspective">From Understanding to Prediction: The Machine Learning Perspective</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics-for-prediction-test-set-error">Metrics for Prediction (Test Set Error)</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">1. Mean Squared Error (MSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">2. Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">3. Mean Absolute Error (MAE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-absolute-error-mae">Mean Absolute Error (MAE)</a></li>
 </ul>
 </li>
 </ul>

@@ -1,0 +1,1377 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Multiclass Logistic Regression and Predictive View &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/13_multiclass_logistic_regression';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Naive Bayes" href="14_map_naive_bayes.html" />
+    <link rel="prev" title="Logistic Regression - Statistical View" href="12_logistic_regression.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Naive Bayes</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/13_multiclass_logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/13_multiclass_logistic_regression.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/13_multiclass_logistic_regression.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Multiclass Logistic Regression and Predictive View</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-logistic-regression">Multinomial Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multinomial-logistic-regression-model">The Multinomial Logistic Regression Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-overview">Model Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-interpretation">Coefficient Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometrical-interpretation-of-the-coefficients-of-a-logistic-regressor">Geometrical Interpretation of the Coefficients of a Logistic Regressor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-softmax-regressor">The Softmax Regressor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometrical-interpretation-of-the-coefficients-of-a-softmax-regressor">Geometrical Interpretation of the Coefficients of a Softmax Regressor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-weights">Interpretation of Weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insights">Key Insights</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-binary-to-multi-class-one-vs-rest-ovr">From Binary to Multi-Class: One-vs-Rest (OvR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-machine-learning-predictive-view">Logistic Regression - Machine Learning (Predictive) View</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-binary-logistic-regression">Part 1: Binary Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-pipeline-and-hyperparameter-grid">Building the Pipeline and Hyperparameter Grid</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-evaluation-binary">Final Evaluation (Binary)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-multi-class-logistic-regression">Part 2: Multi-Class Logistic Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-1-multinomial-softmax">Model 1: Multinomial (Softmax)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-one-vs-rest-ovr">Model 2: One-vs-Rest (OvR)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-comparison-ovr-vs-softmax">Final Comparison: OvR vs. Softmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="multiclass-logistic-regression-and-predictive-view">
+<h1>Multiclass Logistic Regression and Predictive View<a class="headerlink" href="#multiclass-logistic-regression-and-predictive-view" title="Permalink to this heading">#</a></h1>
+<p>In this lecture, we will extend logistic regression to multiclass cases and observe this algorithm also from a purely predictive point of view.</p>
+<section id="multinomial-logistic-regression">
+<h2>Multinomial Logistic Regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>In many cases, we want to study the relationship between a set of <strong>continuous or categorical independent variable and a non-binary categorical dependent variable</strong>.</p>
+<p>Let us consider the <code class="docutils literal notranslate"><span class="pre">diabetes</span></code> dataset:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+
+<span class="c1"># Try loading the dataset</span>
+<span class="n">diabetes_data</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">get_rdataset</span><span class="p">(</span><span class="s2">&quot;Diabetes&quot;</span><span class="p">,</span> <span class="s2">&quot;heplots&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+<span class="n">diabetes_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>relwt</th>
+      <th>glufast</th>
+      <th>glutest</th>
+      <th>instest</th>
+      <th>sspg</th>
+      <th>group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.81</td>
+      <td>80</td>
+      <td>356</td>
+      <td>124</td>
+      <td>55</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.95</td>
+      <td>97</td>
+      <td>289</td>
+      <td>117</td>
+      <td>76</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.94</td>
+      <td>105</td>
+      <td>319</td>
+      <td>143</td>
+      <td>105</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1.04</td>
+      <td>90</td>
+      <td>356</td>
+      <td>199</td>
+      <td>108</td>
+      <td>Normal</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1.00</td>
+      <td>90</td>
+      <td>323</td>
+      <td>240</td>
+      <td>143</td>
+      <td>Normal</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>This dataset contains clinical measurements from <span class="math notranslate nohighlight">\(145\)</span> subjects, used to study glucose metabolism and insulin resistance.</p>
+<p>It was originally presented in <em>Data: A Collection of Problems from Many Fields</em> (Andrews &amp; Herzberg, 1985) and is included in the R package <strong>heplots</strong>.</p>
+<section id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>relwt</strong>: Relative weight (ratio of actual to expected weight)</p></li>
+<li><p><strong>glufast</strong>: Fasting plasma glucose level</p></li>
+<li><p><strong>glutest</strong>: Glucose intolerance (oral glucose tolerance test area)</p></li>
+<li><p><strong>instest</strong>: Insulin response (insulin area)</p></li>
+<li><p><strong>sspg</strong>: Steady state plasma glucose (measure of insulin resistance)</p></li>
+<li><p><strong>group</strong>: Diagnostic group</p>
+<ul>
+<li><p><em>Normal</em></p></li>
+<li><p><em>Chemical_Diabetic</em></p></li>
+<li><p><em>Overt_Diabetic</em></p></li>
+</ul>
+</li>
+</ul>
+<p>Let’s visualize the data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">diabetes_data</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;group&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/393cae03e7d70562c94700684c933f69fee4bcc3968277917975caf583f43492.png" src="../_images/393cae03e7d70562c94700684c933f69fee4bcc3968277917975caf583f43492.png" />
+</div>
+</div>
+<p>Differently from previous examples, our categorical variable contains three levels. Also, we can easily identify an interesting <strong>base class</strong>, i.e., the “Normal” group.</p>
+<p>We will define an extension of the logistic regression model, the multinomial logistic regression model, based on this concept of “base” class.</p>
+</section>
+<section id="the-multinomial-logistic-regression-model">
+<h3>The Multinomial Logistic Regression Model<a class="headerlink" href="#the-multinomial-logistic-regression-model" title="Permalink to this heading">#</a></h3>
+<p>When the dependent variable can assume more than two values, <strong>we can define the multinomial logistic regression model</strong>. In this case, we select one of the values of the dependent variable <span class="math notranslate nohighlight">\(Y\)</span> as <strong>a baseline class</strong> (e.g., the “Normal” group). Without loss of generality, let <span class="math notranslate nohighlight">\(K\)</span> be the number of classes and let <span class="math notranslate nohighlight">\(Y=1\)</span> be the baseline class. Recall that in the case of the logistic regressor, we modeled the logarithm of the odd as our linear function:</p>
+<div class="math notranslate nohighlight">
+\[\log \left(\frac{P(y=1|\mathbf{x})}{1-P(y=1|\mathbf{x})}\right) = \beta_0 + \beta_1 x_1 + \ldots + \beta_n x_n\]</div>
+<p>Since we have more than one possible outcomes for the dependent variable, rather than modeling the odds, a multinomial logistic regressor models the logarithm of the ratio between a given class <span class="math notranslate nohighlight">\(k\)</span> and the baseline class <span class="math notranslate nohighlight">\(1\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[\log\left( \frac{P(Y=k|X=\mathbf{x})}{P(Y=1|X=\mathbf{x})} \right) = \beta_{k0} + \beta_{k1} x_1 + \ldots + \beta_{kn} x_n\]</div>
+<p>Note that, in practice, we need to define a different linear combination for each class <span class="math notranslate nohighlight">\(k = 1 \ldots K\)</span>, hence we need <span class="math notranslate nohighlight">\((n+1) \times (k-1)\)</span> parameters.</p>
+<p>Doing the math, it can be shown that:</p>
+<div class="math notranslate nohighlight">
+\[ P(Y=k|X=\mathbf{x}) = \frac{e^{\mathbf{\beta_k}^T\mathbf{X}}}{1+\sum_{l=2}^K \mathbf{e^{\beta_l^T\mathbf{X}}}}\]</div>
+<div class="math notranslate nohighlight">
+\[ P(Y=1|X=\mathbf{x}) = \frac{1}{1+\sum_{l=2}^K \mathbf{e^{\beta_l^T\mathbf{X}}}}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\mathbf{\beta_k}=(\beta_0,\beta_1,\ldots,\beta_k)\)</span> and <span class="math notranslate nohighlight">\(\mathbf{X}=(1,x_1,\ldots,x_n)\)</span>.</p>
+<p>These two expressions can be used to compute the probabilities of the classes once that the parameters have been estimated and <span class="math notranslate nohighlight">\(\mathcal{x}\)</span> is observed.</p>
+<p>Let’s fit the following model:</p>
+<div class="math notranslate nohighlight">
+\[\text{group} = \beta_0 + \beta_1 \text{relwt} + \beta_1 \text{glutest}\]</div>
+<p>We obtain the following results:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.formula.api</span> <span class="k">as</span> <span class="nn">smf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Assume you already loaded the Diabetes dataset into diabetes_data</span>
+<span class="c1"># Columns: relwt, glufast, glutest, instest, sspg, group</span>
+
+<span class="c1"># Recode group into integers (baseline = Normal)</span>
+<span class="n">diabetes_data2</span> <span class="o">=</span> <span class="n">diabetes_data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">diabetes_data2</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diabetes_data2</span><span class="p">[</span><span class="s1">&#39;group&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span>
+    <span class="s1">&#39;Normal&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;Chemical_Diabetic&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;Overt_Diabetic&#39;</span><span class="p">:</span> <span class="mi">2</span>
+<span class="p">})</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+<span class="c1"># Fit multinomial logistic regression</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">smf</span><span class="o">.</span><span class="n">mnlogit</span><span class="p">(</span><span class="s2">&quot;group ~ glutest&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">diabetes_data2</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+<span class="c1"># Summary with coefficients, standard errors, z-scores, p-values</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+
+<span class="c1"># Likelihood ratio test for overall model fit</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Model Likelihood Ratio Test:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">llr</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">llr_pvalue</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Optimization terminated successfully.
+         Current function value: 0.100843
+         Iterations 14
+                          MNLogit Regression Results                          
+==============================================================================
+Dep. Variable:                  group   No. Observations:                  145
+Model:                        MNLogit   Df Residuals:                      141
+Method:                           MLE   Df Model:                            2
+Date:                Sat, 15 Nov 2025   Pseudo R-squ.:                  0.9013
+Time:                        15:53:12   Log-Likelihood:                -14.622
+converged:                       True   LL-Null:                       -148.10
+Covariance Type:            nonrobust   LLR p-value:                 1.076e-58
+==============================================================================
+   group=1       coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    -90.3738     42.527     -2.125      0.034    -173.726      -7.022
+glutest        0.2153      0.101      2.128      0.033       0.017       0.413
+------------------------------------------------------------------------------
+   group=2       coef    std err          z      P&gt;|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept   -109.8266     43.021     -2.553      0.011    -194.147     -25.506
+glutest        0.2471      0.102      2.428      0.015       0.048       0.447
+==============================================================================
+
+Model Likelihood Ratio Test:
+266.9538631863749 1.0757346252010753e-58
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that the model estimates two sets of coefficients: one for <code class="docutils literal notranslate"><span class="pre">group=1</span></code> (Chemical Diabetic) and one for <code class="docutils literal notranslate"><span class="pre">group=2</span></code> (Overt Diabetic). No coefficients are estimated for <code class="docutils literal notranslate"><span class="pre">group=0</span></code> (Normal), which serves as the baseline category. Let us interpret the results:</p>
+</section>
+<section id="model-overview">
+<h3>Model Overview<a class="headerlink" href="#model-overview" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Dependent variable</strong>: <code class="docutils literal notranslate"><span class="pre">group</span></code>, with three diagnostic categories</p></li>
+<li><p><strong>Predictors included</strong>: ``glutest` (glucose intolerance)</p></li>
+<li><p><strong>Estimation method</strong>: Maximum Likelihood Estimation (MLE)</p></li>
+<li><p><strong>Convergence</strong>: Successful after 14 iterations</p></li>
+<li><p><strong>Log-likelihood</strong>: −14.622 (final value of our cost function)</p></li>
+<li><p><strong>Pseudo R-squared</strong>: 0.9013 (good explanatory power)</p></li>
+<li><p><strong>Likelihood Ratio Test</strong>:</p>
+<ul>
+<li><p>Statistic: 266.95</p></li>
+<li><p>p-value: almost zero → highly significant improvement over the null model</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="coefficient-interpretation">
+<h3>Coefficient Interpretation<a class="headerlink" href="#coefficient-interpretation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The intercept for <code class="docutils literal notranslate"><span class="pre">group=1</span></code> is −90.3738. This means that the odds of being <em>Chemical Diabetic</em> versus <em>Normal</em> are<br />
+<span class="math notranslate nohighlight">\( e^{−90.3738} \approx 0 \)</span> when <code class="docutils literal notranslate"><span class="pre">glutest</span></code> is zero. This is an extremely low value, indicating that when <code class="docutils literal notranslate"><span class="pre">glutest</span></code> is zero, it is much more probable that the subject is <em>Normal</em> rather than <em>Chemical Diabetic</em>.</p></li>
+<li><p>The intercept for <code class="docutils literal notranslate"><span class="pre">group=2</span></code> is −109.8266. This means that the odds of being <em>Overt Diabetic</em> versus <em>Normal</em> are<br />
+<span class="math notranslate nohighlight">\( e^{-109.8266} \approx 0 \)</span> when <code class="docutils literal notranslate"><span class="pre">glutest</span></code> is zero. This indicates that when everything is zero, it is much more probable that the subject is <em>Normal</em> rather than <em>Overt Diabetic</em>. Hence, when <code class="docutils literal notranslate"><span class="pre">glutest</span></code> is zero, the subject is almost certainly <em>Normal</em>.</p></li>
+<li><p>The coefficient 0.2153 for <code class="docutils literal notranslate"><span class="pre">glutest</span></code> in <code class="docutils literal notranslate"><span class="pre">group=1</span></code> suggests that a one-unit increase in <code class="docutils literal notranslate"><span class="pre">glutest</span></code> increases the odds of being <em>Chemical Diabetic</em> versus <em>Normal</em> by<br />
+<span class="math notranslate nohighlight">\( e^{0.2153} \approx 1.24 \)</span>, an increase of about <strong>24%</strong>..</p></li>
+<li><p>The coefficient −1.911 for <code class="docutils literal notranslate"><span class="pre">glutest</span></code> in <code class="docutils literal notranslate"><span class="pre">group=2</span></code> implies a similar increase in odds for <em>Overt Diabetic</em> versus <em>Normal</em>:<br />
+<span class="math notranslate nohighlight">\( e^{0.2471} \approx 1.28 \)</span>, an increase of about <strong>28%</strong>.</p></li>
+</ul>
+</section>
+</section>
+<section id="geometrical-interpretation-of-the-coefficients-of-a-logistic-regressor">
+<h2>Geometrical Interpretation of the Coefficients of a Logistic Regressor<a class="headerlink" href="#geometrical-interpretation-of-the-coefficients-of-a-logistic-regressor" title="Permalink to this heading">#</a></h2>
+<p>Similar to linear regression, also the coefficients of logistic
+regression have a geometrical interpretation, which is particularly interesting when treating the classifier from a purely predictive point of view. We will see that, while
+linear regression finds a «curve» that fits the data, logistic
+regression finds a hyperplane that separates the data.</p>
+<p>Let us consider a simple example with bi-dimensional data
+<span class="math notranslate nohighlight">\(\mathbf{x} \in \mathfrak{R}^{2}\)</span> as the one shown in the following:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/d3f5c09f0f264dc55c163080d421b6a2e28653b2c3e463f302984e021cdbe2e3.png" src="../_images/d3f5c09f0f264dc55c163080d421b6a2e28653b2c3e463f302984e021cdbe2e3.png" />
+</div>
+</div>
+<p>Let us assume that we fit a logistic regressor model to this data</p>
+<div class="math notranslate nohighlight">
+\[P\left( y=1 | \mathbf{x} \right) = \frac{1}{1 + e^{- {(\beta}_{0} + \beta_{1}x_{1} + \beta_{2}x_{2})}}\]</div>
+<p>and find the following values for the parameters:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\left\{ \begin{matrix}
+\beta_{0} = - 3.47 \\
+\beta_{1} = 1.17 \\
+\beta_{2} = 1.43 \\
+\end{matrix} \right.\ \end{split}\]</div>
+<p>We know that these parameters allow to find a probability value according to the formula above.
+We can use these values to <strong>classify the observations</strong> <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. In practice, a reasonable criterion to classify observations would be:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\hat y = \begin{cases}1 &amp; \text{if } P(y=1|\mathbf{x}) \geq 0.5\\0 &amp; \text{otherwise}\end{cases}\end{split}\]</div>
+<p>This makes sense as we are assigning the observations to the group for which the posterior probability <span class="math notranslate nohighlight">\(P(y|\mathbf{x})\)</span> is higher.</p>
+<p>To understand how the data is classified, we can look at those points in
+which the classifier is uncertain, which is often called <strong>the decision boundary</strong>, i.e.,
+those points in which <span class="math notranslate nohighlight">\(P\left( y=1 | \mathbf{x} \right) = 0.5\)</span>.</p>
+<p>We note that:</p>
+<div class="math notranslate nohighlight">
+\[P\left(y=1 | \mathbf{x} \right) = 0.5 \Leftrightarrow e^{- (\beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2})} = 1 \Leftrightarrow 0 = \beta_{0} + \beta_{1}x_{1} + \beta_{2}x_{2}\]</div>
+<p>This last equation is the equation of a line (in the form
+<span class="math notranslate nohighlight">\(ax + by + c = 0\)</span>). We can see it in explicit form:</p>
+<div class="math notranslate nohighlight">
+\[x_{2} = - \frac{\beta_{1}}{\beta_{2}}x_{1} - \frac{\beta_{0}}{\beta_{2}}\]</div>
+<p>So, we have found a line which has a</p>
+<ul class="simple">
+<li><p>Angular coefficient equal to <span class="math notranslate nohighlight">\(- \frac{\beta_{1}}{\beta_{2}}\)</span>;</p></li>
+<li><p>Intercept equal to <span class="math notranslate nohighlight">\(- \frac{\beta_{0}}{\beta_{2}}\)</span>;</p></li>
+</ul>
+<p>If we plot this line, we obtain the <strong>decision boundary</strong> which
+separates the elements from the two classes:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/c0c82e00d05df69a65ebe76581a0935b0c7c8bdbfdbb4a78dc43c85e69233dc8.png" src="../_images/c0c82e00d05df69a65ebe76581a0935b0c7c8bdbfdbb4a78dc43c85e69233dc8.png" />
+</div>
+</div>
+<p>As can be seen, the decision boundary found by a logistic regressor is a
+line. This is because <strong>a logistic regressor is a linear classifier</strong>,
+despite the logistic function is not linear!</p>
+</section>
+<section id="the-softmax-regressor">
+<h2>The Softmax Regressor<a class="headerlink" href="#the-softmax-regressor" title="Permalink to this heading">#</a></h2>
+<p>Softmax regression is an alternative formulation of multinomial logistic regression which is designed to avoid the definition of a baseline and it is hence symmetrical. In a softmax regressor, the probabilities are modeled as follows:</p>
+<div class="math notranslate nohighlight">
+\[ P(Y=k|X=\mathbf{x}) = \frac{e^{\mathbf{\beta_k}^T\mathbf{X}}}{\sum_{l=1}^K \mathbf{e^{\beta_l^T\mathbf{X}}}}, \ \ \ \forall k=1,\ldots,K\]</div>
+<p>So, rather than estimating <span class="math notranslate nohighlight">\(K-1\)</span> coefficients, we estimate <span class="math notranslate nohighlight">\(K\)</span> coefficients.</p>
+<p>The optimization of the model is performed defining a similar cost function and optimizing it with iterative methods.</p>
+<p>The softmax formulation is widely used in predictive analysis and machine learning, where a statistical interpretation of coefficients is not required, but less pervasive in statistics.</p>
+<section id="geometrical-interpretation-of-the-coefficients-of-a-softmax-regressor">
+<h3>Geometrical Interpretation of the Coefficients of a Softmax Regressor<a class="headerlink" href="#geometrical-interpretation-of-the-coefficients-of-a-softmax-regressor" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The decision rule of Softmax regressor is to assign each observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the class with the highest probability.</p></li>
+<li><p>The <strong>decision boundary</strong> between two classes <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> is defined by the set of points where their probabilities are equal:
+$<span class="math notranslate nohighlight">\(
+P(Y=i|\mathbf{x}) = P(Y=j|\mathbf{x})
+\)</span>$</p></li>
+<li><p>This simplifies to:
+$<span class="math notranslate nohighlight">\(
+\beta_i^T \mathbf{x} = \beta_j^T \mathbf{x}
+\)</span>$</p></li>
+<li><p>Geometrically, this is the equation of a <strong>hyperplane</strong> in the feature space.</p></li>
+<li><p>Thus, softmax regression partitions the space into regions separated by linear boundaries, each region corresponding to one class.</p></li>
+</ul>
+</section>
+<section id="interpretation-of-weights">
+<h3>Interpretation of Weights<a class="headerlink" href="#interpretation-of-weights" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Each weight vector <span class="math notranslate nohighlight">\(\beta_k\)</span> defines a direction in feature space that favors class (k).</p></li>
+<li><p>The relative position of these hyperplanes determines how the space is divided among classes.</p></li>
+<li><p>Large positive coefficients increase the log-odds of belonging to that class relative to others.</p></li>
+</ul>
+<p>The plot below shows a classification problem with a decision map obtained empirically. The plot also show the three decision boundaries arising from the three classes derived analytically.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/055a5a280fdc7c2b13b856afe292f545f2a0a0e2bd72a86d9d7b534a7d29df01.png" src="../_images/055a5a280fdc7c2b13b856afe292f545f2a0a0e2bd72a86d9d7b534a7d29df01.png" />
+</div>
+</div>
+</section>
+<section id="key-insights">
+<h3>Key Insights<a class="headerlink" href="#key-insights" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Softmax regression produces <strong>linear decision boundaries</strong> between classes, just like logistic regression.</p></li>
+<li><p>Each boundary corresponds to the equality of two linear functions <span class="math notranslate nohighlight">\(\beta_i^T \mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\beta_j^T \mathbf{x}\)</span>.</p></li>
+<li><p>The model divides the plane into regions, each associated with the class that has the highest score.</p></li>
+<li><p>Weights <span class="math notranslate nohighlight">\(\beta_k\)</span> can be interpreted as defining the orientation and position of these separating hyperplanes.</p></li>
+</ul>
+</section>
+</section>
+<section id="from-binary-to-multi-class-one-vs-rest-ovr">
+<h2>From Binary to Multi-Class: One-vs-Rest (OvR)<a class="headerlink" href="#from-binary-to-multi-class-one-vs-rest-ovr" title="Permalink to this heading">#</a></h2>
+<p>One-vs-Rest provides a technique to turn any binary classification model into a multi-class model. This is also known as “one vs all”.</p>
+<p>The OvR approach turns one <span class="math notranslate nohighlight">\(K\)</span>-class problem into <span class="math notranslate nohighlight">\(K\)</span> separate binary classification problems. To do this, we need a binary classifier (like Logistic Regression) that outputs a <strong>confidence score</strong> (a probability), which we can use to find the most likely class.</p>
+<p>Given a classification task with <span class="math notranslate nohighlight">\(K\)</span> classes, the OvR approach works as follows:</p>
+<ol class="arabic simple">
+<li><p><strong>Deconstruct the Problem:</strong> We train <span class="math notranslate nohighlight">\(K\)</span> independent binary classifiers, <span class="math notranslate nohighlight">\(h_k\)</span>. Each classifier is trained to distinguish <em>one</em> class from <em>all other</em> classes (the “rest”).</p>
+<ul class="simple">
+<li><p><strong>Classifier 1 (<span class="math notranslate nohighlight">\(h_1\)</span>):</strong> Trains on <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">1</span></code> vs. <code class="docutils literal notranslate"><span class="pre">(Class</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">3</span> <span class="pre">+</span> <span class="pre">...</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">K)</span></code></p></li>
+<li><p><strong>Classifier 2 (<span class="math notranslate nohighlight">\(h_2\)</span>):</strong> Trains on <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">2</span></code> vs. <code class="docutils literal notranslate"><span class="pre">(Class</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">3</span> <span class="pre">+</span> <span class="pre">...</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">K)</span></code></p></li>
+<li><p>…</p></li>
+<li><p><strong>Classifier K (<span class="math notranslate nohighlight">\(h_K\)</span>):</strong> Trains on <code class="docutils literal notranslate"><span class="pre">Class</span> <span class="pre">K</span></code> vs. <code class="docutils literal notranslate"><span class="pre">(Class</span> <span class="pre">1</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">2</span> <span class="pre">+</span> <span class="pre">...</span> <span class="pre">+</span> <span class="pre">Class</span> <span class="pre">K-1)</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Classify a New Point:</strong> To classify a new example <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, we feed it to <strong>all <span class="math notranslate nohighlight">\(K\)</span> classifiers</strong>. Each one will output a probability or confidence score:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(h_1(\mathbf{x}) \to P(y=1 | \mathbf{x})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(h_2(\mathbf{x}) \to P(y=2 | \mathbf{x})\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(h_3(\mathbf{x}) \to P(y=3 | \mathbf{x})\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Choose the Winner:</strong> The final predicted class is simply the one whose classifier gave the <strong>highest confidence score</strong>.</p></li>
+</ol>
+<p>This is exemplified in this image from this post <a href="https://medium.com/@b.terryjack/tips-and-tricks-for-multi-class-classification-c184ae1c8ffc">https://medium.com/&#64;b.terryjack/tips-and-tricks-for-multi-class-classification-c184ae1c8ffc</a>:</p>
+<img src="https://miro.medium.com/v2/resize:fit:1034/format:webp/1*7sz-bpA4r_xSqAG3IJx-7w.jpeg">
+<p>This OvR strategy is a convenient “wrapper” that lets us use a simple binary model for complex multi-class tasks. Later, we will see an alternative (called <strong>Softmax</strong> or <strong>Multinomial Regression</strong>) that solves this by changing the model’s core math to handle all <span class="math notranslate nohighlight">\(K\)</span> classes at once.</p>
+</section>
+<section id="logistic-regression-machine-learning-predictive-view">
+<h2>Logistic Regression - Machine Learning (Predictive) View<a class="headerlink" href="#logistic-regression-machine-learning-predictive-view" title="Permalink to this heading">#</a></h2>
+<p>In the last lecture, we used <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to build logistic regression models for <strong>inference</strong> and <strong>understanding</strong>. We focused on interpreting p-values and coefficients (log-odds).</p>
+<p>Now, we will switch to the <strong>Machine Learning</strong> perspective. Our goal is no longer <em>understanding</em> but <strong>predictive accuracy</strong>.</p>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to build robust, optimized models. Our new workflow will be:</p>
+<ol class="arabic simple">
+<li><p><strong>Start with a Train/Test Split</strong> to get an honest, unbiased evaluation.</p></li>
+<li><p>Build a <strong><code class="docutils literal notranslate"><span class="pre">Pipeline</span></code></strong> that includes <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code>, as logistic regression is sensitive to feature scales (especially when regularized).</p></li>
+<li><p>Use <strong><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></strong> to find the best <strong>hyperparameters</strong> (specifically the regularization strength <code class="docutils literal notranslate"><span class="pre">C</span></code>).</p></li>
+<li><p>Evaluate our final, tuned model on the <strong>test set</strong> using metrics like <code class="docutils literal notranslate"><span class="pre">accuracy</span></code>, <code class="docutils literal notranslate"><span class="pre">classification_report</span></code>, and the <code class="docutils literal notranslate"><span class="pre">confusion_matrix</span></code>.</p></li>
+</ol>
+<section id="part-1-binary-logistic-regression">
+<h3>Part 1: Binary Logistic Regression<a class="headerlink" href="#part-1-binary-logistic-regression" title="Permalink to this heading">#</a></h3>
+<p>We will use the <strong>Breast Cancer Wisconsin</strong> dataset, which is a classic binary classification problem: predict whether a tumor is <code class="docutils literal notranslate"><span class="pre">malignant</span></code> (1) or <code class="docutils literal notranslate"><span class="pre">benign</span></code> (0) based on 30 continuous features.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_breast_cancer</span>
+
+<span class="c1"># All our models and tools</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">classification_report</span>
+
+<span class="c1"># 1. Load Data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_breast_cancer</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
+<span class="n">target_names</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">target_names</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Features shape: </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Target shape: </span><span class="si">{</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Classes: 0 = </span><span class="si">{</span><span class="n">target_names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">, 1 = </span><span class="si">{</span><span class="n">target_names</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Create the Train/Test Split</span>
+<span class="c1"># We hold back 30% for the final test</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Features shape: (569, 30)
+Target shape: (569,)
+Classes: 0 = malignant, 1 = benign
+</pre></div>
+</div>
+</div>
+</div>
+<section id="building-the-pipeline-and-hyperparameter-grid">
+<h4>Building the Pipeline and Hyperparameter Grid<a class="headerlink" href="#building-the-pipeline-and-hyperparameter-grid" title="Permalink to this heading">#</a></h4>
+<p>We will create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> that first scales the data, then fits the logistic regression model.</p>
+<p>Note that the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> is regularized with L2 norm by default with a parameter <strong><code class="docutils literal notranslate"><span class="pre">C</span></code></strong>.</p>
+<ul class="simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">C</span></code></strong> is the <em>inverse</em> of the regularization strength <span class="math notranslate nohighlight">\(\lambda\)</span> we saw in theory.</p></li>
+<li><p><strong>Small <code class="docutils literal notranslate"><span class="pre">C</span></code></strong> = Strong regularization (simpler model, high bias).</p></li>
+<li><p><strong>Large <code class="docutils literal notranslate"><span class="pre">C</span></code></strong> = Weak regularization (complex model, high variance).</p></li>
+</ul>
+<p>We will use <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> to find the best value for <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create the pipeline</span>
+<span class="n">pipe_lr</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">))</span> <span class="c1"># &#39;liblinear&#39; is a good solver for binary</span>
+<span class="p">])</span>
+
+<span class="c1"># 2. Define a search grid for &#39;C&#39;</span>
+<span class="c1"># We&#39;ll test a wide range of C values on a log scale</span>
+<span class="n">param_grid_lr</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;model__C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c1"># [0.001, 0.01, 0.1, 1, 10, 100, 1000]</span>
+<span class="p">}</span>
+
+<span class="c1"># 3. Create and fit the Grid Search</span>
+<span class="c1"># cv=5 means 5-fold cross-validation on the training set</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting Grid Search for Binary Logistic Regression...&quot;</span><span class="p">)</span>
+<span class="n">search_lr</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe_lr</span><span class="p">,</span> <span class="n">param_grid_lr</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+<span class="n">search_lr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Grid Search complete.&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best &#39;C&#39; found by CV: </span><span class="si">{</span><span class="n">search_lr</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;model__C&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best CV accuracy:     </span><span class="si">{</span><span class="n">search_lr</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Starting Grid Search for Binary Logistic Regression...
+Grid Search complete.
+Best &#39;C&#39; found by CV: 1.0
+Best CV accuracy:     0.9799
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="final-evaluation-binary">
+<h4>Final Evaluation (Binary)<a class="headerlink" href="#final-evaluation-binary" title="Permalink to this heading">#</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code> has automatically found the best <code class="docutils literal notranslate"><span class="pre">C</span></code> and re-trained a final model on the entire training set (available as <code class="docutils literal notranslate"><span class="pre">search_lr.best_estimator_</span></code>).</p>
+<p>Now we “unlock” our test set for the first and only time to get our final, unbiased score.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Get predictions from the best-tuned model</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">search_lr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># 2. Calculate final metrics</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;--- Final Model Evaluation (Test Set) ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Overall Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Confusion Matrix ---&quot;</span><span class="p">)</span>
+<span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> 
+            <span class="n">xticklabels</span><span class="o">=</span><span class="n">target_names</span><span class="p">,</span> 
+            <span class="n">yticklabels</span><span class="o">=</span><span class="n">target_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Classification Report ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">target_names</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Final Model Evaluation (Test Set) ---
+Overall Accuracy: 98.83%
+
+--- Confusion Matrix ---
+</pre></div>
+</div>
+<img alt="../_images/50fb8ea9b4f60d91f952f393e6c2af211166c65b258ce14a73e754fc25bf131d.png" src="../_images/50fb8ea9b4f60d91f952f393e6c2af211166c65b258ce14a73e754fc25bf131d.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Classification Report ---
+              precision    recall  f1-score   support
+
+   malignant       0.98      0.98      0.98        64
+      benign       0.99      0.99      0.99       107
+
+    accuracy                           0.99       171
+   macro avg       0.99      0.99      0.99       171
+weighted avg       0.99      0.99      0.99       171
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="part-2-multi-class-logistic-regression">
+<h3>Part 2: Multi-Class Logistic Regression<a class="headerlink" href="#part-2-multi-class-logistic-regression" title="Permalink to this heading">#</a></h3>
+<p>What happens when we have more than two classes, like in the <strong>Iris dataset</strong> (3 classes)? A binary model that predicts <span class="math notranslate nohighlight">\(P(y=1)\)</span> can’t work.</p>
+<p>We have two main strategies:</p>
+<ol class="arabic simple">
+<li><p><strong>One-vs-Rest (OvR):</strong></p>
+<ul class="simple">
+<li><p><strong>How it works:</strong> This strategy trains <strong>K</strong> separate binary classifiers.</p>
+<ul>
+<li><p>Classifier 1: <code class="docutils literal notranslate"><span class="pre">setosa</span></code> vs. (<code class="docutils literal notranslate"><span class="pre">versicolor</span></code> + <code class="docutils literal notranslate"><span class="pre">virginica</span></code>)</p></li>
+<li><p>Classifier 2: <code class="docutils literal notranslate"><span class="pre">versicolor</span></code> vs. (<code class="docutils literal notranslate"><span class="pre">setosa</span></code> + <code class="docutils literal notranslate"><span class="pre">virginica</span></code>)</p></li>
+<li><p>Classifier 3: <code class="docutils literal notranslate"><span class="pre">virginica</span></code> vs. (<code class="docutils literal notranslate"><span class="pre">setosa</span></code> + <code class="docutils literal notranslate"><span class="pre">versicolor</span></code>)</p></li>
+</ul>
+</li>
+<li><p>When a new flower comes in, all 3 classifiers give a probability. The one with the highest confidence wins.</p></li>
+<li><p>This is the default strategy in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>.</p></li>
+</ul>
+</li>
+<li><p><strong>Multinomial (Softmax) Regression:</strong></p>
+<ul class="simple">
+<li><p><strong>How it works:</strong> This is a <em>different model</em> that changes the core math. Instead of the <em>sigmoid</em> function (which gives one 0-1 probability), it uses the <strong><code class="docutils literal notranslate"><span class="pre">softmax</span></code></strong> function.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">softmax</span></code> outputs a <em>vector</em> of probabilities, one for each class, that are all guaranteed to sum to 1.</p>
+<ul>
+<li><p>e.g., <code class="docutils literal notranslate"><span class="pre">[P(setosa)=0.9,</span> <span class="pre">P(versicolor)=0.05,</span> <span class="pre">P(virginica)=0.05]</span></code></p></li>
+</ul>
+</li>
+<li><p>This is a “true” multi-class model trained as a single unit.</p></li>
+</ul>
+</li>
+</ol>
+<p>Let’s use the Iris dataset and compare both strategies in a “bake-off”.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.multiclass</span> <span class="kn">import</span> <span class="n">OneVsRestClassifier</span> <span class="c1"># &lt;-- Import the OvR wrapper</span>
+
+<span class="c1"># 1. Load Iris data (using all 4 features)</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X_i</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y_i</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+<span class="n">target_names_i</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target_names</span>
+
+<span class="c1"># 2. Create the Train/Test Split</span>
+<span class="n">X_train_i</span><span class="p">,</span> <span class="n">X_test_i</span><span class="p">,</span> <span class="n">y_train_i</span><span class="p">,</span> <span class="n">y_test_i</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_i</span><span class="p">,</span> <span class="n">y_i</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_i</span><span class="p">)</span>
+
+<span class="c1"># 3. Define the parameter grid (we&#39;ll use this for both)</span>
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="c1"># [0.001, 0.01, 0.1, 1, 10, 100, 1000]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-1-multinomial-softmax">
+<h3>Model 1: Multinomial (Softmax)<a class="headerlink" href="#model-1-multinomial-softmax" title="Permalink to this heading">#</a></h3>
+<p>This is the standard for multi-class logistic regression in <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. We build a pipeline and tune the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter of the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create the pipeline for Softmax</span>
+<span class="n">pipe_multi</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;lbfgs&#39;</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># 2. Define the grid search parameters</span>
+<span class="c1"># We must prefix parameters with the pipeline step name: &#39;model__&#39;</span>
+<span class="n">param_grid_multi</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;model__C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># 3. Run Grid Search</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running Grid Search for Multinomial (Softmax)...&quot;</span><span class="p">)</span>
+<span class="n">search_multi</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe_multi</span><span class="p">,</span> <span class="n">param_grid_multi</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+<span class="n">search_multi</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train_i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best &#39;C&#39; for Multinomial: </span><span class="si">{</span><span class="n">search_multi</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;model__C&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best CV Accuracy: </span><span class="si">{</span><span class="n">search_multi</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running Grid Search for Multinomial (Softmax)...
+Best &#39;C&#39; for Multinomial: 1.0
+Best CV Accuracy: 0.9810
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="model-2-one-vs-rest-ovr">
+<h3>Model 2: One-vs-Rest (OvR)<a class="headerlink" href="#model-2-one-vs-rest-ovr" title="Permalink to this heading">#</a></h3>
+<p>Now we’ll use the <code class="docutils literal notranslate"><span class="pre">OneVsRestClassifier</span></code> wrapper. This wrapper takes a <em>base</em> estimator (our binary <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> model) and will train 3 of them “under the hood.”</p>
+<p><strong>Important:</strong> Because our model is now a wrapper, the hyperparameter <code class="docutils literal notranslate"><span class="pre">C</span></code> belongs to the <em>base estimator</em>, not the wrapper. When we build our <code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code>, the parameter name changes to <strong><code class="docutils literal notranslate"><span class="pre">model__estimator__C</span></code></strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create the pipeline for OvR</span>
+<span class="c1"># We pass a *new* LogisticRegression() model *inside* the wrapper</span>
+<span class="n">pipe_ovr</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">OneVsRestClassifier</span><span class="p">(</span><span class="n">LogisticRegression</span><span class="p">(</span><span class="n">solver</span><span class="o">=</span><span class="s1">&#39;liblinear&#39;</span><span class="p">)))</span>
+<span class="p">])</span>
+
+<span class="c1"># 2. Define the grid search parameters</span>
+<span class="c1"># Note the new parameter name: &#39;model__estimator__C&#39;</span>
+<span class="n">param_grid_ovr</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;model__estimator__C&#39;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># 3. Run Grid Search</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Running Grid Search for One-vs-Rest (OvR)...&quot;</span><span class="p">)</span>
+<span class="n">search_ovr</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe_ovr</span><span class="p">,</span> <span class="n">param_grid_ovr</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="s1">&#39;accuracy&#39;</span><span class="p">)</span>
+<span class="n">search_ovr</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train_i</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best &#39;C&#39; for OvR: </span><span class="si">{</span><span class="n">search_ovr</span><span class="o">.</span><span class="n">best_params_</span><span class="p">[</span><span class="s1">&#39;model__estimator__C&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Best CV Accuracy: </span><span class="si">{</span><span class="n">search_ovr</span><span class="o">.</span><span class="n">best_score_</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Running Grid Search for One-vs-Rest (OvR)...
+Best &#39;C&#39; for OvR: 10.0
+Best CV Accuracy: 0.9714
+</pre></div>
+</div>
+</div>
+</div>
+<section id="final-comparison-ovr-vs-softmax">
+<h4>Final Comparison: OvR vs. Softmax<a class="headerlink" href="#final-comparison-ovr-vs-softmax" title="Permalink to this heading">#</a></h4>
+<p>Now we do our final, unbiased evaluation on the <strong>test set</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Get predictions from the best Multinomial (Softmax) model</span>
+<span class="n">y_pred_multi</span> <span class="o">=</span> <span class="n">search_multi</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_i</span><span class="p">)</span>
+<span class="n">acc_multi</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_i</span><span class="p">,</span> <span class="n">y_pred_multi</span><span class="p">)</span>
+
+<span class="c1"># 2. Get predictions from the best OvR model</span>
+<span class="n">y_pred_ovr</span> <span class="o">=</span> <span class="n">search_ovr</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_i</span><span class="p">)</span>
+<span class="n">acc_ovr</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test_i</span><span class="p">,</span> <span class="n">y_pred_ovr</span><span class="p">)</span>
+
+<span class="c1"># 3. Create a results table</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Multinomial (Softmax)&quot;</span><span class="p">:</span> <span class="n">acc_multi</span><span class="p">,</span>
+    <span class="s2">&quot;One-vs-Rest (OvR)&quot;</span><span class="p">:</span> <span class="n">acc_ovr</span>
+<span class="p">}</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Multi-Class Model Comparison ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Report for Multinomial (Softmax) Model ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_i</span><span class="p">,</span> <span class="n">y_pred_multi</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">target_names_i</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- Report for One-vs-Rest (OvR) Model ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">classification_report</span><span class="p">(</span><span class="n">y_test_i</span><span class="p">,</span> <span class="n">y_pred_ovr</span><span class="p">,</span> <span class="n">target_names</span><span class="o">=</span><span class="n">target_names_i</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Multi-Class Model Comparison ---
+                       Test Accuracy
+Multinomial (Softmax)       0.911111
+One-vs-Rest (OvR)           0.866667
+
+--- Report for Multinomial (Softmax) Model ---
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        15
+  versicolor       0.82      0.93      0.88        15
+   virginica       0.92      0.80      0.86        15
+
+    accuracy                           0.91        45
+   macro avg       0.92      0.91      0.91        45
+weighted avg       0.92      0.91      0.91        45
+
+
+--- Report for One-vs-Rest (OvR) Model ---
+              precision    recall  f1-score   support
+
+      setosa       1.00      1.00      1.00        15
+  versicolor       0.80      0.80      0.80        15
+   virginica       0.80      0.80      0.80        15
+
+    accuracy                           0.87        45
+   macro avg       0.87      0.87      0.87        45
+weighted avg       0.87      0.87      0.87        45
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chapter <span class="math notranslate nohighlight">\(4\)</span> of [1]</p></li>
+<li><p><a class="reference external" href="https://medium.com/&#64;b.terryjack/tips-and-tricks-for-multi-class-classification-c184ae1c8ffc">https://medium.com/&#64;b.terryjack/tips-and-tricks-for-multi-class-classification-c184ae1c8ffc</a></p></li>
+</ul>
+<p>[1] James, Gareth Gareth Michael. An introduction to statistical learning: with applications in Python, 2023.<a class="reference external" href="https://www.statlearning.com">https://www.statlearning.com</a></p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="12_logistic_regression.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Logistic Regression - Statistical View</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="14_map_naive_bayes.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Naive Bayes</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-logistic-regression">Multinomial Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variables">Variables</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multinomial-logistic-regression-model">The Multinomial Logistic Regression Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-overview">Model Overview</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coefficient-interpretation">Coefficient Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#geometrical-interpretation-of-the-coefficients-of-a-logistic-regressor">Geometrical Interpretation of the Coefficients of a Logistic Regressor</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-softmax-regressor">The Softmax Regressor</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometrical-interpretation-of-the-coefficients-of-a-softmax-regressor">Geometrical Interpretation of the Coefficients of a Softmax Regressor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation-of-weights">Interpretation of Weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-insights">Key Insights</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-binary-to-multi-class-one-vs-rest-ovr">From Binary to Multi-Class: One-vs-Rest (OvR)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-machine-learning-predictive-view">Logistic Regression - Machine Learning (Predictive) View</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-binary-logistic-regression">Part 1: Binary Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-pipeline-and-hyperparameter-grid">Building the Pipeline and Hyperparameter Grid</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-evaluation-binary">Final Evaluation (Binary)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-multi-class-logistic-regression">Part 2: Multi-Class Logistic Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-1-multinomial-softmax">Model 1: Multinomial (Softmax)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-one-vs-rest-ovr">Model 2: One-vs-Rest (OvR)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-comparison-ovr-vs-softmax">Final Comparison: OvR vs. Softmax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
