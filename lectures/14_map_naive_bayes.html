@@ -231,7 +231,6 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Naive Bayes</a></li>
-
 </ul>
 
     </div>
@@ -458,7 +457,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Naive Bayes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
@@ -483,21 +481,18 @@ document.write(`
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-</ul>
-
             </nav>
         </div>
     </div>
@@ -844,13 +839,12 @@ uniform priors and set:</p>
 </section>
 </section>
 </section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">
-<h1>Lab Bake-Off: The Right vs. The Wrong Tool for the Job<a class="headerlink" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job" title="Permalink to this heading">#</a></h1>
+<section id="lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">
+<h2>Lab Bake-Off: The Right vs. The Wrong Tool for the Job<a class="headerlink" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job" title="Permalink to this heading">#</a></h2>
 <p>We’ve now seen a “family” of generative models (QDA, LDA, GNB) and know about discriminative models like KNN and Logistic Regression.</p>
 <p>Let’s run a “bake-off” to see what happens when we apply these models to a <strong>high-dimensional text classification</strong> problem (spam filtering). This will clearly demonstrate <em>why</em> <code class="docutils literal notranslate"><span class="pre">Multinomial</span> <span class="pre">Naive</span> <span class="pre">Bayes</span> <span class="pre">(MNB)</span></code> is a standard tool for this task, and why the other models we’ve learned are the <strong>wrong tool for the job</strong>.</p>
 <section id="the-competitors">
-<h2>The Competitors:<a class="headerlink" href="#the-competitors" title="Permalink to this heading">#</a></h2>
+<h3>The Competitors:<a class="headerlink" href="#the-competitors" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p><strong>Text-Native Models:</strong></p>
 <ul class="simple">
@@ -869,7 +863,7 @@ uniform priors and set:</p>
 </ol>
 </section>
 <section id="the-workflow">
-<h2>The Workflow:<a class="headerlink" href="#the-workflow" title="Permalink to this heading">#</a></h2>
+<h3>The Workflow:<a class="headerlink" href="#the-workflow" title="Permalink to this heading">#</a></h3>
 <ol class="arabic simple">
 <li><p>Load and clean the SMS Spam dataset.</p></li>
 <li><p>Create a single <strong>Train/Test Split</strong>.</p></li>
@@ -917,7 +911,7 @@ uniform priors and set:</p>
 </div>
 </section>
 <section id="step-1-load-and-split-the-data">
-<h2>Step 1: Load and Split the Data<a class="headerlink" href="#step-1-load-and-split-the-data" title="Permalink to this heading">#</a></h2>
+<h3>Step 1: Load and Split the Data<a class="headerlink" href="#step-1-load-and-split-the-data" title="Permalink to this heading">#</a></h3>
 <p>First, we load the data from the UCI zip file, map the labels, and create our single, “locked-away” test set.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -972,7 +966,7 @@ Training samples: 3900, Test samples: 1672
 </div>
 </section>
 <section id="step-2-define-pipelines-and-custom-transformer">
-<h2>Step 2: Define Pipelines and Custom Transformer<a class="headerlink" href="#step-2-define-pipelines-and-custom-transformer" title="Permalink to this heading">#</a></h2>
+<h3>Step 2: Define Pipelines and Custom Transformer<a class="headerlink" href="#step-2-define-pipelines-and-custom-transformer" title="Permalink to this heading">#</a></h3>
 <p>We need a custom transformer to convert the sparse output of <code class="docutils literal notranslate"><span class="pre">TfidfVectorizer</span></code> into a dense <code class="docutils literal notranslate"><span class="pre">numpy</span></code> array, which GNB, LDA, and QDA require. This is intentionally inefficient and will highlight the “nightmare” of using these models on high-dimensional data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1028,7 +1022,7 @@ Training samples: 3900, Test samples: 1672
 </div>
 </section>
 <section id="step-3-run-the-bake-off">
-<h2>Step 3: Run the Bake-Off<a class="headerlink" href="#step-3-run-the-bake-off" title="Permalink to this heading">#</a></h2>
+<h3>Step 3: Run the Bake-Off<a class="headerlink" href="#step-3-run-the-bake-off" title="Permalink to this heading">#</a></h3>
 <p>Now we loop, fit, and time each model. Watch what happens when we try to run the models that aren’t designed for this kind of data.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1086,7 +1080,7 @@ Training samples: 3900, Test samples: 1672
 </div>
 </section>
 <section id="step-4-show-the-final-results">
-<h2>Step 4: Show the Final Results<a class="headerlink" href="#step-4-show-the-final-results" title="Permalink to this heading">#</a></h2>
+<h3>Step 4: Show the Final Results<a class="headerlink" href="#step-4-show-the-final-results" title="Permalink to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert results to a pandas DataFrame for a &quot;nice chart&quot;</span>
@@ -1131,7 +1125,7 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
 </div>
 </section>
 <section id="conclusion-the-right-tool-for-the-job">
-<h2>Conclusion: The Right Tool for the Job<a class="headerlink" href="#conclusion-the-right-tool-for-the-job" title="Permalink to this heading">#</a></h2>
+<h3>Conclusion: The Right Tool for the Job<a class="headerlink" href="#conclusion-the-right-tool-for-the-job" title="Permalink to this heading">#</a></h3>
 <p>This bake-off tells a very clear story:</p>
 <ol class="arabic simple">
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">Logistic</span> <span class="pre">Regression</span></code> and <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></strong> were the <strong>winners</strong>. They are designed to handle high-dimensional, sparse text data and performed excellently.</p></li>
@@ -1140,6 +1134,7 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
 <li><p><strong><code class="docutils literal notranslate"><span class="pre">LDA</span></code> and <code class="docutils literal notranslate"><span class="pre">QDA</span></code></strong> <strong>took a long time to run and gave warnings</strong>.</p></li>
 </ol>
 <p><strong>The final lesson is clear:</strong> You must choose a model that matches the assumptions and dimensionality of your data. For high-dimensional, sparse count data like text, <strong>Multinomial Naive Bayes</strong> and <strong>Logistic Regression</strong> are the correct, industry-standard tools.</p>
+</section>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
@@ -1206,7 +1201,6 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Naive Bayes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-core-principle-maximum-a-posteriori-map">The Core Principle: Maximum A Posteriori (MAP)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-prior-p-y">The Prior <span class="math notranslate nohighlight">\(P(Y)\)</span></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-p-x-y">The Likelihood <span class="math notranslate nohighlight">\(P(X|Y)\)</span></a></li>
@@ -1231,21 +1225,18 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
 </li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
 </ul>
 </li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-bake-off-the-right-vs-the-wrong-tool-for-the-job">Lab Bake-Off: The Right vs. The Wrong Tool for the Job</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-define-pipelines-and-custom-transformer">Step 2: Define Pipelines and Custom Transformer</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-run-the-bake-off">Step 3: Run the Bake-Off</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-show-the-final-results">Step 4: Show the Final Results</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion-the-right-tool-for-the-job">Conclusion: The Right Tool for the Job</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
-</li>
-</ul>
-
   </nav></div>
 
 </div></div>
