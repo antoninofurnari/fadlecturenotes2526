@@ -54,6 +54,10 @@ parts:
 - caption: Lecture 15
   chapters:
   - file: lectures/14_map_naive_bayes
+- caption: Lecture 16
+  chapters:
+  - file: lectures/15_data_as_nd_points
+  - file: lectures/16_clustering
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
