@@ -1,0 +1,1558 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Density Estimation &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/17_density_estimation';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Dimensionality Reduction: Principal Component Analysis (PCA)" href="18_principal_component_analysis.html" />
+    <link rel="prev" title="Clustering" href="16_clustering.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="13_multiclass_logistic_regression.html">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Generative Classifiers and Naive Bayes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 16</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="15_data_as_nd_points.html">Data as N-Dimensional Points, Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_clustering.html">Clustering</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 17</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Density Estimation</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 18</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="18_principal_component_analysis.html">Dimensionality Reduction: Principal Component Analysis (PCA)</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/17_density_estimation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/17_density_estimation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/17_density_estimation.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Density Estimation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-density-estimation-techniques">Non-parametric Density Estimation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-windows-nd-histograms">Fixed Windows (ND Histograms)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-mobile-windows-kernel-density-estimation">Method 2: Mobile Windows (Kernel Density Estimation)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-approach-the-circular-kernel">The “Naive” Approach: The Circular Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-view">Kernel View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-with-the-naive-kernel">The Problem with the “Naive” Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-smooth-kernels">The Solution: “Smooth” Kernels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-epanechnikov-kernel">The Epanechnikov Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-tradeoff-choosing-the-bandwidth-h">The Bias-Variance Tradeoff: Choosing the Bandwidth <span class="math notranslate nohighlight">\(h\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-result-kde">Final Result: KDE</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-density-estimation">Parametric Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-gaussian-to-the-data">Fitting a Gaussian to the Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-sample-mean-and-covariance">The Solution: Sample Mean and Covariance</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-weakness-of-a-single-gaussian-bimodal-data">The Weakness of a Single Gaussian: Bimodal Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-models-gmm">Gaussian Mixture Models (GMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-density-estimation-example">GMM Density Estimation Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-as-soft-clustering">GMM as “Soft Clustering”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-learn-a-gmm-optimization-by-maximum-likelihood">How to “Learn” a GMM: Optimization by Maximum Likelihood</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-vs-k-means">GMM vs K-Means</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-density-estimation-for-anomaly-detection">Lab: Density Estimation for Anomaly Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-goal">The Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-prepare-the-data">Step 1: Load and Prepare the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-preprocessing-scaling">Step 2: Preprocessing (Scaling)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-fit-the-density-models">Step 3: Fit the Density Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-get-anomaly-scores">Step 4: Get Anomaly Scores</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-quantitative-comparison-the-roc-curve">Step 5: Quantitative Comparison (The ROC Curve)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="density-estimation">
+<h1>Density Estimation<a class="headerlink" href="#density-estimation" title="Permalink to this heading">#</a></h1>
+<p>We have seen that clustering algorithms aim to mine the underlying structure of data by breaking it into coherent groups. For example k-means clustering <strong>allows to identify parts of the feature space with high density (i.e., a large number of observations)</strong> by partitioning all observations into a <strong>discrete set of <span class="math notranslate nohighlight">\(K\)</span> data groups distributed around centroids</strong>.</p>
+<p>An alternative <strong>smoother</strong> approach would be to study the probability <span class="math notranslate nohighlight">\(P(X)\)</span>, where <span class="math notranslate nohighlight">\(X\)</span> is the data. Indeed, if we could determine the probability value of an given point in space <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, we could naturally discover clusters in the data (<strong>zones with high probability values</strong>). Knowing the distribution of the data is also useful for a number of things:</p>
+<ul class="simple">
+<li><p>Similar to clustering, if <span class="math notranslate nohighlight">\(X\)</span> is a series of observations of customers in a bank (e.g., age, sex, balance, salary, etc.), we may want to know <span class="math notranslate nohighlight">\(P(X)\)</span> to understand which types of customers are more frequent (those that have large <span class="math notranslate nohighlight">\(P(X)\)</span> values), or if there are different distinct groups of customers (e.g., if <span class="math notranslate nohighlight">\(P(X)\)</span> has more than one mode);</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(X\)</span> is a set of images of faces, knowing <span class="math notranslate nohighlight">\(P(X)\)</span> would allow us to understand if an image <span class="math notranslate nohighlight">\(x\)</span> looks like an image of a face or not, which faces are more frequent, if there are more than one “groups” of faces, etc. If we could draw <span class="math notranslate nohighlight">\(x \sim P\)</span>, we could even generate new images of faces! (<strong>by the way, this is what Generative Adversarial Networks do</strong>);</p></li>
+<li><p>If <span class="math notranslate nohighlight">\(X\)</span> is a series of observations of bank transactions, by modeling <span class="math notranslate nohighlight">\(P(X)\)</span> we can infer if a given observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is a typical transaction (high <span class="math notranslate nohighlight">\(P(\mathbf{x}\)</span>)) or whether it is an anomaly (low <span class="math notranslate nohighlight">\(P(X)\)</span>). If we can make assumptions on the nature of <span class="math notranslate nohighlight">\(P(X)\)</span>, we can even make inference on the properties of a given data point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. For instance, if <span class="math notranslate nohighlight">\(P\)</span> is Gaussian, then datapoints which are further from the center are atypical and they can hence identify anomalous transactions.</p></li>
+</ul>
+<p>A probability density is <strong>a continuous function</strong>, so estimating it is not as straightforward as estimating a <strong>probability mass function</strong>. There are two main classes of methods for density estimation:</p>
+<ul class="simple">
+<li><p><strong>Non-parametric methods</strong>: these methods aim to estimate the density <strong>directly from the data, without strong assumptions on the source distribution</strong>. The main advantage of these methods is that they generally have few hyper-parameters to tune and can be used when no assumption can be made on the source of the data. A disadvantage is that, while we can numerically compute <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span> with these methods (where <span class="math notranslate nohighlight">\(f\)</span> is the density function), we do not know the analytical form or property of <span class="math notranslate nohighlight">\(f\)</span>;</p></li>
+<li><p><strong>Parametric methods</strong>: these methods aim to <strong>fit a known distribution to the data</strong>. An example of this approach is <strong>fitting a Gaussian to the data</strong>. The main advantage of these methods is that they provide an analytical form for the density <span class="math notranslate nohighlight">\(f\)</span>, which can be useful in a number of contexts (for instance, the density may be part of a cost function we want to optimize). The downside is that these methods make strong assumptions on the nature of the data.</p></li>
+</ul>
+<p>In the following, we will see the main representatives of these two classes of methods.</p>
+<section id="non-parametric-density-estimation-techniques">
+<h2>Non-parametric Density Estimation Techniques<a class="headerlink" href="#non-parametric-density-estimation-techniques" title="Permalink to this heading">#</a></h2>
+<p>We will now look at <strong>non-parametric methods</strong>, which estimate the density <em>directly from the data</em> without making strong assumptions (like that the data is Gaussian).</p>
+<p>We will focus on the two main approaches:</p>
+<ol class="arabic simple">
+<li><p><strong>Fixed Windows (Histograms):</strong> This method “discretizes” the feature space into a fixed grid of bins and counts how many points fall into each bin.</p></li>
+<li><p><strong>Mobile Windows (Kernel Density Estimation):</strong> This method centers a “window” on <em>every single data point</em> (or on a grid) and sums their influence, creating a much smoother estimate. This is also known as the <strong>Parzen Window</strong> method.</p></li>
+</ol>
+<section id="fixed-windows-nd-histograms">
+<h3>Fixed Windows (ND Histograms)<a class="headerlink" href="#fixed-windows-nd-histograms" title="Permalink to this heading">#</a></h3>
+<p>This is the simplest method, extending the 1D histogram to multiple dimensions. We “discretize” the feature space into a fixed grid of “bins” (or “tiles”) and count how many points fall into each bin.</p>
+<p>A simple <em>count</em> is misleading. A bin that is 4x larger might have 4x more points but have the same <em>density</em>.</p>
+<p>To get a true <strong>probability density function <span class="math notranslate nohighlight">\(f(\mathbf{x})\)</span></strong>, our function must satisfy one rule: the <strong>total “volume” under the function must integrate to 1</strong>.</p>
+<div class="math notranslate nohighlight">
+\[
+\int f(\mathbf{x}) d\mathbf{x} = 1
+\]</div>
+<p>To achieve this, we cannot just plot the counts. We must define the density <span class="math notranslate nohighlight">\(f(R_i)\)</span> for a bin <span class="math notranslate nohighlight">\(R_i\)</span> as the <em>probability</em> of that bin divided by its <em>volume</em> (or area).</p>
+<ol class="arabic simple">
+<li><p><strong>Probability of the bin:</strong> <span class="math notranslate nohighlight">\(P(R_i) = \frac{\text{Count of points in } R_i}{\text{Total Number of Points } (N)}\)</span></p></li>
+<li><p><strong>Volume of the bin:</strong> <span class="math notranslate nohighlight">\(V(R_i)\)</span> (e.g., for a 2x2 bin, the area is 4).</p></li>
+</ol>
+<p>This gives us the formula for the density <em>height</em> of that bin:</p>
+<div class="math notranslate nohighlight">
+\[
+f(\mathbf{x} \in R_i) = \frac{P(R_i)}{V(R_i)} = \frac{|R_i| / N}{V(R_i)}
+\]</div>
+<p>By dividing by the volume, we ensure that a small, crowded bin (small <span class="math notranslate nohighlight">\(V(R_i)\)</span>) will have a high density value, while a large, sparse bin (large <span class="math notranslate nohighlight">\(V(R_i)\)</span>) will have a low density value, even if they contain the same number of points. This normalization is what ensures the total volume integrates to 1:</p>
+<div class="math notranslate nohighlight">
+\[
+P(\mathbf{x} \in \cup_i R_i) = \sum_i P(R_i) = \sum_i f(\mathbf{x} \in R_i) V(R_i) = \sum_i \frac{|R_i| / N}{V(R_i)} V(R_i) = \frac{1}{N} \sum_i |R_i| = 1
+\]</div>
+<p>This approach has two main hyperparameters: the <strong>bin size</strong> and the <strong>grid’s origin (position)</strong>. A popular alternative to square bins is <code class="docutils literal notranslate"><span class="pre">hexbin</span></code>, which uses hexagonal bins that tile the space more naturally.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ignoring fixed y limits to fulfill fixed data aspect with adjustable data limits.
+Ignoring fixed y limits to fulfill fixed data aspect with adjustable data limits.
+Ignoring fixed x limits to fulfill fixed data aspect with adjustable data limits.
+Ignoring fixed x limits to fulfill fixed data aspect with adjustable data limits.
+</pre></div>
+</div>
+<img alt="../_images/9ce4c4ef2bbebc9b02a3ae9f687d08a113215a9b2db27b9806e611beb359cf9a.png" src="../_images/9ce4c4ef2bbebc9b02a3ae9f687d08a113215a9b2db27b9806e611beb359cf9a.png" />
+</div>
+</div>
+<p>As you can see, both plots do a good job of finding the two high-density “blobs” in our data. The <code class="docutils literal notranslate"><span class="pre">hexbin</span></code> plot (right) often looks a bit smoother and more natural than the <code class="docutils literal notranslate"><span class="pre">hist2d</span></code> (left).</p>
+<p>The main problem with “fixed window” methods is that the <em>bin size</em> is a difficult hyperparameter to choose. More importantly, the rigid, fixed grid is sensitive to where the points fall (the “bin edge” problem).</p>
+<p>While we saw this in 2D, we can generalize it to N dimensions (e.g., squares become cubes or hypercubes).</p>
+</section>
+</section>
+<section id="method-2-mobile-windows-kernel-density-estimation">
+<h2>Method 2: Mobile Windows (Kernel Density Estimation)<a class="headerlink" href="#method-2-mobile-windows-kernel-density-estimation" title="Permalink to this heading">#</a></h2>
+<p>The “fixed window” (histogram) method has two main problems:</p>
+<ol class="arabic simple">
+<li><p>The “bin edges” are arbitrary and can change the shape of the density.</p></li>
+<li><p>The resulting density is “blocky” and not smooth.</p></li>
+</ol>
+<p>A more flexible and powerful non-parametric approach is to use a <strong>“mobile window”</strong>. This method is known as <strong>Kernel Density Estimation (KDE)</strong> or the <strong>Parzen Window</strong> method.</p>
+<p>Instead of putting a fixed grid over the data, KDE places a “window” (or <strong>kernel</strong>) at each point in space <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and asks, “How much data is inside this window?”</p>
+<section id="the-naive-approach-the-circular-kernel">
+<h3>The “Naive” Approach: The Circular Kernel<a class="headerlink" href="#the-naive-approach-the-circular-kernel" title="Permalink to this heading">#</a></h3>
+<p>A simple approach is to center a circle (or hypersphere) of a fixed radius <span class="math notranslate nohighlight">\(h\)</span> at a point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and calculate the density based on how many data points <span class="math notranslate nohighlight">\(N(\mathbf{x},h)\)</span> fall inside it.</p>
+<p>This follows the same logic as the histogram:</p>
+<blockquote>
+<div><p>Density = (Probability of being in the window) / (Volume of the window)</p>
+</div></blockquote>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \frac{|N(\mathbf{x},h)| / N}{V(h)}\]</div>
+<p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of points, <span class="math notranslate nohighlight">\(|N(\mathbf{x},h)|\)</span> is the count of points inside the circle</p>
+<div class="math notranslate nohighlight">
+\[N(\mathbf{x},h) = \{\mathbf{x}' \in \mathbf{X}\ s.t.\ ||\mathbf{x}' - \mathbf{x}||_2 \leq h \}\]</div>
+<p>and <span class="math notranslate nohighlight">\(V(h)\)</span> is the volume (or area) of the circle (e.g., <span class="math notranslate nohighlight">\(V(h) = \pi h^2\)</span>).</p>
+<p>It is not hard to see that under the definition above, we have:</p>
+<div class="math notranslate nohighlight">
+\[\int_{\mathbf{x} \in \Re^d} f(\mathbf{x}) d\mathbf{x}= 1\]</div>
+<p>The plot below shows some density estimates using this method:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ignoring fixed y limits to fulfill fixed data aspect with adjustable data limits.
+</pre></div>
+</div>
+<img alt="../_images/acd701b00a9913f89c1ad6b18575619a8ed84755b5a298d147a356e7bc0b2411.png" src="../_images/acd701b00a9913f89c1ad6b18575619a8ed84755b5a298d147a356e7bc0b2411.png" />
+</div>
+</div>
+</section>
+<section id="kernel-view">
+<h3>Kernel View<a class="headerlink" href="#kernel-view" title="Permalink to this heading">#</a></h3>
+<p>We can also write the expression above as:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \frac{1}{|\mathbf{X}|} \sum_{i=1}^{|\mathbf{X}|} K_h\left(\mathbf{x}_i - \mathbf{x}\right) \]</div>
+<p>where <span class="math notranslate nohighlight">\(K_h\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}K_h\left(\mathbf{x}_i - \mathbf{x}\right) = \begin{cases} \frac{1}{V(h)} &amp; \text{if } ||\frac{\mathbf{x}_i - \mathbf{x}}{h}||_2 \leq 1 \\ 0 &amp; \text{otherwise} \end{cases}\end{split}\]</div>
+<p>We will call <span class="math notranslate nohighlight">\(K_h\)</span> <strong>a kernel function</strong> depending on the bandwidth parameter <span class="math notranslate nohighlight">\(h\)</span>. This is a function which assigns a weight to a point <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span> depending on its distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. In the example above, we chose <span class="math notranslate nohighlight">\(K_h\)</span> as <strong>a circular (or radial) kernel</strong> which assigns a uniform score to all points falling in a circle of radius <span class="math notranslate nohighlight">\(h\)</span> centered at <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>A main problem with this density estimation approach is that <strong>it can be very sensitive to the location at which we are computing the density</strong>. Indeed, we can find cases in which we obtain very different densities when we move the circle by a little bit.</p>
+<p>We can note that <strong>this is due by the kernel <span class="math notranslate nohighlight">\(K\)</span> making “hard decisions” on which elements to assign a non-zero score and which ones to assign a zero score</strong>. Indeed, if we plot the kernel as a function of the distance between <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>, rescaled by <span class="math notranslate nohighlight">\(h\)</span>, we obtain the following picture:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/4c0146d948b7aa799a3251ad05bbb19c0520b35eec1baf25f5eecaaefd1cd574.png" src="../_images/4c0146d948b7aa799a3251ad05bbb19c0520b35eec1baf25f5eecaaefd1cd574.png" />
+</div>
+</div>
+<p>The figure above plots points putting their distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> in the x axis and the assigned weight in the y axis. As can be noted, even very close points in the x axis (e.g., the last of the green ones and the first of the red ones) get assigned very different weights, which makes the overall process sensitive to small shifts in <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+</section>
+<section id="the-problem-with-the-naive-kernel">
+<h3>The Problem with the “Naive” Kernel<a class="headerlink" href="#the-problem-with-the-naive-kernel" title="Permalink to this heading">#</a></h3>
+<p>This “circular” (or “radial”) kernel has a major flaw: it makes <strong>“hard decisions”</strong>. A point is either 100% “in” the circle (and gets a full vote) or 100% “out” (and gets a 0 vote).</p>
+<p>This means that if you move the center <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> just a tiny bit, a data point might fall out of the circle, causing the density to “jump” abruptly. This creates a non-smooth, “bumpy” density estimate.</p>
+</section>
+<section id="the-solution-smooth-kernels">
+<h3>The Solution: “Smooth” Kernels<a class="headerlink" href="#the-solution-smooth-kernels" title="Permalink to this heading">#</a></h3>
+<p>To fix this, we use a <strong>smooth kernel</strong> that assigns decreasing weight to points as their distance from the center <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> grows. The <strong>Gaussian Kernel</strong> is a reasonable choice:</p>
+<div class="math notranslate nohighlight">
+\[K_h(\mathbf{x}_i - \mathbf{x}) \propto \exp\left(-\frac{\|\mathbf{x}_i - \mathbf{x}\|^2}{2h^2}\right)\]</div>
+<p>With a smooth kernel, all points contribute to the density at <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, but nearby points contribute <em>much more</em> than faraway points.</p>
+<p>The general formula for Kernel Density Estimation is a “sum of kernels,” one for each data point:</p>
+<div class="math notranslate nohighlight">
+\[f(\mathbf{x}) = \frac{1}{N} \sum_{i=1}^{N} K_h\left(\mathbf{x}_i - \mathbf{x}\right) \]</div>
+<p>We can visualize this kernel as follows:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/ac22618593348622fe63d4d9bd54fc35fe252c0e2e045661001c1dd3cf6e9fb5.png" src="../_images/ac22618593348622fe63d4d9bd54fc35fe252c0e2e045661001c1dd3cf6e9fb5.png" />
+</div>
+</div>
+</section>
+<section id="the-epanechnikov-kernel">
+<h3>The Epanechnikov Kernel<a class="headerlink" href="#the-epanechnikov-kernel" title="Permalink to this heading">#</a></h3>
+<p>The Guassian Kernel solves the sensitivity problem. However, it is very expensive to compute. Indeed, for every new density estimate, we have to compute and sum Gaussian terms over the whole dataset. This can be expensive if we have a large dataset.</p>
+<p>An alternative is to set to zero all elements which are far enough. This saves a lot of computation.</p>
+<p>This is exactly what the Epanechnikov does. It is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[K_h(\mathbf{x}_i - \mathbf{x}) = \frac{3}{4h^2} \left(1 - \frac{\|\mathbf{x}_i - \mathbf{x}\|^2}{h^2}\right) \mathbb{I}(\|\mathbf{x}_i - \mathbf{x}\| \leq h)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbb{I}\)</span> is the indicator function defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbb{I}(x) = \begin{cases} 1 &amp; \text{if } x \text{ is true} \\ 0 &amp; \text{otherwise}\end{cases}\end{split}\]</div>
+<p>The plot below compares the scores assigned to points depending on their distance from <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> according to the three kernels seen so far:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/41c38e697ff2d17de08d367051041b48a06775b938c6ca692021447d6e07d6cc.png" src="../_images/41c38e697ff2d17de08d367051041b48a06775b938c6ca692021447d6e07d6cc.png" />
+</div>
+</div>
+<p>The effect of the kernels on the density estimations processes can be seen in the following plot:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/7db64059094c34cfae74955c2ed434713cd5161e15c9cdda8e94a8a7aa8502f3.png" src="../_images/7db64059094c34cfae74955c2ed434713cd5161e15c9cdda8e94a8a7aa8502f3.png" />
+</div>
+</div>
+</section>
+<section id="the-bias-variance-tradeoff-choosing-the-bandwidth-h">
+<h3>The Bias-Variance Tradeoff: Choosing the Bandwidth <span class="math notranslate nohighlight">\(h\)</span><a class="headerlink" href="#the-bias-variance-tradeoff-choosing-the-bandwidth-h" title="Permalink to this heading">#</a></h3>
+<p>The kernel shape (e.g., Gaussian) is not the most important choice. The <strong>bandwidth (<span class="math notranslate nohighlight">\(h\)</span>)</strong> is the <em>single most important hyperparameter</em> in density estimation. It controls the <strong>bias-variance tradeoff</strong>.</p>
+<ul class="simple">
+<li><p><strong>Small <span class="math notranslate nohighlight">\(h\)</span> (e.g., <code class="docutils literal notranslate"><span class="pre">bandwidth</span> <span class="pre">=</span> <span class="pre">0.1</span></code>):</strong></p>
+<ul>
+<li><p><strong>Low Bias, High Variance.</strong></p></li>
+<li><p>The model “trusts” only a tiny local area. The resulting density is “spiky” and “noisy.” It <strong>overfits</strong> to the training data.</p></li>
+</ul>
+</li>
+<li><p><strong>Large <span class="math notranslate nohighlight">\(h\)</span> (e.g., <code class="docutils literal notranslate"><span class="pre">bandwidth</span> <span class="pre">=</span> <span class="pre">1.0</span></code>):</strong></p>
+<ul>
+<li><p><strong>High Bias, Low Variance.</strong></p></li>
+<li><p>The model “blurs” the data by averaging over a huge area. The resulting density is “over-smoothed.” It <strong>underfits</strong>, hiding the true structure (like the two separate clusters).</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/872fe06fee7830aab7e79b71152db98a848b1608579d3f9904e46df5857e6232.png" src="../_images/872fe06fee7830aab7e79b71152db98a848b1608579d3f9904e46df5857e6232.png" />
+</div>
+</div>
+</section>
+<section id="final-result-kde">
+<h3>Final Result: KDE<a class="headerlink" href="#final-result-kde" title="Permalink to this heading">#</a></h3>
+<p>As we can see, choosing a good bandwidth (like <span class="math notranslate nohighlight">\(h=0.5\)</span> or <span class="math notranslate nohighlight">\(h=0.75\)</span>) is critical.</p>
+<p>When we use a good kernel (like Gaussian) and a well-chosen bandwidth, we can produce a smooth, accurate, and non-parametric estimate of the true data density. The <code class="docutils literal notranslate"><span class="pre">seaborn.kdeplot</span></code> function does all of this for us automatically.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Generate random 2D points</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+<span class="n">data2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">multivariate_normal</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span> <span class="n">size</span><span class="o">=</span><span class="mi">250</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">data2</span><span class="p">])</span>
+
+<span class="c1"># Set the size of the bins (adjust as needed)</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+<span class="c1"># Calculate the range of the plot</span>
+<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="c1"># Calculate the number of bins in each dimension</span>
+<span class="n">num_x_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span>
+<span class="n">num_y_bins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span>
+
+<span class="c1"># Create a square bin plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span><span class="n">data</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span><span class="s1">&#39;.r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Set labels and title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X-axis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y-axis&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Density estimation with histograms&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">7</span><span class="p">])</span>
+<span class="c1">#plt.grid()</span>
+
+<span class="c1"># Display the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Ignoring fixed x limits to fulfill fixed data aspect with adjustable data limits.
+</pre></div>
+</div>
+<img alt="../_images/84f660af02ea20696f0eb23532b253a07ca6134917a4d82b07f8829dca147b98.png" src="../_images/84f660af02ea20696f0eb23532b253a07ca6134917a4d82b07f8829dca147b98.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="parametric-density-estimation">
+<h2>Parametric Density Estimation<a class="headerlink" href="#parametric-density-estimation" title="Permalink to this heading">#</a></h2>
+<p>Parametric methods aim to estimate density by <strong>fitting a parametric model to the data</strong>. This has some advantages over non-parametric density estimation:</p>
+<ul class="simple">
+<li><p><strong>The chosen model has in general a known analytical formulation which we can reason on</strong>, or that we can even plug into a cost function and differentiate to pursue some optimization objective;</p></li>
+<li><p><strong>The chosen model is compact.</strong> While non-parametric models need to keep in memory the whole dataset to make density estimations at given points, once fitted, parametric models can be used to predict density values using the analytical formulation of the model;</p></li>
+<li><p><strong>If we choose an interpretable model, we can reason on the model to derive properties of the data.</strong> For instance, if we fit a Gaussian on the data, then we know that the mean is the point with highest density. We also know that when we go further from the mean, the density values decrease;</p></li>
+<li><p><strong>Parametric approaches impose constraints and hence work better when we do not have much data</strong>. Non-parametric approaches, instead, make very little assumptions on the data, so they are better suited to the cases in which we have large datasets which are good representatives of the population.</p></li>
+</ul>
+<p>Nevertheless, these methods also have disadvantages:</p>
+<ul class="simple">
+<li><p><strong>An optimization process is required</strong> to fit the model to the data, i.e., find appropriate values which make the model “explain well the data”. This can be a time-consuming process.</p></li>
+<li><p>Parametric models make <strong>strong assumptions on the data</strong>. For instance, if we fit a Gaussian to the data, we assume that the data is distributed in a Gaussian way. If this is not true, then the model will not be very accurate. This is a relevant point, as in many cases we cannot make strong assumptions on the data.</p></li>
+</ul>
+<p>For the reasons above, <strong>it is common to use non-parametric density estimations for visualizations</strong> (e.g., the density plots we have seen and used in many cases), especially for exploration, when we do not know much about the data, and to use parametric model when we need to create efficient models able to make predictions (as we will see later in the course).</p>
+<section id="fitting-a-gaussian-to-the-data">
+<h3>Fitting a Gaussian to the Data<a class="headerlink" href="#fitting-a-gaussian-to-the-data" title="Permalink to this heading">#</a></h3>
+<p>The most common parametric method is to assume our data follows a <strong>Multivariate Gaussian (Normal) Distribution</strong>.</p>
+<p>Recall the PDF (Probability Density Function) for a <span class="math notranslate nohighlight">\(d\)</span>-dimensional Gaussian:</p>
+<div class="math notranslate nohighlight">
+\[N\left( \mathbf{x;\mu,}\mathbf{\Sigma} \right) = \frac{1}{\sqrt{(2\pi)^{d}\det(\Sigma)}} e^{ - \frac{1}{2}\left( \mathbf{x} - \mathbf{\mu} \right)^{T}\Sigma^{- 1}\left( \mathbf{x} - \mathbf{\mu} \right)}\]</div>
+<p>This entire, complex distribution is defined by only two parameters:</p>
+<ul class="simple">
+<li><p>The mean vector <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> (the center of the cloud).</p></li>
+<li><p>The covariance matrix <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> (the shape and orientation of the cloud).</p></li>
+</ul>
+<p>Our task is to find the <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> that <strong>best fit our data <span class="math notranslate nohighlight">\(\mathbf{X}\)</span></strong>.</p>
+<section id="maximum-likelihood-estimation-mle">
+<h4>Maximum Likelihood Estimation (MLE)<a class="headerlink" href="#maximum-likelihood-estimation-mle" title="Permalink to this heading">#</a></h4>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{X} = \{\mathbf{x}_1, \ldots, \mathbf{x}_N\}\)</span> be a set of observations which we will assume to be <strong>independent and drawn from a multivariate Gaussian distribution of unknown parameters</strong>. We would like to find the parameters <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> that identify the <strong>most likely Gaussian distribution that may have generated the data</strong>. To do so, we can use the <strong>Maximum Likelihood (ML)</strong> principle, which consists in finding the parameters which maximize the probability values that the Gaussian distribution would compute for the given data. The likelihood is defined as</p>
+<div class="math notranslate nohighlight">
+\[P(\mathbf{X}|\mathbf{\mu},\mathbf{\Sigma}) = \prod_i \mathcal{N}(\mathbf{x}_i|\mathbf{\mu}, \mathbf{\Sigma})\]</div>
+<p>In practice, we maximize the log-likelihood instead.</p>
+<p>Intuitively, this works as follows:</p>
+<ol class="arabic simple">
+<li><p>We “try” a specific Gaussian (a given <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span>).</p></li>
+<li><p>We calculate the probability density (the “likelihood”) of <em>all</em> of our data points under this Gaussian.</p></li>
+<li><p>We multiply these probabilities together to get the <strong>Total Likelihood</strong> of our entire dataset.</p></li>
+<li><p>The goal is to find the <em>one</em> <span class="math notranslate nohighlight">\(\mathbf{\mu}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\Sigma}\)</span> that <strong>maximize this total likelihood</strong>.</p></li>
+</ol>
+<p>This sounds like a complex optimization problem, but for a Gaussian distribution, a closed-form solution exists. It can be shown by taking the derivative of the log-likelihood (the log of the likelihood function) and setting it to zero.</p>
+<p>Let us consider a simple example in which we want to fit a Gaussian to a set of 1D data. The plot below shows the log likelihood for Gaussians with different means and standard deviations.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/b7d40b4651b08f5f31ffdd114649fc33ce553564a1fad132b3e4cd2b63d05ea9.png" src="../_images/b7d40b4651b08f5f31ffdd114649fc33ce553564a1fad132b3e4cd2b63d05ea9.png" />
+</div>
+</div>
+<p>In the top plots, the standard deviation is fixed to <span class="math notranslate nohighlight">\(1\)</span>, while the mean of the Gaussian is changed. The log likelihood is shown in the legend. As can be seen, the mean in the center plot leads to a larger log likelihood. <strong>Intuitively, this happens when we choose a mean such that the majority of points fall in the central part of the Gaussian distribution</strong>.</p>
+<p><strong>The plots in the bottom show a similar example in which the mean is fixed to <span class="math notranslate nohighlight">\(0\)</span> and the standard deviation is varied</strong>. As can be noted, when the standard deviation is too low (left) or to high (right), we obtain smaller log likelihoods.</p>
+<p>The plots below show the log likelihood (first two plots) or the likelihood (last plot) as a function of different values of means and standard deviations.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/268d65b3b559151a99aa4095e5bf40d94767809dcdbb6fbc9e40e7a7d6d6a118.png" src="../_images/268d65b3b559151a99aa4095e5bf40d94767809dcdbb6fbc9e40e7a7d6d6a118.png" />
+</div>
+</div>
+<p>The first two plots show how the log likelihood changes when <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span> change, keeping the data fixed (same data as the previous plot). The last plot shows how the likelihood changes as a function of both <span class="math notranslate nohighlight">\(\mu\)</span> and <span class="math notranslate nohighlight">\(\sigma\)</span>. As we can see, we have a maximum for <span class="math notranslate nohighlight">\(\mu=0\)</span> and <span class="math notranslate nohighlight">\(\sigma=1\)</span>, which are the true parameters of the distribution which generated the data.</p>
+</section>
+<section id="the-solution-sample-mean-and-covariance">
+<h4>The Solution: Sample Mean and Covariance<a class="headerlink" href="#the-solution-sample-mean-and-covariance" title="Permalink to this heading">#</a></h4>
+<p>The final result is incredibly intuitive. The Maximum Likelihood estimates for the Gaussian parameters are simply:</p>
+<p><strong>1. The ML estimate for the mean (<span class="math notranslate nohighlight">\(\mathbf{\mu}_{ML}\)</span>) is the sample mean:</strong>
+$<span class="math notranslate nohighlight">\(
+\mathbf{\mu}_{ML} = \frac{1}{N} \sum_{i=1}^N \mathbf{x}_i
+\)</span>$</p>
+<p><strong>2. The ML estimate for the covariance (<span class="math notranslate nohighlight">\(\mathbf{\Sigma}_{ML}\)</span>) is the sample covariance matrix:</strong>
+$<span class="math notranslate nohighlight">\(
+\mathbf{\Sigma}_{ML} = \frac{1}{N} \sum_{i=1}^N (\mathbf{x}_i - \mathbf{\mu}_{ML})(\mathbf{x}_i - \mathbf{\mu}_{ML})^T
+\)</span><span class="math notranslate nohighlight">\(
+*(Note: In statistics, you often see a \)</span>1/(N-1)<span class="math notranslate nohighlight">\( denominator for an &quot;unbiased&quot; estimate. The \)</span>1/N$ is the true Maximum Likelihood estimate, but in practice, they are nearly identical.)*</p>
+<p><strong>In short: “Fitting a Gaussian” is just a fancy way of saying “calculating the mean and covariance of your data.”</strong></p>
+</section>
+</section>
+<section id="the-weakness-of-a-single-gaussian-bimodal-data">
+<h3>The Weakness of a Single Gaussian: Bimodal Data<a class="headerlink" href="#the-weakness-of-a-single-gaussian-bimodal-data" title="Permalink to this heading">#</a></h3>
+<p>The single Gaussian model we just learned is powerful, but it’s based on one very strong assumption: that our data comes from a <em>single cluster</em> (i.e., it is <strong>unimodal</strong>).</p>
+<p>This assumption fails for many real-world datasets. A perfect example is the “Old Faithful” <code class="docutils literal notranslate"><span class="pre">geyser</span></code> dataset, which we know from our clustering lecture is <strong>bimodal</strong> (it has two distinct clusters).</p>
+<p>What happens if we try to fit our simple parametric model (a single Gaussian) to this bimodal data? Let’s compare it to the non-parametric KDE, which we know can find the true shape.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/16b038b14f8173a5b070339a992a9f070b8a0c62e7d159dff1ebda50ae218d5e.png" src="../_images/16b038b14f8173a5b070339a992a9f070b8a0c62e7d159dff1ebda50ae218d5e.png" />
+</div>
+</div>
+<p>The result is clear:</p>
+<ul class="simple">
+<li><p>The <strong>KDE plot (middle)</strong> correctly finds the two high-density clusters. It is flexible and <em>non-parametric</em>, so it doesn’t care that the data isn’t a single “blob.”</p></li>
+<li><p>The <strong>Single Gaussian plot (right)</strong> <em>fails</em>. It places its mean (the red ‘X’) in the empty, low-density space <em>between</em> the two clusters. It’s a “unimodal” model trying to fit “bimodal” data.</p></li>
+</ul>
+<p>This proves the limitation of our simple parametric model. To solve this, we need a more powerful parametric model that can <em>learn</em> to model multi-modal data.</p>
+</section>
+</section>
+<section id="gaussian-mixture-models-gmm">
+<h2>Gaussian Mixture Models (GMM)<a class="headerlink" href="#gaussian-mixture-models-gmm" title="Permalink to this heading">#</a></h2>
+<p>Our comparison showed a critical weakness: our simple parametric model, a single Gaussian, failed to capture the <strong>bimodal</strong> (two-cluster) structure of the <code class="docutils literal notranslate"><span class="pre">geyser</span></code> data. The non-parametric KDE <em>did</em> find the shape, but it doesn’t give us a compact, mathematical model.</p>
+<p>This leads to the obvious question: Can we create a <em>parametric</em> model that is flexible enough to handle multi-modal data?</p>
+<p>Yes. The solution is a <strong>Gaussian Mixture Model (GMM)</strong>.</p>
+<p>The idea is simple: instead of one Gaussian, we model the data as a <strong>weighted average (a “mixture”) of <span class="math notranslate nohighlight">\(K\)</span> different Gaussian components</strong>.</p>
+<div class="math notranslate nohighlight">
+\[P(\mathbf{x}) = \sum_{k=1}^{K} \pi_k \mathcal{N}(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\Sigma}_k)\]</div>
+<p>This model is defined by three sets of parameters:</p>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(\pi_k\)</span> (Mixing Coefficients):</strong> The “weight” or prior probability of each component. (e.g., <span class="math notranslate nohighlight">\(\pi_1=0.6, \pi_2=0.4\)</span>). Must sum to 1.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\mathbf{\mu}_k\)</span> (Means):</strong> The center of each of the <span class="math notranslate nohighlight">\(K\)</span> Gaussian components.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(\mathbf{\Sigma}_k\)</span> (Covariances):</strong> The shape and orientation of each of the <span class="math notranslate nohighlight">\(K\)</span> components.</p></li>
+</ul>
+<p>The 1D plot below shows a GMM with <span class="math notranslate nohighlight">\(K=3\)</span>. The final density (red-dashed) is a <em>mixture</em> of three separate Gaussian components (blue, orange, green), allowing it to model complex, multi-modal data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span>
+
+<span class="c1"># Generate synthetic 1D data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=-</span><span class="mi">5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">50</span><span class="p">),</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">30</span><span class="p">)</span>
+<span class="p">])</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Fit a GMM with 3 components</span>
+<span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Generate data for plotting</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Plot the GMM</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;ob&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data Points&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the individual components</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">n_components</span><span class="p">):</span>
+    <span class="n">component_pdf</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">norm</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">scale</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">component_pdf</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Component </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> ($\pi_k$=</span><span class="si">{</span><span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s1">0.2f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="c1"># Plot the total GMM density</span>
+<span class="n">pdf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pdf</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Total GMM Density&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;1D Gaussian Mixture Model (K=3)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Data Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Probability Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b3cf82e93f5b51b646c46c3c074a9260bc576c908ebbc822970188314892ae38.png" src="../_images/b3cf82e93f5b51b646c46c3c074a9260bc576c908ebbc822970188314892ae38.png" />
+</div>
+</div>
+<section id="gmm-density-estimation-example">
+<h3>GMM Density Estimation Example<a class="headerlink" href="#gmm-density-estimation-example" title="Permalink to this heading">#</a></h3>
+<p>Now let’s apply this to our <code class="docutils literal notranslate"><span class="pre">geyser</span></code> data. When we fit a GMM with <span class="math notranslate nohighlight">\(K=2\)</span>, it should succeed where the single Gaussian failed.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Load Old Faithful dataset from seaborn</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;geyser&quot;</span><span class="p">)</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;waiting&#39;</span><span class="p">,</span> <span class="s1">&#39;duration&#39;</span><span class="p">]])</span>
+
+<span class="c1"># Fit a Gaussian Mixture Model to the data</span>
+<span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">covariance_type</span><span class="o">=</span><span class="s1">&#39;full&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)</span>
+
+<span class="c1"># Create a figure and subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">7</span><span class="p">))</span>
+
+<span class="c1"># Create a grid for plotting contours</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">((</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">))</span>
+
+<span class="c1"># Evaluate the GMM PDF on the meshgrid</span>
+<span class="n">pdf_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">pos</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)))</span>
+<span class="n">pdf_values</span> <span class="o">=</span> <span class="n">pdf_values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># Scatter plot of the original data and GMM fit</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_scaled</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original Data&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">pdf_values</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Scaled Waiting Time&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Scaled Eruptions Duration&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Gaussian Mixture Model (K=2) Fit&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/5ba74623b0e1e4734d3eb363998ed36872224a9185bcdadcc703c5c066f5a418.png" src="../_images/5ba74623b0e1e4734d3eb363998ed36872224a9185bcdadcc703c5c066f5a418.png" />
+</div>
+</div>
+<p>Success! The GMM has learned two distinct Gaussian components that perfectly model the two clusters in our data.</p>
+</section>
+<section id="gmm-as-soft-clustering">
+<h3>GMM as “Soft Clustering”<a class="headerlink" href="#gmm-as-soft-clustering" title="Permalink to this heading">#</a></h3>
+<p>GMM can be seen as a “soft” version of K-Means. If K-Means makes a hard assignment of data points to clusters, it can be shown that GMM does it in a “soft” way, computing instead the probability of assigning an element to a cluster.</p>
+<p>It does this by introducing a <strong>latent variable</strong>, <span class="math notranslate nohighlight">\(Z\)</span> encoding the event:</p>
+<blockquote>
+<div><p>The example <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> belongs to a given cluster.</p>
+</div></blockquote>
+<p>In practice, <span class="math notranslate nohighlight">\(Z=k\)</span> denotes the case in which <span class="math notranslate nohighlight">\(X=\mathbf{x}\)</span> belongs to cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>A <strong>latent variable</strong> is a “hidden” variable for which we don’t observe ground-truth values, but which we assume is intrinsically part of the data. In this GMM, for every data point <span class="math notranslate nohighlight">\(\mathbf{x}_i\)</span>, there is a hidden <span class="math notranslate nohighlight">\(z_i\)</span> that “indicates” which of the <span class="math notranslate nohighlight">\(K\)</span> Gaussian components <em>generated</em> that point.</p>
+<p>To compute the soft assignment, we find the <strong>posterior probability</strong>, <span class="math notranslate nohighlight">\(P(Z=k | \mathbf{x})\)</span>: “What is the probability that this point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> belongs to cluster <span class="math notranslate nohighlight">\(k\)</span>?”</p>
+<p>We solve this using <strong>Bayes’ Theorem</strong> to “flip” the question:</p>
+<div class="math notranslate nohighlight">
+\[
+P(Z=k | \mathbf{x}) = \frac{P(\mathbf{x} | Z=k) P(Z=k)}{P(\mathbf{x})}
+\]</div>
+<p>Once the GMM is trained (which we’ll see how to do later with the E-M algorithm), we <em>have</em> all the pieces for this formula:</p>
+<ol class="arabic simple">
+<li><p><strong><span class="math notranslate nohighlight">\(P(\mathbf{x} | Z=k)\)</span> (The Likelihood):</strong></p>
+<ul class="simple">
+<li><p><em>In words:</em> “What is the probability of seeing <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> <em>if</em> it came from cluster <span class="math notranslate nohighlight">\(k\)</span>?”</p></li>
+<li><p><em>The value:</em> This is simply the value of our <span class="math notranslate nohighlight">\(k\)</span>-th Gaussian component: <span class="math notranslate nohighlight">\(\mathcal{N}(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\Sigma}_k)\)</span>.</p></li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\(P(Z=k)\)</span> (The Prior):</strong></p>
+<ul class="simple">
+<li><p><em>In words:</em> “How common is cluster <span class="math notranslate nohighlight">\(k\)</span> in general?”</p></li>
+<li><p><em>The value:</em> This is our mixing coefficient, <span class="math notranslate nohighlight">\(\pi_k\)</span>.</p></li>
+</ul>
+</li>
+<li><p><strong><span class="math notranslate nohighlight">\(P(\mathbf{x})\)</span> (The Evidence):</strong></p>
+<ul class="simple">
+<li><p><em>In words:</em> “What is the total probability of seeing <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> under <em>any</em> cluster?”</p></li>
+<li><p><em>The value:</em> This is just the sum of all components, which is our GMM formula: <span class="math notranslate nohighlight">\(\sum_{j=1}^K \pi_j \mathcal{N}(\mathbf{x}|\mathbf{\mu}_j, \mathbf{\Sigma}_j)\)</span>.</p></li>
+</ul>
+</li>
+</ol>
+<p>Putting it all together, the “soft assignment” (or <strong>responsibility</strong>, <span class="math notranslate nohighlight">\(\gamma_k\)</span>) for a point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> belonging to cluster <span class="math notranslate nohighlight">\(k\)</span> is:</p>
+<div class="math notranslate nohighlight">
+\[
+\gamma_k = P(Z=k|\mathbf{x}) = \frac{\pi_k \mathcal{N}(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\Sigma}_k)}{\sum_{j=1}^K \pi_j \mathcal{N}(\mathbf{x}|\mathbf{\mu}_j, \mathbf{\Sigma}_j)}
+\]</div>
+<p>This formula is exactly what is being used to generate the colors in the plot below. Points in the middle get an “uncertain” color (like yellow, <span class="math notranslate nohighlight">\(\approx 0.5\)</span>) because their probability is split between the two components.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_openml</span>
+
+
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">data</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)],</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+
+<span class="c1"># Fit a Gaussian Mixture Model (GMM) with 2 components to the data</span>
+<span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">responsibilities</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Plot the data points with different shades of color based on responsibilities</span>
+<span class="n">scatter</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">responsibilities</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;RdYlGn&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+
+<span class="n">pdf_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">weight</span> <span class="o">*</span> <span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+              <span class="k">for</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">,</span> <span class="n">weight</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">,</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">,</span> <span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span><span class="p">)]</span>
+
+<span class="n">pdf1</span><span class="p">,</span> <span class="n">pdf2</span> <span class="o">=</span> <span class="n">pdf_values</span>
+
+<span class="c1"># Reshape PDF values for contour plotting</span>
+<span class="n">pdf_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">pdf_values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot the GMM components and contours</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gaussian Means&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pdf1</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pdf2</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">),</span> <span class="n">levels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="c1"># Plot the means of the Gaussian components</span>
+<span class="c1">#plt.scatter(gmm.means_[:, 0], gmm.means_[:, 1], c=&#39;red&#39;, marker=&#39;X&#39;, s=200, label=&#39;Gaussian Means&#39;)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">mappable</span><span class="o">=</span><span class="n">scatter</span><span class="p">)</span>
+
+<span class="c1"># Add labels and legend</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e2984f275f072f4e2a9ef5253796047092c4ae1678d06cb2af3f5776aa388951.png" src="../_images/e2984f275f072f4e2a9ef5253796047092c4ae1678d06cb2af3f5776aa388951.png" />
+</div>
+</div>
+</section>
+<section id="how-to-learn-a-gmm-optimization-by-maximum-likelihood">
+<h3>How to “Learn” a GMM: Optimization by Maximum Likelihood<a class="headerlink" href="#how-to-learn-a-gmm-optimization-by-maximum-likelihood" title="Permalink to this heading">#</a></h3>
+<p>We have defined our GMM as a sum of weighted Gaussians:
+$<span class="math notranslate nohighlight">\(P(\mathbf{x}) = \sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x}|\mathbf{\mu}_k, \mathbf{\Sigma}_k)\)</span>$</p>
+<p>The model’s parameters are all the means, covariances, and mixing coefficients:
+$<span class="math notranslate nohighlight">\(\mathbf{\theta} = (\mathbf{\pi}, \mathbf{\mu}, \mathbf{\Sigma}) = \{\pi_1, \ldots, \pi_K, \mathbf{\mu}_1, \ldots, \mathbf{\mu}_K, \mathbf{\Sigma}_1, \ldots, \mathbf{\Sigma}_K\}\)</span>$</p>
+<p>To “fit” the model, we use <strong>Maximum Likelihood Estimation (MLE)</strong>, just as we did for a single Gaussian. We want to find the parameters <span class="math notranslate nohighlight">\(\mathbf{\theta}\)</span> that maximize the log-likelihood of our observed data <span class="math notranslate nohighlight">\(\mathbf{X} = \{\mathbf{x}_1, \ldots, \mathbf{x}_N\}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\log P(\mathbf{X}|\mathbf{\theta}) = \sum_{i=1}^N \log\left[\sum_{k=1}^K \pi_k \mathcal{N}(\mathbf{x_i}|\mathbf{\mu}_k, \mathbf{\Sigma}_k)\right]\]</div>
+<p>This problem can not be optimized directly. Instead, a dedicated algorithm called Expectation-Maximization is used. We will not see this in details.</p>
+</section>
+<section id="gmm-vs-k-means">
+<h3>GMM vs K-Means<a class="headerlink" href="#gmm-vs-k-means" title="Permalink to this heading">#</a></h3>
+<p>The EM algorithm is very similar to the optimization algorithm of K-Means. It can be shown that K-Means can be seen as a particular case of Gaussian Mixture Models in which:</p>
+<ul class="simple">
+<li><p>Points are assigned to clusters in a “<em>hard</em>” way, as compared to the <strong>soft assignment</strong> made by the responsibilities <span class="math notranslate nohighlight">\(\gamma(z_{ik})\)</span> in Gaussian Mixture Models;</p></li>
+<li><p>Clusters are assumed to have diagonal covariance matrices <span class="math notranslate nohighlight">\(\epsilon \mathbf{I}\)</span> where <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> is the <span class="math notranslate nohighlight">\(D \times D\)</span> identity matrix and <span class="math notranslate nohighlight">\(\epsilon\)</span> is a variance parameter which is <strong>shared by all components</strong>. This means that the clusters are assumed to be all <strong>symmetrical and with the same shape</strong>.</p></li>
+</ul>
+<p>Despite these differences highlight the limitations of K-Means, it should be considered that K-Means is a significantly faster algorithm than GMM. Hence, if studying the probability density <span class="math notranslate nohighlight">\(P(\mathbf{X})\)</span> is not needed and we can assume symmetrical clusters with similar shapes, K-Means is in practice a more popular choice, due to its faster convergence.</p>
+<p>The plot below illustrates such differences:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.cluster</span> <span class="kn">import</span> <span class="n">KMeans</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Generate skewed synthetic data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y_true</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">cluster_std</span><span class="o">=</span><span class="mf">0.60</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">10</span>  <span class="c1"># Add skewness to the data</span>
+
+<span class="c1"># Standardize the data</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Apply K-means clustering</span>
+<span class="n">kmeans</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">kmeans_labels</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">kmeans_centers</span> <span class="o">=</span> <span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span>
+
+<span class="c1"># Apply Gaussian Mixture Model (GMM) clustering</span>
+<span class="n">gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="n">gmm_labels</span> <span class="o">=</span> <span class="n">gmm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># Function to plot circles around k-means cluster centers</span>
+<span class="k">def</span> <span class="nf">plot_kmeans_circles</span><span class="p">(</span><span class="n">kmeans</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">)):</span>
+        <span class="n">circle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">kmeans</span><span class="o">.</span><span class="n">cluster_centers_</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+
+<span class="c1"># Function to plot density estimation for each Gaussian component in GMM</span>
+<span class="k">def</span> <span class="nf">plot_gmm_density</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="n">h</span> <span class="o">=</span> <span class="mf">0.02</span>  <span class="c1"># Step size of the mesh</span>
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">h</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span>
+
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()]</span>
+    <span class="n">density</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">coef</span> <span class="o">*</span> <span class="n">multivariate_normal</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span><span class="o">.</span><span class="n">pdf</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span> <span class="k">for</span> <span class="n">coef</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">cov</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">gmm</span><span class="o">.</span><span class="n">weights_</span><span class="p">,</span> <span class="n">gmm</span><span class="o">.</span><span class="n">means_</span><span class="p">,</span> <span class="n">gmm</span><span class="o">.</span><span class="n">covariances_</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">density</span> <span class="o">=</span> <span class="n">density</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">density</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Plot k-means results with circles around cluster centers</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">kmeans_labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">kmeans_centers</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">kmeans_centers</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Cluster Centers&#39;</span><span class="p">)</span>
+<span class="n">plot_kmeans_circles</span><span class="p">(</span><span class="n">kmeans</span><span class="p">,</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;K-Means Clustering&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="c1">#axs[0].legend()</span>
+
+<span class="c1"># Plot GMM results with density estimation</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">gmm_labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plot_gmm_density</span><span class="p">(</span><span class="n">gmm</span><span class="p">,</span> <span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;GMM Clustering&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_aspect</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="c1"># Show the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/ipykernel_41205/782823674.py:44: UserWarning: The following kwargs were not used by contour: &#39;linewidth&#39;
+  ax.contour(xx, yy, density, colors=&#39;red&#39;, levels=5, linewidth=2)
+</pre></div>
+</div>
+<img alt="../_images/12500f4c3527544bcba5c2bdfbef04714979802d4af579f0af1d1d585c51bdca.png" src="../_images/12500f4c3527544bcba5c2bdfbef04714979802d4af579f0af1d1d585c51bdca.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="lab-density-estimation-for-anomaly-detection">
+<h2>Lab: Density Estimation for Anomaly Detection<a class="headerlink" href="#lab-density-estimation-for-anomaly-detection" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we will use our density estimation techniques to build a more complex <strong>Anomaly Detector</strong>.</p>
+<section id="the-goal">
+<h3>The Goal<a class="headerlink" href="#the-goal" title="Permalink to this heading">#</a></h3>
+<p>Our task is to build a model that can identify the digit <strong>‘0’</strong> as an “anomaly.”</p>
+<ol class="arabic simple">
+<li><p><strong>“Normal” Training Data:</strong> We will train our models on a large dataset of “normal” digits (all images of ‘1’s, ‘2’s, ‘3’s, … ‘9’s). This “normal” data is highly <strong>multi-modal</strong> (it has 9 distinct clusters).</p></li>
+<li><p><strong>Test Data:</strong> We will then create a test set containing a mix of “normal” digits (1-9) and “anomalous” digits (‘0’s).</p></li>
+<li><p><strong>The “Bake-Off”:</strong> We will compare three models to see which is best at this task:</p>
+<ul class="simple">
+<li><p><strong>Model 1 (Single Gaussian):</strong> A “naive” parametric model. We expect this to fail, as it will try to fit one “average” blob over all 9 normal digits.</p></li>
+<li><p><strong>Model 2 (GMM):</strong> A “smart” parametric model. We will tell it to fit <span class="math notranslate nohighlight">\(K=4\)</span> components, to capture some diversity in the data.</p></li>
+<li><p><strong>Model 3 (KDE):</strong> A “flexible” non-parametric model.</p></li>
+</ul>
+</li>
+</ol>
+<p>A good model will give a <strong>high density score</strong> to the “normal” digits and a <strong>very low score</strong> to the “anomalous” ‘0’s.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_digits</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KernelDensity</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">auc</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1-load-and-prepare-the-data">
+<h3>Step 1: Load and Prepare the Data<a class="headerlink" href="#step-1-load-and-prepare-the-data" title="Permalink to this heading">#</a></h3>
+<p>We’ll load the <code class="docutils literal notranslate"><span class="pre">digits</span></code> dataset and split it into three groups:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">X_train_normal</span></code>: A training set of 70% of all “normal” digits (1-9).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_test_normal</span></code>: A test set of 30% of all “normal” digits (1-9).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">X_test_anomaly</span></code>: <em>All</em> of the “anomalous” digit ‘0’s.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Load Data</span>
+<span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span> <span class="o">=</span> <span class="n">load_digits</span><span class="p">(</span><span class="n">return_X_y</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># 2. Separate &quot;normal&quot; (1-9) from &quot;anomaly&quot; (0)</span>
+<span class="n">X_normal_all</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">[</span><span class="n">y_all</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_normal_all</span> <span class="o">=</span> <span class="n">y_all</span><span class="p">[</span><span class="n">y_all</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="n">X_anomaly_all</span> <span class="o">=</span> <span class="n">X_all</span><span class="p">[</span><span class="n">y_all</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">y_anomaly_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_anomaly_all</span><span class="p">))</span> <span class="c1"># Label 1 = Anomaly</span>
+
+<span class="c1"># 3. Create our Train/Test split</span>
+<span class="c1"># We split the &quot;normal&quot; data into a train and test set</span>
+<span class="n">X_train_normal</span><span class="p">,</span> <span class="n">X_test_normal</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">X_normal_all</span><span class="p">,</span> <span class="n">y_normal_all</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y_normal_all</span>
+<span class="p">)</span>
+<span class="n">y_test_normal</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test_normal</span><span class="p">))</span> <span class="c1"># Label 0 = Normal</span>
+
+<span class="c1"># 4. Create the final test set</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">X_test_normal</span><span class="p">,</span> <span class="n">X_anomaly_all</span><span class="p">))</span>
+<span class="n">y_test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">y_test_normal</span><span class="p">,</span> <span class="n">y_anomaly_all</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training data (Normal, 1-9): </span><span class="si">{</span><span class="n">X_train_normal</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test data (Mixed): </span><span class="si">{</span><span class="n">X_test</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  -&gt; Normal &#39;1-9&#39;s in test: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test_normal</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  -&gt; Anomalous &#39;0&#39;s in test:  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_anomaly_all</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Training data (Normal, 1-9): (1133, 64)
+Test data (Mixed): (664, 64)
+  -&gt; Normal &#39;1-9&#39;s in test: 486
+  -&gt; Anomalous &#39;0&#39;s in test:  178
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-preprocessing-scaling">
+<h3>Step 2: Preprocessing (Scaling)<a class="headerlink" href="#step-2-preprocessing-scaling" title="Permalink to this heading">#</a></h3>
+<p>We will fit a <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> <em>only</em> on our <code class="docutils literal notranslate"><span class="pre">X_train_normal</span></code> data and use it to transform both our train and test sets.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train_normal</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-fit-the-density-models">
+<h3>Step 3: Fit the Density Models<a class="headerlink" href="#step-3-fit-the-density-models" title="Permalink to this heading">#</a></h3>
+<p>Now we will fit our three competitors to the <strong><code class="docutils literal notranslate"><span class="pre">X_train_scaled</span></code></strong> data (which contains 9 different clusters of digits).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Fit the Single Gaussian (Unimodal Parametric)</span>
+<span class="c1"># This model will try to find the &quot;average&quot; of all 9 digits.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting Single Gaussian (K=1)...&quot;</span><span class="p">)</span>
+<span class="n">model_single_gauss</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_single_gauss</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+
+<span class="c1"># 2. Fit the GMM (Multi-modal Parametric)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting GMM (K=4)...&quot;</span><span class="p">)</span>
+<span class="n">model_gmm</span> <span class="o">=</span> <span class="n">GaussianMixture</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model_gmm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+
+<span class="c1"># 3. Fit the KDE (Non-Parametric)</span>
+<span class="c1"># We&#39;ll use a bandwidth found from experimentation</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting KDE...&quot;</span><span class="p">)</span>
+<span class="n">model_kde</span> <span class="o">=</span> <span class="n">KernelDensity</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;gaussian&#39;</span><span class="p">)</span>
+<span class="n">model_kde</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;All three models are trained on the &#39;1-9&#39; digits.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting Single Gaussian (K=1)...
+Fitting GMM (K=4)...
+Fitting KDE...
+All three models are trained on the &#39;1-9&#39; digits.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-get-anomaly-scores">
+<h3>Step 4: Get Anomaly Scores<a class="headerlink" href="#step-4-get-anomaly-scores" title="Permalink to this heading">#</a></h3>
+<p>Now we’ll use all three models to score our <code class="docutils literal notranslate"><span class="pre">X_test_scaled</span></code> data. We will use the <strong>Negative Log-Likelihood (NLL)</strong> as our “anomaly score.”</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model.score_samples()</span></code> returns the log-likelihood (high = normal).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-model.score_samples()</span></code> returns the NLL.</p></li>
+</ul>
+<p>With NLL, a <strong>low score</strong> means “this point looks normal,” and a <strong>high score</strong> means “this point looks weird (anomalous).” This is a more intuitive way to think of an “anomaly score.”</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get the NLL scores for every point in the test set</span>
+<span class="c1"># (NLL = -LogLikelihood)</span>
+<span class="n">scores_single</span> <span class="o">=</span> <span class="o">-</span><span class="n">model_single_gauss</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">scores_gmm</span> <span class="o">=</span> <span class="o">-</span><span class="n">model_gmm</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+<span class="n">scores_kde</span> <span class="o">=</span> <span class="o">-</span><span class="n">model_kde</span><span class="o">.</span><span class="n">score_samples</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># Store results in a DataFrame for easy plotting</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span>
+    <span class="s1">&#39;y_true&#39;</span><span class="p">:</span> <span class="n">y_test</span><span class="p">,</span> 
+    <span class="s1">&#39;SingleGaussian_NLL&#39;</span><span class="p">:</span> <span class="n">scores_single</span><span class="p">,</span> 
+    <span class="s1">&#39;GMM_K4_NLL&#39;</span><span class="p">:</span> <span class="n">scores_gmm</span><span class="p">,</span> 
+    <span class="s1">&#39;KDE_NLL&#39;</span><span class="p">:</span> <span class="n">scores_kde</span>
+<span class="p">})</span>
+
+<span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;Label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;Normal (1-9)&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span> <span class="s1">&#39;Anomaly (0)&#39;</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-quantitative-comparison-the-roc-curve">
+<h3>Step 5: Quantitative Comparison (The ROC Curve)<a class="headerlink" href="#step-5-quantitative-comparison-the-roc-curve" title="Permalink to this heading">#</a></h3>
+<p>The histograms show GMM and KDE are much better, but the <strong>ROC Curve</strong> gives us the definitive quantitative score.</p>
+<p>We will plot the <strong>True Positive Rate</strong> (finding the ‘0’s) vs. the <strong>False Positive Rate</strong> (falsely flagging the ‘1-9’s) for all three models. The <strong>Area Under the Curve (AUC)</strong> will be our final metric.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_auc_score</span>
+
+<span class="c1"># --- Create the ROC Plot ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># --- 1. Single Gaussian ---</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;SingleGaussian_NLL&#39;</span><span class="p">])</span>
+<span class="n">auc_single</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Single Gaussian (AUC = </span><span class="si">{</span><span class="n">auc_single</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- 2. GMM (K=9) ---</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;GMM_K4_NLL&#39;</span><span class="p">])</span>
+<span class="n">auc_gmm</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;GMM (K=4) (AUC = </span><span class="si">{</span><span class="n">auc_gmm</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- 3. KDE ---</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">],</span> <span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;KDE_NLL&#39;</span><span class="p">])</span>
+<span class="n">auc_kde</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;KDE (AUC = </span><span class="si">{</span><span class="n">auc_kde</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+
+<span class="c1"># --- 4. Plot Styling ---</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;k--&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Random Guess (AUC = 0.500)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;False Positive Rate (FPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Positive Rate (TPR)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;ROC Curve Comparison for Anomaly Detection (Finding </span><span class="se">\&#39;</span><span class="s1">0</span><span class="se">\&#39;</span><span class="s1">s)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/4208c5c900fcac3736f3cf5d2836d7c505319b0a05e3733664c4c8c1a57cbafb.png" src="../_images/4208c5c900fcac3736f3cf5d2836d7c505319b0a05e3733664c4c8c1a57cbafb.png" />
+</div>
+</div>
+<p>We note that the most flexible density estimation model is the KDE in this case. A single Gaussian oversimplifies the problem, while a GMM adds back some flexibility.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Metric_space">https://en.wikipedia.org/wiki/Metric_space</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Measure_(mathematics)">https://en.wikipedia.org/wiki/Measure_(mathematics)</a></p></li>
+<li><p>Section 19 of notes of the course “Fondamenti di Analisi dei Dati” 2022/2023 - Prof. Giovanni Gallo</p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation">https://en.wikipedia.org/wiki/Multivariate_kernel_density_estimation</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Kernel_density_estimation">https://en.wikipedia.org/wiki/Kernel_density_estimation</a></p></li>
+<li><p><a class="reference external" href="http://faculty.washington.edu/yenchic/18W_425/Lec7_knn_basis.pdf">http://faculty.washington.edu/yenchic/18W_425/Lec7_knn_basis.pdf</a></p></li>
+<li><p>Section 9.2 of [1]</p></li>
+</ul>
+<p>[1] Bishop, Christopher M., and Nasser M. Nasrabadi. Pattern recognition and machine learning. Vol. 4. No. 4. New York: springer, 2006.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="16_clustering.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Clustering</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="18_principal_component_analysis.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Dimensionality Reduction: Principal Component Analysis (PCA)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#non-parametric-density-estimation-techniques">Non-parametric Density Estimation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixed-windows-nd-histograms">Fixed Windows (ND Histograms)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#method-2-mobile-windows-kernel-density-estimation">Method 2: Mobile Windows (Kernel Density Estimation)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-approach-the-circular-kernel">The “Naive” Approach: The Circular Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kernel-view">Kernel View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-problem-with-the-naive-kernel">The Problem with the “Naive” Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-smooth-kernels">The Solution: “Smooth” Kernels</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-epanechnikov-kernel">The Epanechnikov Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-bias-variance-tradeoff-choosing-the-bandwidth-h">The Bias-Variance Tradeoff: Choosing the Bandwidth <span class="math notranslate nohighlight">\(h\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-result-kde">Final Result: KDE</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parametric-density-estimation">Parametric Density Estimation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-gaussian-to-the-data">Fitting a Gaussian to the Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#maximum-likelihood-estimation-mle">Maximum Likelihood Estimation (MLE)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-solution-sample-mean-and-covariance">The Solution: Sample Mean and Covariance</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-weakness-of-a-single-gaussian-bimodal-data">The Weakness of a Single Gaussian: Bimodal Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-mixture-models-gmm">Gaussian Mixture Models (GMM)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-density-estimation-example">GMM Density Estimation Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-as-soft-clustering">GMM as “Soft Clustering”</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-learn-a-gmm-optimization-by-maximum-likelihood">How to “Learn” a GMM: Optimization by Maximum Likelihood</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gmm-vs-k-means">GMM vs K-Means</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-density-estimation-for-anomaly-detection">Lab: Density Estimation for Anomaly Detection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-goal">The Goal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-prepare-the-data">Step 1: Load and Prepare the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-preprocessing-scaling">Step 2: Preprocessing (Scaling)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-fit-the-density-models">Step 3: Fit the Density Models</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-get-anomaly-scores">Step 4: Get Anomaly Scores</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-quantitative-comparison-the-roc-curve">Step 5: Quantitative Comparison (The ROC Curve)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
