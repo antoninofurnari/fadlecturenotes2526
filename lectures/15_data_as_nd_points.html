@@ -1,0 +1,2044 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Data as N-Dimensional Points, Clustering &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'lectures/15_data_as_nd_points';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Clustering" href="16_clustering.html" />
+    <link rel="prev" title="Generative Classifiers and Naive Bayes" href="14_map_naive_bayes.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>
+    <script>document.write(`<img src="../_static/logo.png" class="logo__image only-dark" alt="Lecture Notes on Fundamentals of Data Analysis - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    Lecture Notes on Fundamentals of Data Analysis
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 1</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/01_setup.html">Introduction to the Labs and Work Environment Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/02_python_crash_course.html">Python Crash Course</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../laboratories/03_python_data_science_crash_course.html">Python for Data Science Crash Course</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 2</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_intro_data_analysis.html">Data Analysis Key Concepts, Loading and Inspecting the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 3</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="02_describing_and_visualizing_the_data.html">Describing and Visualizing the Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 4</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="03_probability_for_data_analysis.html">Probability for Data Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 5</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="04_association_between_variables.html">Association between variables</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 6</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="05_data_distributions.html">Data Distributions</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 7</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="06_statistical_inference.html">Statistical Inference</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 8</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="07_storytelling_with_data.html">Storytelling with Data</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 9</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="08_predictive_modeling.html">Introduction to Predictive Analysis</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 10</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="09_linear_regression.html">Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 11</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="10_beyond_linear_regression.html">Beyond Linear Regression</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 12</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="11_classification_knn.html">Classification Task, Evaluation Measures, and K-Nearest Neighbor</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 13</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="12_logistic_regression.html">Logistic Regression - Statistical View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 14</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="13_multiclass_logistic_regression.html">Multiclass Logistic Regression and Predictive View</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Generative Classifiers and Naive Bayes</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 16</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data as N-Dimensional Points, Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16_clustering.html">Clustering</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/antoninofurnari/fadlecturenotes2526/blob/master/lecturenotes/lectures/15_data_as_nd_points.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/antoninofurnari/fadlecturenotes2526/issues/new?title=Issue%20on%20page%20%2Flectures/15_data_as_nd_points.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/lectures/15_data_as_nd_points.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data as N-Dimensional Points, Clustering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-properties-of-feature-spaces">Important Properties of Feature Spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#norms">Norms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics">Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#l-p-metrics">L-p Metrics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-distance">Cosine Distance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-and-representation-functions">Features and Representation Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-hand-crafted-features-to-learned-representations">From Hand-Crafted Features to Learned Representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-black-box-feature-extractor">The “Black Box” Feature Extractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-the-critical-importance-of-feature-representation">Lab: The Critical Importance of Feature Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-image-challenge-handwritten-digits">Part 1: The Image Challenge (Handwritten Digits)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-visualize-the-cifar-10-data">Step 1: Load and Visualize the CIFAR-10 Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-look-at-the-task">Step 2: Look at the Task</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-baseline-knn-on-raw-pixels">Step 3: Baseline (KNN on Raw Pixels)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-extract-smart-features-with-dlfeat-the-expensive-step">Step 4: Extract “Smart” Features with <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> (The Expensive Step)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-knn-on-smart-features">Step 5: KNN on “Smart” Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-the-final-showdown-bar-chart">Step 6: The Final Showdown (Bar Chart)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#muntinomial-naive-bayes-vs-knn-vs-smart-knn">Muntinomial Naive Bayes vs. KNN vs. “Smart” KNN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-bag-of-words-competitors">Part 1: The “Bag of Words” Competitors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-the-smart-features-competitor">Part 2: The “Smart” Features Competitor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-the-final-results">Part 3: The Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-conclusion">Analysis &amp; Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-the-power-of-feature-representation-sentiment-analysis">Lab: The Power of Feature Representation (Sentiment Analysis)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Part 1: The “Bag of Words” Competitors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Part 2: The “Smart” Features Competitor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Part 3: The Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Analysis &amp; Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-further-exploration-the-dlfeat-library">For Further Exploration: The <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="data-as-n-dimensional-points-clustering">
+<h1>Data as N-Dimensional Points, Clustering<a class="headerlink" href="#data-as-n-dimensional-points-clustering" title="Permalink to this heading">#</a></h1>
+<p>So far, we have seen data as a collection of observations of multiple variables. We often represented a dataset as a table or a data matrix. In all previous analyses, we have focused on the interpretation of the values of each variable.</p>
+<p>However, in many cases (and especially when we have many variables), it is useful to given a geometric interpretation of data and see observations more generically as <strong>d-dimensional data points</strong>, not paying too much attention to variable names.</p>
+<p>In this context in which we are not always <strong>explicitly giving names or interpretation to the variables</strong>, each of the variables will also be referred to as <strong>a feature of the data</strong>. For instance, <strong>a dataset of images of <span class="math notranslate nohighlight">\(100 \times 100\)</span> pixels can be seen as a collection of <span class="math notranslate nohighlight">\(10000\)</span>-dimensional vectors</strong>, where each vector’s dimension is a “feature”, i.e., the value of a specific pixel of the image.</p>
+<p>Given this interpretation of variables as features, it is often common to talk about <strong>feature extraction</strong>, in the case of any process transforming the data <span class="math notranslate nohighlight">\(\mathbf{x} \in \Re^d\)</span> to another form <span class="math notranslate nohighlight">\(\mathbf{y} \in \Re^m\)</span>. In this context, a function:</p>
+<div class="math notranslate nohighlight">
+\[f : \Re^d \to \Re^m\]</div>
+<p>will be often referred to as a “<strong>feature extraction function</strong>” (of feature extractor) or a “<strong>representation function</strong>”. We will recall these terms going further in the course. We will also refer to the process of mapping data using a representation function as <strong>data representation</strong>.</p>
+<p>We will also refer to <span class="math notranslate nohighlight">\(\Re^d\)</span> and <span class="math notranslate nohighlight">\(\Re^m\)</span> as “<strong>feature spaces</strong>” or “<strong>representation spaces</strong>” as they will be <strong>vector spaces</strong> to which data points (also called <strong>feature vectors</strong>) belong.</p>
+<section id="important-properties-of-feature-spaces">
+<h2>Important Properties of Feature Spaces<a class="headerlink" href="#important-properties-of-feature-spaces" title="Permalink to this heading">#</a></h2>
+<p>Since observations <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> are vectors living in some vector spaces, all <strong>basic properties of vectors and vector spaces seen in linear algebra will apply here as well</strong>. We’ll recall the most important concepts as we need them in the course, but, for the moment, it is useful to summarize the main important properties.</p>
+<section id="norms">
+<h3>Norms<a class="headerlink" href="#norms" title="Permalink to this heading">#</a></h3>
+<p>Given a vector space <span class="math notranslate nohighlight">\(S\)</span>, a norm <span class="math notranslate nohighlight">\(p\)</span> is a function from <span class="math notranslate nohighlight">\(S\)</span> to a non negative real number:</p>
+<div class="math notranslate nohighlight">
+\[p : S \to \Re^+_0\]</div>
+<p>A commonly used family of norms is the one of the L-p norms:</p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_p = \left( \sum_{i=1}^{d} |x_i|^p \right)^{1/p}\]</div>
+<p>Where <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is d-dimensional, <span class="math notranslate nohighlight">\(x_i\)</span> is the i-th component of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, and <span class="math notranslate nohighlight">\(p\)</span> is a parameter defining the behavior of the norm.</p>
+<p>Note that a norm computes some kind of measure of distance of the vector from the origin of the space. In practice, the following norms are commonly used:</p>
+<p><strong>L-2 Norm</strong></p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_2 = \sqrt{\sum_{i=1}^{d} x_i^2}\]</div>
+<p>This is what we know as “computing the magnitude (or modulus) of the vector”. It is the Euclidean distance between the origin and the vector.</p>
+<p>When we use the L2 norm, we can omit the <span class="math notranslate nohighlight">\(p=2\)</span> subscript:</p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_2 = ||\mathbf{x}||\]</div>
+<p>Another commonly used notation is the one for the squared L2 norm:</p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_2^2 = ||\mathbf{x}||^2 = \sum_{i=1}^{d} x_i^2\]</div>
+<p><strong>L-1 Norm</strong></p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_1 = \sum_{i=1}^{d} |x_i|\]</div>
+<p>This is the sum of the absolute values of the components of the vector.</p>
+<p><strong>L-<span class="math notranslate nohighlight">\(\infty\)</span> Norm</strong></p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x}||_\infty = \max\{|x_i|\}_{i=1}^{d}\]</div>
+<p>This is the maximum absolute value of the components of the vector.</p>
+<p>To visualize the difference between the different norms, it often common to display the <strong>unit circles according to the different norms</strong>. Each of the shapes is made of <strong>vectors with unit norm</strong> according to specific norm:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/fe4419f09a73b93e547f81f585267f5a3de9617a8e1b0a1dfb61ebb127328179.png" src="../_images/fe4419f09a73b93e547f81f585267f5a3de9617a8e1b0a1dfb61ebb127328179.png" />
+</div>
+</div>
+</section>
+<section id="metrics">
+<h3>Metrics<a class="headerlink" href="#metrics" title="Permalink to this heading">#</a></h3>
+<p>Given a space <span class="math notranslate nohighlight">\(S\)</span>, a function</p>
+<p><span class="math notranslate nohighlight">\(m : S \times S \to \Re\)</span></p>
+<p>is <strong>a metric</strong> if the following properties are satisfied:</p>
+<ol class="arabic simple">
+<li><p>The distance of a point from itself is zero: <span class="math notranslate nohighlight">\(m(\mathbf{x}, \mathbf{x}) = 0\)</span>;</p></li>
+<li><p>The distance between two distinct points is always positive (positivity) if <span class="math notranslate nohighlight">\(\mathbf{x} \neq \mathbf{y}\)</span>: <span class="math notranslate nohighlight">\(m(\mathbf{x},\mathbf{y}) &gt; 0, \forall \mathbf{x}, \mathbf{y} \in S, \mathbf{x} \neq \mathbf{y}\)</span>;</p></li>
+<li><p>The distance between <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> is the same as the distance between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(x\)</span> (symmetry): <span class="math notranslate nohighlight">\(m(\mathbf{x}, \mathbf{y}) = m(\mathbf{y}, \mathbf{x})\)</span>.</p></li>
+<li><p>Triangle inequality: <span class="math notranslate nohighlight">\(m(\mathbf{x},\mathbf{y}) \leq m(\mathbf{x},\mathbf{z}) + m(\mathbf{z},\mathbf{y}), \forall \mathbf{x}, \mathbf{y}, \mathbf{z} \in S\)</span></p></li>
+</ol>
+<section id="l-p-metrics">
+<h4>L-p Metrics<a class="headerlink" href="#l-p-metrics" title="Permalink to this heading">#</a></h4>
+<p>From the L-p norms, we can derive <strong>a family of metrics</strong> as follows:</p>
+<div class="math notranslate nohighlight">
+\[L_p(\mathbf{x},\mathbf{y}) = ||\mathbf{x} - \mathbf{y}||_p = \left( \sum_{i=1}^{d} |x_i - y_i|^p \right)^{1/p}\]</div>
+<p><strong>L2 Distance</strong></p>
+<p>Note that with <span class="math notranslate nohighlight">\(p=2\)</span> we have the Euclidean (or L-2) distance:</p>
+<div class="math notranslate nohighlight">
+\[L_2(\mathbf{x},\mathbf{y}) = ||\mathbf{x} - \mathbf{y}||_2 = \sqrt{\sum_{i=1}^{d} (x_i - y_i)^2}\]</div>
+<p><strong>L1 Distance</strong></p>
+<p>With <span class="math notranslate nohighlight">\(p=1\)</span>, we obtain the L1 distance, which is also known as the <strong>Manhattan distance</strong>:</p>
+<div class="math notranslate nohighlight">
+\[L_1(\mathbf{x},\mathbf{y}) = ||\mathbf{x} - \mathbf{y}||_1 = \sum_{i=1}^{d} |x_i - y_i|\]</div>
+<p><strong>L-<span class="math notranslate nohighlight">\(\infty\)</span> Distance</strong></p>
+<p>With <span class="math notranslate nohighlight">\(p=\inf\)</span>, we obtain the L-<span class="math notranslate nohighlight">\(\infty\)</span> distance:</p>
+<div class="math notranslate nohighlight">
+\[L_\infty(\mathbf{x},\mathbf{y}) = ||\mathbf{x} - \mathbf{y}||_\infty = \max_{i=1}^d\{|x_i - y_i|\}\]</div>
+<p>The difference between the L1 and L2 distances is notable, as shown in the figure blow:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/9875267b3656cd73af5b63e55da1108a69cf4731c852cea3aae17b670605f9ba.png" src="../_images/9875267b3656cd73af5b63e55da1108a69cf4731c852cea3aae17b670605f9ba.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Manhattan (L1) Distance: 7.00
+Euclidean (L2) Distance: 5.00
+L-Inf Distance: 4.00
+</pre></div>
+</div>
+</div>
+</div>
+<p>While the Euclidean distance measures the length of the straight segment connecting the two points, the Manhattan distance is the one in grey (dashed), which measures the distance that a taxi driver should drive in Manhattan (or any other square-block based city) to reach the destination.</p>
+</section>
+<section id="cosine-distance">
+<h4>Cosine Distance<a class="headerlink" href="#cosine-distance" title="Permalink to this heading">#</a></h4>
+<p>The cosine distance is useful when we need to compare two vectors but we do not care about differences arising from scaling factors. Note that the Euclidean distance of two proportional vectors is in general non-zero:</p>
+<div class="math notranslate nohighlight">
+\[||\mathbf{x} - \alpha \mathbf{x}||^2 &gt; 0, \alpha \neq 1\]</div>
+<p>Nevertheless, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\alpha \mathbf{x}\)</span> are very similar. If we want to compare two vectors considering only <strong>the relationships between their coordinates, rather than their values</strong>, we can use the cosine similarity, which is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[S_C (\mathbf{x}, \mathbf{y}) = \frac{\mathbf{x} \cdot \mathbf{y}}{||\mathbf{x}|| ||\mathbf{y}||}\]</div>
+<p>The cosine similarity computes the cosine of the angle <span class="math notranslate nohighlight">\(\theta\)</span> comprised between two vectors, as shown in the plot below:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/e64e2c520cf9e4504e6b8df2037730c271b45a5bcfec47f00c3f284020ab8af2.png" src="../_images/e64e2c520cf9e4504e6b8df2037730c271b45a5bcfec47f00c3f284020ab8af2.png" />
+</div>
+</div>
+<p>Note that the cosine similarity would be the same if the two vectors had different scales (i.e., if they were longer but they would have the same orientation).</p>
+<p>This kind of similarity measure is useful when the scale of the vector is not important. For instance, if the vectors <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{y}\)</span> are vectors of word counts of two documents of different lengths, we care about the <strong>proportions of words in each document, while longer document will have vectors with larger L2 norms</strong>.</p>
+<p>The cosine similarity is a normalized number between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(1\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(+1\)</span> means maximum alignment (similarity) between the two vectors;</p></li>
+<li><p><span class="math notranslate nohighlight">\(-1\)</span> means that the two vectors are dissimilar - they are indeed opposite.</p></li>
+<li><p><span class="math notranslate nohighlight">\(0\)</span> means that the two vectors are orthogonal.</p></li>
+</ul>
+<p>The plot below shows different examples of cosine similarity of vector pairs:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/196b6c029f390b83b1d4259ea91b0c7b50c7948d8ad6313018d8c3c8bbcbad9e.png" src="../_images/196b6c029f390b83b1d4259ea91b0c7b50c7948d8ad6313018d8c3c8bbcbad9e.png" />
+</div>
+</div>
+<p>The cosine distance is defined from the cosine similarity as:</p>
+<div class="math notranslate nohighlight">
+\[D_C = 1- S_C = 1- \frac{\mathbf{x} \cdot \mathbf{y}}{||\mathbf{x}|| \cdot ||\mathbf{x}||}\]</div>
+<p>It should be noted that the cosine similarity is not a metric as it does not satisfy the triangular inequality.</p>
+</section>
+</section>
+</section>
+<section id="features-and-representation-functions">
+<h2>Features and Representation Functions<a class="headerlink" href="#features-and-representation-functions" title="Permalink to this heading">#</a></h2>
+<p>Data representation can help making data analysis processes simpler. Consider for example the example below:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Step 1: Generate linearly correlated data in Polar coordinates</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">200</span>
+
+<span class="c1"># Generate linearly spaced angles (theta) from 0 to 4π</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>  <span class="c1"># Increasing angle for a spiral effect</span>
+
+<span class="c1"># Define a linear relationship for radius: r = m * theta + c</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># Slope</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mi">2</span>    <span class="c1"># Intercept</span>
+<span class="n">radius</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>  <span class="c1"># Add small noise</span>
+
+<span class="c1"># Step 2: Convert Polar to Cartesian coordinates</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Plot both Polar and Cartesian representations</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Polar plot: plot radius vs. angle (in radians)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Linearly Correlated Data in Polar Coordinates&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Angle (radians)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Radius&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="c1"># Cartesian plot</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed Data in Cartesian Coordinates&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/32bb4015d100b3fb6b5c1330b7a85bcd33544a678a5549b776b31b494721b2ad.png" src="../_images/32bb4015d100b3fb6b5c1330b7a85bcd33544a678a5549b776b31b494721b2ad.png" />
+</div>
+</div>
+<p>The data on the left follows a non-linear pattern which we wouldn’t know how to correctly model. However, taking polar coordinates in this form (in practice the case-defined <code class="docutils literal notranslate"><span class="pre">atan2</span></code> function is used instead of <code class="docutils literal notranslate"><span class="pre">arctan</span></code> to handle quadrants correctly):</p>
+<div class="math notranslate nohighlight">
+\[r = \sqrt{x^2 + y^2} \]</div>
+<div class="math notranslate nohighlight">
+\[\theta = \arctan\left(\frac{y}{x}\right)\]</div>
+<p>We obtain a linear set of data which could be modeled with a linear regression.</p>
+<p>A similar example can be made for classification:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Step 1: Generate synthetic ball-and-ring data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">n_ball</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">n_ring</span> <span class="o">=</span> <span class="mi">300</span>
+
+<span class="c1"># Central ball (Class 0)</span>
+<span class="n">ball</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">n_ball</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">ball_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_ball</span><span class="p">)</span>
+
+<span class="c1"># Surrounding ring (Class 1)</span>
+<span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n_ring</span><span class="p">)</span>
+<span class="n">radii</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n_ring</span><span class="p">)</span>
+<span class="n">x_ring</span> <span class="o">=</span> <span class="n">radii</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+<span class="n">y_ring</span> <span class="o">=</span> <span class="n">radii</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angles</span><span class="p">)</span>
+<span class="n">ring</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">((</span><span class="n">x_ring</span><span class="p">,</span> <span class="n">y_ring</span><span class="p">))</span>
+<span class="n">ring_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_ring</span><span class="p">)</span>
+
+<span class="c1"># Combine</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">ball</span><span class="p">,</span> <span class="n">ring</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">ball_labels</span><span class="p">,</span> <span class="n">ring_labels</span><span class="p">))</span>
+
+<span class="c1"># Step 2: Convert to polar coordinates</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+
+<span class="c1"># Step 3: Plot both views</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Cartesian view</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ball&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ring&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Cartesian Coordinates&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;x&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;equal&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Polar view</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ball&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">theta</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">],</span> <span class="n">r</span><span class="p">[</span><span class="n">y</span> <span class="o">==</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Ring&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Polar Coordinates&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Angle (radians)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Radius&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" src="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" />
+</div>
+</div>
+<section id="from-hand-crafted-features-to-learned-representations">
+<h3>From Hand-Crafted Features to Learned Representations<a class="headerlink" href="#from-hand-crafted-features-to-learned-representations" title="Permalink to this heading">#</a></h3>
+<p>The polar coordinate example is powerful. It shows that a problem that is impossible for a linear model in one space (Cartesian) can become trivial in another space (Polar).</p>
+<p>In this case, we used our human intuition to “hand-craft” a new feature representation (<span class="math notranslate nohighlight">\(r\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span>) that solved the problem. This is the traditional approach to machine learning.</p>
+<section id="the-black-box-feature-extractor">
+<h4>The “Black Box” Feature Extractor<a class="headerlink" href="#the-black-box-feature-extractor" title="Permalink to this heading">#</a></h4>
+<p>In practice, for complex data like images, audio, or text, we can’t manually discover the perfect feature function.</p>
+<ul class="simple">
+<li><p>What is the “radius” of a picture of a cat?</p></li>
+<li><p>What is the “angle” of a legal document?</p></li>
+</ul>
+<p>This is where modern machine learning, particularly <strong>Deep Learning</strong>, comes in. The dominant approach today is to <em>learn</em> the representation function <span class="math notranslate nohighlight">\(f\)</span> from the data itself.</p>
+<p>We can treat these massive, pre-trained models as powerful “black-box” feature extractors.</p>
+<ul class="simple">
+<li><p><strong>For Text:</strong> We can use models like <strong>BERT</strong>, <strong>GPT</strong>, or <strong>Sentence Transformers</strong>. You can feed a raw sentence into one of these models and get a 768-dimensional vector as output. This vector is a rich, numerical “feature vector” that understands the <em>semantic meaning</em> of the sentence. Libraries like <strong>Hugging Face <code class="docutils literal notranslate"><span class="pre">transformers</span></code></strong> are the standard toolkit for this.</p></li>
+<li><p><strong>For Images:</strong> We can use pre-trained <strong>Convolutional Neural Networks (CNNs)</strong> like <strong>ResNet</strong> or <strong>Vision Transformers (ViT)</strong>. You feed in a raw image and get a 2048-dimensional vector that represents its visual content.</p></li>
+<li><p><strong>For Audio:</strong> We can use traditional features like <strong>MFCCs</strong> (Mel-Frequency Cepstral Coefficients) or use deep models like <strong>1D CNNs</strong> or <strong>Audio Transformers</strong> like <strong>Wav2Vec2</strong>. You feed in a raw waveform and get a feature vector that represents the acoustic content, speaker identity, or spoken words.</p></li>
+</ul>
+<p>In all cases, the principle is the same. Whether hand-crafted (like <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span>) or learned (like a Transformer), the goal of the representation function <span class="math notranslate nohighlight">\(f: \Re^d \to \Re^m\)</span> is to map the “messy” raw data into a new <strong>feature space</strong> where the relationships are simpler and a classifier can easily find the decision boundary.</p>
+</section>
+</section>
+</section>
+<section id="lab-the-critical-importance-of-feature-representation">
+<h2>Lab: The Critical Importance of Feature Representation<a class="headerlink" href="#lab-the-critical-importance-of-feature-representation" title="Permalink to this heading">#</a></h2>
+<p>So far, we have learned about algorithms (like KNN) and the “Curse of Dimensionality.” We’ve also discussed how we can <em>represent</em> data, from raw vectors (pixels) to hand-crafted features (polar coordinates) to “learned” features (like from your <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> library).</p>
+<p>In this lab, we will prove that <strong>feature representation is often more important than the choice of algorithm.</strong></p>
+<p>We will conduct two “bake-offs” to show how a simple <code class="docutils literal notranslate"><span class="pre">KNeighborsClassifier</span></code> (which we know is sensitive to dimensionality and distance) performs in different feature spaces.</p>
+<ol class="arabic simple">
+<li><p><strong>Image Task (CIFAR):</strong> We’ll compare KNN on <strong>raw pixels</strong> vs. KNN on <strong>“smart” CNN features</strong>.</p></li>
+<li><p><strong>Text Task (Spam):</strong> We’ll compare the “classic” <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> vs. KNN on word counts vs. KNN on “smart” deep features.</p></li>
+</ol>
+<p>We will use the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> library for KNN and other utilities, and <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> for deep learning-based text features.</p>
+<p>Let’s start by installing libraries:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>torchaudio<span class="w"> </span>scikit-learn<span class="w"> </span>Pillow<span class="w"> </span>numpy<span class="w"> </span>scipy<span class="w"> </span>av
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>transformers<span class="w"> </span>sentence-transformers<span class="w"> </span>timm<span class="w"> </span>requests
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>torch<span class="w"> </span>torchvision<span class="w"> </span>torchaudio<span class="w"> </span>transformers<span class="w"> </span>sentence-transformers<span class="w"> </span>timm<span class="w"> </span>requests
+<span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/antoninofurnari/dlfeat.git
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting torch
+  Downloading torch-2.9.1-cp313-none-macosx_11_0_arm64.whl.metadata (30 kB)
+Collecting torchvision
+  Downloading torchvision-0.24.1-cp313-cp313-macosx_12_0_arm64.whl.metadata (5.9 kB)
+Collecting torchaudio
+  Downloading torchaudio-2.9.1-cp313-cp313-macosx_12_0_arm64.whl.metadata (6.9 kB)
+Requirement already satisfied: scikit-learn in /opt/homebrew/anaconda3/lib/python3.13/site-packages (1.6.1)
+Requirement already satisfied: Pillow in /opt/homebrew/anaconda3/lib/python3.13/site-packages (11.1.0)
+Requirement already satisfied: numpy in /opt/homebrew/anaconda3/lib/python3.13/site-packages (2.1.3)
+Requirement already satisfied: scipy in /opt/homebrew/anaconda3/lib/python3.13/site-packages (1.15.3)
+Collecting av
+  Downloading av-16.0.1-cp313-cp313-macosx_14_0_arm64.whl.metadata (4.6 kB)
+Requirement already satisfied: filelock in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.17.0)
+Requirement already satisfied: typing-extensions&gt;=4.10.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (4.12.2)
+Requirement already satisfied: setuptools in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (72.1.0)
+Requirement already satisfied: sympy&gt;=1.13.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (1.13.3)
+Requirement already satisfied: networkx&gt;=2.5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.4.2)
+Requirement already satisfied: jinja2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.1.6)
+Requirement already satisfied: fsspec&gt;=0.8.5 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (2025.3.2)
+Requirement already satisfied: joblib&gt;=1.2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn) (1.4.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn) (3.5.0)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sympy&gt;=1.13.3-&gt;torch) (1.3.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from jinja2-&gt;torch) (3.0.2)
+Downloading torch-2.9.1-cp313-none-macosx_11_0_arm64.whl (74.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">74.5/74.5 MB</span> <span class=" -Color -Color-Red">10.0 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>00:0100:01
+?25hDownloading torchvision-0.24.1-cp313-cp313-macosx_12_0_arm64.whl (1.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">1.9/1.9 MB</span> <span class=" -Color -Color-Red">10.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hDownloading torchaudio-2.9.1-cp313-cp313-macosx_12_0_arm64.whl (808 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">808.1/808.1 kB</span> <span class=" -Color -Color-Red">7.1 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>
+?25hDownloading av-16.0.1-cp313-cp313-macosx_14_0_arm64.whl (21.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">21.7/21.7 MB</span> <span class=" -Color -Color-Red">4.8 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>a <span class=" -Color -Color-Cyan">0:00:01</span>
+?25hInstalling collected packages: av, torch, torchvision, torchaudio
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">4/4</span> [torchaudio]4 [torchaudio]]
+Successfully installed av-16.0.1 torch-2.9.1 torchaudio-2.9.1 torchvision-0.24.1
+Collecting transformers
+  Using cached transformers-4.57.1-py3-none-any.whl.metadata (43 kB)
+Collecting sentence-transformers
+  Downloading sentence_transformers-5.1.2-py3-none-any.whl.metadata (16 kB)
+Collecting timm
+  Downloading timm-1.0.22-py3-none-any.whl.metadata (63 kB)
+Requirement already satisfied: requests in /opt/homebrew/anaconda3/lib/python3.13/site-packages (2.32.3)
+Requirement already satisfied: filelock in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (3.17.0)
+Collecting huggingface-hub&lt;1.0,&gt;=0.34.0 (from transformers)
+  Using cached huggingface_hub-0.36.0-py3-none-any.whl.metadata (14 kB)
+Requirement already satisfied: numpy&gt;=1.17 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (2.1.3)
+Requirement already satisfied: packaging&gt;=20.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (24.2)
+Requirement already satisfied: pyyaml&gt;=5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (6.0.2)
+Requirement already satisfied: regex!=2019.12.17 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (2024.11.6)
+Collecting tokenizers&lt;=0.23.0,&gt;=0.22.0 (from transformers)
+  Using cached tokenizers-0.22.1-cp39-abi3-macosx_11_0_arm64.whl.metadata (6.8 kB)
+Collecting safetensors&gt;=0.4.3 (from transformers)
+  Using cached safetensors-0.6.2-cp38-abi3-macosx_11_0_arm64.whl.metadata (4.1 kB)
+Requirement already satisfied: tqdm&gt;=4.27 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (4.67.1)
+Requirement already satisfied: fsspec&gt;=2023.5.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from huggingface-hub&lt;1.0,&gt;=0.34.0-&gt;transformers) (2025.3.2)
+Requirement already satisfied: typing-extensions&gt;=3.7.4.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from huggingface-hub&lt;1.0,&gt;=0.34.0-&gt;transformers) (4.12.2)
+Collecting hf-xet&lt;2.0.0,&gt;=1.1.3 (from huggingface-hub&lt;1.0,&gt;=0.34.0-&gt;transformers)
+  Downloading hf_xet-1.2.0-cp37-abi3-macosx_11_0_arm64.whl.metadata (4.9 kB)
+Requirement already satisfied: torch&gt;=1.11.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (2.9.1)
+Requirement already satisfied: scikit-learn in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (1.6.1)
+Requirement already satisfied: scipy in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (1.15.3)
+Requirement already satisfied: Pillow in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (11.1.0)
+Requirement already satisfied: torchvision in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from timm) (0.24.1)
+Requirement already satisfied: charset-normalizer&lt;4,&gt;=2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (3.7)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (2.3.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (2025.4.26)
+Requirement already satisfied: setuptools in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.11.0-&gt;sentence-transformers) (72.1.0)
+Requirement already satisfied: sympy&gt;=1.13.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.11.0-&gt;sentence-transformers) (1.13.3)
+Requirement already satisfied: networkx&gt;=2.5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.11.0-&gt;sentence-transformers) (3.4.2)
+Requirement already satisfied: jinja2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.11.0-&gt;sentence-transformers) (3.1.6)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sympy&gt;=1.13.3-&gt;torch&gt;=1.11.0-&gt;sentence-transformers) (1.3.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from jinja2-&gt;torch&gt;=1.11.0-&gt;sentence-transformers) (3.0.2)
+Requirement already satisfied: joblib&gt;=1.2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn-&gt;sentence-transformers) (1.4.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn-&gt;sentence-transformers) (3.5.0)
+Using cached transformers-4.57.1-py3-none-any.whl (12.0 MB)
+Using cached huggingface_hub-0.36.0-py3-none-any.whl (566 kB)
+Downloading hf_xet-1.2.0-cp37-abi3-macosx_11_0_arm64.whl (2.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.7/2.7 MB</span> <span class=" -Color -Color-Red">10.9 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span> <span class=" -Color -Color-Cyan">0:00:01</span>
+?25hUsing cached tokenizers-0.22.1-cp39-abi3-macosx_11_0_arm64.whl (2.9 MB)
+Downloading sentence_transformers-5.1.2-py3-none-any.whl (488 kB)
+Downloading timm-1.0.22-py3-none-any.whl (2.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">2.5/2.5 MB</span> <span class=" -Color -Color-Red">10.3 MB/s</span> eta <span class=" -Color -Color-Cyan">0:00:00</span>a <span class=" -Color -Color-Cyan">0:00:01</span>
+?25hUsing cached safetensors-0.6.2-cp38-abi3-macosx_11_0_arm64.whl (432 kB)
+Installing collected packages: safetensors, hf-xet, huggingface-hub, tokenizers, transformers, timm, sentence-transformers
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ <span class=" -Color -Color-Green">7/7</span> [sentence-transformers]ence-transformers]
+Successfully installed hf-xet-1.2.0 huggingface-hub-0.36.0 safetensors-0.6.2 sentence-transformers-5.1.2 timm-1.0.22 tokenizers-0.22.1 transformers-4.57.1
+Requirement already satisfied: torch in /opt/homebrew/anaconda3/lib/python3.13/site-packages (2.9.1)
+Requirement already satisfied: torchvision in /opt/homebrew/anaconda3/lib/python3.13/site-packages (0.24.1)
+Requirement already satisfied: torchaudio in /opt/homebrew/anaconda3/lib/python3.13/site-packages (2.9.1)
+Requirement already satisfied: transformers in /opt/homebrew/anaconda3/lib/python3.13/site-packages (4.57.1)
+Requirement already satisfied: sentence-transformers in /opt/homebrew/anaconda3/lib/python3.13/site-packages (5.1.2)
+Requirement already satisfied: timm in /opt/homebrew/anaconda3/lib/python3.13/site-packages (1.0.22)
+Requirement already satisfied: requests in /opt/homebrew/anaconda3/lib/python3.13/site-packages (2.32.3)
+Collecting requests
+  Using cached requests-2.32.5-py3-none-any.whl.metadata (4.9 kB)
+Requirement already satisfied: filelock in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.17.0)
+Requirement already satisfied: typing-extensions&gt;=4.10.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (4.12.2)
+Requirement already satisfied: setuptools in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (72.1.0)
+Requirement already satisfied: sympy&gt;=1.13.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (1.13.3)
+Requirement already satisfied: networkx&gt;=2.5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.4.2)
+Requirement already satisfied: jinja2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (3.1.6)
+Requirement already satisfied: fsspec&gt;=0.8.5 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch) (2025.3.2)
+Requirement already satisfied: numpy in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torchvision) (2.1.3)
+Requirement already satisfied: pillow!=8.3.*,&gt;=5.3.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torchvision) (11.1.0)
+Requirement already satisfied: huggingface-hub&lt;1.0,&gt;=0.34.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (0.36.0)
+Requirement already satisfied: packaging&gt;=20.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (24.2)
+Requirement already satisfied: pyyaml&gt;=5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (6.0.2)
+Requirement already satisfied: regex!=2019.12.17 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (2024.11.6)
+Requirement already satisfied: tokenizers&lt;=0.23.0,&gt;=0.22.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (0.22.1)
+Requirement already satisfied: safetensors&gt;=0.4.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (0.6.2)
+Requirement already satisfied: tqdm&gt;=4.27 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from transformers) (4.67.1)
+Requirement already satisfied: hf-xet&lt;2.0.0,&gt;=1.1.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from huggingface-hub&lt;1.0,&gt;=0.34.0-&gt;transformers) (1.2.0)
+Requirement already satisfied: scikit-learn in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (1.6.1)
+Requirement already satisfied: scipy in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sentence-transformers) (1.15.3)
+Requirement already satisfied: charset_normalizer&lt;4,&gt;=2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (3.3.2)
+Requirement already satisfied: idna&lt;4,&gt;=2.5 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (3.7)
+Requirement already satisfied: urllib3&lt;3,&gt;=1.21.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (2.3.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from requests) (2025.4.26)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sympy&gt;=1.13.3-&gt;torch) (1.3.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from jinja2-&gt;torch) (3.0.2)
+Requirement already satisfied: joblib&gt;=1.2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn-&gt;sentence-transformers) (1.4.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn-&gt;sentence-transformers) (3.5.0)
+Using cached requests-2.32.5-py3-none-any.whl (64 kB)
+Installing collected packages: requests
+  Attempting uninstall: requests
+    Found existing installation: requests 2.32.3
+    Uninstalling requests-2.32.3:
+      Successfully uninstalled requests-2.32.3
+Successfully installed requests-2.32.5
+Collecting git+https://github.com/antoninofurnari/dlfeat.git
+  Cloning https://github.com/antoninofurnari/dlfeat.git to /private/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/pip-req-build-nubrf702
+  Running command git clone --filter=blob:none --quiet https://github.com/antoninofurnari/dlfeat.git /private/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/pip-req-build-nubrf702
+  Resolved https://github.com/antoninofurnari/dlfeat.git to commit e386952d7f4479602002da470a935ecc3b630065
+  Installing build dependencies ... ?25ldone
+?25h  Getting requirements to build wheel ... ?25ldone
+?25h  Preparing metadata (pyproject.toml) ... ?25ldone
+?25hRequirement already satisfied: torch&gt;=1.9.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from dlfeat==0.6.0) (2.9.1)
+Requirement already satisfied: numpy&gt;=1.19.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from dlfeat==0.6.0) (2.1.3)
+Requirement already satisfied: scikit-learn&gt;=0.24.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from dlfeat==0.6.0) (1.6.1)
+Requirement already satisfied: scipy&gt;=1.6.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn&gt;=0.24.0-&gt;dlfeat==0.6.0) (1.15.3)
+Requirement already satisfied: joblib&gt;=1.2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn&gt;=0.24.0-&gt;dlfeat==0.6.0) (1.4.2)
+Requirement already satisfied: threadpoolctl&gt;=3.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from scikit-learn&gt;=0.24.0-&gt;dlfeat==0.6.0) (3.5.0)
+Requirement already satisfied: filelock in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (3.17.0)
+Requirement already satisfied: typing-extensions&gt;=4.10.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (4.12.2)
+Requirement already satisfied: setuptools in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (72.1.0)
+Requirement already satisfied: sympy&gt;=1.13.3 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (1.13.3)
+Requirement already satisfied: networkx&gt;=2.5.1 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (3.4.2)
+Requirement already satisfied: jinja2 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (3.1.6)
+Requirement already satisfied: fsspec&gt;=0.8.5 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (2025.3.2)
+Requirement already satisfied: mpmath&lt;1.4,&gt;=1.1.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from sympy&gt;=1.13.3-&gt;torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (1.3.0)
+Requirement already satisfied: MarkupSafe&gt;=2.0 in /opt/homebrew/anaconda3/lib/python3.13/site-packages (from jinja2-&gt;torch&gt;=1.9.0-&gt;dlfeat==0.6.0) (3.0.2)
+Building wheels for collected packages: dlfeat
+  Building wheel for dlfeat (pyproject.toml) ... ?25ldone
+?25h  Created wheel for dlfeat: filename=dlfeat-0.6.0-py3-none-any.whl size=16416 sha256=d63f4a5b563f17c88d3528859a1286a38f9dd2ccfc90bb57a7bbfd72e8322fef
+  Stored in directory: /private/var/folders/cs/p62_d78d49n3ddj0xlfh1h7r0000gn/T/pip-ephem-wheel-cache-7_8qp94z/wheels/57/8c/5d/57fb2c082125f0e1d327659cd7862fe577e5f7fa74f2d844ea
+Successfully built dlfeat
+Installing collected packages: dlfeat
+Successfully installed dlfeat-0.6.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s import dependencies:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. All Imports ---</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">joblib</span> <span class="c1"># Using joblib for efficient saving of numpy arrays</span>
+
+<span class="c1"># --- Sklearn Tools ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># --- Models ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+
+<span class="c1"># --- Data and Feature Extractors ---</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">CIFAR10</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">dlfeat</span> <span class="kn">import</span> <span class="n">DLFeatExtractor</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="part-1-the-image-challenge-handwritten-digits">
+<h3>Part 1: The Image Challenge (Handwritten Digits)<a class="headerlink" href="#part-1-the-image-challenge-handwritten-digits" title="Permalink to this heading">#</a></h3>
+<p>We will build two KNN models to classify images from the <strong>CIFAR-10</strong> dataset.</p>
+<ul class="simple">
+<li><p><strong>Model 1 (The “Dumb” Baseline):</strong> We will train KNN on <strong>raw pixel data</strong>. This is a “dumb,” high-dimensional space (32x32x3 = 3,072 features). We expect this to perform poorly.</p></li>
+<li><p><strong>Model 2 (The “Smart” Model):</strong> We will first use a powerful, pre-trained Convolutional Neural Network (CNN) from your <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> library to extract “smart” <strong>semantic features</strong>. We will then train KNN on this new, “clean” feature space.</p></li>
+</ul>
+<p>We hypothesize that the simple KNN model will perform <em>dramatically</em> better when using the “smart” features.</p>
+<section id="step-1-load-and-visualize-the-cifar-10-data">
+<h4>Step 1: Load and Visualize the CIFAR-10 Data<a class="headerlink" href="#step-1-load-and-visualize-the-cifar-10-data" title="Permalink to this heading">#</a></h4>
+<p>First, let’s load the data. CIFAR-10 consists of 60,000 32x32 color images in 10 classes. For speed, we’ll use a subset of 5,000 for training and 1,000 for testing.</p>
+<p>We will prepare our data in two formats:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">X_train_pil</span></code></strong>: A list of PIL Image objects, required by <code class="docutils literal notranslate"><span class="pre">DLFeatExtractor</span></code>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">X_train_raw</span></code></strong>: A NumPy array of flattened pixel vectors (shape <code class="docutils literal notranslate"><span class="pre">(N,</span> <span class="pre">3072)</span></code>), for our baseline KNN.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. Load CIFAR-10 Dataset ---</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;1. Loading CIFAR-10 dataset...&quot;</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">cifar10_train_raw</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./cifar_data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">cifar10_test_raw</span> <span class="o">=</span> <span class="n">CIFAR10</span><span class="p">(</span><span class="n">root</span><span class="o">=</span><span class="s1">&#39;./cifar_data&#39;</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    
+    <span class="n">class_names</span> <span class="o">=</span> <span class="n">cifar10_train_raw</span><span class="o">.</span><span class="n">classes</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Classes: </span><span class="si">{</span><span class="n">class_names</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Extract a subset for faster demonstration</span>
+    <span class="n">num_train_samples</span> <span class="o">=</span> <span class="mi">5000</span>
+    <span class="n">num_test_samples</span> <span class="o">=</span> <span class="mi">1000</span>
+
+    <span class="c1"># Get PIL Images (for DLFeat)</span>
+    <span class="n">X_train_pil</span> <span class="o">=</span> <span class="p">[</span><span class="n">cifar10_train_raw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train_samples</span><span class="p">)]</span>
+    <span class="n">y_train</span> <span class="o">=</span> <span class="p">[</span><span class="n">cifar10_train_raw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_train_samples</span><span class="p">)]</span>
+    
+    <span class="n">X_test_pil</span> <span class="o">=</span> <span class="p">[</span><span class="n">cifar10_test_raw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test_samples</span><span class="p">)]</span>
+    <span class="n">y_test</span> <span class="o">=</span> <span class="p">[</span><span class="n">cifar10_test_raw</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_test_samples</span><span class="p">)]</span>
+
+    <span class="c1"># Get Raw Pixel vectors (for Baseline KNN)</span>
+    <span class="c1"># Shape = (N, 32*32*3) = (N, 3072)</span>
+    <span class="n">X_train_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">X_train_pil</span><span class="p">])</span>
+    <span class="n">X_test_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">img</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">X_test_pil</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Subset loaded: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span><span class="si">}</span><span class="s2"> training samples, </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test_pil</span><span class="p">)</span><span class="si">}</span><span class="s2"> testing samples.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Raw pixel data shape: </span><span class="si">{</span><span class="n">X_train_raw</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading or processing CIFAR-10: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1. Loading CIFAR-10 dataset...
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 170M/170M [00:43&lt;00:00, 3.93MB/s] 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Classes: [&#39;airplane&#39;, &#39;automobile&#39;, &#39;bird&#39;, &#39;cat&#39;, &#39;deer&#39;, &#39;dog&#39;, &#39;frog&#39;, &#39;horse&#39;, &#39;ship&#39;, &#39;truck&#39;]
+   Subset loaded: 5000 training samples, 1000 testing samples.
+   Raw pixel data shape: (5000, 3072)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-look-at-the-task">
+<h4>Step 2: Look at the Task<a class="headerlink" href="#step-2-look-at-the-task" title="Permalink to this heading">#</a></h4>
+<p>Let’s see what these images actually look like. They are small (32x32) and can be hard to recognize.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Show 10 random sample images</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">[</span><span class="n">idx</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="n">class_names</span><span class="p">[</span><span class="n">y_train</span><span class="p">[</span><span class="n">idx</span><span class="p">]])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Example CIFAR-10 Images&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/aa7669c1dd598a54b224240efbc8de2953f46a2a39edc15c204d3e8740a3e32c.png" src="../_images/aa7669c1dd598a54b224240efbc8de2953f46a2a39edc15c204d3e8740a3e32c.png" />
+</div>
+</div>
+</section>
+<section id="step-3-baseline-knn-on-raw-pixels">
+<h4>Step 3: Baseline (KNN on Raw Pixels)<a class="headerlink" href="#step-3-baseline-knn-on-raw-pixels" title="Permalink to this heading">#</a></h4>
+<p>First, we’ll train our baseline model. We create a <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> that scales the 3,072 pixel values (a critical step) and then runs our KNN classifier. We expect this to perform poorly due to the <strong>Curse of Dimensionality</strong>—the 3,072-dimensional space is too large and “empty” for “nearest neighbor” to be a meaningful concept.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a simple KNN pipeline for raw pixels</span>
+<span class="c1"># We must scale the pixel data!</span>
+<span class="n">pipe_knn_raw</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># 2. Fit and score</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting KNN on RAW 3072-pixel features...&quot;</span><span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">pipe_knn_raw</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_raw</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_raw</span> <span class="o">=</span> <span class="n">pipe_knn_raw</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_raw</span><span class="p">)</span>
+<span class="n">acc_raw</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_raw</span><span class="p">)</span>
+<span class="n">time_raw</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Accuracy (KNN on Raw Pixels): </span><span class="si">{</span><span class="n">acc_raw</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Time taken: </span><span class="si">{</span><span class="n">time_raw</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="c1"># Store results for our final chart</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;KNN on Raw Pixels&#39;</span><span class="p">:</span> <span class="n">acc_raw</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting KNN on RAW 3072-pixel features...
+   Accuracy (KNN on Raw Pixels): 26.20%
+   Time taken: 0.63 seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-extract-smart-features-with-dlfeat-the-expensive-step">
+<h4>Step 4: Extract “Smart” Features with <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> (The Expensive Step)<a class="headerlink" href="#step-4-extract-smart-features-with-dlfeat-the-expensive-step" title="Permalink to this heading">#</a></h4>
+<p>Now, we’ll use a pre-trained <strong>ResNet18</strong> model via your <code class="docutils literal notranslate"><span class="pre">DLFeatExtractor</span></code> to convert our images into “smart” feature vectors. This model has already learned about edges, shapes, and objects from the ImageNet dataset.</p>
+<p>This step is <strong>computationally expensive</strong> and only needs to be done <em>once</em>. We will run it and then <strong>save the resulting feature vectors to disk</strong> (<code class="docutils literal notranslate"><span class="pre">.pkl</span></code> files) to save time in the future.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">DLFeatExtractor</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature dimension will be: </span><span class="si">{</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">get_feature_dimension</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># 1. Extract Training Features</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting training features (this is the slow part)...&quot;</span><span class="p">)</span>
+<span class="n">start_time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="c1"># We pass the list of PIL Images: X_train_pil</span>
+<span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
+<span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
+
+<span class="c1"># 2. Extract Test Features</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting test features...&quot;</span><span class="p">)</span>
+<span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_pil</span><span class="p">)</span>
+<span class="n">time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_extract</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature extraction complete. Time: </span><span class="si">{</span><span class="n">time_extract</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3. Save features to disk for next time</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Saving features to disk...&quot;</span><span class="p">)</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TRAIN</span><span class="p">)</span>
+<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TEST</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Feature dimension will be: 512
+   Extracting training features (this is the slow part)...
+   Extracting test features...
+   Feature extraction complete. Time: 17.72s
+   Saving features to disk...
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;cifar_test_resnet18.pkl&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define file paths for our cached features</span>
+<span class="n">FEATURE_FILE_TRAIN</span> <span class="o">=</span> <span class="s1">&#39;cifar_train_resnet18.pkl&#39;</span>
+<span class="n">FEATURE_FILE_TEST</span> <span class="o">=</span> <span class="s1">&#39;cifar_test_resnet18.pkl&#39;</span>
+<span class="n">MODEL_NAME</span> <span class="o">=</span> <span class="s2">&quot;resnet18&quot;</span>
+
+<span class="c1"># Check if features are already saved</span>
+<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FEATURE_FILE_TRAIN</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">FEATURE_FILE_TEST</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loading &#39;smart&#39; features from disk... (This is fast!)&quot;</span><span class="p">)</span>
+    <span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">FEATURE_FILE_TRAIN</span><span class="p">)</span>
+    <span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">FEATURE_FILE_TEST</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Features loaded.&quot;</span><span class="p">)</span>
+
+<span class="k">else</span><span class="p">:</span>
+    <span class="c1"># If not on disk, we must extract them</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No cached features found. Initializing DLFeatExtractor with model: </span><span class="si">{</span><span class="n">MODEL_NAME</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">DLFeatExtractor</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature dimension will be: </span><span class="si">{</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">get_feature_dimension</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># 1. Extract Training Features</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting training features (this is the slow part)...&quot;</span><span class="p">)</span>
+        <span class="n">start_time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="c1"># We pass the list of PIL Images: X_train_pil</span>
+        <span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
+        <span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
+        
+        <span class="c1"># 2. Extract Test Features</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting test features...&quot;</span><span class="p">)</span>
+        <span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_pil</span><span class="p">)</span>
+        <span class="n">time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_extract</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature extraction complete. Time: </span><span class="si">{</span><span class="n">time_extract</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># 3. Save features to disk for next time</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Saving features to disk...&quot;</span><span class="p">)</span>
+        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TRAIN</span><span class="p">)</span>
+        <span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TEST</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Error initializing or using DLFeatExtractor: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="c1"># In case of error, create dummy variables so the lab can continue</span>
+        <span class="n">X_train_deep</span><span class="p">,</span> <span class="n">X_test_deep</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&#39;Smart&#39; feature shape: </span><span class="si">{</span><span class="n">X_train_deep</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Loading &#39;smart&#39; features from disk... (This is fast!)
+   Features loaded.
+
+&#39;Smart&#39; feature shape: (5000, 512)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-knn-on-smart-features">
+<h4>Step 5: KNN on “Smart” Features<a class="headerlink" href="#step-5-knn-on-smart-features" title="Permalink to this heading">#</a></h4>
+<p>Now we have our new “smart” feature set, <code class="docutils literal notranslate"><span class="pre">X_train_deep</span></code>. Instead of 3072 “noisy” pixel features, we have 512 “smart” semantic features.</p>
+<p>Let’s train our <em>same</em> KNN pipeline on this new, better data.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Create a *new* pipeline for these *new* features</span>
+<span class="n">pipe_knn_deep</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="c1"># Still good practice to scale the CNN features</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="c1"># 2. Fit and score</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting KNN on &#39;smart&#39; CNN features...&quot;</span><span class="p">)</span>
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_deep</span> <span class="o">=</span> <span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">)</span>
+<span class="n">acc_deep</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_deep</span><span class="p">)</span>
+<span class="n">time_deep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Accuracy (KNN on CNN Features): </span><span class="si">{</span><span class="n">acc_deep</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Time taken (training only): </span><span class="si">{</span><span class="n">time_deep</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+
+<span class="c1"># Store the result</span>
+<span class="n">results</span><span class="p">[</span><span class="s1">&#39;KNN on Smart Features&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">acc_deep</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting KNN on &#39;smart&#39; CNN features...
+   Accuracy (KNN on CNN Features): 73.90%
+   Time taken (training only): 0.11 seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-6-the-final-showdown-bar-chart">
+<h4>Step 6: The Final Showdown (Bar Chart)<a class="headerlink" href="#step-6-the-final-showdown-bar-chart" title="Permalink to this heading">#</a></h4>
+<p>Let’s compare the final accuracy of our two models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert results to a pandas DataFrame</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">])</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- FINAL BAKE-OFF RANKING ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_df</span><span class="p">)</span>
+
+<span class="c1"># Plot the comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> 
+    <span class="n">y</span><span class="o">=</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">],</span> 
+    <span class="n">hue</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> 
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> 
+    <span class="n">legend</span><span class="o">=</span><span class="kc">False</span>
+<span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Image Classification Bake-Off: Raw Pixels vs. CNN Features&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Set Accuracy&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="c1"># Show full 0-100% scale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- FINAL BAKE-OFF RANKING ---
+                       Test Accuracy
+KNN on Smart Features          0.739
+KNN on Raw Pixels              0.262
+</pre></div>
+</div>
+<img alt="../_images/c6110bea4a559c2b5d27d27d066046bafcee1d735f244b09b6f00c7c68b4344b.png" src="../_images/c6110bea4a559c2b5d27d27d066046bafcee1d735f244b09b6f00c7c68b4344b.png" />
+</div>
+</div>
+</section>
+<section id="analysis">
+<h4>Analysis<a class="headerlink" href="#analysis" title="Permalink to this heading">#</a></h4>
+<p>The results are dramatic and clear.</p>
+<ol class="arabic simple">
+<li><p><strong>KNN on Raw Pixels</strong> performed poorly (e.g., ~26% accuracy). This is a perfect demonstration of the <strong>Curse of Dimensionality</strong>. The model was trying to calculate distances in a “noisy” 3072-dimensional space, and the “nearest neighbor” was meaningless.</p></li>
+<li><p><strong>KNN on “Smart” CNN Features</strong> performed <em>dramatically</em> better (e.g., ~74% accuracy).</p></li>
+</ol>
+<p><strong>Why?</strong> The pre-trained ResNet model acted as an intelligent “feature extractor.” It transformed the “dumb” 3072-pixel space into a “smart” 512-dimensional <strong>semantic space</strong>, where similar-looking images (like “dog” and “cat”) are placed closer together than “dog” and “airplane.”</p>
+<p>In this new, lower-dimensional, and more meaningful feature space, our simple KNN model was able to find “truly” similar images and make accurate predictions. This proves our main lesson: <strong>The quality of your feature representation is the most important part of your model.</strong></p>
+</section>
+</section>
+<section id="muntinomial-naive-bayes-vs-knn-vs-smart-knn">
+<h3>Muntinomial Naive Bayes vs. KNN vs. “Smart” KNN<a class="headerlink" href="#muntinomial-naive-bayes-vs-knn-vs-smart-knn" title="Permalink to this heading">#</a></h3>
+<p>We have seen <code class="docutils literal notranslate"><span class="pre">Multinomial</span> <span class="pre">Naive</span> <span class="pre">Bayes</span> <span class="pre">(MNB)</span></code> as the classic, fast, and effective model for text. We also saw <code class="docutils literal notranslate"><span class="pre">K-Nearest</span> <span class="pre">Neighbors</span> <span class="pre">(KNN)</span></code> and learned about its main weakness: the <strong>Curse of Dimensionality</strong>.</p>
+<p>In this lab, we will run a “bake-off” to prove these concepts. We will build three different models for our spam classification task:</p>
+<ol class="arabic simple">
+<li><p><strong>Model 1 (The Baseline): <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> on <code class="docutils literal notranslate"><span class="pre">Count</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>This is the “classic” generative model that is built for this type of data.</p></li>
+</ul>
+</li>
+<li><p><strong>Model 2 (The “Wrong Tool”): <code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">Count</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>This is a distance-based model. We expect it to fail <em>miserably</em> because it will be trying to calculate distances in a “dumb,” unscaled, high-dimensional (e.g., 7000+ features) space.</p></li>
+</ul>
+</li>
+<li><p><strong>Model 3 (The “Smart” Model): <code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>We will first use a <code class="docutils literal notranslate"><span class="pre">sentence-bert</span></code> model from your <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> library to create a “smart,” low-dimensional (e.g., 384) feature space that understands <em>meaning</em>.</p></li>
+<li><p>We hypothesize that KNN will perform <em>brilliantly</em> in this new space.</p></li>
+</ul>
+</li>
+</ol>
+<p>Our goal is to compare their final accuracy on the <strong>test set</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="c1"># --- Sklearn Tools ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># --- Models ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="c1"># --- Feature Extractors ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">dlfeat</span> <span class="kn">import</span> <span class="n">DLFeatExtractor</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-1-load-and-split-the-data">
+<h3>Step 1: Load and Split the Data<a class="headerlink" href="#step-1-load-and-split-the-data" title="Permalink to this heading">#</a></h3>
+<p>First, we load the spam dataset, map the labels, and create our single, “locked-away” test set.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Load the dataset</span>
+<span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip&quot;</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="n">zip_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">zip_data</span><span class="p">))</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">z</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;SMSSpamCollection&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">],</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span>
+
+    <span class="c1"># 2. Map labels to 0 (ham) and 1 (spam)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">({</span><span class="s1">&#39;ham&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">})</span>
+    
+    <span class="c1"># 3. Define X and y</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span> <span class="c1"># The raw text</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>   <span class="c1"># The 0 or 1</span>
+
+    <span class="c1"># 4. Create the Train/Test Split</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Spam data loaded and split.&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Training samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2">, Test samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading or processing data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Spam data loaded and split.
+Training samples: 3900, Test samples: 1672
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-1-the-bag-of-words-competitors">
+<h3>Part 1: The “Bag of Words” Competitors<a class="headerlink" href="#part-1-the-bag-of-words-competitors" title="Permalink to this heading">#</a></h3>
+<p>First, we will build pipelines using <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>. This converts our text into a large, sparse matrix of raw word counts (e.g., <code class="docutils literal notranslate"><span class="pre">(3900,</span> <span class="pre">7000)</span></code> shape).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. Model 1: MultinomialNB (The Baseline) ---</span>
+<span class="c1"># This model is designed for raw counts</span>
+<span class="n">pipe_mnb</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting MultinomialNB...&quot;</span><span class="p">)</span>
+<span class="n">start_time_mnb</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">pipe_mnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_mnb</span> <span class="o">=</span> <span class="n">pipe_mnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc_mnb</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_mnb</span><span class="p">)</span>
+<span class="n">time_mnb</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_mnb</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy (MNB on Counts): </span><span class="si">{</span><span class="n">acc_mnb</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">% (Time: </span><span class="si">{</span><span class="n">time_mnb</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># --- 2. Model 2: KNN on Counts (The &quot;Wrong Tool&quot;) ---</span>
+<span class="c1"># KNN is not designed for this. It will suffer from:</span>
+<span class="c1"># 1. Curse of Dimensionality (thousands of features)</span>
+<span class="c1"># 2. Unscaled Data (word counts like &#39;the&#39;=50 vs &#39;win&#39;=1)</span>
+<span class="n">pipe_knn_counts</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Fitting KNN on &#39;dumb&#39; Counts...&quot;</span><span class="p">)</span>
+<span class="n">start_time_knn</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="n">pipe_knn_counts</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_counts</span> <span class="o">=</span> <span class="n">pipe_knn_counts</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc_knn_counts</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_counts</span><span class="p">)</span>
+<span class="n">time_knn</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_knn</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy (KNN on Counts): </span><span class="si">{</span><span class="n">acc_knn_counts</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">% (Time: </span><span class="si">{</span><span class="n">time_knn</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting MultinomialNB...
+Accuracy (MNB on Counts): 98.74% (Time: 0.13s)
+
+Fitting KNN on &#39;dumb&#39; Counts...
+Accuracy (KNN on Counts): 91.15% (Time: 0.18s)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-2-the-smart-features-competitor">
+<h3>Part 2: The “Smart” Features Competitor<a class="headerlink" href="#part-2-the-smart-features-competitor" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">KNN</span> <span class="pre">on</span> <span class="pre">Counts</span></code> model performed terribly, as expected.</p>
+<p>Now, let’s create a <em>new</em> feature space. We will use <code class="docutils literal notranslate"><span class="pre">DLFeatExtractor</span></code> with <code class="docutils literal notranslate"><span class="pre">'sentence-bert'</span></code> to convert each text message into a <strong>384-dimensional “smart” vector</strong> that understands semantic meaning. This space is <strong>low-dimensional</strong>, <strong>dense</strong>, and <strong>meaningful</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. Model 3: KNN on &quot;Smart&quot; DLFeat Features ---</span>
+
+<span class="c1"># 3a. Extract Deep Features (The expensive, one-time step)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracting deep semantic features with DLFeat...&quot;</span><span class="p">)</span>
+<span class="c1"># We use .to_list() to pass the raw text strings to the extractor</span>
+<span class="n">X_train_list</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">X_test_list</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">DLFeatExtractor</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;sentence-bert&quot;</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+    
+    <span class="n">start_time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)</span>
+    <span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_list</span><span class="p">)</span>
+    <span class="n">extract_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_extract</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature extraction complete. Time: </span><span class="si">{</span><span class="n">extract_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   New feature shape: </span><span class="si">{</span><span class="n">X_train_deep</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2"> (vs. </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)</span><span class="si">}</span><span class="s2"> docs)&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 3b. Build a *new* pipeline for these features</span>
+    <span class="c1"># This pipeline *only* needs to scale the features, not vectorize text</span>
+    <span class="n">pipe_knn_deep</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">])</span>
+
+    <span class="c1"># 3c. Fit and score</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting KNN on &#39;smart&#39; DLFeat features...&quot;</span><span class="p">)</span>
+    <span class="n">start_time_knn_deep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred_deep</span> <span class="o">=</span> <span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">)</span>
+    <span class="n">acc_knn_deep</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_deep</span><span class="p">)</span>
+    <span class="n">time_knn_deep</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_knn_deep</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Accuracy (KNN on DLFeat): </span><span class="si">{</span><span class="n">acc_knn_deep</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Time taken (training only): </span><span class="si">{</span><span class="n">time_knn_deep</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in text feature extraction: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure dependencies for text models (like sentence-transformers) are installed.&quot;</span><span class="p">)</span>
+    <span class="n">acc_knn_deep</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Set to 0 for the final chart</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracting deep semantic features with DLFeat...
+   Feature extraction complete. Time: 9.44s
+   New feature shape: (3900, 384) (vs. 3900 docs)
+Fitting KNN on &#39;smart&#39; DLFeat features...
+   Accuracy (KNN on DLFeat): 97.97%
+   Time taken (training only): 0.48s
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="part-3-the-final-results">
+<h3>Part 3: The Final Results<a class="headerlink" href="#part-3-the-final-results" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a final comparison table</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;MultinomialNB + Counts&quot;</span><span class="p">:</span> <span class="n">acc_mnb</span><span class="p">,</span>
+    <span class="s2">&quot;KNN + &#39;Smart&#39; DLFeat Features&quot;</span><span class="p">:</span> <span class="n">acc_knn_deep</span><span class="p">,</span>
+    <span class="s2">&quot;KNN + &#39;Dumb&#39; Count Features&quot;</span><span class="p">:</span> <span class="n">acc_knn_counts</span>
+<span class="p">}</span>
+
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">])</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- FINAL BAKE-OFF RANKING (Spam Filter) ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_df</span><span class="p">)</span>
+
+<span class="c1"># Plot the comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Text Classification Bake-Off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Set Accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span> <span class="c1"># Show full 0-100% scale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- FINAL BAKE-OFF RANKING (Spam Filter) ---
+                               Test Accuracy
+MultinomialNB + Counts              0.987440
+KNN + &#39;Smart&#39; DLFeat Features       0.979665
+KNN + &#39;Dumb&#39; Count Features         0.911483
+</pre></div>
+</div>
+<img alt="../_images/04452fdfc92e2ad040bc529da96b39d51d017459637886607f44a8fa6d05446f.png" src="../_images/04452fdfc92e2ad040bc529da96b39d51d017459637886607f44a8fa6d05446f.png" />
+</div>
+</div>
+</section>
+<section id="analysis-conclusion">
+<h3>Analysis &amp; Conclusion<a class="headerlink" href="#analysis-conclusion" title="Permalink to this heading">#</a></h3>
+<p>The results are powerful and clear:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></strong> performed excellently. They are the classic, strong baselines for text data.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code></strong> (raw counts) performed <em>worse than competitors</em>. This is the <strong>Curse of Dimensionality</strong> in action. The model was trying to calculate distances in a 7000+ dimensional, unscaled space.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code></strong> was the <strong>winner</strong>. By <em>first</em> using a powerful feature extractor to create a <em>low-dimensional (384), semantically rich</em> feature space, our simple KNN model was able to easily find “truly” similar messages and make the best predictions.</p></li>
+</ol>
+<p>This proves our main lesson: <strong>The quality of your feature representation is the most important part of your model.</strong> A “dumb” model on smart features can easily beat a “smart” model on dumb features.</p>
+</section>
+</section>
+<section id="lab-the-power-of-feature-representation-sentiment-analysis">
+<h2>Lab: The Power of Feature Representation (Sentiment Analysis)<a class="headerlink" href="#lab-the-power-of-feature-representation-sentiment-analysis" title="Permalink to this heading">#</a></h2>
+<p>We’ve seen <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> is great for text. We also know <code class="docutils literal notranslate"><span class="pre">KNN</span></code> is a simple, powerful classifier that suffers from the <strong>Curse of Dimensionality</strong>.</p>
+<p>In this lab, we’ll run a “bake-off” to prove that <strong>feature representation is the most important part of a model.</strong> We’ll use a <strong>sentiment analysis</strong> task: classifying product reviews as “positive” (1) or “negative” (0).</p>
+<section id="the-competitors">
+<h3>The Competitors:<a class="headerlink" href="#the-competitors" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Model 1 (Baseline): <code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code> on <code class="docutils literal notranslate"><span class="pre">Count</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>This is the “classic” generative model that is built for this type of data.</p></li>
+</ul>
+</li>
+<li><p><strong>Model 2 (The “Wrong Tool”): <code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">Count</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>We expect this to fail due to the Curse of Dimensionality (thousands of unscaled features).</p></li>
+</ul>
+</li>
+<li><p><strong>Model 3 (The “Smart” Model): <code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> features.</strong></p>
+<ul class="simple">
+<li><p>We’ll use a <code class="docutils literal notranslate"><span class="pre">sentence-bert</span></code> model to create a “smart,” low-dimensional feature space that understands <em>meaning</em>. We expect KNN to perform very well here.</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="the-workflow">
+<h3>The Workflow:<a class="headerlink" href="#the-workflow" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Dataset:</strong> A set of 1000 Amazon product reviews, labeled 0 (negative) or 1 (positive).</p></li>
+<li><p><strong>Split:</strong> A standard Train/Test split.</p></li>
+<li><p><strong>Pipelines:</strong> We’ll build the correct <code class="docutils literal notranslate"><span class="pre">Pipeline</span></code> for each model.</p></li>
+<li><p><strong>Evaluation:</strong> We’ll compare all models on the <strong>test set</strong> accuracy.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">urllib.request</span>
+
+<span class="c1"># --- Sklearn Tools ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># --- Models ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">MultinomialNB</span>
+
+<span class="c1"># --- Feature Extractors ---</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">dlfeat</span> <span class="kn">import</span> <span class="n">DLFeatExtractor</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Step 1: Load and Split the Data<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>First, we’ll load a labeled dataset of Amazon reviews from the UCI archive.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Load the dataset</span>
+<span class="c1"># This file contains 1000 reviews, 500 positive (1) and 500 negative (0).</span>
+<span class="n">data_url</span> <span class="o">=</span> <span class="s2">&quot;https://archive.ics.uci.edu/ml/machine-learning-databases/00331/sentiment</span><span class="si">%20la</span><span class="s2">belled</span><span class="si">%20s</span><span class="s2">entences.zip&quot;</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">data_url</span><span class="p">)</span> <span class="k">as</span> <span class="n">response</span><span class="p">:</span>
+        <span class="n">zip_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># 2. Unzip the file in memory</span>
+    <span class="k">with</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">zip_data</span><span class="p">))</span> <span class="k">as</span> <span class="n">z</span><span class="p">:</span>
+        <span class="c1"># 3. Read the &#39;amazon_cells_labelled.txt&#39; file</span>
+        <span class="k">with</span> <span class="n">z</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;sentiment labelled sentences/amazon_cells_labelled.txt&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> 
+                             <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> 
+                             <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> 
+                             <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;label&#39;</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--- Data Head ---&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+    <span class="c1"># 4. Define X and y</span>
+    <span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;message&#39;</span><span class="p">]</span> <span class="c1"># The raw text</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>   <span class="c1"># The 0 (negative) or 1 (positive)</span>
+
+    <span class="c1"># 5. Create the Train/Test Split</span>
+    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">stratify</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Training samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span><span class="si">}</span><span class="s2">, Test samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error loading or processing data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- Data Head ---
+                                             message  label
+0  So there is no way for me to plug it in here i...      0
+1                        Good case, Excellent value.      1
+2                             Great for the jawbone.      1
+3  Tied to charger for conversations lasting more...      0
+4                                  The mic is great.      1
+
+Training samples: 700, Test samples: 300
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id2">
+<h3>Part 1: The “Bag of Words” Competitors<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>First, we will build pipelines using <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code>. This converts our text into a large, sparse matrix of raw word counts.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 1. Model 1: MultinomialNB (The Baseline) ---</span>
+<span class="c1"># This model is designed for raw counts</span>
+<span class="n">pipe_mnb</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">MultinomialNB</span><span class="p">())</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting MultinomialNB...&quot;</span><span class="p">)</span>
+<span class="n">pipe_mnb</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_mnb</span> <span class="o">=</span> <span class="n">pipe_mnb</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc_mnb</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_mnb</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy (MNB on Counts): </span><span class="si">{</span><span class="n">acc_mnb</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+
+<span class="c1"># --- 2. Model 2: KNN on Counts (The &quot;Wrong Tool&quot;) ---</span>
+<span class="c1"># This will suffer from the Curse of Dimensionality</span>
+<span class="n">pipe_knn_counts</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+    <span class="p">(</span><span class="s1">&#39;vectorizer&#39;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">&#39;english&#39;</span><span class="p">)),</span>
+    <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Fitting KNN on &#39;dumb&#39; Counts...&quot;</span><span class="p">)</span>
+<span class="n">pipe_knn_counts</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_counts</span> <span class="o">=</span> <span class="n">pipe_knn_counts</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">acc_knn_counts</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_counts</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy (KNN on Counts): </span><span class="si">{</span><span class="n">acc_knn_counts</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fitting MultinomialNB...
+Accuracy (MNB on Counts): 76.00%
+
+Fitting KNN on &#39;dumb&#39; Counts...
+Accuracy (KNN on Counts): 67.67%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id3">
+<h3>Part 2: The “Smart” Features Competitor<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">KNN</span> <span class="pre">on</span> <span class="pre">Counts</span></code> model performed terribly (likely ~60-70% accuracy), as expected.</p>
+<p>Now, let’s create a <em>new</em> feature space. We will use <code class="docutils literal notranslate"><span class="pre">DLFeatExtractor</span></code> with <code class="docutils literal notranslate"><span class="pre">'sentence-bert'</span></code> to convert each text review into a <strong>384-dimensional “smart” vector</strong> that understands semantic meaning. This space is <strong>low-dimensional</strong>, <strong>dense</strong>, and <strong>meaningful</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --- 3. Model 3: KNN on &quot;Smart&quot; DLFeat Features ---</span>
+
+<span class="c1"># 3a. Extract Deep Features (The expensive, one-time step)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Extracting deep semantic features with DLFeat...&quot;</span><span class="p">)</span>
+<span class="c1"># We use .to_list() to pass the raw text strings to the extractor</span>
+<span class="n">X_train_list</span> <span class="o">=</span> <span class="n">X_train</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">X_test_list</span> <span class="o">=</span> <span class="n">X_test</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">DLFeatExtractor</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">&quot;sentence-bert&quot;</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">)</span>
+    
+    <span class="n">start_time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_list</span><span class="p">)</span>
+    <span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_list</span><span class="p">)</span>
+    <span class="n">extract_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_extract</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature extraction complete. Time: </span><span class="si">{</span><span class="n">extract_time</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   New feature shape: </span><span class="si">{</span><span class="n">X_train_deep</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># 3b. Build a *new* pipeline for these features</span>
+    <span class="c1"># This pipeline *only* needs to scale the features</span>
+    <span class="n">pipe_knn_deep</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span>
+        <span class="p">(</span><span class="s1">&#39;scaler&#39;</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span>
+        <span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">,</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+    <span class="p">])</span>
+
+    <span class="c1"># 3c. Fit and score</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fitting KNN on &#39;smart&#39; DLFeat features...&quot;</span><span class="p">)</span>
+    <span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred_deep</span> <span class="o">=</span> <span class="n">pipe_knn_deep</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">)</span>
+    <span class="n">acc_knn_deep</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_deep</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Accuracy (KNN on DLFeat): </span><span class="si">{</span><span class="n">acc_knn_deep</span><span class="o">*</span><span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error in text feature extraction: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ensure dependencies for text models (like sentence-transformers) are installed.&quot;</span><span class="p">)</span>
+    <span class="n">acc_knn_deep</span> <span class="o">=</span> <span class="mf">0.0</span> <span class="c1"># Set to 0 for the final chart</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Extracting deep semantic features with DLFeat...
+   Feature extraction complete. Time: 3.23s
+   New feature shape: (700, 384)
+Fitting KNN on &#39;smart&#39; DLFeat features...
+   Accuracy (KNN on DLFeat): 85.00%
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id4">
+<h3>Part 3: The Final Results<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a final comparison table</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;MultinomialNB + Counts&quot;</span><span class="p">:</span> <span class="n">acc_mnb</span><span class="p">,</span>
+    <span class="s2">&quot;KNN + &#39;Smart&#39; DLFeat Features&quot;</span><span class="p">:</span> <span class="n">acc_knn_deep</span><span class="p">,</span>
+    <span class="s2">&quot;KNN + &#39;Dumb&#39; Count Features&quot;</span><span class="p">:</span> <span class="n">acc_knn_counts</span>
+<span class="p">}</span>
+
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">])</span>
+<span class="n">results_df</span> <span class="o">=</span> <span class="n">results_df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">--- FINAL BAKE-OFF RANKING (Sentiment Analysis) ---&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">results_df</span><span class="p">)</span>
+
+<span class="c1"># Plot the comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">barplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">results_df</span><span class="p">[</span><span class="s1">&#39;Test Accuracy&#39;</span><span class="p">],</span> <span class="n">hue</span><span class="o">=</span><span class="n">results_df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">legend</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Text Classification Bake-Off&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Test Set Accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;right&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.05</span><span class="p">)</span> <span class="c1"># Show full 0-100% scale</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>--- FINAL BAKE-OFF RANKING (Sentiment Analysis) ---
+                               Test Accuracy
+KNN + &#39;Smart&#39; DLFeat Features       0.850000
+MultinomialNB + Counts              0.760000
+KNN + &#39;Dumb&#39; Count Features         0.676667
+</pre></div>
+</div>
+<img alt="../_images/31c59660ec9309c780e3d4b4107a6012526de6819d0349e49e484c1eb9229316.png" src="../_images/31c59660ec9309c780e3d4b4107a6012526de6819d0349e49e484c1eb9229316.png" />
+</div>
+</div>
+</section>
+<section id="id5">
+<h3>Analysis &amp; Conclusion<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>The results are powerful and clear:</p>
+<ol class="arabic simple">
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">MultinomialNB</span></code></strong> performed well. It’s a fast, effective baseline that is optimized for word counts.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code></strong> (raw counts) performed <em>worse than competitors</em>.</p></li>
+<li><p><strong><code class="docutils literal notranslate"><span class="pre">KNN</span></code> on <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code></strong> was the <strong>winner</strong>. By <em>first</em> using a powerful feature extractor to create a <em>low-dimensional (384), semantically rich</em> feature space, our simple KNN model was able to easily find “truly” similar messages and make the best predictions.</p></li>
+</ol>
+<p>This task highlights the importance of semantics. MNB and “dumb” KNN can’t tell that “I <em>hated</em> this product” and “This product is <em>terrible</em>” are semantically similar, even though they share no words. The <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> model <em>does</em> understand this, creating a feature space where these two sentences are “near” each other.</p>
+<p>This proves our main lesson: <strong>The quality of your feature representation is the most important part of your model.</strong> A “dumb” model on smart features can easily beat a “smart” model on dumb features.</p>
+</section>
+</section>
+<section id="for-further-exploration-the-dlfeat-library">
+<h2>For Further Exploration: The <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> Library<a class="headerlink" href="#for-further-exploration-the-dlfeat-library" title="Permalink to this heading">#</a></h2>
+<p>In this lab, we used <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> to quickly extract powerful features from images (<code class="docutils literal notranslate"><span class="pre">resnet18</span></code>) and text (<code class="docutils literal notranslate"><span class="pre">sentence-bert</span></code>). This is just the beginning.</p>
+<p>Your <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> library is a powerful toolkit designed to make feature extraction from many different types of data (or “modalities”) simple.</p>
+<p>For more information, examples, and a full list of available models, <strong>check the official documentation:</strong></p>
+<p><a class="reference external" href="https://antoninofurnari.github.io/DLFeat/">https://antoninofurnari.github.io/DLFeat/</a></p>
+<p>In the documentation, you will find:</p>
+<ul class="simple">
+<li><p><strong>The Model Zoo:</strong> A complete list of all supported “black-box” feature extractors, including:</p>
+<ul>
+<li><p>Advanced <strong>Image</strong> models (like <code class="docutils literal notranslate"><span class="pre">vit_base_patch16_224</span></code>, <code class="docutils literal notranslate"><span class="pre">dinov2_base</span></code>)</p></li>
+<li><p>Powerful <strong>Video</strong> models (like <code class="docutils literal notranslate"><span class="pre">video_swin_t</span></code>, <code class="docutils literal notranslate"><span class="pre">r2plus1d_18</span></code>)</p></li>
+<li><p><strong>Audio</strong> models (like <code class="docutils literal notranslate"><span class="pre">wav2vec2_base</span></code>)</p></li>
+<li><p><strong>Multimodal</strong> (Image+Text) models (like <code class="docutils literal notranslate"><span class="pre">clip_vit_b32</span></code>)</p></li>
+</ul>
+</li>
+<li><p><strong>Basic Usage Guides:</strong> Code examples for how to extract features from all these different data types (Audio, Video, etc.), not just the ones we used today.</p></li>
+<li><p><strong>Installation &amp; Self-Tests:</strong> How to install the full library with all optional dependencies and how to run <code class="docutils literal notranslate"><span class="pre">dlfeat.run_self_tests()</span></code> to see which models are available in your environment.</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Norm_(mathematics)">https://en.wikipedia.org/wiki/Norm_(mathematics)</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Lp_space">https://en.wikipedia.org/wiki/Lp_space</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Metric_space">https://en.wikipedia.org/wiki/Metric_space</a></p></li>
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">https://en.wikipedia.org/wiki/Cosine_similarity</a></p></li>
+<li><p>Parts of Chapter 2 of [1]</p></li>
+</ul>
+<p>[1] Goodfellow, Ian, Yoshua Bengio, and Aaron Courville. Deep learning. MIT press, 2016.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./lectures"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="14_map_naive_bayes.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Generative Classifiers and Naive Bayes</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="16_clustering.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Clustering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important-properties-of-feature-spaces">Important Properties of Feature Spaces</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#norms">Norms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metrics">Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#l-p-metrics">L-p Metrics</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#cosine-distance">Cosine Distance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-and-representation-functions">Features and Representation Functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-hand-crafted-features-to-learned-representations">From Hand-Crafted Features to Learned Representations</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-black-box-feature-extractor">The “Black Box” Feature Extractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-the-critical-importance-of-feature-representation">Lab: The Critical Importance of Feature Representation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-image-challenge-handwritten-digits">Part 1: The Image Challenge (Handwritten Digits)</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-visualize-the-cifar-10-data">Step 1: Load and Visualize the CIFAR-10 Data</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-look-at-the-task">Step 2: Look at the Task</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-baseline-knn-on-raw-pixels">Step 3: Baseline (KNN on Raw Pixels)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-extract-smart-features-with-dlfeat-the-expensive-step">Step 4: Extract “Smart” Features with <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> (The Expensive Step)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-knn-on-smart-features">Step 5: KNN on “Smart” Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-the-final-showdown-bar-chart">Step 6: The Final Showdown (Bar Chart)</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis">Analysis</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#muntinomial-naive-bayes-vs-knn-vs-smart-knn">Muntinomial Naive Bayes vs. KNN vs. “Smart” KNN</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-split-the-data">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-the-bag-of-words-competitors">Part 1: The “Bag of Words” Competitors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-the-smart-features-competitor">Part 2: The “Smart” Features Competitor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-the-final-results">Part 3: The Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-conclusion">Analysis &amp; Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lab-the-power-of-feature-representation-sentiment-analysis">Lab: The Power of Feature Representation (Sentiment Analysis)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-competitors">The Competitors:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-workflow">The Workflow:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Step 1: Load and Split the Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Part 1: The “Bag of Words” Competitors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Part 2: The “Smart” Features Competitor</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Part 3: The Final Results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Analysis &amp; Conclusion</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#for-further-exploration-the-dlfeat-library">For Further Exploration: The <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> Library</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Antonino Furnari
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
