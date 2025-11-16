@@ -68,7 +68,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Naive Bayes" href="14_map_naive_bayes.html" />
+    <link rel="next" title="Generative Classifiers and Naive Bayes" href="14_map_naive_bayes.html" />
     <link rel="prev" title="Logistic Regression - Statistical View" href="12_logistic_regression.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -231,7 +231,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Naive Bayes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14_map_naive_bayes.html">Generative Classifiers and Naive Bayes</a></li>
 </ul>
 
     </div>
@@ -473,7 +473,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-binary-to-multi-class-one-vs-rest-ovr">From Binary to Multi-Class: One-vs-Rest (OvR)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-machine-learning-predictive-view">Logistic Regression - Machine Learning (Predictive) View</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass-logistic-regression-in-python-machine-learning-perspective">Multiclass Logistic Regression in Python (Machine Learning Perspective)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-binary-logistic-regression">Part 1: Binary Logistic Regression</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-pipeline-and-hyperparameter-grid">Building the Pipeline and Hyperparameter Grid</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-evaluation-binary">Final Evaluation (Binary)</a></li>
@@ -809,13 +809,14 @@ despite the logistic function is not linear!</p>
 <ul class="simple">
 <li><p>The decision rule of Softmax regressor is to assign each observation <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to the class with the highest probability.</p></li>
 <li><p>The <strong>decision boundary</strong> between two classes <span class="math notranslate nohighlight">\(i\)</span> and <span class="math notranslate nohighlight">\(j\)</span> is defined by the set of points where their probabilities are equal:
-$<span class="math notranslate nohighlight">\(
+<span class="math notranslate nohighlight">\(
 P(Y=i|\mathbf{x}) = P(Y=j|\mathbf{x})
-\)</span>$</p></li>
+\)</span></p></li>
 <li><p>This simplifies to:
-$<span class="math notranslate nohighlight">\(
+<span class="math notranslate nohighlight">\(
 \beta_i^T \mathbf{x} = \beta_j^T \mathbf{x}
-\)</span>$</p></li>
+\)</span>
+or <span class="math notranslate nohighlight">\((\beta_i^T - \beta_j^T) \mathbf{x}=0\)</span></p></li>
 <li><p>Geometrically, this is the equation of a <strong>hyperplane</strong> in the feature space.</p></li>
 <li><p>Thus, softmax regression partitions the space into regions separated by linear boundaries, each region corresponding to one class.</p></li>
 </ul>
@@ -871,8 +872,8 @@ $<span class="math notranslate nohighlight">\(
 <img src="https://miro.medium.com/v2/resize:fit:1034/format:webp/1*7sz-bpA4r_xSqAG3IJx-7w.jpeg">
 <p>This OvR strategy is a convenient “wrapper” that lets us use a simple binary model for complex multi-class tasks. Later, we will see an alternative (called <strong>Softmax</strong> or <strong>Multinomial Regression</strong>) that solves this by changing the model’s core math to handle all <span class="math notranslate nohighlight">\(K\)</span> classes at once.</p>
 </section>
-<section id="logistic-regression-machine-learning-predictive-view">
-<h2>Logistic Regression - Machine Learning (Predictive) View<a class="headerlink" href="#logistic-regression-machine-learning-predictive-view" title="Permalink to this heading">#</a></h2>
+<section id="multiclass-logistic-regression-in-python-machine-learning-perspective">
+<h2>Multiclass Logistic Regression in Python (Machine Learning Perspective)<a class="headerlink" href="#multiclass-logistic-regression-in-python-machine-learning-perspective" title="Permalink to this heading">#</a></h2>
 <p>In the last lecture, we used <code class="docutils literal notranslate"><span class="pre">statsmodels</span></code> to build logistic regression models for <strong>inference</strong> and <strong>understanding</strong>. We focused on interpreting p-values and coefficients (log-odds).</p>
 <p>Now, we will switch to the <strong>Machine Learning</strong> perspective. Our goal is no longer <em>understanding</em> but <strong>predictive accuracy</strong>.</p>
 <p>We will use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to build robust, optimized models. Our new workflow will be:</p>
@@ -1270,7 +1271,7 @@ weighted avg       0.87      0.87      0.87        45
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Naive Bayes</p>
+        <p class="prev-next-title">Generative Classifiers and Naive Bayes</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1304,7 +1305,7 @@ weighted avg       0.87      0.87      0.87        45
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#from-binary-to-multi-class-one-vs-rest-ovr">From Binary to Multi-Class: One-vs-Rest (OvR)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression-machine-learning-predictive-view">Logistic Regression - Machine Learning (Predictive) View</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#multiclass-logistic-regression-in-python-machine-learning-perspective">Multiclass Logistic Regression in Python (Machine Learning Perspective)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-binary-logistic-regression">Part 1: Binary Logistic Regression</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-pipeline-and-hyperparameter-grid">Building the Pipeline and Hyperparameter Grid</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#final-evaluation-binary">Final Evaluation (Binary)</a></li>

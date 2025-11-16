@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Naive Bayes &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
+    <title>Generative Classifiers and Naive Bayes &#8212; Lecture Notes on Fundamentals of Data Analysis</title>
   
   
   
@@ -230,7 +230,7 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Lecture 15</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Naive Bayes</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Generative Classifiers and Naive Bayes</a></li>
 </ul>
 
     </div>
@@ -447,7 +447,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Naive Bayes</h1>
+    <h1>Generative Classifiers and Naive Bayes</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -463,6 +463,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-problem-from-ideal-to-practical">The “Likelihood” Problem: From Ideal to Practical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#guiding-example-spam-detector">Guiding Example: Spam Detector</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-discrete-data-and-its-limitations">The “Ideal” Model for Discrete Data (and its Limitations)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-continuous-data-qda">The “Ideal” Model for Continuous Data: QDA</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-simplification-linear-discriminant-analysis-lda">The First Simplification: Linear Discriminant Analysis (LDA)</a></li>
@@ -471,12 +472,21 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-pragmatic-solution">Naive Bayes: The Pragmatic Solution</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implications-of-the-naive-assumption-in-gaussian-naive-bayes">Implications of the Naive Assumption in Gaussian Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries-and-comparison-with-qda-and-lda">Decision Boundaries and Comparison with QDA and LDA</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes-mnb">Multinomial Naive Bayes (MNB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-multinomial-distribution">Fitting the Multinomial Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-parameters">Estimating the Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-word-likelihoods-p-ki">Estimating the Word Likelihoods <span class="math notranslate nohighlight">\(p_{ki}\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-prior-p-y-k">Estimating the Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-gotchas-two-critical-fixes">Practical “Gotchas”: Two Critical Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-the-zero-probability-problem">Problem 1: The Zero-Probability Problem</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-arithmetic-underflow">Problem 2: Arithmetic Underflow</a></li>
 </ul>
 </li>
 </ul>
@@ -503,13 +513,13 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="naive-bayes">
-<h1>Naive Bayes<a class="headerlink" href="#naive-bayes" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="generative-classifiers-and-naive-bayes">
+<h1>Generative Classifiers and Naive Bayes<a class="headerlink" href="#generative-classifiers-and-naive-bayes" title="Permalink to this heading">#</a></h1>
 <p>In previous lectures, we have seen <strong>discriminative models</strong> (like Logistic Regression). These models have one goal: learn the <em>decision boundary</em> between classes. They directly model the conditional probability <span class="math notranslate nohighlight">\(P(Y=k | X=\mathbf{x})\)</span>.</p>
 <p>Recall that in this stage <span class="math notranslate nohighlight">\(Y\)</span> is discrete and finite (our classes), while <span class="math notranslate nohighlight">\(X\)</span> can be either continuous or discrete, scalar or multidimensional.</p>
 <p>In this lecture, we will learn about a completely different family of classifiers: <strong>generative models</strong>, and in particular, we will see the <strong>Naive Bayes</strong> model.</p>
 <p>Generative models do not explicitly model the decision boundary. Instead, their goal is to <strong>learn the “story” or “profile” of each class independently</strong>. They aim to build a full probabilistic model of what each class <em>looks like</em>.</p>
-<p>Technically, this means they model the <strong>joint probability distribution</strong> <span class="math notranslate nohighlight">\(P(X,Y)\)</span>. Recalling that <span class="math notranslate nohighlight">\(P(X,Y)=P(X|Y)P(X)\)</span>, they do this by modeling two separate pieces:</p>
+<p>Technically, this means they model the <strong>joint probability distribution</strong> <span class="math notranslate nohighlight">\(P(X,Y)\)</span>. Recalling that <span class="math notranslate nohighlight">\(P(X,Y)=P(X|Y)P(Y)\)</span>, they do this by modeling two separate pieces:</p>
 <ol class="arabic simple">
 <li><p><strong>The Likelihood <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span>:</strong> “What does a typical <span class="math notranslate nohighlight">\(X\)</span> look like <em>for this class</em>?”</p></li>
 <li><p><strong>The Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span>:</strong> “How common is <em>this class</em> in general?”</p></li>
@@ -578,7 +588,16 @@ concretely estimated <span class="math notranslate nohighlight">\(P(X|Y=k)\)</sp
 <h2>The “Likelihood” Problem: From Ideal to Practical<a class="headerlink" href="#the-likelihood-problem-from-ideal-to-practical" title="Permalink to this heading">#</a></h2>
 <p>The MAP rule is simple: <span class="math notranslate nohighlight">\(h(\mathbf{x}) = \arg \max_{k} P(X=\mathbf{x} | Y=k) P(Y=k)\)</span>.</p>
 <p>The prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span> is easy to estimate (we just count). The <em>entire</em> challenge of generative modeling lies in estimating the <strong>Likelihood, <span class="math notranslate nohighlight">\(P(X=\mathbf{x} | Y=k)\)</span></strong>.</p>
-<p>How we do this depends on our features, and this is where we run into the <strong>Curse of Dimensionality</strong>.</p>
+<p>How we do this depends on our features, and this is where we run (again) into the <strong>Curse of Dimensionality</strong>.</p>
+<section id="guiding-example-spam-detector">
+<h3>Guiding Example: Spam Detector<a class="headerlink" href="#guiding-example-spam-detector" title="Permalink to this heading">#</a></h3>
+<p>Spam detection is framed as a generative classification task, where the goal is to determine whether an incoming email is “spam” or “ham” based on its features.</p>
+<p>Each email is represented as a high-dimensional vector, with features derived from word frequencies across a potentially massive vocabulary—often tens of thousands of words.</p>
+<p>Since most emails contain only a small subset of these words, the resulting feature vectors are typically sparse.</p>
+<p>This sparsity and dimensionality make estimating the likelihood function <span class="math notranslate nohighlight">\(P(X \mid Y = k)\)</span> challenging, requiring strategic simplifications to model the data effectively.</p>
+<p>The figure below shows how a text is converted into a vector of word counts. Note that in this process, we usually remove some less meaningful works such as articles and prepositions, which are usually called “stop words”:</p>
+<p><img alt="" src="_static/lecture_specific/naive_bayes/bagofwords.png" /></p>
+</section>
 <section id="the-ideal-model-for-discrete-data-and-its-limitations">
 <h3>The “Ideal” Model for Discrete Data (and its Limitations)<a class="headerlink" href="#the-ideal-model-for-discrete-data-and-its-limitations" title="Permalink to this heading">#</a></h3>
 <p>If our features are discrete (e.g., <code class="docutils literal notranslate"><span class="pre">Offer=Yes</span></code>, <code class="docutils literal notranslate"><span class="pre">Free=No</span></code>), we could try to model <span class="math notranslate nohighlight">\(P(X|Y)\)</span> by building a giant contingency table for every single combination of features.</p>
@@ -597,9 +616,12 @@ concretely estimated <span class="math notranslate nohighlight">\(P(X|Y=k)\)</sp
 </ul>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" src="../_images/18691502bd3d1343d3a9c2e2a99bf4690e6c1a88b133fd2d170ea78e07b5bfae.png" />
+<img alt="../_images/cc268f5ce7747ca3e66b07aa95a7418e9802be681f05427e64360e05e11f8c72.png" src="../_images/cc268f5ce7747ca3e66b07aa95a7418e9802be681f05427e64360e05e11f8c72.png" />
 </div>
 </div>
+<p>QDA produces a powerful, curved (quadratic) decision boundary between classes, reflecting its flexibility in modelling distinct class distributions.</p>
+<p>When we have enough data, QDA can lead to good results, but it can easily overfit when we don’t have enough data.</p>
+<p>Note that each class has its own Gaussian distribution and that distributions can be very different from each other.</p>
 </section>
 <section id="the-first-simplification-linear-discriminant-analysis-lda">
 <h3>The First Simplification: Linear Discriminant Analysis (LDA)<a class="headerlink" href="#the-first-simplification-linear-discriminant-analysis-lda" title="Permalink to this heading">#</a></h3>
@@ -612,9 +634,12 @@ concretely estimated <span class="math notranslate nohighlight">\(P(X|Y=k)\)</sp
 </ul>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/04036e2da91e301dcd8e8c1f3758b92dcd61cf193242d8a5a72b81100fcc6cce.png" src="../_images/04036e2da91e301dcd8e8c1f3758b92dcd61cf193242d8a5a72b81100fcc6cce.png" />
+<img alt="../_images/f7a8aec5dcf8df3c99bafe56ac986082748081006964ae878c68ab88041c1cb7.png" src="../_images/f7a8aec5dcf8df3c99bafe56ac986082748081006964ae878c68ab88041c1cb7.png" />
 </div>
 </div>
+<p>This critical assumption forces the mathematical derivations to simplify, resulting in a decision boundary that is always linear.</p>
+<p>While less flexible than QDA’s quadratic boundaries, LDA’s linear approach is more robust and less prone to overfitting when data is scarce or dimensionality is high.</p>
+<p>Note how now each class has the same “shape” (covariance). This makes the model less flexible and leads to a linear decision boundary.</p>
 </section>
 </section>
 <section id="naive-bayes-the-pragmatic-solution">
@@ -718,12 +743,27 @@ Gaussian distributions:</p>
 </ul>
 <p>We can exemplify this process as follows:</p>
 <p><img alt="" src="../_images/map_weight3.png" /></p>
-<section id="gaussian-naive-bayes-and-qda">
-<h4>Gaussian Naive Bayes and QDA<a class="headerlink" href="#gaussian-naive-bayes-and-qda" title="Permalink to this heading">#</a></h4>
+</section>
+<section id="implications-of-the-naive-assumption-in-gaussian-naive-bayes">
+<h3>Implications of the Naive Assumption in Gaussian Naive Bayes<a class="headerlink" href="#implications-of-the-naive-assumption-in-gaussian-naive-bayes" title="Permalink to this heading">#</a></h3>
+<p>Gaussian Naive Bayes assumes that features are conditionally independent given the class label. This leads to a <strong>diagonal covariance matrix</strong> for each class <span class="math notranslate nohighlight">\(\Sigma_k\)</span>, meaning that the off-diagonal entries—representing feature correlations—are zero. Mathematically, this is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\Sigma_k = 
+\begin{bmatrix}
+\sigma_1^2 &amp; 0 &amp; 0 \\
+0 &amp; \sigma_2^2 &amp; 0 \\
+0 &amp; 0 &amp; \sigma_3^2
+\end{bmatrix}
+\end{split}\]</div>
+<p>This structure implies that the model treats each feature as contributing independently to the likelihood <span class="math notranslate nohighlight">\(P(X \mid Y = k)\)</span>. As a result, the fitted Gaussian distributions are <strong>axis-aligned</strong>, meaning their contours are parallel to the coordinate axes. This simplifies computation and estimation, especially in high-dimensional spaces, but limits the model’s ability to capture <strong>intra-class correlations</strong>.</p>
+<p>Despite this simplification, Gaussian Naive Bayes allows each class to have its own diagonal covariance matrix. That is, <span class="math notranslate nohighlight">\(\Sigma_k \neq \Sigma_j\)</span>  for <span class="math notranslate nohighlight">\(k \neq j\)</span>, which enables the model to produce <strong>non-linear decision boundaries</strong>. These boundaries arise from differences in class-specific variances, even though the distributions themselves remain axis-aligned. However, the inability to model feature interactions within a class remains a core limitation of the naive assumption.</p>
+<section id="decision-boundaries-and-comparison-with-qda-and-lda">
+<h4>Decision Boundaries and Comparison with QDA and LDA<a class="headerlink" href="#decision-boundaries-and-comparison-with-qda-and-lda" title="Permalink to this heading">#</a></h4>
 <p>Let’s compare the decision boundaries of the three classifiers:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" src="../_images/c2ae54f56e6a50bc4f5d1a07d249ea4d820ce5eb0050ba8049575fb241141610.png" />
+<img alt="../_images/44256a2942304bebb5f1a8b10bad132b50becbc467dca858ecf835a8a92376aa.png" src="../_images/44256a2942304bebb5f1a8b10bad132b50becbc467dca858ecf835a8a92376aa.png" />
 </div>
 </div>
 <p>This figure perfectly summarizes the three models:</p>
@@ -734,108 +774,112 @@ Gaussian distributions:</p>
 </ul>
 </section>
 </section>
-<section id="multinomial-naive-bayes">
-<h3>Multinomial Naïve Bayes<a class="headerlink" href="#multinomial-naive-bayes" title="Permalink to this heading">#</a></h3>
-<p>In the previous examples, we have considered cases in which the input
-features are continuous. In these cases, indeed, it can make sense to
-<strong>estimate likelihoods using continuous probability distributions</strong>
-(PDF) such as the Gaussian distribution. When the input features are
-discrete instead, it makes sense to <strong>approximate them as probability
-mass functions (PFM)</strong>.</p>
-<p>Let us consider for instance the case of <strong>text classification</strong>. If we
-represent text using word counts (bag of words representation), the
-input features will be <strong>discrete</strong>. In particular, given a vocabulary
-<span class="math notranslate nohighlight">\(V\)</span> of size <span class="math notranslate nohighlight">\(n\)</span>, the input features will be tuples of <span class="math notranslate nohighlight">\(n\)</span> natural
-numbers:</p>
+<section id="multinomial-naive-bayes-mnb">
+<h3>Multinomial Naive Bayes (MNB)<a class="headerlink" href="#multinomial-naive-bayes-mnb" title="Permalink to this heading">#</a></h3>
+<p>In the previous section, we saw <strong>Gaussian Naive Bayes (GNB)</strong>, which is ideal for <strong>continuous features</strong> (like <code class="docutils literal notranslate"><span class="pre">petal_length</span></code>) that we can model with a Gaussian (bell curve).</p>
+<p>When the input features are <strong>discrete</strong>, we must use a different “flavor” of Naive Bayes. The most common case is <strong>text classification</strong> (e.g., spam filtering).</p>
+<p>If we represent text using <strong>word counts</strong> (a “Bag of Words” or BoW representation), our input features are a vector of discrete, natural numbers:</p>
 <div class="math notranslate nohighlight">
-\[\mathbf{x} = (x_{1},x_{2},x_{3},\ldots,x_{n})\]</div>
-<p>with <span class="math notranslate nohighlight">\(x_{i} \in N\)</span> being the number of times the term <span class="math notranslate nohighlight">\(i\)</span>
-appears in document <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
-<p>Hence, the probability of a given document <strong>x</strong>, given its class (the
-likelihood) can be modeled as</p>
-<div class="math notranslate nohighlight">
-\[P(x_{1},\ldots,x_{n}|c)\]</div>
-<p>If we assume the <strong>naïve hypothesis</strong>, then we are saying that, given
-documents of a fixed class, the number of times that word <span class="math notranslate nohighlight">\(i\)</span>
-appears in the text is independent of the number of times that word <span class="math notranslate nohighlight">\(j\)</span>
-appears in the text.</p>
-<p>If we imagine the process of writing a document as the one of picking
-words from the vocabulary <span class="math notranslate nohighlight">\(V\)</span>, then, chosen a class
-<span class="math notranslate nohighlight">\(C = c\)</span>, we can model the probability
-<span class="math notranslate nohighlight">\(P(x_{1},\ldots,x_{n}|C = c)\)</span> with a <strong>multinomial distribution</strong>.
-Recall that we need to estimate a different multinomial distribution for
-each possible value of <span class="math notranslate nohighlight">\(C\)</span>.</p>
-<p>Remember that <strong>the multinomial distribution models the probability of
-obtaining exactly</strong>
-<span class="math notranslate nohighlight">\(\mathbf{(}\mathbf{n}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{n}_{\mathbf{k}}\mathbf{)}\)</span>
-<strong>occurrences with</strong>
-<span class="math notranslate nohighlight">\(\mathbf{n}\mathbf{=}\sum_{\mathbf{i}}^{}\mathbf{n}_{\mathbf{i}}\)</span> <strong>for
-each of</strong> <span class="math notranslate nohighlight">\(\mathbf{k}\)</span> <strong>possible outcomes in a sequence of</strong>
-<span class="math notranslate nohighlight">\(\mathbf{n}\)</span> <strong>independent experiments which follow categorical
-distributions with probabilities</strong>
-<span class="math notranslate nohighlight">\(\mathbf{p}_{\mathbf{1}}\mathbf{,\ldots,}\mathbf{p}_{\mathbf{k}}\)</span>.</p>
-<p>In our case, the individual “experiments” consist in the process of
-generating a word. We can assume that this process follows a categorical
-distribution with some words being more common than others. These
-experiments are <em>independent</em> because of the naïve assumption.</p>
-<p>To characterize our multinomial distribution, we need to fix/estimate
-some parameters:</p>
+\[\mathbf{x} = (x_{1},x_{2},x_{3},\ldots,x_{d})\]</div>
+<p>where <span class="math notranslate nohighlight">\(d\)</span> is the size of our vocabulary (i.e., <span class="math notranslate nohighlight">\(d = |V|\)</span>) and <span class="math notranslate nohighlight">\(x_{i} \in \mathbb{N}\)</span> is the number of times the <span class="math notranslate nohighlight">\(i\)</span>-th word in the vocabulary appears in the document <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>Our goal is to model the likelihood, <span class="math notranslate nohighlight">\(P(\mathbf{x} | Y=k)\)</span>, which is:
+$<span class="math notranslate nohighlight">\(P(x_{1}, x_{2}, \ldots, x_{d} | Y=k)\)</span>$</p>
+<p>If we imagine the process of “generating” a document as pulling <span class="math notranslate nohighlight">\(n\)</span> words out of a “bag” (our vocabulary <span class="math notranslate nohighlight">\(V\)</span>), we can model this probability <span class="math notranslate nohighlight">\(P(\mathbf{x} | Y=k)\)</span> with a <strong>Multinomial Distribution</strong>. We will need to estimate a different Multinomial distribution for each class <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<blockquote>
+<div><p><strong>The Multinomial Distribution:</strong>
+Remember that the multinomial distribution models the probability of obtaining exactly <span class="math notranslate nohighlight">\((\mathbf{x}_1, \ldots, \mathbf{x}_d)\)</span> occurrences for each of the <span class="math notranslate nohighlight">\(d\)</span> possible outcomes (words), in a sequence of <span class="math notranslate nohighlight">\(n\)</span> independent experiments (total words), where each experiment follows a categorical distribution with probabilities <span class="math notranslate nohighlight">\((p_{k1}, \ldots, p_{kd})\)</span>.</p>
+</div></blockquote>
+<p>In our case:</p>
 <ul class="simple">
-<li><p><strong>Number of experiments</strong>: the number of words in the document. This
-will be the sum of the features <span class="math notranslate nohighlight">\(\sum_{i}^{}x_{i}\)</span>.</p></li>
-<li><p><strong>Number of possible outcomes</strong>: the number of words in the
-vocabulary.</p></li>
-<li><p><strong>Probability of each outcome</strong>: the probability of generating a
-word, given the class. We will call this probability
-<span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span>. The most common way to evaluate this term is by
-<strong>counting the number of times that each word appears in all
-documents of a given class</strong>.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(n = \sum_{i=1}^d x_i\)</span></strong>: The total number of words in the document <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(d\)</span> possible outcomes</strong>: The <span class="math notranslate nohighlight">\(d\)</span> words in the vocabulary.</p></li>
+<li><p><strong><span class="math notranslate nohighlight">\(p_{ki}\)</span></strong>: The probability of randomly picking word <span class="math notranslate nohighlight">\(i\)</span>, given that we are in class <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
 </ul>
-<p>Hence, we can solve text classification with MAP using the expression:</p>
+</section>
+<section id="fitting-the-multinomial-distribution">
+<h3>Fitting the Multinomial Distribution<a class="headerlink" href="#fitting-the-multinomial-distribution" title="Permalink to this heading">#</a></h3>
+<p>Using the analytical form of the multinomial distribution (as seen in your slide), we can write the full likelihood:</p>
 <div class="math notranslate nohighlight">
-\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( x_{1},x_{2},\ldots,c_{n} \middle| c \right)P\left( c \right)\]</div>
-<p>Using the analytical form of the multinomial distribution:</p>
+\[
+P(\mathbf{x} | Y=k) = \frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!} \cdot p_{k1}^{x_{1}} \cdot p_{k2}^{x_{2}} \cdot \ldots \cdot p_{kd}^{x_{d}}
+\]</div>
+<p>Now, we plug this into our MAP classification rule:</p>
 <div class="math notranslate nohighlight">
-\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
-<p>We can note that, similarly to the evidence <span class="math notranslate nohighlight">\(P(X)\)</span>, the term
-<span class="math notranslate nohighlight">\(\frac{(\sum_{i}^{}x_{i})!}{x_{1}!\ldots x_{n}!}\)</span> is independent from
-<span class="math notranslate nohighlight">\(c\)</span> and hence we can safely ignore it if our aim is not to compute
-probability values:</p>
+\[
+h(\mathbf{x}) = \arg \max_{k} P(Y=k) \cdot \frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!} \prod_{i=1}^d (p_{ki})^{x_{i}}
+\]</div>
+<p>We can immediately simplify this. The big factorial term…
+$<span class="math notranslate nohighlight">\(
+\frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!}
+\)</span><span class="math notranslate nohighlight">\(
+...is a constant *with respect to \)</span>k<span class="math notranslate nohighlight">\(*. It only depends on the input \)</span>\mathbf{x}<span class="math notranslate nohighlight">\(, not the class. Since we are just trying to find the `arg max`, we can drop this term entirely, as it doesn't change which \)</span>k$ gives the highest score.</p>
+<p>This leaves us with a much simpler (and faster) classification rule:</p>
 <div class="math notranslate nohighlight">
-\[f\left( x_{1},\ \ldots,x_{n} \right) = \arg_{c}\text{max~}P\left( c \right)p_{c1}^{x_{1}} \cdot p_{c2}^{x_{2}} \cdot \ldots \cdot p_{\text{cn}}^{x_{n}}\]</div>
-<section id="estimating-the-terms-p-text-ci-and-p-c">
-<h4>Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span><a class="headerlink" href="#estimating-the-terms-p-text-ci-and-p-c" title="Permalink to this heading">#</a></h4>
-<p>We can model the terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> in a frequentist way as follows:</p>
+\[
+h(\mathbf{x}) = \arg \max_{k} P(Y=k) \prod_{i=1}^d (p_{ki})^{x_{i}}
+\]</div>
+</section>
+<section id="estimating-the-parameters">
+<h3>Estimating the Parameters<a class="headerlink" href="#estimating-the-parameters" title="Permalink to this heading">#</a></h3>
+<p>To use this model, we must estimate two sets of parameters from our training data: the priors <span class="math notranslate nohighlight">\(P(Y=k)\)</span> and the word likelihoods <span class="math notranslate nohighlight">\(p_{ki}\)</span>.</p>
+<section id="estimating-the-word-likelihoods-p-ki">
+<h4>Estimating the Word Likelihoods <span class="math notranslate nohighlight">\(p_{ki}\)</span><a class="headerlink" href="#estimating-the-word-likelihoods-p-ki" title="Permalink to this heading">#</a></h4>
+<p>We estimate the probability of word <span class="math notranslate nohighlight">\(i\)</span> for class <span class="math notranslate nohighlight">\(k\)</span> by counting:</p>
 <div class="math notranslate nohighlight">
-\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)}}}{\sum_{j}^{}{\sum_{k}^{}{\lbrack y^{(j)} = c\rbrack x_{k}^{(j)}}}}\]</div>
-<p>Where <span class="math notranslate nohighlight">\(\left\lbrack \cdot \right\rbrack\)</span> denotes the Iverson bracket,
-which is defined as:</p>
+\[
+p_{ki} = \frac{\text{Total count of word } i \text{ in all documents of class } k}{\text{Total count of *all words* in all documents of class } k}
+\]</div>
+<p>Using the Iverson bracket notation from your slides (where <span class="math notranslate nohighlight">\([y^{(j)}=k]\)</span> is 1 if true, 0 otherwise):</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\left\lbrack x \right\rbrack = \left\{ \begin{matrix}
-1\ \text{if}\ x\ \text{is}\ \text{true} \\
-0\ \text{ot}h\text{erwise} \\
-\end{matrix} \right.\ \end{split}\]</div>
-<p>Hence, in the expression above:</p>
+\[
+p_{ki} = \frac{\sum_{j} [y^{(j)} = k] x_i^{(j)}}{\sum_{l=1}^d \left( \sum_{j} [y^{(j)}=k] x_l^{(j)} \right)}
+\]</div>
 <ul class="simple">
-<li><p>The numerator counts the number of times word <span class="math notranslate nohighlight">\(i\)</span> appears in
-documents of class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
-<li><p>The denominator counts all the words appearing in all documents of
-class <span class="math notranslate nohighlight">\(c\)</span>;</p></li>
-<li><p>Hence, the expression is <strong>the fraction of times word i appears
-among all words in documents of class c</strong>;</p></li>
+<li><p><strong>Numerator:</strong> Sums the counts of word <span class="math notranslate nohighlight">\(i\)</span> <em>only</em> in documents <span class="math notranslate nohighlight">\(j\)</span> from class <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p><strong>Denominator:</strong> Sums the counts of <em>all</em> words (<span class="math notranslate nohighlight">\(l=1\)</span> to <span class="math notranslate nohighlight">\(d\)</span>) in <em>all</em> documents <span class="math notranslate nohighlight">\(j\)</span> from class <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
 </ul>
-<p>In practice, since some words can have zero occurrences, we perform
-‘Laplacian smoothing’ by adding a “1” to each term as follows:</p>
+</section>
+<section id="estimating-the-prior-p-y-k">
+<h4>Estimating the Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span><a class="headerlink" href="#estimating-the-prior-p-y-k" title="Permalink to this heading">#</a></h4>
+<p>This is the same as before. We estimate the prior as the fraction of documents in our training set that belong to class <span class="math notranslate nohighlight">\(k\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[p_{\text{ci}} = \frac{\sum_{j}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{(j)} + 1}}{\sum_{j}^{}{(\sum_{i}^{}{\left\lbrack y^{\left( j \right)} = c \right\rbrack x_{i}^{\left( j \right)} + 1)}}}\]</div>
-<p>This allows to make sure that we do not divide by zero.</p>
-<p>We can estimate the prior probability as:</p>
+\[
+P(Y=k) = \frac{\sum_{j} [y^{(j)} = k]}{N}
+\]</div>
+<p>Where <span class="math notranslate nohighlight">\(N\)</span> is the total number of documents.</p>
+</section>
+</section>
+<section id="practical-gotchas-two-critical-fixes">
+<h3>Practical “Gotchas”: Two Critical Fixes<a class="headerlink" href="#practical-gotchas-two-critical-fixes" title="Permalink to this heading">#</a></h3>
+<p>If we use the formulas above directly, our model will fail. We need to fix two major problems.</p>
+<section id="problem-1-the-zero-probability-problem">
+<h4>Problem 1: The Zero-Probability Problem<a class="headerlink" href="#problem-1-the-zero-probability-problem" title="Permalink to this heading">#</a></h4>
+<p>What happens if we get a new email that contains the word “crypto”? If our training data for <code class="docutils literal notranslate"><span class="pre">Class='Spam'</span></code> <em>never</em> contained the word “crypto,” then its estimated probability is:
+<span class="math notranslate nohighlight">\(p_{k, \text{'crypto'}} = 0\)</span></p>
+<p>When we classify this email, our MAP rule will multiply by this zero:
+$<span class="math notranslate nohighlight">\(
+h(\mathbf{x}) \propto P(Y=\text{Spam}) \cdot \ldots \cdot p_{k, \text{'crypto'}}^{x_{\text{crypto}}} \cdot \ldots = P(Y=\text{Spam}) \cdot \ldots \cdot 0 \cdot \ldots = 0
+\)</span>$
+Because of this one <strong>zero</strong>, the entire score for the “Spam” class becomes zero. The model breaks.</p>
+<p><strong>The Solution: Laplace (Add-One) Smoothing</strong>
+The fix is simple: we pretend we’ve seen every word in our vocabulary <em>at least one time</em> before we start. This is called <strong>Laplace Smoothing</strong>.</p>
+<p>We add 1 (the “pseudo-count”) to the numerator, and we add <span class="math notranslate nohighlight">\(d = |V|\)</span> (the vocabulary size) to the denominator to keep the probabilities summing to 1. This ensures no probability is ever zero.</p>
 <div class="math notranslate nohighlight">
-\[p\left( c \right) = \frac{\sum_{j}^{}{\lbrack y^{\left( j \right)} = c\rbrack}}{N}\]</div>
-<p>where <span class="math notranslate nohighlight">\(N\)</span> is the total number of documents. Alternatively, we can assume
-uniform priors and set:</p>
+\[
+p_{ki} = \frac{\left( \sum_{j} [y^{(j)}=k] x_i^{(j)} \right) + 1}{\left( \sum_{l=1}^d \sum_{j} [y^{(j)}=k] x_l^{(j)} \right) + |V|}
+\]</div>
+</section>
+<section id="problem-2-arithmetic-underflow">
+<h4>Problem 2: Arithmetic Underflow<a class="headerlink" href="#problem-2-arithmetic-underflow" title="Permalink to this heading">#</a></h4>
+<p>Our final rule multiplies thousands of tiny probabilities together (e.g., <span class="math notranslate nohighlight">\(0.001 \times 0.0004 \times \ldots\)</span>). This number gets so small, so fast, that the computer runs out of precision and rounds it to 0. This is called <strong>arithmetic underflow</strong>.</p>
+<p><strong>The Solution: Log-Probabilities</strong>
+Since the <span class="math notranslate nohighlight">\(\log\)</span> function is monotonic (it doesn’t change the <code class="docutils literal notranslate"><span class="pre">arg</span> <span class="pre">max</span></code>), we can maximize the <em>log-probability</em> instead.</p>
+<p>Using the log-rule <span class="math notranslate nohighlight">\(\log(a \cdot b) = \log(a) + \log(b)\)</span> and <span class="math notranslate nohighlight">\(\log(p^x) = x \cdot \log(p)\)</span>, we get:</p>
 <div class="math notranslate nohighlight">
-\[P\left( c \right) = \frac{1}{M}\]</div>
+\[
+h(\mathbf{x}) = \arg \max_{k} \left( \log P(Y=k) + \sum_{i=1}^d x_i \cdot \log p_{ki} \right)
+\]</div>
+<p>This is the <strong>final classification rule</strong> that is actually implemented in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. It’s computationally stable, extremely fast (it’s just a sum!), and is the foundation of modern text classification.</p>
 </section>
 </section>
 </section>
@@ -1207,6 +1251,7 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-likelihood-problem-from-ideal-to-practical">The “Likelihood” Problem: From Ideal to Practical</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#guiding-example-spam-detector">Guiding Example: Spam Detector</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-discrete-data-and-its-limitations">The “Ideal” Model for Discrete Data (and its Limitations)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-ideal-model-for-continuous-data-qda">The “Ideal” Model for Continuous Data: QDA</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-first-simplification-linear-discriminant-analysis-lda">The First Simplification: Linear Discriminant Analysis (LDA)</a></li>
@@ -1215,12 +1260,21 @@ Quadratic Discriminant (QDA)               0.483254   25.357229  None
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#naive-bayes-the-pragmatic-solution">Naive Bayes: The Pragmatic Solution</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-naive-assumption">The “Naive” Assumption</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#flavors-of-naive-bayes">Flavors of Naive Bayes</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes-and-qda">Gaussian Naive Bayes and QDA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gaussian-naive-bayes">Gaussian Naïve Bayes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implications-of-the-naive-assumption-in-gaussian-naive-bayes">Implications of the Naive Assumption in Gaussian Naive Bayes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-boundaries-and-comparison-with-qda-and-lda">Decision Boundaries and Comparison with QDA and LDA</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes">Multinomial Naïve Bayes</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-terms-p-text-ci-and-p-c">Estimating the Terms <span class="math notranslate nohighlight">\(p_{\text{ci}}\)</span> and <span class="math notranslate nohighlight">\(P(c)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#multinomial-naive-bayes-mnb">Multinomial Naive Bayes (MNB)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-multinomial-distribution">Fitting the Multinomial Distribution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-parameters">Estimating the Parameters</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-word-likelihoods-p-ki">Estimating the Word Likelihoods <span class="math notranslate nohighlight">\(p_{ki}\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-the-prior-p-y-k">Estimating the Prior <span class="math notranslate nohighlight">\(P(Y=k)\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-gotchas-two-critical-fixes">Practical “Gotchas”: Two Critical Fixes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-1-the-zero-probability-problem">Problem 1: The Zero-Probability Problem</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#problem-2-arithmetic-underflow">Problem 2: Arithmetic Underflow</a></li>
 </ul>
 </li>
 </ul>
