@@ -58,6 +58,12 @@ parts:
   chapters:
   - file: lectures/15_data_as_nd_points
   - file: lectures/16_clustering
+- caption: Lecture 17
+  chapters:
+  - file: lectures/17_density_estimation
+- caption: Lecture 18
+  chapters:
+  - file: lectures/18_principal_component_analysis
 # - caption: Lectures
 #   chapters:
 #   - file: lectures/01_intro_data_analysis
