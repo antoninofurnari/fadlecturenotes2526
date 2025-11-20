@@ -1475,7 +1475,7 @@ e^{(m)}
 <p><strong>This is again a problem of bias-variance tradeoff.</strong></p>
 <p>To express this, we can compute the adjusted <span class="math notranslate nohighlight">\(R^2\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
-\[\overline R^2 = 1- \frac{m-1}{m-n-1} (1-R)^2\]</div>
+\[\overline R^2 = 1- \frac{m-1}{m-n-1} (1-R^2)\]</div>
 <p>Where <span class="math notranslate nohighlight">\(m\)</span> is the number of data points and <span class="math notranslate nohighlight">\(n\)</span> is the number of independent variables. The <span class="math notranslate nohighlight">\(\overline R^2\)</span> re-balances the <span class="math notranslate nohighlight">\(R^2\)</span> accounting for the introduction of additional variables.</p>
 <p>For instance the last model we fit has an <span class="math notranslate nohighlight">\(R^2=0.820\)</span> and <span class="math notranslate nohighlight">\(\overline R^2=0.818\)</span>. In general, when using multiple regressor and especially for variable selection, it is good practice to use the adjusted <span class="math notranslate nohighlight">\(R^2\)</span> rather than standard <span class="math notranslate nohighlight">\(R^2\)</span>.</p>
 </section>
