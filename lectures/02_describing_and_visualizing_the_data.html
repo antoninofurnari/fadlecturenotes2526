@@ -2085,10 +2085,10 @@ The interquartile range of sample 2 is: 2.0
 <p>The dispersion indices seen so far (excluding variance) have the same <strong>unit of measurement</strong> as the input data. In the case of ages, the data are measured in years. It is therefore correct to say that <strong>minimum</strong>, <strong>maximum</strong>, <strong>range</strong>, <strong>interquartile range</strong>, and <strong>mean absolute deviation</strong> calculated on weights are measured in years.</p>
 <p>The same does not apply to the variance, which will be measured in <strong>years squared</strong>. If we want to obtain a <strong>commensurable</strong> measure of dispersion, we can calculate the square root of the variance, thus obtaining the <strong>standard deviation</strong> (or <strong>root mean square deviation</strong>), which is defined as follows:</p>
 <div class="math notranslate nohighlight">
-\[s = \sqrt{s^2}=\sqrt{\frac{\sum_{i=1}{n}(x_i-x^2)}{n}}\]</div>
+\[s_{n} = \sqrt{s_n^2}=\sqrt{\frac{\sum_{i=1}(x_i-\overline{x})^2}{n}}\]</div>
 <p>Similarly, we often use the <strong>sample standard deviation</strong>:</p>
 <div class="math notranslate nohighlight">
-\[s = \sqrt{s^2}=\sqrt{\frac{\sum_{i=1}{n}(x_i-x^2)}{n-1}}\]</div>
+\[s_{n-1} = \sqrt{s_{n-1}^2}=\sqrt{\frac{\sum_{i=1}(x_i-\overline{x})^2}{n-1}}\]</div>
 <p>We can compute the standard deviation as follows:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

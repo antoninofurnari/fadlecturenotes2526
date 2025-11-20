@@ -1378,8 +1378,16 @@ I(x) = -\log_2 P(x)
 <p>(we will use <span class="math notranslate nohighlight">\(\log\)</span> in the future in this context to denote <span class="math notranslate nohighlight">\(\log_2\)</span> for brevity)</p>
 <p>This definition is motivated by several properties of the logarithm:</p>
 <ul class="simple">
-<li><p>The logarithm makes self-information <strong>additive</strong> for independent events: the information gained from observing two independent events is the sum of their individual self-informations.
-$<span class="math notranslate nohighlight">\(I(X = x,Y = y) = - \log\left\lbrack P(X = x,Y = y) \right\rbrack = \log\left\lbrack P(X = x)P(Y = y) \right\rbrack = - logP(X = x) - \log P(Y = y) = I(x) + I(y)\)</span>$</p></li>
+<li><p>The logarithm makes self-information <strong>additive</strong> for independent events: the information gained from observing two independent events is the sum of their individual self-informations.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+I(X = x,Y = y) = - \log\left\lbrack P(X = x,Y = y) \right\rbrack = \]</div>
+<div class="math notranslate nohighlight">
+\[
+= \log\left\lbrack P(X = x)P(Y = y) \right\rbrack = - logP(X = x) - \log P(Y = y) = I(x) + I(y)
+\]</div>
+<ul class="simple">
 <li><p>The negative logarithm reflects the intuition that <strong>rare events are more informative</strong>: as <span class="math notranslate nohighlight">\(P(x)\)</span> decreases, <span class="math notranslate nohighlight">\(I(x)\)</span> increases (see plot below)</p></li>
 <li><p>The base 2 logarithm measures information in <strong>bits</strong>, which is standard in information theory</p></li>
 </ul>

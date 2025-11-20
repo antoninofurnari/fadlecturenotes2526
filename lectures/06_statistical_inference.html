@@ -1290,7 +1290,7 @@ t_{n-1} = \frac{\overline{X} - \mu}{s_{n-1} / \sqrt{n}}
 \[[\overline{x}-SE(\overline{x}), \overline{x}+SE(\overline{x})]\]</div>
 <p>We note that <span class="math notranslate nohighlight">\(68.3\)</span> is a very peculiar number and also a relatively low probability. In general, given a chosen percentage <span class="math notranslate nohighlight">\(p\)</span>, that we call a <strong>confidence level</strong>, we can obtain a number <span class="math notranslate nohighlight">\(\beta\)</span> such that:</p>
 <div class="math notranslate nohighlight">
-\[P\left(\overline{x}-\beta \sigma \leq \mu \leq \hat p+\beta \sigma\right) = p\]</div>
+\[P\left(\overline{x}-\beta \sigma \leq \mu \leq \overline{x}+\beta \sigma\right) = p\]</div>
 <p>leading to the following confidence interval:</p>
 <div class="math notranslate nohighlight">
 \[[\overline{x}-\beta SE(\overline{x}), \overline{x}+\beta SE(\overline{x})]\]</div>
@@ -1559,7 +1559,7 @@ E[T(X)] = \phi
 <p>To estimate the variance of cookie weights, we may compute:</p>
 <div class="math notranslate nohighlight">
 \[
-t
+s_n^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \overline{x})^2
 \]</div>
 <p>This formula is <strong>biased</strong>—it tends to underestimate the true variance <span class="math notranslate nohighlight">\(\sigma^2\)</span>. Specifically:</p>
 <div class="math notranslate nohighlight">
