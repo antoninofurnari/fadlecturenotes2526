@@ -483,6 +483,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-and-representation-functions">Features and Representation Functions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-hand-crafted-features-to-learned-representations">From Hand-Crafted Features to Learned Representations</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-black-box-feature-extractor">The “Black Box” Feature Extractor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-processing-inequality">Data Processing Inequality</a></li>
 </ul>
 </li>
 </ul>
@@ -614,7 +615,7 @@ document.write(`
 <p>To visualize the difference between the different norms, it often common to display the <strong>unit circles according to the different norms</strong>. Each of the shapes is made of <strong>vectors with unit norm</strong> according to specific norm:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/fe4419f09a73b93e547f81f585267f5a3de9617a8e1b0a1dfb61ebb127328179.png" src="../_images/fe4419f09a73b93e547f81f585267f5a3de9617a8e1b0a1dfb61ebb127328179.png" />
+<img alt="../_images/28d845fc7cd8b8338d70a1a75adeca6c0a7d22535c079a96b9dfde3f497abb0d.png" src="../_images/28d845fc7cd8b8338d70a1a75adeca6c0a7d22535c079a96b9dfde3f497abb0d.png" />
 </div>
 </div>
 </section>
@@ -652,7 +653,7 @@ L_p(\mathbf{x},\mathbf{y}) = ||\mathbf{x} - \mathbf{y}||_p = \left( \sum_{i=1}^{
 <p>The difference between the L1 and L2 distances is notable, as shown in the figure blow:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/9875267b3656cd73af5b63e55da1108a69cf4731c852cea3aae17b670605f9ba.png" src="../_images/9875267b3656cd73af5b63e55da1108a69cf4731c852cea3aae17b670605f9ba.png" />
+<img alt="../_images/2615b41c0f7663b411957875f23cfdeda616cd8e674a32462ddd35eebfdd831d.png" src="../_images/2615b41c0f7663b411957875f23cfdeda616cd8e674a32462ddd35eebfdd831d.png" />
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Manhattan (L1) Distance: 7.00
 Euclidean (L2) Distance: 5.00
 L-Inf Distance: 4.00
@@ -673,7 +674,7 @@ L-Inf Distance: 4.00
 <p>The cosine similarity computes the cosine of the angle <span class="math notranslate nohighlight">\(\theta\)</span> comprised between two vectors, as shown in the plot below:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/e64e2c520cf9e4504e6b8df2037730c271b45a5bcfec47f00c3f284020ab8af2.png" src="../_images/e64e2c520cf9e4504e6b8df2037730c271b45a5bcfec47f00c3f284020ab8af2.png" />
+<img alt="../_images/831de29219271f8d661fb366d9ade81d4f7c6860397438a599463a89e19781e4.png" src="../_images/831de29219271f8d661fb366d9ade81d4f7c6860397438a599463a89e19781e4.png" />
 </div>
 </div>
 <p>Note that the cosine similarity would be the same if the two vectors had different scales (i.e., if they were longer but they would have the same orientation).</p>
@@ -687,7 +688,7 @@ L-Inf Distance: 4.00
 <p>The plot below shows different examples of cosine similarity of vector pairs:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/196b6c029f390b83b1d4259ea91b0c7b50c7948d8ad6313018d8c3c8bbcbad9e.png" src="../_images/196b6c029f390b83b1d4259ea91b0c7b50c7948d8ad6313018d8c3c8bbcbad9e.png" />
+<img alt="../_images/b686324d6f15373f53e6d6ae0a840ba468895132bb3f8db52c797902396df482.png" src="../_images/b686324d6f15373f53e6d6ae0a840ba468895132bb3f8db52c797902396df482.png" />
 </div>
 </div>
 <p>The cosine distance is defined from the cosine similarity as:</p>
@@ -702,21 +703,15 @@ L-Inf Distance: 4.00
 <p>Data representation can help making data analysis processes simpler. Consider for example the example below:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../_images/32bb4015d100b3fb6b5c1330b7a85bcd33544a678a5549b776b31b494721b2ad.png" src="../_images/32bb4015d100b3fb6b5c1330b7a85bcd33544a678a5549b776b31b494721b2ad.png" />
+<img alt="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" src="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" />
 </div>
 </div>
-<p>The data on the left follows a non-linear pattern which we wouldn’t know how to correctly model. However, taking polar coordinates in this form (in practice the case-defined <code class="docutils literal notranslate"><span class="pre">atan2</span></code> function is used instead of <code class="docutils literal notranslate"><span class="pre">arctan</span></code> to handle quadrants correctly):</p>
+<p>The data on the left in not linearly separable. However, taking polar coordinates in this form (in practice the case-defined <code class="docutils literal notranslate"><span class="pre">atan2</span></code> function is used instead of <code class="docutils literal notranslate"><span class="pre">arctan</span></code> to handle quadrants correctly):</p>
 <div class="math notranslate nohighlight">
 \[r = \sqrt{x^2 + y^2} \]</div>
 <div class="math notranslate nohighlight">
 \[\theta = \arctan\left(\frac{y}{x}\right)\]</div>
-<p>We obtain a linear set of data which could be modeled with a linear regression.</p>
-<p>A similar example can be made for classification:</p>
-<div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<img alt="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" src="../_images/55c7c5f34d1807f40a2d6d81527e94c3ff77babf9418b28f754e6751c31ae1cc.png" />
-</div>
-</div>
+<p>We obtain a linearly separable set of data which could be classified with a linear classifier.</p>
 <section id="from-hand-crafted-features-to-learned-representations">
 <h3>From Hand-Crafted Features to Learned Representations<a class="headerlink" href="#from-hand-crafted-features-to-learned-representations" title="Permalink to this heading">#</a></h3>
 <p>The polar coordinate example is powerful. It shows that a problem that is impossible for a linear model in one space (Cartesian) can become trivial in another space (Polar).</p>
@@ -736,6 +731,22 @@ L-Inf Distance: 4.00
 <li><p><strong>For Audio:</strong> We can use traditional features like <strong>MFCCs</strong> (Mel-Frequency Cepstral Coefficients) or use deep models like <strong>1D CNNs</strong> or <strong>Audio Transformers</strong> like <strong>Wav2Vec2</strong>. You feed in a raw waveform and get a feature vector that represents the acoustic content, speaker identity, or spoken words.</p></li>
 </ul>
 <p>In all cases, the principle is the same. Whether hand-crafted (like <span class="math notranslate nohighlight">\(r\)</span> and <span class="math notranslate nohighlight">\(\theta\)</span>) or learned (like a Transformer), the goal of the representation function <span class="math notranslate nohighlight">\(f: \Re^d \to \Re^m\)</span> is to map the “messy” raw data into a new <strong>feature space</strong> where the relationships are simpler and a classifier can easily find the decision boundary.</p>
+</section>
+<section id="data-processing-inequality">
+<h4>Data Processing Inequality<a class="headerlink" href="#data-processing-inequality" title="Permalink to this heading">#</a></h4>
+<p>The Data Processing Inequality (DPI) states that applying any data transformation, whether deterministic or stochastic, can never increase the information content about an original random variable. In simple terms: processing data can only lose or preserve information, never create it.</p>
+<p>Mathematically, if we have a Markov chain <span class="math notranslate nohighlight">\(X \rightarrow Y \rightarrow Z\)</span>, meaning <span class="math notranslate nohighlight">\(Z\)</span> is conditionally independent of <span class="math notranslate nohighlight">\(X\)</span> given <span class="math notranslate nohighlight">\(Y\)</span>, then the mutual information satisfies:</p>
+<div class="math notranslate nohighlight">
+\[
+I(X; Y) \geq I(X; Z)
+\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(I(X; Y)\)</span> represents the shared information between random variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>. This inequality implies that as data <span class="math notranslate nohighlight">\(X\)</span> is successively transformed into <span class="math notranslate nohighlight">\(Y\)</span> and then <span class="math notranslate nohighlight">\(Z\)</span>, the amount of information about the original variable <span class="math notranslate nohighlight">\(X\)</span> can only decrease or stay the same; it can never increase.</p>
+<p>This principle has profound implications for feature engineering:</p>
+<ul class="simple">
+<li><p><strong>Irreversible Loss</strong> If hand-crafted features inadvertently discard crucial information about the underlying signal, that information is permanently lost and cannot be recovered by subsequent modeling steps.</p></li>
+<li><p><strong>Information Bottleneck</strong> Poor feature design creates an information bottleneck, limiting the maximum performance achievable by any machine learning model built upon those features.</p></li>
+<li><p><strong>The Advantage of Learned Features</strong> Deep learning models aim to learn representations that preserve maximal task-relevant information directly from raw data, minimizing the risk of premature information loss.</p></li>
+</ul>
 </section>
 </section>
 </section>
@@ -1083,44 +1094,6 @@ Successfully installed dlfeat-0.6.0
 <h4>Step 4: Extract “Smart” Features with <code class="docutils literal notranslate"><span class="pre">DLFeat</span></code> (The Expensive Step)<a class="headerlink" href="#step-4-extract-smart-features-with-dlfeat-the-expensive-step" title="Permalink to this heading">#</a></h4>
 <p>Now, we’ll use a pre-trained <strong>ResNet18</strong> model via your <code class="docutils literal notranslate"><span class="pre">DLFeatExtractor</span></code> to convert our images into “smart” feature vectors. This model has already learned about edges, shapes, and objects from the ImageNet dataset.</p>
 <p>This step is <strong>computationally expensive</strong> and only needs to be done <em>once</em>. We will run it and then <strong>save the resulting feature vectors to disk</strong> (<code class="docutils literal notranslate"><span class="pre">.pkl</span></code> files) to save time in the future.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">feature_extractor</span> <span class="o">=</span> <span class="n">DLFeatExtractor</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="n">MODEL_NAME</span><span class="p">,</span> <span class="n">task_type</span><span class="o">=</span><span class="s2">&quot;image&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature dimension will be: </span><span class="si">{</span><span class="n">feature_extractor</span><span class="o">.</span><span class="n">get_feature_dimension</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># 1. Extract Training Features</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting training features (this is the slow part)...&quot;</span><span class="p">)</span>
-<span class="n">start_time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
-<span class="c1"># We pass the list of PIL Images: X_train_pil</span>
-<span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
-<span class="n">X_train_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train_pil</span><span class="p">)</span>
-
-<span class="c1"># 2. Extract Test Features</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Extracting test features...&quot;</span><span class="p">)</span>
-<span class="n">X_test_deep</span> <span class="o">=</span> <span class="n">feature_extractor</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test_pil</span><span class="p">)</span>
-<span class="n">time_extract</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time_extract</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Feature extraction complete. Time: </span><span class="si">{</span><span class="n">time_extract</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
-
-<span class="c1"># 3. Save features to disk for next time</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Saving features to disk...&quot;</span><span class="p">)</span>
-<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_train_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TRAIN</span><span class="p">)</span>
-<span class="n">joblib</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">X_test_deep</span><span class="p">,</span> <span class="n">FEATURE_FILE_TEST</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Feature dimension will be: 512
-   Extracting training features (this is the slow part)...
-   Extracting test features...
-   Feature extraction complete. Time: 17.72s
-   Saving features to disk...
-</pre></div>
-</div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&#39;cifar_test_resnet18.pkl&#39;]
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define file paths for our cached features</span>
@@ -1906,6 +1879,7 @@ KNN + &#39;Dumb&#39; Count Features         0.676667
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#features-and-representation-functions">Features and Representation Functions</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#from-hand-crafted-features-to-learned-representations">From Hand-Crafted Features to Learned Representations</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-black-box-feature-extractor">The “Black Box” Feature Extractor</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-processing-inequality">Data Processing Inequality</a></li>
 </ul>
 </li>
 </ul>

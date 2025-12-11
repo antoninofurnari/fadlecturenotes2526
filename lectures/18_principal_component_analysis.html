@@ -486,14 +486,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-principal-components-eigenfaces">Visualizing the Principal Components (Eigenfaces)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-compression-and-reconstruction">Data Compression and Reconstruction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#are-these-eigenface-features-actually-better">Are These “Eigenface” Features Actually Better?</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-knn-on-4096-raw-pixels">Baseline: KNN on 4096 Raw Pixels</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-knn-on-20-smart-pca-features">Model 2: KNN on 20 “Smart” PCA Features</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-these-eigenface-features-actually-better">Are These “Eigenface” Features Actually Better?</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-knn-on-4096-raw-pixels">Baseline: KNN on 4096 Raw Pixels</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-knn-on-20-smart-pca-features">Model 2: KNN on 20 “Smart” PCA Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
@@ -896,7 +896,7 @@ Eigenvectors:
 </div>
 <p>We can quantify the fraction of variance explained by each component <span class="math notranslate nohighlight">\(n\)</span> as follows:</p>
 <div class="math notranslate nohighlight">
-\[\frac{var(n)}{V(D)}\]</div>
+\[\frac{var(z_n)}{V(D)}\]</div>
 <p>If we compute such value for all <span class="math notranslate nohighlight">\(n\)</span>, we obtain the following vector in our example:</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
@@ -1662,9 +1662,8 @@ Eigenfaces (components) shape: (20, 4096)
 </div>
 </div>
 </section>
-</section>
 <section id="are-these-eigenface-features-actually-better">
-<h3>Are These “Eigenface” Features Actually Better?<a class="headerlink" href="#are-these-eigenface-features-actually-better" title="Permalink to this heading">#</a></h3>
+<h4>Are These “Eigenface” Features Actually Better?<a class="headerlink" href="#are-these-eigenface-features-actually-better" title="Permalink to this heading">#</a></h4>
 <p>So far, we’ve seen that PCA can <em>compress</em> a 4096-pixel image into a 20-number vector, and then reconstruct it. This is great for storage.</p>
 <p>But is this new, 20-dimensional vector a <em>better feature set</em> for a machine learning model?</p>
 <p>Let’s run a “bake-off” to find out. We will build a <strong>face recognition</strong> classifier (using KNN) and test it on two different feature sets:</p>
@@ -1710,7 +1709,7 @@ Training on 280 samples, testing on 120 samples.
 </div>
 </div>
 <section id="baseline-knn-on-4096-raw-pixels">
-<h4>Baseline: KNN on 4096 Raw Pixels<a class="headerlink" href="#baseline-knn-on-4096-raw-pixels" title="Permalink to this heading">#</a></h4>
+<h5>Baseline: KNN on 4096 Raw Pixels<a class="headerlink" href="#baseline-knn-on-4096-raw-pixels" title="Permalink to this heading">#</a></h5>
 <p>First, our baseline. We build a pipeline that scales the 4096 pixel values and then runs the KNN classifier.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1744,7 +1743,7 @@ Training on 280 samples, testing on 120 samples.
 </div>
 </section>
 <section id="model-2-knn-on-20-smart-pca-features">
-<h4>Model 2: KNN on 20 “Smart” PCA Features<a class="headerlink" href="#model-2-knn-on-20-smart-pca-features" title="Permalink to this heading">#</a></h4>
+<h5>Model 2: KNN on 20 “Smart” PCA Features<a class="headerlink" href="#model-2-knn-on-20-smart-pca-features" title="Permalink to this heading">#</a></h5>
 <p>Now, we’ll build a complete pipeline that does all the steps at once:</p>
 <ol class="arabic simple">
 <li><p>Scales the data.</p></li>
@@ -1785,7 +1784,7 @@ Training on 280 samples, testing on 120 samples.
 </section>
 </section>
 <section id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h3>
+<h4>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h4>
 <p>Let’s look at the results.</p>
 <table class="table">
 <thead>
@@ -1806,6 +1805,7 @@ Training on 280 samples, testing on 120 samples.
 </tbody>
 </table>
 <p>PCA didn’t just <em>compress</em> the data; it <strong>improved</strong> it. By creating a cleaner, low-dimensional feature space, it allowed our simple KNN classifier to find the true patterns and make far more accurate predictions.</p>
+</section>
 </section>
 </section>
 <section id="references">
@@ -1887,14 +1887,14 @@ Training on 280 samples, testing on 120 samples.
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-principal-components-eigenfaces">Visualizing the Principal Components (Eigenfaces)</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#data-compression-and-reconstruction">Data Compression and Reconstruction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#are-these-eigenface-features-actually-better">Are These “Eigenface” Features Actually Better?</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-knn-on-4096-raw-pixels">Baseline: KNN on 4096 Raw Pixels</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-knn-on-20-smart-pca-features">Model 2: KNN on 20 “Smart” PCA Features</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#are-these-eigenface-features-actually-better">Are These “Eigenface” Features Actually Better?</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#baseline-knn-on-4096-raw-pixels">Baseline: KNN on 4096 Raw Pixels</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#model-2-knn-on-20-smart-pca-features">Model 2: KNN on 20 “Smart” PCA Features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
