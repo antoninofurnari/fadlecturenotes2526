@@ -675,7 +675,7 @@ practice it usually leads to a reasonable solution.</em></p>
 <div><p>Randomly initialize <span class="math notranslate nohighlight">\(K\)</span> cluster centroids <span class="math notranslate nohighlight">\(\mu_{1},\mu_{2},\ldots,\mu_{K} \in \mathfrak{R}^{n}\)</span></p>
 <p>Repeat until termination criterion is reached {</p>
 <p>         for i = 1 to N</p>
-<p>                 <span class="math notranslate nohighlight">\(r_{ij} = \begin{cases}1 &amp; \text{ if } j=\arg_k\min ||\mathbf{x}^{(i)}-\mathbf{\mu}_j||^2 \\ 0 &amp; \text{otherwise} \end{cases}, \forall i,j\)</span> //assignment</p>
+<p>                 <span class="math notranslate nohighlight">\(r_{ij} = \begin{cases}1 &amp; \text{ if } j=\arg_j\min ||\mathbf{x}^{(i)}-\mathbf{\mu}_j||^2 \\ 0 &amp; \text{otherwise} \end{cases}, \forall i,j\)</span> //assignment</p>
 <p>         for j = 1 to K</p>
 <p>                 <span class="math notranslate nohighlight">\(\mathbf{\mu}_{j} = \frac{\sum_{i = 1}^{N}{r_{ij}\mathbf{x}^{(i)}}}{\sum_{i = 1}^{N}{r_{ij}}}\)</span> //update</p>
 <p>}</p>
