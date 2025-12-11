@@ -819,14 +819,11 @@ P(\mathbf{x} | Y=k) = \frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!} \cdot p_
 \]</div>
 <p>Now, we plug this into our MAP classification rule:</p>
 <div class="math notranslate nohighlight">
-\[
-h(\mathbf{x}) = \arg \max_{k} P(Y=k) \cdot \frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!} \prod_{i=1}^d (p_{ki})^{x_{i}}
-\]</div>
-<p>We can immediately simplify this. The big factorial term…
-$<span class="math notranslate nohighlight">\(
-\frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!}
-\)</span><span class="math notranslate nohighlight">\(
-...is a constant *with respect to \)</span>k<span class="math notranslate nohighlight">\(*. It only depends on the input \)</span>\mathbf{x}<span class="math notranslate nohighlight">\(, not the class. Since we are just trying to find the `arg max`, we can drop this term entirely, as it doesn't change which \)</span>k$ gives the highest score.</p>
+\[h(\mathbf{x}) = \arg \max_{k} P(Y=k) \cdot \frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!} \prod_{i=1}^d (p_{ki})^{x_{i}}\]</div>
+<p>We can immediately simplify this. The big factorial term</p>
+<div class="math notranslate nohighlight">
+\[\frac{(\sum_{i=1}^d x_{i})!}{x_{1}!\ldots x_{d}!}\]</div>
+<p>…is a constant <em>with respect to <span class="math notranslate nohighlight">\(k\)</span></em>. It only depends on the input <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, not the class. Since we are just trying to find the <code class="docutils literal notranslate"><span class="pre">arg</span> <span class="pre">max</span></code>, we can drop this term entirely, as it doesn’t change which <span class="math notranslate nohighlight">\(k\)</span> gives the highest score.</p>
 <p>This leaves us with a much simpler (and faster) classification rule:</p>
 <div class="math notranslate nohighlight">
 \[
