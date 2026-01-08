@@ -636,7 +636,7 @@ a parameter specified by the user (its application may depend on the application
 <p>The goal of K-Means is to find the set of centroids <span class="math notranslate nohighlight">\(\{\mathbf{\mu}_j\}\)</span> and assignments <span class="math notranslate nohighlight">\(\{r_{ij}\}\)</span> that minimizes this total inertia <span class="math notranslate nohighlight">\(J\)</span>.</p>
 <p>The K-Means problem is solved by finding a partition  <span class="math notranslate nohighlight">\(\widehat{S}\)</span> minimizing the cost function:</p>
 <div class="math notranslate nohighlight">
-\[\{\hat r_{ij}\}_{ij}, \{ \hat{\mathbf{\mu}_j} \}_j = \arg{\min{\sum_{j = 1}^{K}{\sum_{i = 1}^{N}{r_{ij}\left\| \mathbf{x}^{(i)} - \mathbf{\mu}_{i} \right\|^{2}}}}}\]</div>
+\[\{\hat r_{ij}\}_{ij}, \{ \hat{\mathbf{\mu}_j} \}_j = \arg{\min{\sum_{j = 1}^{K}{\sum_{i = 1}^{N}{r_{ij}\left\| \mathbf{x}^{(i)} - \mathbf{\mu}_{j} \right\|^{2}}}}}\]</div>
 <section id="optimization">
 <h3>Optimization<a class="headerlink" href="#optimization" title="Permalink to this heading">#</a></h3>
 <p>The minimization above can be performed using an iterative algorithm.
